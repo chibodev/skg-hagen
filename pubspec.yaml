@@ -19,10 +19,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
+  kf_drawer: ^1.1.2
 
 dev_dependencies:
   flutter_test:
@@ -48,6 +46,8 @@ flutter:
     - images/gebet.jpg
     - images/lesen.jpg
     - images/spende.jpg
+    - images/skg-green.png
+    - images/skg-logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -63,11 +63,7 @@ flutter:
   fonts:
      - family: Optima
        fonts:
-         - asset: fonts/Optima.ttf
-     - family: OptimaBold
-       fonts:
-         - asset: fonts/Optima_Bold.ttf
-           weight: 700
+         - asset: fonts/Optima.ttc
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
