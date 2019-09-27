@@ -1,24 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/common/model/customCard.dart';
+import 'package:skg_hagen/src/home/model/scripturalVerse.dart';
 import 'package:skg_hagen/src/home/model/singleCard.dart';
+import 'package:skg_hagen/src/home/repository/monthlyVerseClient.dart';
+import 'package:skg_hagen/src/menu/controller/menu.dart';
 
+class Home extends StatelessWidget {
 
-class Home extends StatefulWidget {
-  @override
-  Cards createState() => Cards();
-}
-
-class Cards extends State<Home> {
+  static const String route = '/home';
   final _fontOptima = const TextStyle(fontFamily: 'Optima');
+  MonthlyVerseClient monthlyVerseClient = new MonthlyVerseClient();
 
   @override
   Widget build(BuildContext context) {
+    ScripturalVerse monthlyVerse = monthlyVerseClient.getVerse();
     return Scaffold(
       appBar: AppBar(
-        //TODO: Text to be got per API call
-        title: Text('SUCHE DEN FRIEDEN UND JAGE IHM NACH Ps 34, 15', style: TextStyle(fontSize: 12, color: Colors.white),),
+        title: Text(
+          monthlyVerse.text +
+              ' ' +
+              monthlyVerse.book +
+              ' ' +
+              monthlyVerse.chapter.toString() +
+              ', ' +
+              monthlyVerse.verse.toString(),
+          style: TextStyle(fontSize: 12, color: Colors.white),
+        ),
         backgroundColor: Color(0xFF8EBC6B),
       ),
+      drawer: Menu(),
       body: _buildCards(),
     );
   }
