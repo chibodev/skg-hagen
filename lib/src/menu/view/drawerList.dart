@@ -12,27 +12,31 @@ class DrawerList {
     SingleCard card = new SingleCard();
     List<CardContent> cards = card.getAllCards();
     return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          _createHeader(() => Navigator.pushReplacementNamed(context, Routes.home)),
-          _createDrawerItem(
-              text: 'Home',
-              onTap: () =>
-                  Navigator.pushReplacementNamed(context, Routes.home)),
-          _createDrawerItem(
-              text: capitalize(cards[0].title),
-              onTap: () =>
-                  Navigator.pushReplacementNamed(context, Routes.appointment)),
-          _createDrawerItem(text: capitalize(cards[1].title)),
-          _createDrawerItem(text: capitalize(cards[2].title)),
-          _createDrawerItem(text: capitalize(cards[3].title)),
-          _createDrawerItem(text: capitalize(cards[4].title)),
-          _createDrawerItem(text: capitalize(cards[5].title)),
-          _createDrawerItem(text: capitalize(cards[6].title)),
-          _createDrawerItem(text: capitalize(cards[7].title)),
-        ],
-      ),
+        child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+            _createHeader(() => Navigator.pushReplacementNamed(context,
+        Routes.home)),
+    _createDrawerItem(
+    text: 'Home',
+    onTap: () =>
+    Navigator.pushReplacementNamed(_context, Routes.home)),
+    _createDrawerItem(
+    text: capitalize(cards[0].title),
+    onTap: () =>
+    Navigator.pushReplacementNamed(_context, Routes.appointment)),
+    _createDrawerItem(text: capitalize(cards[1].title), onTap: () =>
+    Navigator.pushReplacementNamed(_context, Routes.offer),),
+    _createDrawerItem(text: capitalize(cards[2].title)),
+    _createDrawerItem(text: capitalize(cards[3].title)),
+    _createDrawerItem(text: capitalize(cards[4].title)),
+    _createDrawerItem(text: capitalize(cards[5].title)),
+    _createDrawerItem(text: capitalize(cards[6].title)),
+    _createDrawerItem(text: capitalize(cards[7].title)),
+    ]
+    ,
+    )
+    ,
     );
   }
 

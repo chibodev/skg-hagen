@@ -17,26 +17,26 @@ class SingleCard {
         Routes.appointment,
         'images/termine.jpg'));
     _cards.add(_createNewCard('angebote', ['GRUPPEN', 'KREISEN', 'MUSIK'],
-        Routes.appointment, 'images/angebote.jpg'));
+        Routes.offer, 'images/angebote.jpg'));
     _cards.add(_createNewCard('ev.Kindergarten', ['EVENTS', 'MITTEILUNGEN'],
-        Routes.appointment, 'images/kindergarten.jpg'));
+        Routes.home, 'images/kindergarten.jpg'));
     _cards.add(_createNewCard('andacht', ['ZUSPRUCH', 'PREDIGT'],
-        Routes.appointment, 'images/andacht.jpg'));
+        Routes.home, 'images/andacht.jpg'));
     _cards.add(_createNewCard(
-        'lesen', ['BIBEL'], Routes.appointment, 'images/lesen.jpg'));
+        'lesen', ['BIBEL'], Routes.home, 'images/lesen.jpg'));
     _cards.add(_createNewCard(
-        'gebet', ['GEBETSWUNSCH'], Routes.appointment, 'images/gebet.jpg'));
+        'gebet', ['GEBETSWUNSCH'], Routes.home, 'images/gebet.jpg'));
     _cards.add(_createNewCard(
-        'spende', ['KOLLEKTE'], Routes.appointment, 'images/spende.jpg'));
+        'spende', ['KOLLEKTE'], Routes.home, 'images/spende.jpg'));
     _cards.add(_createNewCard(
         'kontakte',
         ['ADRESSE', 'ANSPRECHPARTNER', 'SOCIAL MEDIA'],
-        Routes.appointment,
+        Routes.home,
         'images/kontakte.jpg'));
     _cards.add(_createNewCard(
         'Über uns',
         ['GESCHICHTE', 'DAS PRESBYTERIUM', 'IMPRESSUM'],
-        Routes.appointment,
+        Routes.home,
         'images/skg.jpg'));
   }
 
