@@ -51,7 +51,7 @@ class DrawerList {
         child: GestureDetector(
           onTap: onTap,
           child: Image(
-              image: AssetImage('images/skg-green.png'), fit: BoxFit.cover),
+              image: AssetImage('assets/images/skg-green.png'), fit: BoxFit.cover),
         ),
       ),
     );

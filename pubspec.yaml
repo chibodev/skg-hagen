@@ -40,16 +40,16 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - images/termine.jpg
-    - images/angebote.jpg
-    - images/andacht.jpg
-    - images/gebet.jpg
-    - images/lesen.jpg
-    - images/spende.jpg
-    - images/kontakte.jpg
-    - images/skg-green.png
-    - images/skg.jpg
-    - images/kindergarten.jpg
+    - assets/images/termine.jpg
+    - assets/images/angebote.jpg
+    - assets/images/andacht.jpg
+    - assets/images/gebet.jpg
+    - assets/images/lesen.jpg
+    - assets/images/spende.jpg
+    - assets/images/kontakte.jpg
+    - assets/images/skg-green.png
+    - assets/images/skg.jpg
+    - assets/images/kindergarten.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -65,7 +65,7 @@ flutter:
   fonts:
      - family: Optima
        fonts:
-         - asset: fonts/Optima.ttc
+         - asset: assets/fonts/Optima.ttc
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
