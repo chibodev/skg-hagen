@@ -1,7 +1,8 @@
-import 'package:skg_hagen/src/common/model/customCard.dart';
+import 'package:skg_hagen/src/common/routes/routes.dart';
+import 'package:skg_hagen/src/home/model/cardContent.dart';
 
 class SingleCard {
-  List _cards = new List<CustomCard>();
+  List _cards = new List<CardContent>();
 
   List getAllCards() {
     _setCards();
@@ -10,25 +11,35 @@ class SingleCard {
 
   void _setCards() {
     //TODO: Retrieve data for 'home' from a config file (yaml for instance)
-    _cards.add(_createNewCard('termine',
-        ['GOTTESDIENSTE', 'VERANSTALTUNGEN', 'EVENTS'], 'images/termine.jpg'));
     _cards.add(_createNewCard(
-        'angebote', ['GRUPPEN', 'KREISEN', 'MUSIK'], 'images/angebote.jpg'));
+        'termine',
+        ['GOTTESDIENSTE', 'VERANSTALTUNGEN', 'EVENTS'],
+        Routes.appointment,
+        'images/termine.jpg'));
+    _cards.add(_createNewCard('angebote', ['GRUPPEN', 'KREISEN', 'MUSIK'],
+        Routes.appointment, 'images/angebote.jpg'));
+    _cards.add(_createNewCard('andacht', ['ZUSPRUCH', 'PREDIGT'],
+        Routes.appointment, 'images/andacht.jpg'));
     _cards.add(_createNewCard(
-        'andacht', ['ZUSPRUCH', 'PREDIGT'], 'images/andacht.jpg'));
-    _cards.add(_createNewCard('lesen', ['BIBEL'], 'images/lesen.jpg'));
-    _cards.add(_createNewCard('gebet', ['GEBETSWUNSCH'], 'images/gebet.jpg'));
-    _cards.add(_createNewCard('spende', ['KOLLEKTE'], 'images/spende.jpg'));
-    _cards.add(_createNewCard('kontakte',
-        ['ADRESSE', 'ANSPRECHPARTNER', 'SOCIAL MEDIA'], 'images/angebote.jpg'));
+        'lesen', ['BIBEL'], Routes.appointment, 'images/lesen.jpg'));
+    _cards.add(_createNewCard(
+        'gebet', ['GEBETSWUNSCH'], Routes.appointment, 'images/gebet.jpg'));
+    _cards.add(_createNewCard(
+        'spende', ['KOLLEKTE'], Routes.appointment, 'images/spende.jpg'));
+    _cards.add(_createNewCard(
+        'kontakte',
+        ['ADRESSE', 'ANSPRECHPARTNER', 'SOCIAL MEDIA'],
+        Routes.appointment,
+        'images/angebote.jpg'));
     _cards.add(_createNewCard(
         'Über uns',
         ['GESCHICHTE', 'DAS PRESBYTERIUM', 'IMPRESSUM'],
+        Routes.appointment,
         'images/angebote.jpg'));
   }
 
-  CustomCard _createNewCard(String title, List subtitle,
-      [String imagePath = null]) {
-    return new CustomCard(title, subtitle, imagePath);
+  CardContent _createNewCard(String title, List subtitle, String routeName,
+      [String imagePath]) {
+    return new CardContent(title, subtitle, routeName, imagePath);
   }
 }

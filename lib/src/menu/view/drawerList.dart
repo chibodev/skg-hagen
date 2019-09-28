@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/common/model/customCard.dart';
+import 'package:skg_hagen/src/home/model/cardContent.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/home/model/singleCard.dart';
 
@@ -7,7 +7,7 @@ class DrawerList {
   static Widget getList(BuildContext context) {
     String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
     SingleCard card = new SingleCard();
-    List<CustomCard> cards = card.getAllCards();
+    List<CardContent> cards = card.getAllCards();
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -37,12 +37,12 @@ class DrawerList {
     return DrawerHeader(
       margin: EdgeInsets.zero,
       padding: EdgeInsets.zero,
-      child: new OverflowBox(
+      child: OverflowBox(
         minWidth: 0.0,
         minHeight: 0.0,
         maxWidth: 180,
-        child: new Image(
-            image: new AssetImage('images/skg-green.png'), fit: BoxFit.cover),
+        child: Image(
+            image: AssetImage('images/skg-green.png'), fit: BoxFit.cover),
       ),
     );
   }

@@ -17,9 +17,9 @@ class MyApp extends StatelessWidget {
         Routes.appointment : (context) => Appointment(),
       },
       theme: ThemeData(
-        primaryColor: Colors.white,
+        primaryColor: Colors.white, fontFamily: 'Optima'
       ),
-      home: Home()
+      home: Home(),
     );
   }
 }

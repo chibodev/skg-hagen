@@ -20,7 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^0.1.2
-  kf_drawer: ^1.1.2
+  intl: ^0.16.0
 
 dev_dependencies:
   flutter_test:
