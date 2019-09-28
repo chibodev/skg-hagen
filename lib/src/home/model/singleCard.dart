@@ -18,6 +18,8 @@ class SingleCard {
         'images/termine.jpg'));
     _cards.add(_createNewCard('angebote', ['GRUPPEN', 'KREISEN', 'MUSIK'],
         Routes.appointment, 'images/angebote.jpg'));
+    _cards.add(_createNewCard('ev.Kindergarten', ['EVENTS', 'MITTEILUNGEN'],
+        Routes.appointment, 'images/kindergarten.jpg'));
     _cards.add(_createNewCard('andacht', ['ZUSPRUCH', 'PREDIGT'],
         Routes.appointment, 'images/andacht.jpg'));
     _cards.add(_createNewCard(
@@ -30,12 +32,12 @@ class SingleCard {
         'kontakte',
         ['ADRESSE', 'ANSPRECHPARTNER', 'SOCIAL MEDIA'],
         Routes.appointment,
-        'images/angebote.jpg'));
+        'images/kontakte.jpg'));
     _cards.add(_createNewCard(
         'Über uns',
         ['GESCHICHTE', 'DAS PRESBYTERIUM', 'IMPRESSUM'],
         Routes.appointment,
-        'images/angebote.jpg'));
+        'images/skg.jpg'));
   }
 
   CardContent _createNewCard(String title, List subtitle, String routeName,

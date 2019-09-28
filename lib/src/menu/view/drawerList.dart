@@ -4,7 +4,10 @@ import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/home/model/singleCard.dart';
 
 class DrawerList {
+  static BuildContext _context;
+
   static Widget getList(BuildContext context) {
+    _context = context;
     String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
     SingleCard card = new SingleCard();
     List<CardContent> cards = card.getAllCards();
@@ -12,7 +15,7 @@ class DrawerList {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          _createHeader(),
+          _createHeader(() => Navigator.pushReplacementNamed(context, Routes.home)),
           _createDrawerItem(
               text: 'Home',
               onTap: () =>
@@ -33,7 +36,7 @@ class DrawerList {
     );
   }
 
-  static Widget _createHeader() {
+  static Widget _createHeader(GestureTapCallback onTap) {
     return DrawerHeader(
       margin: EdgeInsets.zero,
       padding: EdgeInsets.zero,
@@ -41,8 +44,11 @@ class DrawerList {
         minWidth: 0.0,
         minHeight: 0.0,
         maxWidth: 180,
-        child: Image(
-            image: AssetImage('images/skg-green.png'), fit: BoxFit.cover),
+        child: GestureDetector(
+          onTap: onTap,
+          child: Image(
+              image: AssetImage('images/skg-green.png'), fit: BoxFit.cover),
+        ),
       ),
     );
   }

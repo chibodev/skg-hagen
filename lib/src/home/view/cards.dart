@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/home/model/cardContent.dart';
 import 'package:skg_hagen/src/home/model/scripturalVerse.dart';
 import 'package:skg_hagen/src/home/model/singleCard.dart';
@@ -9,9 +8,12 @@ import 'package:skg_hagen/src/menu/controller/menu.dart';
 class Cards {
   final _fontOptima = const TextStyle(fontFamily: 'Optima');
   MonthlyVerseClient monthlyVerseClient = new MonthlyVerseClient();
+  BuildContext _context;
 
   Widget getCards(BuildContext context) {
     ScripturalVerse monthlyVerse = monthlyVerseClient.getVerse();
+    this._context = context;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -26,12 +28,12 @@ class Cards {
         ),
         backgroundColor: Color(0xFF8EBC6B),
       ),
-      body: _buildCards(context),
+      body: _buildCards(),
       drawer: Menu(),
     );
   }
 
-  Widget _buildCards(BuildContext context) {
+  Widget _buildCards() {
     SingleCard card = new SingleCard();
     List<CardContent> cards = card.getAllCards();
 
@@ -39,16 +41,16 @@ class Cards {
         padding: EdgeInsets.zero,
         itemCount: cards.length,
         itemBuilder: (context, index) {
-          return _buildRows(context, cards[index]);
+          return _buildRows(cards[index]);
         });
   }
 
-  Widget _buildRows(BuildContext context, CardContent card) {
+  Widget _buildRows(CardContent card) {
     final imageAssest = (card.custom != null) ? Image.asset(card.custom) : null;
 
     return Material(
       child: GestureDetector(
-        onTap: () => Navigator.pushReplacementNamed(context, Routes.appointment),
+        onTap: () => Navigator.pushReplacementNamed(this._context, card.routeName),
         child: Card(
           child: Column(
             mainAxisSize: MainAxisSize.min,
