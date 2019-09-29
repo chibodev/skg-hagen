@@ -1,25 +1,27 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'address.g.dart';
+
+@JsonSerializable()
 class Address {
-  String _churchName;
-  String _address1;
-  String _houseNumber;
-  String _zip;
-  String _city;
-  String _country;
+  @JsonKey(name: 'church_name')
+  final String churchName;
+  final String address1;
+  @JsonKey(name: 'house_number')
+  final String houseNumber;
+  final String zip;
+  final String city;
+  final String country;
+  final String room;
 
-  Address(this._churchName, this._address1, this._houseNumber, this._zip,
-      this._city, this._country);
+  Address(this.churchName, this.address1, this.houseNumber, this.zip, this.city,
+      this.country,
+      [this.room]);
 
-  String get country => _country;
+  factory Address.fromJson(Map<String, dynamic> json) =>
+      _$AddressFromJson(json);
 
-  String get city => _city;
-
-  String get zip => _zip;
-
-  String get houseNumber => _houseNumber;
-
-  String get address1 => _address1;
-
-  String get churchName => _churchName;
+  Map<String, dynamic> toJson() => _$AddressToJson(this);
 
   String getZipAndCity() {
     return zip + ' ' + city;

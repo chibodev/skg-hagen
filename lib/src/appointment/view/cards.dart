@@ -18,17 +18,16 @@ class Cards extends State<Controller.Appointment> {
   }
 
   Widget _buildCards() {
-    AppointmentClient appointmentClient = new AppointmentClient();
-    List<DTO.Appointment> appointments = appointmentClient.getAppointments();
+    final List<DTO.Appointment> appointments = AppointmentClient().getAppointments();
 
     return ListView.builder(
         padding: EdgeInsets.zero,
-        itemCount: appointments.length,
+        itemCount: appointments.length+1,
         itemBuilder: (context, index) {
           if (index == 0) {
             // return the header
             return Column(
-              children: <Widget>[Image.asset('images/termine.jpg')],
+              children: <Widget>[Image.asset('assets/images/termine.jpg')],
             );
           }
           index -= 1;

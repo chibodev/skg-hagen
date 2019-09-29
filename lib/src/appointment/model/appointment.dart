@@ -3,10 +3,10 @@ import 'package:intl/intl.dart';
 import 'package:skg_hagen/src/common/model/address.dart';
 
 class Appointment {
-  String _title;
-  DateTime _dateAndTime;
-  Address _address;
-  String _organizer;
+  final String _title;
+  final DateTime _dateAndTime;
+  final Address _address;
+  final String _organizer;
 
   Appointment(this._title, this._dateAndTime, this._address, [this._organizer]);
 
@@ -20,6 +20,9 @@ class Appointment {
 
   String getFormattedTime() {
     initializeDateFormatting('de_DE', null);
-    return DateFormat("E d.M.yy | HH:mm", "de_DE").format(dateAndTime).toString().toUpperCase();
+    return DateFormat("E d.M.yy | HH:mm", "de_DE")
+        .format(dateAndTime)
+        .toString()
+        .toUpperCase();
   }
 }

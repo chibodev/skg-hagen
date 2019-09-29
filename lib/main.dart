@@ -14,9 +14,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'skg-hagen',
       routes: {
-        Routes.home : (context) => Home(),
-        Routes.appointment : (context) => Appointment(),
-        Routes.offer : (context) => Offer(),
+        Routes.home : (BuildContext context) => Home(),
+        Routes.appointment : (BuildContext context) => Appointment(),
+        Routes.offer : (BuildContext context) => Offer(),
       },
       theme: ThemeData(
         primaryColor: Colors.white, fontFamily: 'Optima'
