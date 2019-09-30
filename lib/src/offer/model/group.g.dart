@@ -14,6 +14,7 @@ Group _$GroupFromJson(Map<String, dynamic> json) {
     json['address'] == null
         ? null
         : Address.fromJson(json['address'] as Map<String, dynamic>),
+    json['organizer'] as String,
   );
 }
 
@@ -22,4 +23,5 @@ Map<String, dynamic> _$GroupToJson(Group instance) => <String, dynamic>{
       'date': instance.date,
       'time': instance.time,
       'address': instance.address?.toJson(),
+      'organizer': instance.organizer,
     };

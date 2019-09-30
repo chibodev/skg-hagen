@@ -19,7 +19,7 @@ class SingleCard {
     _cards.add(_createNewCard('angebote', ['GRUPPEN', 'KREISEN', 'MUSIK'],
         Routes.offer, 'assets/images/angebote.jpg'));
     _cards.add(_createNewCard('ev.Kindergarten', ['EVENTS', 'MITTEILUNGEN'],
-        Routes.home, 'assets/images/kindergarten.jpg'));
+        Routes.kindergarten, 'assets/images/kindergarten.jpg'));
     _cards.add(_createNewCard('andacht', ['ZUSPRUCH', 'PREDIGT'],
         Routes.home, 'assets/images/andacht.jpg'));
     _cards.add(_createNewCard(

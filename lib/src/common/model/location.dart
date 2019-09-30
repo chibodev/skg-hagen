@@ -8,8 +8,8 @@ class Location {
   static const String _JOHANNIS_CHURCH = 'johanniskirche';
 
   // TODO: add longitude and latitide
-  static const String _LONG_LAT_MARKUS = 'johanniskirche';
-  static const String _LONG_LAT_JOHANNIS = 'johanniskirche';
+  static const String _LONG_LAT_MARKUS = '51.369311, 7.471246';
+  static const String _LONG_LAT_JOHANNIS = '51.355742, 7.477465';
 
   static const List<String> VALID_LOCATIONS = <String>[
     _MARKUS_CHURCH,
