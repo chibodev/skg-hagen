@@ -54,7 +54,8 @@ class Cards {
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(color: Colors.grey)),
                           InkWell(
-                            onTap: () => TapAction().sendMail(card.email, card.title),
+                            onTap: () =>
+                                TapAction().sendMail(card.email, card.title),
                             child: Padding(
                               padding: EdgeInsets.only(left: 10),
                               child: Icon(
@@ -75,17 +76,21 @@ class Cards {
               color: Color(0xFF8EBC6B),
               width: 125,
               height: 100,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(card.address.churchName,
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold)),
-                  Text(card.address.address1,
-                      style: TextStyle(color: Colors.white)),
-                  Text(card.address.getZipAndCity(),
-                      style: TextStyle(color: Colors.white)),
-                ],
+              child: InkWell(
+                onTap: () =>
+                    TapAction().openMap(card.address.churchName),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(card.address.churchName,
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold)),
+                    Text(card.address.address1,
+                        style: TextStyle(color: Colors.white)),
+                    Text(card.address.getZipAndCity(),
+                        style: TextStyle(color: Colors.white)),
+                  ],
+                ),
               ),
             )
           ],
@@ -124,17 +129,21 @@ class Cards {
               color: Color(0xFF8EBC6B),
               width: 125,
               height: 100,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(card.address.churchName,
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold)),
-                  Text(card.address.address1,
-                      style: TextStyle(color: Colors.white)),
-                  Text(card.address.getZipAndCity(),
-                      style: TextStyle(color: Colors.white)),
-                ],
+              child: InkWell(
+                onTap: () =>
+                    TapAction().openMap(card.address.churchName),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(card.address.churchName,
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold)),
+                    Text(card.address.address1,
+                        style: TextStyle(color: Colors.white)),
+                    Text(card.address.getZipAndCity(),
+                        style: TextStyle(color: Colors.white)),
+                  ],
+                ),
               ),
             )
           ],

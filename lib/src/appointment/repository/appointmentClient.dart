@@ -30,7 +30,7 @@ class AppointmentClient {
     appointments.add(_createAppointment(
         'Kantorei - Proben', DateTime(2019, 10, 2, 19, 00), johannisChurch));
 
-    appointments.add(_createAppointment('Offener Meditationsabend.',
+    appointments.add(_createAppointment('Offener Meditationsabend',
         DateTime(2019, 10, 2, 19, 30), johannisChurch, 'Frau Klahr und Team'));
 
     appointments.add(_createAppointment('(persischer) Bibelkreis',

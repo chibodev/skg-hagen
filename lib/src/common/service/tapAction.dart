@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:skg_hagen/src/common/model/location.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TapAction {
@@ -13,17 +14,21 @@ class TapAction {
     }
   }
 
-  void openMap() async {
+  void openMap(String location) async {
     // Android
-    String url = 'geo:52.32,4.917';
-    if (Platform.isIOS) {
-      // iOS
-      url = 'http://maps.apple.com/?ll=52.32,4.917';
-    }
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
+    final String longLat = Location(location).getLongtideLatitude();
+
+    if (longLat != null){
+      String url = 'geo:$longLat';
+      if (Platform.isIOS) {
+        // iOS
+        url = 'http://maps.apple.com/?ll=$longLat';
+      }
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
     }
   }
 
