@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
 import 'package:skg_hagen/src/kindergarten/model/events.dart';
 import 'package:skg_hagen/src/kindergarten/view/news.dart';
-import 'package:skg_hagen/src/offer/model/offer.dart';
 
 class Cards {
   BuildContext _context;
@@ -64,6 +63,7 @@ class Cards {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   InkWell(
+                    splashColor: Color(0xFF8EBC6B),
                     onTap: () => TapAction().launchURL(card.link),
                     child: Image.asset('assets/images/icon/radiohagen.png'),
                   ),
@@ -80,6 +80,7 @@ class Cards {
     return Material(
       child: Card(
         child: InkWell(
+          splashColor: Color(0xFF8EBC6B),
           onTap: () => Navigator.push(
             _context,
             MaterialPageRoute(

@@ -9,8 +9,11 @@ class News {
   final String title;
   final DateTime date;
   final String content;
+  final String link;
+  @JsonKey(name: 'link_text')
+  final String linkText;
 
-  News(this.title, this.date, this.content);
+  News(this.title, this.date, this.content, this.link, this.linkText);
 
   factory News.fromJson(Map<String, dynamic> json) => _$NewsFromJson(json);
 

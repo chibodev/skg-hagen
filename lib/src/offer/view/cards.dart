@@ -54,6 +54,7 @@ class Cards {
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(color: Colors.grey)),
                           InkWell(
+                            splashColor: Color(0xFF8EBC6B),
                             onTap: () =>
                                 TapAction().sendMail(card.email, card.title),
                             child: Padding(
@@ -77,6 +78,7 @@ class Cards {
               width: 125,
               height: 100,
               child: InkWell(
+                splashColor: Color(0xFF8EBC6B),
                 onTap: () =>
                     TapAction().openMap(card.address.churchName),
                 child: Column(
@@ -130,6 +132,7 @@ class Cards {
               width: 125,
               height: 100,
               child: InkWell(
+                splashColor: Color(0xFF8EBC6B),
                 onTap: () =>
                     TapAction().openMap(card.address.churchName),
                 child: Column(

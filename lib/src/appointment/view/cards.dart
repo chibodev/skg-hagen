@@ -75,6 +75,7 @@ class Cards extends State<Controller.Appointment> {
               width: 125,
               height: 100,
               child: InkWell(
+                splashColor: Color(0xFF8EBC6B),
                 onTap: () =>
                     TapAction().openMap(card.address.churchName),
                 child: Column(

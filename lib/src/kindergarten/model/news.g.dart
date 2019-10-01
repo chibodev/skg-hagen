@@ -11,6 +11,8 @@ News _$NewsFromJson(Map<String, dynamic> json) {
     json['title'] as String,
     json['date'] == null ? null : DateTime.parse(json['date'] as String),
     json['content'] as String,
+    json['link'] as String,
+    json['link_text'] as String,
   );
 }
 
@@ -18,4 +20,6 @@ Map<String, dynamic> _$NewsToJson(News instance) => <String, dynamic>{
       'title': instance.title,
       'date': instance.date?.toIso8601String(),
       'content': instance.content,
+      'link': instance.link,
+      'link_text': instance.linkText,
     };

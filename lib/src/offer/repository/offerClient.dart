@@ -10,7 +10,6 @@ class OfferClient {
         await Client().loadAsset('assets/response/offers.json');
 
     final List<dynamic> jsonMap = jsonDecode(jsonResponse);
-    final Offers offers = Offers.fromJson(jsonMap.first);
-    return offers;
+    return Offers.fromJson(jsonMap?.first);
   }
 }

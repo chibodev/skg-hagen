@@ -10,6 +10,6 @@ class KindergartenClient {
 
     final List<dynamic> jsonMap = jsonDecode(jsonResponse);
 
-    return Kindergarten.fromJson(jsonMap.first);
+    return Kindergarten.fromJson(jsonMap?.first);
   }
 }
