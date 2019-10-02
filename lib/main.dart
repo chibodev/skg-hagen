@@ -8,6 +8,9 @@ import 'package:skg_hagen/src/kindergarten/controller/kindergarten.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  //TODO add cache.
+  // TODO If offline, load from cache (add date of loaded so as to add message if older that X days) otherwise show static offline page
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
