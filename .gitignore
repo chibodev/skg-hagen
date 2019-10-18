@@ -100,3 +100,9 @@ packages
 pubspec.lock
 .flutter-plugins
 
+/ios/Flutter/Generated.xcconfig
+/ios/Flutter/flutter_export_environment.sh
+/ios/Pods/*
+/ios/Runner.xcodeproj/*
+/ios/Runner.xcworkspace/*
+/ios/Podfile.lock
