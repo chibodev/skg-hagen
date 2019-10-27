@@ -19,14 +19,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
+  intl: ^0.16.0
+  json_annotation: ^3.0.0
+  url_launcher: ^5.1.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: ^1.0.0
+  json_serializable: ^3.2.2
 
 
 # For information on the generic Dart part of this file, see the
@@ -42,13 +44,21 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - images/termine.jpg
-    - images/angebote.jpg
-    - images/andacht.jpg
-    - images/gebet.jpg
-    - images/lesen.jpg
-    - images/spende.jpg
-
+    - assets/images/termine.jpg
+    - assets/images/angebote.jpg
+    - assets/images/andacht.jpg
+    - assets/images/gebet.jpg
+    - assets/images/lesen.jpg
+    - assets/images/spende.jpg
+    - assets/images/kontakte.jpg
+    - assets/images/skg-green.png
+    - assets/images/skg.jpg
+    - assets/images/kindergarten.jpg
+    - assets/images/icon/radiohagen.png
+    #Dummy demo data
+    - assets/response/offers.json
+    - assets/response/kindergarten.json
+    - assets/response/monthlyScripture.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
@@ -63,11 +73,7 @@ flutter:
   fonts:
      - family: Optima
        fonts:
-         - asset: fonts/Optima.ttf
-     - family: OptimaBold
-       fonts:
-         - asset: fonts/Optima_Bold.ttf
-           weight: 700
+         - asset: assets/fonts/Optima.ttc
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

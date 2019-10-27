@@ -1,0 +1,41 @@
+termine:
+  groups:
+    - gottesdienst
+    - veranstaltung
+    - events
+
+angebote:
+  groups:
+    - gruppen
+    - kreisen
+    - musik
+
+andacht:
+  groups:
+    - zuspruch
+    - predigt
+
+lesen:
+  groups:
+    - bibel
+
+gebet:
+  groups:
+    - gebetswunsch
+
+spende:
+  groups:
+    - spende
+
+kontakte:
+  groups:
+    - adresse
+    - ansprechpartner
+    - social media
+
+über uns:
+  groups:
+    - geschichte
+    - das presbyterium
+    - impressum
+
