@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 
-class Client {
+class AssetClient {
   Future<String> loadAsset(String path) async {
     String asset;
 
