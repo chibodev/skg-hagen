@@ -3,39 +3,58 @@ termine:
     - gottesdienst
     - veranstaltung
     - events
+  image: assets/images/termine.jpg
+  route: appointment
 
 angebote:
   groups:
     - gruppen
     - kreisen
     - musik
+  image: assets/images/angebote.jpg
+  route: offer
 
-andacht:
+ev.kindergarten:
   groups:
-    - zuspruch
-    - predigt
+    - events
+    - mittteilung
+  image: assets/images/kindergarten.jpg
+  route: kindergarten
 
-lesen:
-  groups:
-    - bibel
-
-gebet:
-  groups:
-    - gebetswunsch
-
-spende:
-  groups:
-    - spende
 
 kontakte:
   groups:
     - adresse
     - ansprechpartner
     - social media
+  image: assets/images/kontakte.jpg
+  route: contact
 
 über uns:
   groups:
     - geschichte
     - das presbyterium
     - impressum
+  image: assets/images/skg.jpg
+  route: about
 
+#andacht:
+#  groups:
+#    - zuspruch
+#    - predigt
+#  image: assets/images/andacht.jpg
+#
+#lesen:
+#  groups:
+#    - bibel
+#  image: assets/images/lesen.jpg
+#
+#gebet:
+#  groups:
+#    - gebetswunsch
+#  image: assets/images/gebet.jpg
+#
+#spende:
+#  groups:
+#    - spende
+#  image: assets/images/spende.jpg

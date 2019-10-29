@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/home/model/cardContent.dart';
 import 'package:skg_hagen/src/home/model/monthlyScripture.dart';
-import 'package:skg_hagen/src/home/model/singleCard.dart';
+import 'package:skg_hagen/src/home/service/singleCard.dart';
 import 'package:skg_hagen/src/home/repository/monthlyScriptureClient.dart';
 import 'package:skg_hagen/src/menu/controller/menu.dart';
 
@@ -9,7 +9,6 @@ class Cards {
   final TextStyle _fontOptima = const TextStyle(fontFamily: 'Optima');
   MonthlyScriptureClient monthlyScriptureClient = MonthlyScriptureClient();
   BuildContext _context;
-
 
   Widget getCards(BuildContext context) {
     this._context = context;
@@ -24,7 +23,7 @@ class Cards {
               print('monthlyverse snapshot data is: ${response.data}');
               return Text('');
             }
-            if (response.data != null) {
+            if (response.connectionState == ConnectionState.done && response.data != null) {
               return Center(
                   child: RichText(
                       text: TextSpan(
@@ -47,7 +46,18 @@ class Cards {
         ),
         backgroundColor: Color(0xFF8EBC6B),
       ),
-      body: _buildCards(),
+      body: FutureBuilder(
+        future: _getAllCards(),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<CardContent>> response) {
+          if (response.connectionState == ConnectionState.done && response.data != null) {
+            return _buildCards(response.data);
+          }
+          return CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF8EBC6B)),
+          );
+        },
+      ),
       drawer: Menu(),
     );
   }
@@ -56,10 +66,11 @@ class Cards {
     return await MonthlyScriptureClient().getVerse();
   }
 
-  Widget _buildCards() {
-    final SingleCard card = SingleCard();
-    final List<CardContent> cards = card.getAllCards();
+  Future<List<CardContent>> _getAllCards() async {
+    return await SingleCard().getAllCards();
+  }
 
+  Widget _buildCards(List<CardContent> cards) {
     return ListView.builder(
         padding: EdgeInsets.zero,
         itemCount: cards.length,
