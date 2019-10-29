@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/home/model/cardContent.dart';
 import 'package:skg_hagen/src/home/model/monthlyScripture.dart';
 import 'package:skg_hagen/src/home/model/singleCard.dart';
-import 'package:skg_hagen/src/home/repository/monthlyVerseClient.dart';
+import 'package:skg_hagen/src/home/repository/monthlyScriptureClient.dart';
 import 'package:skg_hagen/src/menu/controller/menu.dart';
 
 class Cards {
   final TextStyle _fontOptima = const TextStyle(fontFamily: 'Optima');
-  MonthlyVerseClient monthlyVerseClient = MonthlyVerseClient();
+  MonthlyScriptureClient monthlyScriptureClient = MonthlyScriptureClient();
   BuildContext _context;
+
 
   Widget getCards(BuildContext context) {
     this._context = context;
@@ -19,8 +20,7 @@ class Cards {
           future: _getText(),
           builder:
               (BuildContext context, AsyncSnapshot<MonthlyScripture> response) {
-            if (response.connectionState == ConnectionState.none &&
-                response.hasData == null) {
+            if (response.connectionState == ConnectionState.none) {
               print('monthlyverse snapshot data is: ${response.data}');
               return Text('');
             }
@@ -53,7 +53,7 @@ class Cards {
   }
 
   Future<MonthlyScripture> _getText() async {
-    return await MonthlyVerseClient().getVerse();
+    return await MonthlyScriptureClient().getVerse();
   }
 
   Widget _buildCards() {

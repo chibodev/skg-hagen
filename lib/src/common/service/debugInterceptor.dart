@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 
-class DebugInterceptor extends Interceptor {
+class DebugInterceptor extends Interceptor{
   @override
-  Future<dynamic> onRequest(RequestOptions options) async {
+  Future<dynamic> onRequest(RequestOptions options) async{
     print(
         "--> ${options.method != null ? options.method.toUpperCase() : 'METHOD'} ${"" + (options.baseUrl ?? "") + (options.path ?? "")}");
     print("Headers:");
@@ -21,7 +21,7 @@ class DebugInterceptor extends Interceptor {
   }
 
   @override
-  Future<dynamic> onError(DioError dioError) async {
+  Future<dynamic> onError(DioError dioError) async{
     print(
         "<-- ${dioError.message} ${(dioError.response?.request != null ? (dioError.response.request.baseUrl + dioError.response.request.path) : 'URL')}");
     print(
@@ -32,7 +32,7 @@ class DebugInterceptor extends Interceptor {
   }
 
   @override
-  Future<dynamic> onResponse(Response response) async {
+  Future<dynamic> onResponse(Response response) async{
     print(
         "<-- ${response.statusCode} ${(response.request != null ? (response.request.baseUrl + response.request.path) : 'URL')}");
     print("Headers:");

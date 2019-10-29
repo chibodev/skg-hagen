@@ -3,15 +3,13 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:skg_hagen/src/common/model/dioHttpClient.dart';
-import 'package:skg_hagen/src/common/model/errorHandler.dart';
 import 'package:skg_hagen/src/common/service/debugInterceptor.dart';
 import 'package:skg_hagen/src/token/model/token.dart';
 
 class TokenClient {
   DioHTTPClient _http;
   final String _path = 'token';
-  final String _username = '', _password = '';
-  String _error = '';
+  final String _username = 'super.admin', _password = 'super.admin1';
 
   TokenClient() {
     this._http = DioHTTPClient();
@@ -22,8 +20,8 @@ class TokenClient {
   }
 
   Future<Token> _getData() async {
-
     _http.client.interceptors.add(DebugInterceptor());
+    _http.client.interceptors.add(DioCacheManager(CacheConfig()).interceptor);
 
     this._http.client.options.contentType = Headers.formUrlEncodedContentType;
     return await _http.client
@@ -33,12 +31,6 @@ class TokenClient {
           options: buildCacheOptions(Duration(minutes: 30),
               maxStale: Duration(hours: 1)),
         )
-        .then((Response response) =>
-            Token.fromJson(jsonDecode(response.data)))
-        .catchError((dynamic err) =>
-            _error = ErrorHandler.handleError(err, err.response.statusCode));
-
+        .then((Response response) => Token.fromJson(jsonDecode(response.data)));
   }
-
-  String get error => _error;
 }
