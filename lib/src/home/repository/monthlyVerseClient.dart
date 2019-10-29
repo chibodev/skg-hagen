@@ -1,19 +1,42 @@
-import 'dart:convert';
-
-import 'package:skg_hagen/src/common/service/client.dart';
+import 'package:dio/dio.dart';
+import 'package:dio_http_cache/dio_http_cache.dart';
+import 'package:skg_hagen/src/common/model/dioHttpClient.dart';
+import 'package:skg_hagen/src/common/model/errorHandler.dart';
+import 'package:skg_hagen/src/common/service/cacheInterceptor.dart';
+import 'package:skg_hagen/src/common/service/debugInterceptor.dart';
 import 'package:skg_hagen/src/home/model/monthlyScripture.dart';
+import 'package:skg_hagen/src/token/service/tokenClient.dart';
+import 'package:skg_hagen/src/token/service/tokenInterceptor.dart';
 
 class MonthlyVerseClient {
-  //TODO setup client
-  Future<MonthlyScripture> getVerse() async {
-    final String jsonResponse =
-        await Client().loadAsset('assets/response/monthlyScripture.json');
+  DioHTTPClient _http;
+  final String _path = 'app/monthly-devotion';
+  String _error = '';
 
-    final List<dynamic> jsonMap = jsonDecode(jsonResponse);
-
-    print(jsonMap);
-    return MonthlyScripture.fromJson(jsonMap?.first);
+  MonthlyVerseClient() {
+    _http = DioHTTPClient();
   }
-//('Suche Frieden und jage ihm nach!', 'Ps.', 34, 15);
 
+  Future<MonthlyScripture> getVerse() async {
+    return await _getData();
+  }
+
+  Future<MonthlyScripture> _getData() async {
+    final TokenClient tokenClient = TokenClient();
+
+    _http.client.interceptors.add(TokenInterceptor(tokenClient, _http));
+    _http.client.interceptors.add(CacheInterceptor());
+    _http.client.interceptors.add(DebugInterceptor());
+
+    return await _http.client
+        .get(_path,
+            options: buildCacheOptions(Duration(days: 7),
+                maxStale: Duration(days: 10)))
+        .then((Response response) =>
+            MonthlyScripture.fromJson(response.data.first))
+        .catchError((dynamic err) =>
+            _error = ErrorHandler.handleError(err, err.response.statusCode));
+  }
+
+  String get error => _error;
 }

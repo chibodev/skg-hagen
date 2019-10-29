@@ -25,8 +25,22 @@ class Cards {
               return Text('');
             }
             if (response.data != null) {
-              return Text(response.data.getFormatted(),
-                  style: TextStyle(fontSize: 14, color: Colors.white));
+              return Center(
+                  child: RichText(
+                      text: TextSpan(
+                          text: response.data.text,
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontFamily: 'Optima'),
+                          children: <TextSpan>[
+                    TextSpan(
+                        text: response.data.getFormatted(),
+                        style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.white,
+                            fontFamily: 'Optima'))
+                  ])));
             }
             return Text('');
           },
@@ -42,26 +56,14 @@ class Cards {
     return await MonthlyVerseClient().getVerse();
   }
 
-  /*
-  Text(
-          monthlyVerse.text +
-              ' ' +
-              monthlyVerse.book +
-              ' ' +
-              monthlyVerse.chapter.toString() +
-              ', ' +
-              monthlyVerse.verse.toString(),
-          style: TextStyle(fontSize: 12, color: Colors.white),
-        ),
-   */
   Widget _buildCards() {
-    SingleCard card = new SingleCard();
-    List<CardContent> cards = card.getAllCards();
+    final SingleCard card = SingleCard();
+    final List<CardContent> cards = card.getAllCards();
 
     return ListView.builder(
         padding: EdgeInsets.zero,
         itemCount: cards.length,
-        itemBuilder: (context, index) {
+        itemBuilder: (dynamic context, int index) {
           return _buildRows(cards[index]);
         });
   }
