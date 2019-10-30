@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:skg_hagen/src/common/model/dioHttpClient.dart';
 import 'package:skg_hagen/src/token/model/token.dart';
-import 'package:skg_hagen/src/token/service/tokenClient.dart';
+import 'package:skg_hagen/src/token/repository/tokenClient.dart';
 
 class TokenInterceptor extends Interceptor {
   final TokenClient _tokenClient;

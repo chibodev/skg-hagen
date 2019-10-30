@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skg_hagen/src/common/service/assetClient.dart';
 import 'package:skg_hagen/src/home/model/cardContent.dart';
 import 'package:skg_hagen/src/home/model/monthlyScripture.dart';
 import 'package:skg_hagen/src/home/service/singleCard.dart';
@@ -67,7 +68,7 @@ class Cards {
   }
 
   Future<List<CardContent>> _getAllCards() async {
-    return await SingleCard().getAllCards();
+    return await SingleCard().getAllCards(AssetClient());
   }
 
   Widget _buildCards(List<CardContent> cards) {

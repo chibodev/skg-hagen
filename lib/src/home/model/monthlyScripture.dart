@@ -1,4 +1,4 @@
-import 'package:skg_hagen/src/common/model/bibleBook.dart';
+import 'package:skg_hagen/src/common/valueObject/bibleBook.dart';
 
 class MonthlyScripture {
   String text;
@@ -23,8 +23,13 @@ class MonthlyScripture {
       };
 
   String getFormatted() {
-    final BibleBook bibleChapter = BibleBook(this.book);
-    final String bookShort = bibleChapter.getAbbreviation();
-    return " $bookShort $chapter, $verse";
+    String formattedText = '';
+    try {
+      final BibleBook bibleChapter = BibleBook(this.book);
+      formattedText = " ${bibleChapter.getAbbreviation()} $chapter, $verse";
+    } catch (e) {
+      //do nothing and return empty formatted text
+    }
+    return formattedText;
   }
 }

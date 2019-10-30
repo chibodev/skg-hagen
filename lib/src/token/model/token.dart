@@ -3,7 +3,6 @@ class Token {
   int iat;
   int expiresIn;
   String jwtToken;
-  String _errorText;
 
   Token({
     this.tokenType,
@@ -22,10 +21,4 @@ class Token {
         "expires_in": expiresIn == null ? null : expiresIn,
         "jwt_token": jwtToken == null ? null : jwtToken,
       };
-
-  void withError(String error) {
-    _errorText = error;
-  }
-
-  String get errorText => _errorText;
 }

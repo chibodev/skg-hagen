@@ -2,12 +2,10 @@ import 'package:flutter/services.dart';
 
 class AssetClient {
   Future<String> loadAsset(String path) async {
-    String asset;
-
-     await rootBundle.loadString(path).then((String onValue) {
-       asset = onValue;
-     });
-
-     return asset;
+    try {
+      return await rootBundle.loadString(path);
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 }

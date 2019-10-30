@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:skg_hagen/src/common/service/assetClient.dart';
 import 'package:skg_hagen/src/home/model/cardContent.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/home/service/singleCard.dart';
 
 class DrawerList {
-
   static const String LOGO = 'assets/images/skg-green.png';
 
   static Widget getList(BuildContext context) {
     final SingleCard card = SingleCard();
-    final Future<List<CardContent>> cards = card.getAllCards();
+    final Future<List<CardContent>> cards = card.getAllCards(AssetClient());
 
     return Drawer(
         child: FutureBuilder(
@@ -62,9 +62,7 @@ class DrawerList {
         maxWidth: 180,
         child: GestureDetector(
           onTap: onTap,
-          child: Image(
-              image: AssetImage(LOGO),
-              fit: BoxFit.cover),
+          child: Image(image: AssetImage(LOGO), fit: BoxFit.cover),
         ),
       ),
     );

@@ -77,14 +77,14 @@ class Cards extends State<Controller.Appointment> {
               child: InkWell(
                 splashColor: Color(0xFF8EBC6B),
                 onTap: () =>
-                    TapAction().openMap(card.address.churchName),
+                    TapAction().openMap(card.address.name),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text(card.address.churchName,
+                    Text(card.address.name,
                         style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold)),
-                    Text(card.address.address1,
+                    Text(card.address.street,
                         style: TextStyle(color: Colors.white)),
                     Text(card.address.getZipAndCity(),
                         style: TextStyle(color: Colors.white)),
