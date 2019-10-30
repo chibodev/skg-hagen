@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      routes: {
+      routes: <String, Widget Function(BuildContext)>{
         Routes.home: (BuildContext context) => Home(),
         Routes.appointment: (BuildContext context) => Appointment(),
         Routes.offer: (BuildContext context) => Offer(),

@@ -48,7 +48,7 @@ class TokenInterceptor extends Interceptor {
           _http.client.unlock();
           _http.client.interceptors.responseLock.unlock();
           _http.client.interceptors.errorLock.unlock();
-        }).then((e) {
+        }).then((dynamic e) {
           return _http.client.request(options.path, options: options);
         });
       }

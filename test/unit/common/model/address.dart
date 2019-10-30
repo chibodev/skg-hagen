@@ -37,7 +37,7 @@ void main() {
   });
 
   test('Address successfully converts json string', () {
-    Address subjectJson = Address.fromJson(jsonDecode(json));
+    final Address subjectJson = Address.fromJson(jsonDecode(json));
 
     expect(subjectJson.name, 'Markuskirche');
     expect(subjectJson.street, 'Rheinstraße');
@@ -49,8 +49,8 @@ void main() {
   });
 
   test('Address successfully converts to json string', () {
-    Map<String, dynamic> payload = subject.toJson();
-    String jsonPayload = jsonEncode(payload);
+    final Map<String, dynamic> payload = subject.toJson();
+    final String jsonPayload = jsonEncode(payload);
 
     expect(payload['name'], 'Test');
     expect(payload['street'], 'Street');

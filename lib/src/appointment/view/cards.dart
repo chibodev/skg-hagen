@@ -24,7 +24,7 @@ class Cards extends State<Controller.Appointment> {
     return ListView.builder(
         padding: EdgeInsets.zero,
         itemCount: appointments.length+1,
-        itemBuilder: (context, index) {
+        itemBuilder: (BuildContext context, int index) {
           if (index == 0) {
             // return the header
             return Column(
@@ -38,7 +38,7 @@ class Cards extends State<Controller.Appointment> {
   }
 
   Widget _buildRows(DTO.Appointment card) {
-    String organizer = (card.organizer != null) ? 'Infos: ' + card.organizer : '';
+    final String organizer = (card.organizer != null) ? 'Infos: ' + card.organizer : '';
     return Material(
       child: Card(
         child: Row(

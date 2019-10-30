@@ -4,14 +4,14 @@ import 'package:skg_hagen/src/offer/model/offer.dart';
 
 class Cards {
   Widget buildRows(var card) {
-    List<Widget> list = List<Widget>();
+    final List<Widget> list = List<Widget>();
 
     if (card is List<Offer>)
-      for (var i = 0; i < card.length; i++) {
+      for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForOffers(card[i]));
       }
     else
-      for (var i = 0; i < card.length; i++) {
+      for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForGroups(card[i]));
       }
 

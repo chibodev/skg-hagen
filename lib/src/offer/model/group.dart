@@ -1,5 +1,3 @@
-import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:skg_hagen/src/common/model/address.dart';
 

@@ -8,9 +8,9 @@ class AppointmentClient {
     //TODO read from json to emulate live behaviour
 
     final Address markusChurch =
-        Address('Markuskirche', 'Rheinstraße', '26', '58097', 'Hagen', 'DE');
+        Address(name: 'Markuskirche', street: 'Rheinstraße', houseNumber: '26', zip: '58097', city: 'Hagen', country: 'DE');
     final Address johannisChurch = Address(
-        'Johanniskirche', 'Johanniskirchplatz', '10', '58095', 'Hagen', 'DE');
+        name: 'Johanniskirche', street: 'Johanniskirchplatz', houseNumber: '10', zip: '58095', city: 'Hagen', country: 'DE');
 
     appointments.add(_createAppointment(
         'Lesung mit Chor',
