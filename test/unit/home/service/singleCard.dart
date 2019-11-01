@@ -4,7 +4,7 @@ import 'package:skg_hagen/src/common/service/assetClient.dart';
 import 'package:skg_hagen/src/home/model/cardContent.dart';
 import 'package:skg_hagen/src/home/service/singleCard.dart';
 
-import '../../../mock/fileClient.dart';
+import '../../../mock/fileClientMock.dart';
 
 class MockAssetClient extends Mock implements AssetClient {}
 
@@ -15,11 +15,15 @@ void main() {
     final AssetClient assetClient = MockAssetClient();
     final SingleCard subject = SingleCard();
 
-    when(assetClient.loadAsset('assets/config/cards.yaml')).thenAnswer((_) async =>
-        FileClient.loadFromTestResourcePath(filename));
+    when(assetClient.loadAsset('assets/config/cards.yaml')).thenAnswer(
+        (_) async => FileClientMock.loadFromTestResourcePath(filename));
 
     final List<CardContent> cards = await subject.getAllCards(assetClient);
-    final List<String> subtitle = <String>['GOTTESDIENST', 'VERANSTALTUNG', 'EVENTS'];
+    final List<String> subtitle = <String>[
+      'GOTTESDIENST',
+      'VERANSTALTUNG',
+      'EVENTS'
+    ];
 
     expect(cards.first.title, 'termine');
     expect(cards.first.subtitle, subtitle);
