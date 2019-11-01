@@ -6,15 +6,15 @@
         "date": "Jeden 2. & 4. Montag im Monat",
         "time": "17:00",
         "address": {
-          "church_name": "Markuskirche",
-          "address1": "Rheinstraße",
-          "house_number": "26",
+          "name": "Markuskirche",
+          "street": "Rheinstraße",
+          "houseNumber": "26",
           "zip": "58097",
           "city": "Hagen",
           "country": "Deutschland",
           "room": "Jugendcontainer"
         },
-        "organizer": "Diakon Stepan Rüping",
+        "organizer": "Diakon Stefan Rüping",
         "email": "rueping@skg-hagen.de",
         "age": {
           "start": 4,
@@ -27,15 +27,15 @@
         "date": "Jeden 3. & 5. Montag im Monat",
         "time": "16:00",
         "address": {
-          "church_name": "Markuskirche",
-          "address1": "Rheinstraße",
-          "house_number": "26",
+          "name": "Markuskirche",
+          "street": "Rheinstraße",
+          "houseNumber": "26",
           "zip": "58097",
           "city": "Hagen",
           "country": "Deutschland",
           "room": "Jugendcontainer"
         },
-        "organizer": "Diakon Stepan Rüping",
+        "organizer": "Diakon Stefan Rüping",
         "email": "rueping@skg-hagen.de",
         "age": {
           "start": 12,
@@ -45,12 +45,12 @@
       },
       {
         "title": "Kinderchor",
-        "date": "Jeden Montag",
-        "time": "16:15",
+        "date": "Montags",
+        "time": "16:00",
         "address": {
-          "church_name": "Markuskirche",
-          "address1": "Rheinstraße",
-          "house_number": "26",
+          "name": "Markuskirche",
+          "street": "Rheinstraße",
+          "houseNumber": "26",
           "zip": "58097",
           "city": "Hagen",
           "country": "Deutschland",
@@ -65,22 +65,61 @@
         "school_year": null
       },
       {
-        "title": "Konfirmanden Unterricht 7SJ",
-        "date": "1-mal im Monat",
-        "time": "16.00",
+        "title": "Konfirmanden Unterricht",
+        "date": "Dienstags",
+        "time": "16.15",
         "address": {
-          "church_name": "Markuskirche",
-          "address1": "Rheinstraße",
-          "house_number": "26",
+          "name": "Markuskirche",
+          "street": "Rheinstraße",
+          "houseNumber": "26",
           "zip": "58097",
           "city": "Hagen",
           "country": "Deutschland",
           "room": "Gemeindehaus"
         },
-        "organizer": "Jessica Tonn",
-        "email": "tonn@skg-hagen.de",
+        "organizer": "Pfarrerin Katharina Eßer",
+        "email": "esser@skg-hagen.de",
+        "age": null,
+        "school_year": 3
+      },
+      {
+        "title": "Konfirmanden Unterricht",
+        "date": "1-mal im Monat",
+        "time": "16.00",
+        "address": {
+          "name": "Markuskirche",
+          "street": "Rheinstraße",
+          "houseNumber": "26",
+          "zip": "58097",
+          "city": "Hagen",
+          "country": "Deutschland",
+          "room": "Gemeindehaus"
+        },
+        "organizer": "Pfarrerin Katharina Eßer",
+        "email": "esser@skg-hagen.de",
         "age": null,
         "school_year": 7
+      },
+      {
+        "title": "Crossover SKG-Band",
+        "date": "Donnerstags",
+        "time": "18:00",
+        "address": {
+          "name": "Markuskirche",
+          "street": "Rheinstraße",
+          "houseNumber": "26",
+          "zip": "58097",
+          "city": "Hagen",
+          "country": "Deutschland",
+          "room": null
+        },
+        "organizer": "Jonas Lehmann",
+        "email": "leimann@gmail.com",
+        "age": {
+          "start": 4,
+          "end": 10
+        },
+        "school_year": null
       }
     ],
     "groups": [
@@ -89,9 +128,9 @@
         "date": "Am 1. Montag im Monat",
         "time": "14:30",
         "address": {
-          "church_name": "Johanniskirche",
-          "address1": "Johanniskirchplatz",
-          "house_number": "10",
+          "name": "Johanniskirche",
+          "street": "Johanniskirchplatz",
+          "houseNumber": "10",
           "zip": "58095",
           "city": "Hagen",
           "country": "Deutschland",
@@ -103,9 +142,9 @@
         "date": "Letzter Mittwoch im Monat",
         "time": "17:00",
         "address": {
-          "church_name": "Johanniskirche",
-          "address1": "Johanniskirchplatz",
-          "house_number": "10",
+          "name": "Johanniskirche",
+          "street": "Johanniskirchplatz",
+          "houseNumber": "10",
           "zip": "58095",
           "city": "Hagen",
           "country": "Deutschland",
@@ -117,9 +156,9 @@
         "date": "Mittwochs",
         "time": "19:00",
         "address": {
-          "church_name": "Johanniskirche",
-          "address1": "Johanniskirchplatz",
-          "house_number": "10",
+          "name": "Johanniskirche",
+          "street": "Johanniskirchplatz",
+          "houseNumber": "10",
           "zip": "58095",
           "city": "Hagen",
           "country": "Deutschland",
@@ -131,9 +170,9 @@
         "date": "Donnerstags",
         "time": "15:30",
         "address": {
-          "church_name": "Johanniskirche",
-          "address1": "Johanniskirchplatz",
-          "house_number": "10",
+          "name": "Johanniskirche",
+          "street": "Johanniskirchplatz",
+          "houseNumber": "10",
           "zip": "58095",
           "city": "Hagen",
           "country": "Deutschland",
