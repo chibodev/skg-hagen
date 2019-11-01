@@ -99,7 +99,7 @@ ios/.generated/
 packages
 pubspec.lock
 .flutter-plugins
-
+/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.*
 /ios/Flutter/Generated.xcconfig
 /ios/Flutter/flutter_export_environment.sh
 /ios/Pods/*
