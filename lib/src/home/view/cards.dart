@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:skg_hagen/src/common/model/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/assetClient.dart';
+import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/home/model/cardContent.dart';
 import 'package:skg_hagen/src/home/model/monthlyScripture.dart';
 import 'package:skg_hagen/src/home/service/singleCard.dart';
@@ -64,7 +66,7 @@ class Cards {
   }
 
   Future<MonthlyScripture> _getText() async {
-    return await MonthlyScriptureClient().getVerse();
+    return await MonthlyScriptureClient().getVerse(DioHTTPClient(), Network());
   }
 
   Future<List<CardContent>> _getAllCards() async {
