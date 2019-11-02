@@ -1,56 +1,30 @@
-import 'package:skg_hagen/src/appointment/model/appointment.dart';
-import 'package:skg_hagen/src/common/model/address.dart';
+import 'package:dio/dio.dart';
+import 'package:dio_http_cache/dio_http_cache.dart';
+import 'package:skg_hagen/src/appointment/model/appointments.dart';
+import 'package:skg_hagen/src/common/model/dioHttpClient.dart';
+import 'package:skg_hagen/src/common/service/network.dart';
 
 class AppointmentClient {
-  List<Appointment> getAppointments() {
-    final List<Appointment> appointments = List<Appointment>();
+  static const String PATH = 'app/appointments';
 
-    //TODO read from json to emulate live behaviour
+  Future<Appointments> getAppointments(
+      DioHTTPClient http, Network network) async {
+    Options options =
+        buildCacheOptions(Duration(days: 7), maxStale: Duration(days: 10));
 
-    final Address markusChurch =
-        Address(name: 'Markuskirche', street: 'Rheinstraße', houseNumber: '26', zip: '58097', city: 'Hagen', country: 'DE');
-    final Address johannisChurch = Address(
-        name: 'Johanniskirche', street: 'Johanniskirchplatz', houseNumber: '10', zip: '58095', city: 'Hagen', country: 'DE');
+    http.initialiseInterceptors('debug');
+    http.initialiseInterceptors('cache');
+    http.initialiseInterceptors('token');
 
-    appointments.add(_createAppointment(
-        'Lesung mit Chor',
-        DateTime(2019, 10, 1, 18, 30),
-        johannisChurch,
-        'Buchhandlung Lesen u. Hören,...'));
+    final bool hasInternet = await network.hasInternet();
 
-    appointments.add(_createAppointment('Kindergartengottesdienst',
-        DateTime(2019, 10, 2, 14, 15), markusChurch));
+    if (hasInternet) {
+      options = buildCacheOptions(Duration(days: 7),
+          maxStale: Duration(days: 10), forceRefresh: true);
+    }
 
-    appointments.add(_createAppointment(
-        'Frauenhilfe',
-        DateTime(2019, 10, 2, 15, 00),
-        markusChurch,
-        'Infos bei den Pfarrerinnen'));
-
-    appointments.add(_createAppointment(
-        'Kantorei - Proben', DateTime(2019, 10, 2, 19, 00), johannisChurch));
-
-    appointments.add(_createAppointment('Offener Meditationsabend',
-        DateTime(2019, 10, 2, 19, 30), johannisChurch, 'Frau Klahr und Team'));
-
-    appointments.add(_createAppointment('(persischer) Bibelkreis',
-        DateTime(2019, 10, 3, 15, 30), johannisChurch));
-
-    appointments.add(_createAppointment(
-        'Café Willkommen', DateTime(2019, 10, 4, 13, 30), johannisChurch));
-
-    appointments.add(_createAppointment('Andacht zur Marktzeit',
-        DateTime(2019, 10, 5, 12, 00), johannisChurch, 'Pfarrerin Eßer'));
-
-    appointments.add(_createAppointment('Familiengottesdienst zum Erntedank',
-        DateTime(2019, 10, 6, 11, 00), markusChurch, 'Pfrin. Eßer + Team'));
-
-    return appointments;
-  }
-
-  Appointment _createAppointment(
-      String title, DateTime dateAndTime, Address address,
-      [String organizer]) {
-    return Appointment(title, dateAndTime, address, organizer);
+    return await http
+        .get(path: PATH, options: options)
+        .then((Response response) => Appointments.fromJson(response.data));
   }
 }

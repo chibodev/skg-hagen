@@ -10,16 +10,16 @@ class MonthlyScripture {
 
   factory MonthlyScripture.fromJson(Map<String, dynamic> json) =>
       MonthlyScripture(
-          text: json['text'] == null ? null : json['text'],
-          book: json['book'] == null ? null : json['book'],
-          chapter: json['chapter'] == null ? null : json['chapter'],
-          verse: json['verse'] == null ? null : json['verse']);
+          text: json['text'],
+          book: json['book'],
+          chapter: json['chapter'],
+          verse: json['verse']);
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'text': this.text == null ? null : text,
-        'book': this.book == null ? null : book,
-        'chapter': this.chapter == null ? null : chapter,
-        'verse': this.verse == null ? null : verse,
+        'text': this.text,
+        'book': this.book,
+        'chapter': this.chapter,
+        'verse': this.verse,
       };
 
   String getFormatted() {

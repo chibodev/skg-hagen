@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/assetClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
@@ -47,7 +48,7 @@ class Cards {
             return Text('');
           },
         ),
-        backgroundColor: Color(0xFF8EBC6B),
+        backgroundColor: Color(Default.COLOR_GREEN),
       ),
       body: FutureBuilder(
         future: _getAllCards(),
@@ -57,7 +58,7 @@ class Cards {
             return _buildCards(response.data);
           }
           return CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF8EBC6B)),
+            valueColor: AlwaysStoppedAnimation<Color>(Color(Default.COLOR_GREEN)),
           );
         },
       ),
