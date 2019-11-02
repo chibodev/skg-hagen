@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
+import 'fileClientMock.dart';
+
 class HTTPClientMock {
   static Future<Response> tokenPost({int statusCode}) async {
     Response response;
@@ -31,8 +33,25 @@ class HTTPClientMock {
 
     switch (statusCode) {
       case HttpStatus.ok:
-        String responseData =
-            '[{"text":"Suchet der Stadt Beste","book":"Jeremia","chapter":"27","verse":"12","validity":"2019-10-29"}]';
+        final String responseData = await FileClientMock.loadFromTestResourcePath('monthlyScripture.json');
+        response = await Dio().resolve(
+            Response(data: jsonDecode(responseData), statusCode: statusCode));
+        break;
+
+      default:
+        response = await _getErrorResponse(response);
+        break;
+    }
+
+    return response;
+  }
+
+  static Future<Response> appointmentGet({int statusCode}) async {
+    Response response;
+
+    switch (statusCode) {
+      case HttpStatus.ok:
+        final String responseData = await FileClientMock.loadFromTestResourcePath('appointments.json');
         response = await Dio().resolve(
             Response(data: jsonDecode(responseData), statusCode: statusCode));
         break;
