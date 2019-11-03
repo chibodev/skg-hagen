@@ -26,12 +26,12 @@ void main() {
   });
 
   test('MonthlyScripture gets correct formatted property', (){
-    expect(subject.getFormatted(), ' Ps. $chapter, $verse');
+    expect(subject.getFormattedBook(), ' Ps. $chapter, $verse');
   });
 
   test('MonthlyScripture throws exception due to unknown book name', (){
     subject.book = 'Unknown';
 
-    expect(subject.getFormatted(), '');
+    expect(subject.getFormattedBook(), '');
   });
 }

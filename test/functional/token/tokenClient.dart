@@ -7,7 +7,7 @@ import 'package:skg_hagen/src/common/model/dioHttpClient.dart';
 import 'package:skg_hagen/src/token/model/token.dart';
 import 'package:skg_hagen/src/token/repository/tokenClient.dart';
 
-import '../../mock/httpClientMock.dart';
+import '../../mock/httpClientTokenMock.dart';
 
 class MockDioHTTPClient extends Mock implements DioHTTPClient {}
 
@@ -27,7 +27,7 @@ void main() {
             data: anyNamed('data'),
             options: anyNamed('options')))
         .thenAnswer(
-            (_) async => HTTPClientMock.tokenPost(statusCode: HttpStatus.ok));
+            (_) async => HTTPClientTokenMock.tokenPost(statusCode: HttpStatus.ok));
 
     final Token token = await subject.getToken(httpClient);
 
@@ -46,7 +46,7 @@ void main() {
             data: anyNamed('data'),
             options: anyNamed('options')))
         .thenAnswer((_) async =>
-            HTTPClientMock.tokenPost(statusCode: HttpStatus.unauthorized));
+            HTTPClientTokenMock.tokenPost(statusCode: HttpStatus.unauthorized));
 
     try {
       await subject.getToken(httpClient);

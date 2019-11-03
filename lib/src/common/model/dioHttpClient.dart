@@ -36,11 +36,11 @@ class DioHTTPClient {
     }
   }
 
-  Future<Response> post({String path, dynamic data, Options options}) async {
+  Future<Response<dynamic>> post({String path, dynamic data, Options options}) async {
     return await this._client.post(path, options: options, data: data);
   }
 
-  Future<Response> get({String path, Options options}) async {
-    return await this._client.get(path, options: options);
+  Future<Response<dynamic>> get({String path, Options options, Map<String, dynamic> queryParameters}) async {
+    return await this._client.get(path, options: options, queryParameters: queryParameters);
   }
 }

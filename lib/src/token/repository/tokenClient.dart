@@ -24,6 +24,6 @@ class TokenClient {
               'password': _PASSWORD
             },
             options: options)
-        .then((Response response) => Token.fromJson(jsonDecode(response.data)));
+        .then((Response<dynamic> response) => Token.fromJson(jsonDecode(response.data)));
   }
 }

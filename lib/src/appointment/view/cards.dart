@@ -11,56 +11,150 @@ import 'package:skg_hagen/src/common/service/tapAction.dart';
 import 'package:skg_hagen/src/menu/controller/menu.dart';
 
 class Cards extends State<Controller.Appointment> {
+  int _indexCounter = 0;
+  Appointments appointments;
+  final ScrollController _scrollController = ScrollController();
+  bool _isPerformingRequest = false;
+
   @override
+  void initState() {
+    super.initState();
+    _getInitialAppointments();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        _getMoreAppointments();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _getInitialAppointments() async {
+    if (!_isPerformingRequest) {
+      setState(() => _isPerformingRequest = true);
+
+      appointments = await AppointmentClient()
+          .getAppointments(DioHTTPClient(), Network()); //returns empty list
+
+      if (appointments.appointments.isEmpty) {
+        final double edge = 50.0;
+        final double offsetFromBottom =
+            _scrollController.position.maxScrollExtent -
+                _scrollController.position.pixels;
+        if (offsetFromBottom < edge) {
+          _scrollController.animateTo(
+              _scrollController.offset - (edge - offsetFromBottom),
+              duration: Duration(milliseconds: 500),
+              curve: Curves.easeOut);
+        }
+      }
+      setState(() {
+        _isPerformingRequest = false;
+        _indexCounter = 1;
+      });
+    }
+  }
+
+  Future<void> _getMoreAppointments() async {
+    if (!_isPerformingRequest) {
+      setState(() => _isPerformingRequest = true);
+
+      final Appointments newAppointments = await AppointmentClient()
+          .getAppointments(DioHTTPClient(), Network(),
+              index: _indexCounter); //returns empty list
+
+      final List<Model.Appointment> newEntries = newAppointments.appointments;
+      final bool isResponseEmpty = newEntries.isEmpty;
+      if (isResponseEmpty) {
+        final double edge = 50.0;
+        final double offsetFromBottom =
+            _scrollController.position.maxScrollExtent -
+                _scrollController.position.pixels;
+        if (offsetFromBottom < edge) {
+          _scrollController.animateTo(
+              _scrollController.offset - (edge - offsetFromBottom),
+              duration: Duration(milliseconds: 500),
+              curve: Curves.easeOut);
+        }
+      }
+      setState(() {
+        _isPerformingRequest = false;
+        if (!isResponseEmpty) {
+          appointments.appointments.addAll(newEntries);
+          _indexCounter++;
+        }
+      });
+    }
+  }
+
+  Widget _buildProgressIndicator() {
+    return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: Opacity(
+            opacity: _isPerformingRequest ? 1.0 : 0.0,
+            child: CircularProgressIndicator(
+              valueColor:
+                  AlwaysStoppedAnimation<Color>(Color(Default.COLOR_GREEN)),
+            ),
+          ),
+        ));
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(Appointments.NAME),
-      ),
       drawer: Menu(),
-      body: FutureBuilder(
-        future: _getAppointments(),
-        builder: (BuildContext context, AsyncSnapshot<Appointments> response) {
-          if (response.connectionState == ConnectionState.done &&
-              response.data != null) {
-            return _buildCards(response.data.appointments);
-          }
-          return Center(
-              child: CircularProgressIndicator(
-            valueColor:
-                AlwaysStoppedAnimation<Color>(Color(Default.COLOR_GREEN)),
-          ));
+      body: RefreshIndicator(
+        onRefresh: () async {
+          _getInitialAppointments();
         },
+        child: appointments == null
+            ? _buildProgressIndicator()
+            : _buildCards(context, appointments?.appointments),
       ),
     );
   }
 
-  Widget _buildCards(List<Model.Appointment> appointments) {
-    return ListView.builder(
-        padding: EdgeInsets.zero,
-        itemCount: appointments.length + 1,
-        itemBuilder: (BuildContext context, int index) {
-          if (index == 0) {
-            // return the header
-            return Column(
-              children: <Widget>[Image.asset(Appointments.IMAGE)],
-            );
-          }
-          index -= 1;
-
-          return _buildRows(appointments[index]);
-        });
-  }
-
-  Future<Appointments> _getAppointments() async {
-    return await AppointmentClient()
-        .getAppointments(DioHTTPClient(), Network());
+  Widget _buildCards(
+      BuildContext context, List<Model.Appointment> appointments) {
+    return CustomScrollView(
+      controller: _scrollController,
+      slivers: <Widget>[
+        SliverAppBar(
+          iconTheme: IconThemeData(color: Colors.white),
+          pinned: true,
+          expandedHeight: 150.0,
+          backgroundColor: Color(Default.COLOR_GREEN),
+          flexibleSpace: FlexibleSpaceBar(
+            title:
+                Text(Appointments.NAME, style: TextStyle(color: Colors.white)),
+            background: Image.asset(
+              Appointments.IMAGE,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              return _buildRows(appointments[index]);
+            },
+            childCount: appointments?.length ?? 0,
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: _buildProgressIndicator(),
+        )
+      ],
+    );
   }
 
   Widget _buildRows(Model.Appointment card) {
-    String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
-    final String organizer =
-        (card.organizer.length > 0) ? 'Infos: ' + card.organizer : '';
     return Material(
       child: Card(
         child: Row(
@@ -84,8 +178,8 @@ class Cards extends State<Controller.Appointment> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: 10.0, bottom: 10),
-                    child:
-                        Text(organizer, style: TextStyle(color: Colors.grey)),
+                    child: Text(card.getFormattedOrganiser(),
+                        style: TextStyle(color: Colors.grey)),
                   ),
                 ],
               ),
@@ -100,7 +194,7 @@ class Cards extends State<Controller.Appointment> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text(capitalize(card.address.name),
+                    Text(Default.capitalize(card.address.name),
                         style: TextStyle(
                             color: Colors.white, fontWeight: FontWeight.bold)),
                     Text(card.address.street,

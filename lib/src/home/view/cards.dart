@@ -19,7 +19,8 @@ class Cards {
 
     return Scaffold(
       appBar: AppBar(
-        title: FutureBuilder(
+        iconTheme: IconThemeData(color: Colors.white),
+        title: FutureBuilder<MonthlyScripture>(
           future: _getText(),
           builder:
               (BuildContext context, AsyncSnapshot<MonthlyScripture> response) {
@@ -31,14 +32,14 @@ class Cards {
               return Center(
                   child: RichText(
                       text: TextSpan(
-                          text: response.data.text,
+                          text: response.data.getModifiedText(),
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 14,
                               color: Colors.white,
                               fontFamily: 'Optima'),
                           children: <TextSpan>[
                     TextSpan(
-                        text: response.data.getFormatted(),
+                        text: response.data.getFormattedBook(),
                         style: TextStyle(
                             fontSize: 10,
                             color: Colors.white,
@@ -50,7 +51,7 @@ class Cards {
         ),
         backgroundColor: Color(Default.COLOR_GREEN),
       ),
-      body: FutureBuilder(
+      body: FutureBuilder<List<CardContent>>(
         future: _getAllCards(),
         builder:
             (BuildContext context, AsyncSnapshot<List<CardContent>> response) {

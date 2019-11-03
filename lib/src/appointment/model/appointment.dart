@@ -52,12 +52,12 @@ class Appointment {
       room: json["room"],
       organizer: json["organizer"],
       email: json["email"],
-      name: json["name"],
-      street: json["street"],
-      houseNumber: json["houseNumber"],
-      zip: json["zip"],
-      city: json["city"],
-      country: json["country"],
+      name: json["name"] == null ? null : json["name"],
+      street: json["street"] == null ? null : json["street"],
+      houseNumber: json["houseNumber"] == null ? null : json["houseNumber"],
+      zip: json["zip"] == null ? null : json["zip"],
+      city: json["city"] == null ? null : json["city"],
+      country: json["country"] == null ? null : json["country"],
     );
   }
 
@@ -87,5 +87,9 @@ class Appointment {
         .format(dateTime)
         .toString()
         .toUpperCase();
+  }
+
+  String getFormattedOrganiser() {
+    return organizer.length > 0 ? 'Infos: ' + organizer : '';
   }
 }

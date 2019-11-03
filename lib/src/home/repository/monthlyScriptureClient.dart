@@ -23,6 +23,6 @@ class MonthlyScriptureClient {
     }
 
     return await http.get(path: PATH, options: options).then(
-        (Response response) => MonthlyScripture.fromJson(response.data.first));
+        (Response<dynamic> response) => MonthlyScripture.fromJson(response.data.first));
   }
 }

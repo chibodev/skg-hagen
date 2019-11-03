@@ -1,3 +1,5 @@
+import 'package:skg_hagen/src/common/model/default.dart';
+
 class Address {
   final String name;
   final String street;
@@ -38,5 +40,9 @@ class Address {
 
   String getZipAndCity() {
     return '$zip, $city';
+  }
+
+  String getCapitalizedAddressName() {
+    return (name == '' || name == null) ? '' : Default.capitalize(name);
   }
 }

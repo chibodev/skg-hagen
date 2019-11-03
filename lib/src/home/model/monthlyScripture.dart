@@ -22,7 +22,7 @@ class MonthlyScripture {
         'verse': this.verse,
       };
 
-  String getFormatted() {
+  String getFormattedBook() {
     String formattedText = '';
     try {
       final BibleBook bibleChapter = BibleBook(this.book);
@@ -31,5 +31,11 @@ class MonthlyScripture {
       //do nothing and return empty formatted text
     }
     return formattedText;
+  }
+
+  String getModifiedText() {
+    return text.length > 37
+        ? "${text.substring(0, 37)}..."
+        : text.length > 2 ? text : '';
   }
 }

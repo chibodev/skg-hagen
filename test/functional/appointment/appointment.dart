@@ -8,7 +8,7 @@ import 'package:skg_hagen/src/appointment/repository/appointmentClient.dart';
 import 'package:skg_hagen/src/common/model/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 
-import '../../mock/httpClientMock.dart';
+import '../../mock/httpClientAppointmentMock.dart';
 
 class MockDioHTTPClient extends Mock implements DioHTTPClient {}
 
@@ -28,14 +28,18 @@ void main() {
   test('AppointmentClient successfully retrieves data', () async {
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(httpClient.get(
-            path: 'app/appointments', options: anyNamed('options')))
-        .thenAnswer((_) async =>
-            HTTPClientMock.appointmentGet(statusCode: HttpStatus.ok));
+            path: 'app/appointments',
+            options: anyNamed('options'),
+            queryParameters: anyNamed('queryParameters')))
+        .thenAnswer((_) async => HTTPClientAppointmentMock.appointmentGet(
+            statusCode: HttpStatus.ok));
 
-    final Appointments appointments = await subject.getAppointments(httpClient, network);
+    final Appointments appointments = await subject
+        .getAppointments(httpClient, network, index: 0, refresh: true);
 
     expect(appointments.appointments.first.title, 'EAT & PRAY');
-    expect(appointments.appointments.first.occurrence, DateTime.parse('2019-11-02'));
+    expect(appointments.appointments.first.occurrence,
+        DateTime.parse('2019-11-02'));
     expect(appointments.appointments.first.time, '12:00:00');
     expect(appointments.appointments.first.placeName, 'johanniskirche');
     expect(appointments.appointments.first.street, 'Johanniskirchplatz');
@@ -44,7 +48,8 @@ void main() {
     expect(appointments.appointments.first.city, 'Hagen');
     expect(appointments.appointments.first.country, 'DE');
     expect(appointments.appointments.last.title, 'Kindergartengottesdienst');
-    expect(appointments.appointments.last.occurrence, DateTime.parse('2019-11-06'));
+    expect(appointments.appointments.last.occurrence,
+        DateTime.parse('2019-11-06'));
     expect(appointments.appointments.last.time, '14:15:00');
     expect(appointments.appointments.last.placeName, 'markuskirche');
     expect(appointments.appointments.last.street, 'Rheinstraße');
@@ -59,12 +64,15 @@ void main() {
 
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(httpClient.get(
-            path: 'app/appointments', options: anyNamed('options')))
-        .thenAnswer((_) async => HTTPClientMock.monthlyScriptureGet(
+            path: 'app/appointments',
+            options: anyNamed('options'),
+            queryParameters: anyNamed('queryParameters')))
+        .thenAnswer((_) async => HTTPClientAppointmentMock.appointmentGet(
             statusCode: HttpStatus.unauthorized));
 
     try {
-      await subject.getAppointments(httpClient, network);
+      await subject.getAppointments(httpClient, network,
+          index: 0, refresh: false);
     } catch (e) {
       error = e;
     }

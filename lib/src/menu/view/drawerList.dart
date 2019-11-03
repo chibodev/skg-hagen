@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
+import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/assetClient.dart';
 import 'package:skg_hagen/src/home/model/cardContent.dart';
-import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/home/service/singleCard.dart';
 
 class DrawerList {
@@ -13,19 +13,21 @@ class DrawerList {
     final Future<List<CardContent>> cards = card.getAllCards(AssetClient());
 
     return Drawer(
-        child: FutureBuilder(
-      future: cards,
-      builder:
-          (BuildContext context, AsyncSnapshot<List<CardContent>> response) {
-        if (response.connectionState == ConnectionState.done &&
-            response.data != null) {
-          return _buildListView(context, response.data);
-        }
-        return CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Color(Default.COLOR_GREEN)),
-        );
-      },
-    ));
+      child: FutureBuilder<List<CardContent>>(
+        future: cards,
+        builder:
+            (BuildContext context, AsyncSnapshot<List<CardContent>> response) {
+          if (response.connectionState == ConnectionState.done &&
+              response.data != null) {
+            return _buildListView(context, response.data);
+          }
+          return CircularProgressIndicator(
+            valueColor:
+                AlwaysStoppedAnimation<Color>(Color(Default.COLOR_GREEN)),
+          );
+        },
+      ),
+    );
   }
 
   static Widget _buildListView(BuildContext context, List<CardContent> cards) {
@@ -34,7 +36,6 @@ class DrawerList {
   }
 
   static List<Widget> _cardList(BuildContext context, List<CardContent> cards) {
-    String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
     final List<Widget> list = List<Widget>();
 
     list.add(_createHeader(
@@ -46,7 +47,7 @@ class DrawerList {
 
     for (int i = 0; i < cards.length; i++) {
       list.add(_createDrawerItem(
-          text: capitalize(cards[i].title),
+          text: Default.capitalize(cards[i].title),
           onTap: () =>
               Navigator.pushReplacementNamed(context, cards[i].routeName)));
     }

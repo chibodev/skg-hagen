@@ -32,7 +32,7 @@ class DebugInterceptor extends Interceptor{
   }
 
   @override
-  Future<dynamic> onResponse(Response response) async{
+  Future<dynamic> onResponse(Response<dynamic> response) async{
     print(
         "<-- ${response.statusCode} ${(response.request != null ? (response.request.baseUrl + response.request.path) : 'URL')}");
     print("Headers:");
