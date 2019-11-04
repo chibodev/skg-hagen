@@ -41,7 +41,7 @@ class Cards {
                   Padding(
                     padding: EdgeInsets.all(3.0),
                     child: Text(
-                      card.getFormatted(),
+                      card.getFormattedOccurrence(),
                       style: TextStyle(
                           color: Colors.grey, fontWeight: FontWeight.bold),
                     ),
@@ -119,7 +119,7 @@ class Cards {
                   Padding(
                     padding: EdgeInsets.all(3.0),
                     child: Text(
-                      card.getFormatted(),
+                      card.getFormattedOccurrence(),
                       style: TextStyle(
                           color: Colors.grey, fontWeight: FontWeight.bold),
                     ),

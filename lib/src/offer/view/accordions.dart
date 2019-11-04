@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:skg_hagen/src/common/model/dioHttpClient.dart';
+import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/menu/controller/menu.dart';
 import 'package:skg_hagen/src/offer/controller/offer.dart' as Controller;
 import 'package:skg_hagen/src/offer/model/offers.dart';
@@ -8,6 +11,7 @@ import 'package:skg_hagen/src/offer/view/cards.dart';
 class Accordions extends State<Controller.Offer> {
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
         drawer: Menu(),
         appBar: AppBar(
@@ -16,8 +20,8 @@ class Accordions extends State<Controller.Offer> {
         bottomNavigationBar: Padding(
             padding: EdgeInsets.only(bottom: 30),
             child: Text(
-              'Ob Gruppen oder Kreise stattfinden bitte bei den Gruppenleitungen erfragen!',
-              style: TextStyle(color: Colors.grey, fontSize: 10),
+              Offers.FOOTER,
+              style: TextStyle(color: Colors.grey, fontSize: SizeConfig.getSafeBlockVerticalBy(1.4)),
               textAlign: TextAlign.center,
             )),
         body: FutureBuilder(
@@ -46,7 +50,7 @@ class Accordions extends State<Controller.Offer> {
           if (index == 0) {
             // return the header
             return Column(
-              children: <Widget>[Image.asset('assets/images/angebote.jpg')],
+              children: <Widget>[Image.asset('assets/images/gruppen.jpg')],
             );
           }
           index -= 1;
@@ -56,6 +60,6 @@ class Accordions extends State<Controller.Offer> {
   }
 
   Future<Offers> getOffers() async {
-    return await OfferClient().getOffers();
+    return await OfferClient().getOffers(DioHTTPClient(), Network());
   }
 }

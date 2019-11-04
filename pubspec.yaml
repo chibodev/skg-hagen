@@ -53,6 +53,7 @@ flutter:
     #Images
     - assets/images/termine.jpg
     - assets/images/angebote.jpg
+    - assets/images/gruppen.jpg
     - assets/images/andacht.jpg
     - assets/images/gebet.jpg
     - assets/images/lesen.jpg
