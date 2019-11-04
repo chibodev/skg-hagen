@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/home/controller/home.dart';
 import 'package:skg_hagen/src/appointment/controller/appointment.dart';
 import 'package:skg_hagen/src/offer/controller/offer.dart';
 import 'package:skg_hagen/src/kindergarten/controller/kindergarten.dart';
 
-void main() => runApp(MyApp());
+Future<void> main() async {
+  SystemChrome.setPreferredOrientations(<DeviceOrientation>[DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(MyApp());
+  });
+}
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
