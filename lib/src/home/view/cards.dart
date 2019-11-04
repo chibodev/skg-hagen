@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/dioHttpClient.dart';
+import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/assetClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/home/model/cardContent.dart';
@@ -10,58 +11,67 @@ import 'package:skg_hagen/src/home/repository/monthlyScriptureClient.dart';
 import 'package:skg_hagen/src/menu/controller/menu.dart';
 
 class Cards {
-  final TextStyle _fontOptima = const TextStyle(fontFamily: 'Optima');
   MonthlyScriptureClient monthlyScriptureClient = MonthlyScriptureClient();
   BuildContext _context;
 
   Widget getCards(BuildContext context) {
     this._context = context;
-
+    SizeConfig().init(_context);
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
-        title: FutureBuilder<MonthlyScripture>(
-          future: _getText(),
-          builder:
-              (BuildContext context, AsyncSnapshot<MonthlyScripture> response) {
-            if (response.connectionState == ConnectionState.none) {
-              print('monthlyverse snapshot data is: ${response.data}');
-              return Text('');
-            }
-            if (response.connectionState == ConnectionState.done && response.data != null) {
-              return Center(
-                  child: RichText(
-                      text: TextSpan(
-                          text: response.data.getModifiedText(),
+        title: Container(
+          width: SizeConfig.getSafeBlockHorizontalBy(100),
+          child: FutureBuilder<MonthlyScripture>(
+            future: _getText(),
+            builder: (BuildContext context,
+                AsyncSnapshot<MonthlyScripture> response) {
+              if (response.connectionState == ConnectionState.none) {
+                print('monthlyverse snapshot data is: ${response.data}');
+                return Text('');
+              }
+              if (response.connectionState == ConnectionState.done &&
+                  response.data != null) {
+                return Center(
+                    child: RichText(
+                        text: TextSpan(
+                            text: response.data.getModifiedText(),
+                            style: TextStyle(
+                                fontSize: SizeConfig.safeBlockHorizontal * 3,
+                                color: Colors.white,
+                                fontFamily: 'Optima'),
+                            children: <TextSpan>[
+                      TextSpan(
+                          text: response.data.getFormattedBook(),
                           style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 10,
                               color: Colors.white,
-                              fontFamily: 'Optima'),
-                          children: <TextSpan>[
-                    TextSpan(
-                        text: response.data.getFormattedBook(),
-                        style: TextStyle(
-                            fontSize: 10,
-                            color: Colors.white,
-                            fontFamily: 'Optima'))
-                  ])));
-            }
-            return Text('');
-          },
+                              fontFamily: 'Optima'))
+                    ])));
+              }
+              return Text('');
+            },
+          ),
         ),
         backgroundColor: Color(Default.COLOR_GREEN),
       ),
-      body: FutureBuilder<List<CardContent>>(
-        future: _getAllCards(),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<CardContent>> response) {
-          if (response.connectionState == ConnectionState.done && response.data != null) {
-            return _buildCards(response.data);
-          }
-          return CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Color(Default.COLOR_GREEN)),
-          );
-        },
+      body: Container(
+        height: SizeConfig.getSafeBlockVerticalBy(100),
+        width: SizeConfig.getSafeBlockHorizontalBy(100),
+        child: FutureBuilder<List<CardContent>>(
+          future: _getAllCards(),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<CardContent>> response) {
+            if (response.connectionState == ConnectionState.done &&
+                response.data != null) {
+              return _buildCards(response.data);
+            }
+            return CircularProgressIndicator(
+              valueColor:
+                  AlwaysStoppedAnimation<Color>(Color(Default.COLOR_GREEN)),
+            );
+          },
+        ),
       ),
       drawer: Menu(),
     );
@@ -85,8 +95,8 @@ class Cards {
   }
 
   Widget _buildRows(CardContent card) {
-    final Image imageAsset =
-        (card.custom != null) ? Image.asset(card.custom) : null;
+    final double thirtyPercent = SizeConfig.getSafeBlockHorizontalBy(3);
+    final double tenPercent = SizeConfig.getSafeBlockHorizontalBy(1);
 
     return Material(
       child: GestureDetector(
@@ -98,15 +108,31 @@ class Cards {
             children: <Widget>[
               Container(
                 padding: EdgeInsets.zero,
-                child: imageAsset,
+                height: SizeConfig.getSafeBlockVerticalBy(12.5),
+                width: SizeConfig.getSafeBlockHorizontalBy(100),
+                child: card.getImageAsset(),
               ),
-              ListTile(
-                title: Text(
+              Container(
+                padding: EdgeInsets.only(
+                    left: thirtyPercent,
+                    top: thirtyPercent,
+                    bottom: tenPercent),
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(
                   card.title.toLowerCase(),
-                  style: _fontOptima,
+                  style:
+                      TextStyle(fontFamily: 'Optima', fontSize: thirtyPercent),
                 ),
-                subtitle:
-                    Text(card.joinedSubtitle.toUpperCase(), style: _fontOptima),
+              ),
+              Container(
+                padding:
+                    EdgeInsets.only(left: thirtyPercent, bottom: thirtyPercent),
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(card.joinedSubtitle.toUpperCase(),
+                    style: TextStyle(
+                        color: Colors.black45,
+                        fontFamily: 'Optima',
+                        fontSize: thirtyPercent)),
               ),
             ],
           ),

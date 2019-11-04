@@ -65,7 +65,6 @@ flutter:
     #Dummy demo data
     - assets/response/offers.json
     - assets/response/kindergarten.json
-    - assets/response/monthlyScripture.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

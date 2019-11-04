@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
+import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/assetClient.dart';
 import 'package:skg_hagen/src/home/model/cardContent.dart';
@@ -7,10 +8,12 @@ import 'package:skg_hagen/src/home/service/singleCard.dart';
 
 class DrawerList {
   static const String LOGO = 'assets/images/skg-green.png';
+  static const String HOME_NAME = 'Home';
 
   static Widget getList(BuildContext context) {
     final SingleCard card = SingleCard();
     final Future<List<CardContent>> cards = card.getAllCards(AssetClient());
+    SizeConfig().init(context);
 
     return Drawer(
       child: FutureBuilder<List<CardContent>>(
@@ -42,7 +45,7 @@ class DrawerList {
         () => Navigator.pushReplacementNamed(context, Routes.home)));
 
     list.add(_createDrawerItem(
-        text: 'Home',
+        text: HOME_NAME,
         onTap: () => Navigator.pushReplacementNamed(context, Routes.home)));
 
     for (int i = 0; i < cards.length; i++) {
@@ -56,12 +59,12 @@ class DrawerList {
 
   static Widget _createHeader(GestureTapCallback onTap) {
     return DrawerHeader(
-      margin: EdgeInsets.zero,
+      margin: EdgeInsets.all(SizeConfig.getSafeBlockVerticalBy(3)),
       padding: EdgeInsets.zero,
       child: OverflowBox(
         minWidth: 0.0,
         minHeight: 0.0,
-        maxWidth: 180,
+        maxWidth: SizeConfig.getSafeBlockVerticalBy(18),
         child: GestureDetector(
           onTap: onTap,
           child: Image(image: AssetImage(LOGO), fit: BoxFit.cover),
@@ -75,8 +78,8 @@ class DrawerList {
       title: Row(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(left: 8.0),
-            child: Text(text, style: TextStyle(fontFamily: 'Optima')),
+            padding: EdgeInsets.all(SizeConfig.getSafeBlockVerticalBy(2.5)),
+            child: Text(text, style: TextStyle(fontFamily: 'Optima', fontSize: SizeConfig.getSafeBlockHorizontalBy(3))),
           ),
         ],
       ),

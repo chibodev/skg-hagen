@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class CardContent {
   final String _title;
   final List<String> _subtitle;
@@ -17,4 +19,8 @@ class CardContent {
   List<String> get subtitleList => _subtitle;
 
   String get routeName => _routeName;
+
+  Image getImageAsset() {
+    return (custom != null) ? Image.asset(custom, fit: BoxFit.fill,) : null;
+  }
 }

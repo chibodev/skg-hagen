@@ -3,7 +3,7 @@ import 'dart:collection';
 class Default{
   static const int COLOR_GREEN = 0xFF8EBC6B;
   static const int START_INDEX = 0;
-  static const int MAX_PAGE_RANGE = 5;
+  static const int MAX_PAGE_RANGE = 10;
 
   static Map<String, dynamic> getQueryParameters({int index = 0}) {
     final Map<String, dynamic> queryParameters = HashMap<String, dynamic>();
