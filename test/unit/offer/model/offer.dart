@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:skg_hagen/src/appointment/model/appointment.dart';
 import 'package:skg_hagen/src/offer/model/group.dart';
 import 'package:skg_hagen/src/offer/model/offer.dart';
 

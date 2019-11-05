@@ -1,8 +1,5 @@
 import 'dart:collection';
 
-import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
-
 class Default {
   static const int COLOR_GREEN = 0xFF8EBC6B;
   static const int START_INDEX = 0;
