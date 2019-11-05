@@ -38,6 +38,10 @@ class Address {
         'room': room == null ? null : this.room,
       };
 
+  String getStreetAndNumber() {
+    return '$street $houseNumber';
+  }
+
   String getZipAndCity() {
     return '$zip, $city';
   }

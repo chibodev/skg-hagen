@@ -38,7 +38,9 @@ class Cards {
                 ],
               ),
             ),
-            CustomWidget.getAddress(card.address)
+            (card.address.street == null || card.address.name == null)
+                ? CustomWidget.getNoLocation()
+                : CustomWidget.getAddressWithAction(card.address)
           ],
         ),
       ),
@@ -60,7 +62,7 @@ class Cards {
                 ],
               ),
             ),
-            CustomWidget.getAddress(card.address)
+            CustomWidget.getAddressWithAction(card.address)
           ],
         ),
       ),

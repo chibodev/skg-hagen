@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/common/service/tapAction.dart';
+import 'package:skg_hagen/src/common/model/default.dart';
+import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/kindergarten/model/events.dart';
 import 'package:skg_hagen/src/kindergarten/view/news.dart';
 
 class Cards {
   BuildContext _context;
 
-  Widget buildRows(BuildContext context, var card) {
+  Widget buildRows(BuildContext context, dynamic card) {
     this._context = context;
 
-    List<Widget> list = List<Widget>();
+    final List<Widget> list = List<Widget>();
 
-    if (card is List<Events>)
-      for (var i = 0; i < card.length; i++) {
+    if (card is List<Events>) {
+      for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForEvents(card[i]));
       }
-    else
-      for (var i = 0; i < card.length; i++) {
+    } else {
+      for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForNews(card[i]));
       }
+    }
 
     return ExpansionTile(
       title: Text(card.first.getName()),
@@ -26,7 +28,7 @@ class Cards {
     );
   }
 
-  Widget _buildTileForEvents(var card) {
+  Widget _buildTileForEvents(dynamic card) {
     return Material(
       child: Card(
         child: Row(
@@ -36,55 +38,40 @@ class Cards {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(left: 10.0, top: 10),
-                    child: Text(card.title),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: Text(
-                      card.getFormattedTime(),
-                      style: TextStyle(
-                          color: Colors.grey, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Divider(),
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text(card.comment),
-                  ),
+                  CustomWidget.getCardTitle(card.title),
+                  CustomWidget.getOccurrence(card.getFormattedOccurrence()),
+                  _getComment(card.comment)
                 ],
               ),
             ),
-            Container(
-              width: 70,
-              height: 100,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  InkWell(
-                    splashColor: Color(0xFF8EBC6B),
-                    onTap: () => TapAction().launchURL(card.link),
-                    child: Image.asset('assets/images/icon/radiohagen.png'),
-                  ),
-                ],
-              ),
-            )
+            (card.address.name == null || card.address.street == null)
+                ? CustomWidget.getNoLocation()
+                : CustomWidget.getAddressWithoutAction(card.address)
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTileForNews(var card) {
+  Widget _getComment(String comment) {
+    if (comment != "" || comment != null) {
+      return CustomWidget.getCardSubtitle(comment);
+    }
+    return null;
+  }
+
+  Widget _buildTileForNews(dynamic card) {
     return Material(
       child: Card(
         child: InkWell(
-          splashColor: Color(0xFF8EBC6B),
+          splashColor: Color(Default.COLOR_GREEN),
           onTap: () => Navigator.push(
             _context,
-            MaterialPageRoute(
-              builder: (BuildContext _context) => News(news: card),
+            MaterialPageRoute<dynamic>(
+              builder: (BuildContext _context) => News(
+                news: card,
+                context: _context,
+              ),
             ),
           ),
           child: Row(
@@ -94,38 +81,11 @@ class Cards {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(left: 10.0, top: 10),
-                      child: Text(card.title),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: Text(
-                        card.getFormattedTime(),
-                        style: TextStyle(
-                            color: Colors.grey, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(3.0),
-                    ),
+                    CustomWidget.getCardTitle(card.title),
                   ],
                 ),
               ),
-              Container(
-                width: 70,
-                height: 100,
-                color: Color(0xFF8EBC6B),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Icon(
-                      Icons.info_outline,
-                      color: Colors.white,
-                    ),
-                  ],
-                ),
-              ),
+              CustomWidget.getInfoIcon()
             ],
           ),
         ),

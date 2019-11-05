@@ -59,14 +59,14 @@ class CustomWidget {
     );
   }
 
-  static Padding getOccurrence(String occurence) {
+  static Padding getOccurrence(String occurrence) {
     return Padding(
       padding: EdgeInsets.only(
         left: SizeConfig.getSafeBlockVerticalBy(2),
         top: SizeConfig.getSafeBlockVerticalBy(1),
       ),
       child: Text(
-        occurence,
+        occurrence,
         style: TextStyle(
           color: Colors.grey,
           fontWeight: FontWeight.bold,
@@ -76,10 +76,10 @@ class CustomWidget {
     );
   }
 
-  static Container getAddress(Address address) {
+  static Container getAddressWithAction(Address address) {
     return Container(
       color: Color(Default.COLOR_GREEN),
-      width: SizeConfig.getSafeBlockVerticalBy(15),
+      width: SizeConfig.getSafeBlockVerticalBy(17),
       height: SizeConfig.getSafeBlockHorizontalBy(22.5),
       child: InkWell(
         splashColor: Color(Default.COLOR_GREEN),
@@ -96,7 +96,7 @@ class CustomWidget {
               ),
             ),
             Text(
-              address.street,
+              address.getStreetAndNumber(),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: SizeConfig.getSafeBlockVerticalBy(1.7),
@@ -112,6 +112,66 @@ class CustomWidget {
           ],
         ),
       ),
+    );
+  }
+
+  static Container getAddressWithoutAction(Address address) {
+    return Container(
+      color: Color(Default.COLOR_GREEN),
+      width: SizeConfig.getSafeBlockVerticalBy(17),
+      height: SizeConfig.getSafeBlockHorizontalBy(22.5),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            Default.capitalize(address.name),
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: SizeConfig.getSafeBlockVerticalBy(1.7),
+            ),
+          ),
+          Text(
+            address.getStreetAndNumber(),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: SizeConfig.getSafeBlockVerticalBy(1.7),
+            ),
+          ),
+          Text(
+            address.getZipAndCity(),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: SizeConfig.getSafeBlockVerticalBy(1.7),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  static Container getInfoIcon() {
+    return Container(
+      color: Color(Default.COLOR_GREEN),
+      width: SizeConfig.getSafeBlockVerticalBy(17),
+      height: SizeConfig.getSafeBlockHorizontalBy(22.5),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(
+            Icons.info_outline,
+            color: Colors.white,
+          ),
+        ],
+      ),
+    );
+  }
+
+  static Container getNoLocation() {
+    return Container(
+      color: Color(Default.COLOR_GREEN),
+      width: SizeConfig.getSafeBlockVerticalBy(17),
+      height: SizeConfig.getSafeBlockHorizontalBy(22.5),
     );
   }
 
@@ -148,15 +208,16 @@ class CustomWidget {
     );
   }
 
-  static Padding getOrganiser(String organiser) {
+  static Padding getCardSubtitle(String text) {
     return Padding(
       padding: EdgeInsets.only(
-        left: SizeConfig.getSafeBlockVerticalBy(1),
+        left: SizeConfig.getSafeBlockVerticalBy(2),
+        right: SizeConfig.getSafeBlockVerticalBy(2),
         top: SizeConfig.getSafeBlockVerticalBy(1),
         bottom: SizeConfig.getSafeBlockVerticalBy(2),
       ),
       child: Text(
-        organiser,
+        text,
         style: TextStyle(
           color: Colors.grey,
           fontSize: SizeConfig.getSafeBlockVerticalBy(1.7),

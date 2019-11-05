@@ -153,11 +153,11 @@ class Cards extends State<Controller.Appointment> {
                 children: <Widget>[
                   CustomWidget.getCardTitle(card.title),
                   CustomWidget.getOccurrence(card.getFormattedTime()),
-                  CustomWidget.getOrganiser(card.getFormattedOrganiser())
+                  CustomWidget.getCardSubtitle(card.getFormattedOrganiser())
                 ],
               ),
             ),
-            CustomWidget.getAddress(card.address)
+            CustomWidget.getAddressWithAction(card.address)
           ],
         ),
       ),
