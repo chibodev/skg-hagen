@@ -9,6 +9,7 @@ import 'package:skg_hagen/src/common/model/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
+import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/menu/controller/menu.dart';
 
 class Cards extends State<Controller.Appointment> {
@@ -107,22 +108,7 @@ class Cards extends State<Controller.Appointment> {
     }
   }
 
-  Widget _buildProgressIndicator() {
-    return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Opacity(
-            opacity: _isPerformingRequest ? 1.0 : 0.0,
-            child: CircularProgressIndicator(
-              valueColor:
-                  AlwaysStoppedAnimation<Color>(Color(Default.COLOR_GREEN)),
-            ),
-          ),
-        ));
-  }
-
-  Widget _buildCards(
-      BuildContext context, Appointments appointments) {
+  Widget _buildCards(BuildContext context, Appointments appointments) {
     return CustomScrollView(
       controller: _scrollController,
       slivers: <Widget>[
@@ -132,8 +118,7 @@ class Cards extends State<Controller.Appointment> {
           expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
           backgroundColor: Color(Default.COLOR_GREEN),
           flexibleSpace: FlexibleSpaceBar(
-            title:
-                Text(Appointments.NAME, style: TextStyle(color: Colors.white, fontSize: SizeConfig.getSafeBlockVerticalBy(2.5))),
+            title: CustomWidget.getTitle(Appointments.NAME),
             background: Image.asset(
               Appointments.IMAGE,
               fit: BoxFit.cover,
@@ -143,13 +128,15 @@ class Cards extends State<Controller.Appointment> {
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
-              return appointments == null ? _buildProgressIndicator() : _buildRows(appointments.appointments[index]);
+              return appointments == null
+                  ? CustomWidget.buildProgressIndicator(_isPerformingRequest)
+                  : _buildRows(appointments.appointments[index]);
             },
             childCount: appointments?.appointments?.length ?? 0,
           ),
         ),
         SliverToBoxAdapter(
-          child: _buildProgressIndicator(),
+          child: CustomWidget.buildProgressIndicator(_isPerformingRequest),
         )
       ],
     );
@@ -165,47 +152,13 @@ class Cards extends State<Controller.Appointment> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(left: SizeConfig.getSafeBlockVerticalBy(1), top: SizeConfig.getSafeBlockVerticalBy(2)),
-                    child: Text(card.title, style: TextStyle(fontSize: SizeConfig.getSafeBlockVerticalBy(2)),),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: SizeConfig.getSafeBlockVerticalBy(1), top: SizeConfig.getSafeBlockVerticalBy(1)),
-                    child: Text(
-                      card.getFormattedTime(),
-                      style: TextStyle(
-                          color: Colors.grey, fontWeight: FontWeight.bold, fontSize: SizeConfig.getSafeBlockVerticalBy(2)),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: SizeConfig.getSafeBlockVerticalBy(1), top: SizeConfig.getSafeBlockVerticalBy(1), bottom: SizeConfig.getSafeBlockVerticalBy(2)),
-                    child: Text(card.getFormattedOrganiser(),
-                        style: TextStyle(color: Colors.grey, fontSize: SizeConfig.getSafeBlockVerticalBy(1.7))),
-                  ),
+                  CustomWidget.getCardTitle(card.title),
+                  CustomWidget.getOccurrence(card.getFormattedTime()),
+                  CustomWidget.getOrganiser(card.getFormattedOrganiser())
                 ],
               ),
             ),
-            Container(
-              color: Color(Default.COLOR_GREEN),
-              width: SizeConfig.getSafeBlockVerticalBy(15),
-              height: SizeConfig.getSafeBlockHorizontalBy(22.5),
-              child: InkWell(
-                splashColor: Color(Default.COLOR_GREEN),
-                onTap: () => TapAction().openMap(card.address.name),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(Default.capitalize(card.address.name),
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold, fontSize: SizeConfig.getSafeBlockVerticalBy(1.7))),
-                    Text(card.address.street,
-                        style: TextStyle(color: Colors.white, fontSize: SizeConfig.getSafeBlockVerticalBy(1.7))),
-                    Text(card.address.getZipAndCity(),
-                        style: TextStyle(color: Colors.white, fontSize: SizeConfig.getSafeBlockVerticalBy(1.7))),
-                  ],
-                ),
-              ),
-            )
+            CustomWidget.getAddress(card.address)
           ],
         ),
       ),

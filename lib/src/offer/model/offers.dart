@@ -5,7 +5,7 @@ class Offers {
   final List<Offer> offers;
   final List<Group> groups;
   static const String NAME = 'Angebote';
-  static const String IMAGE = 'assets/images/angebote.jpg';
+  static const String IMAGE = 'assets/images/gruppen.jpg';
   static const String FOOTER = 'Ob Angebote, Gruppen oder Kreise stattfinden bitte bei den Gruppenleitungen erfragen!';
 
   Offers({this.offers, this.groups});

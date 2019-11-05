@@ -74,4 +74,8 @@ class Offer {
   String getFormattedSchoolYear() => schoolYear.toString() + ' Schuljahr';
 
   String getFormattedOccurrence() => occurrence + " | " + time.substring(0,5);
+
+  String getFormattedOrganiser() {
+    return organizer.length > 0 ? 'Infos: ' + organizer : '';
+  }
 }

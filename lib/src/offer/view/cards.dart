@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/common/service/tapAction.dart';
+import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/model/offer.dart';
 
 class Cards {
-  Widget buildRows(var card) {
+  Widget buildRows(dynamic card) {
     final List<Widget> list = List<Widget>();
 
     if (card is List<Offer>)
@@ -21,134 +21,46 @@ class Cards {
     );
   }
 
-  Widget _buildTileForOffers(var card) {
-    final String organizer =
-        (card.organizer != null) ? 'Infos: ' + card.organizer : '';
+  Widget _buildTileForOffers(dynamic card) {
     return Material(
       child: Card(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 10),
+            Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(3.0),
-                    child: Text(card.title),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(3.0),
-                    child: Text(
-                      card.getFormattedOccurrence(),
-                      style: TextStyle(
-                          color: Colors.grey, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Padding(
-                      padding: EdgeInsets.all(3.0),
-                      child: Row(
-                        children: <Widget>[
-                          Text(organizer,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(color: Colors.grey)),
-                          InkWell(
-                            splashColor: Color(0xFF8EBC6B),
-                            onTap: () =>
-                                TapAction().sendMail(card.email, card.title),
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Icon(
-                                Icons.email,
-                                color: Colors.grey,
-                                size: 20.0,
-                                semanticLabel:
-                                    'Text to announce in accessibility modes',
-                              ),
-                            ),
-                          )
-                        ],
-                      )),
+                  CustomWidget.getCardTitle(card.title),
+                  CustomWidget.getOccurrence(card.getFormattedOccurrence()),
+                  CustomWidget.getEmail(
+                      card.getFormattedOrganiser(), card.email, card.title),
                 ],
               ),
             ),
-            Container(
-              color: Color(0xFF8EBC6B),
-              width: 125,
-              height: 100,
-              child: InkWell(
-                splashColor: Color(0xFF8EBC6B),
-                onTap: () =>
-                    TapAction().openMap(card.address.name),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(card.address.name,
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold)),
-                    Text(card.address.street,
-                        style: TextStyle(color: Colors.white)),
-                    Text(card.address.getZipAndCity(),
-                        style: TextStyle(color: Colors.white)),
-                  ],
-                ),
-              ),
-            )
+            CustomWidget.getAddress(card.address)
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTileForGroups(var card) {
+  Widget _buildTileForGroups(dynamic card) {
     return Material(
       child: Card(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 10),
+            Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(3.0),
-                    child: Text(card.title),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(3.0),
-                    child: Text(
-                      card.getFormattedOccurrence(),
-                      style: TextStyle(
-                          color: Colors.grey, fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                  CustomWidget.getCardTitle(card.title),
+                  CustomWidget.getOccurrence(card.getFormattedOccurrence()),
                 ],
               ),
             ),
-            Container(
-              color: Color(0xFF8EBC6B),
-              width: 125,
-              height: 100,
-              child: InkWell(
-                splashColor: Color(0xFF8EBC6B),
-                onTap: () =>
-                    TapAction().openMap(card.address.name),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(card.address.name,
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold)),
-                    Text(card.address.street,
-                        style: TextStyle(color: Colors.white)),
-                    Text(card.address.getZipAndCity(),
-                        style: TextStyle(color: Colors.white)),
-                  ],
-                ),
-              ),
-            )
+            CustomWidget.getAddress(card.address)
           ],
         ),
       ),
