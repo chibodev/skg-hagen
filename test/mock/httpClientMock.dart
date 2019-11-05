@@ -6,14 +6,14 @@ import 'package:dio/dio.dart';
 import 'fileClientMock.dart';
 import 'httpClientErrorMock.dart';
 
-class HTTPClientAppointmentMock {
-  static Future<Response<dynamic>> appointmentGet({int statusCode}) async {
+class HTTPClientMock {
+  static Future<Response<dynamic>> getRequest({int statusCode, String path}) async {
     Response<dynamic> response;
 
     switch (statusCode) {
       case HttpStatus.ok:
         final String responseData =
-            await FileClientMock.loadFromTestResourcePath('appointments.json');
+            await FileClientMock.loadFromTestResourcePath(path);
         response = await Dio().resolve(Response<dynamic>(
             data: jsonDecode(responseData), statusCode: statusCode));
         break;

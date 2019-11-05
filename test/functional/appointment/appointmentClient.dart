@@ -8,7 +8,7 @@ import 'package:skg_hagen/src/appointment/repository/appointmentClient.dart';
 import 'package:skg_hagen/src/common/model/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 
-import '../../mock/httpClientAppointmentMock.dart';
+import '../../mock/httpClientMock.dart';
 
 class MockDioHTTPClient extends Mock implements DioHTTPClient {}
 
@@ -31,8 +31,8 @@ void main() {
             path: 'app/appointments',
             options: anyNamed('options'),
             queryParameters: anyNamed('queryParameters')))
-        .thenAnswer((_) async => HTTPClientAppointmentMock.appointmentGet(
-            statusCode: HttpStatus.ok));
+        .thenAnswer((_) async => HTTPClientMock.getRequest(
+            statusCode: HttpStatus.ok, path: 'appointments.json'));
 
     final Appointments appointments = await subject
         .getAppointments(httpClient, network, index: 0, refresh: true);
@@ -67,8 +67,8 @@ void main() {
             path: 'app/appointments',
             options: anyNamed('options'),
             queryParameters: anyNamed('queryParameters')))
-        .thenAnswer((_) async => HTTPClientAppointmentMock.appointmentGet(
-            statusCode: HttpStatus.unauthorized));
+        .thenAnswer((_) async =>
+            HTTPClientMock.getRequest(statusCode: HttpStatus.unauthorized));
 
     try {
       await subject.getAppointments(httpClient, network,

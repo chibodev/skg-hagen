@@ -7,15 +7,6 @@ import 'package:skg_hagen/src/offer/model/offers.dart';
 class OfferClient {
   static const String PATH = 'app/offers';
 
-  /*
-  Future<Offers> getOffers() async {
-    final String jsonResponse =
-        await AssetClient().loadAsset('assets/response/offers.json');
-
-    final List<dynamic> jsonMap = jsonDecode(jsonResponse);
-    return Offers.fromJson(jsonMap?.first);
-  }
-   */
   Future<Offers> getOffers(DioHTTPClient http, Network network,
       {int index, bool refresh}) async {
     Options options =

@@ -8,7 +8,7 @@ import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/home/model/monthlyScripture.dart';
 import 'package:skg_hagen/src/home/repository/monthlyScriptureClient.dart';
 
-import '../../mock/httpClientMonthlyScriptureMock.dart';
+import '../../mock/httpClientMock.dart';
 
 class MockDioHTTPClient extends Mock implements DioHTTPClient {}
 
@@ -30,7 +30,7 @@ void main() {
     when(httpClient.get(
             path: 'app/monthly-devotion', options: anyNamed('options')))
         .thenAnswer((_) async =>
-            HTTPClientMonthlyScriptureMock.monthlyScriptureGet(statusCode: HttpStatus.ok));
+            HTTPClientMock.getRequest(statusCode: HttpStatus.ok, path: 'monthlyScripture.json'));
 
     final MonthlyScripture verse = await subject.getVerse(httpClient, network);
 
@@ -46,7 +46,7 @@ void main() {
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(httpClient.get(
             path: 'app/monthly-devotion', options: anyNamed('options')))
-        .thenAnswer((_) async => HTTPClientMonthlyScriptureMock.monthlyScriptureGet(
+        .thenAnswer((_) async => HTTPClientMock.getRequest(
             statusCode: HttpStatus.unauthorized));
 
     try {

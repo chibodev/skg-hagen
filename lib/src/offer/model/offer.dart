@@ -71,11 +71,11 @@ class Offer {
 
   String getName() => "Angebote";
 
-  String getFormattedSchoolYear() => schoolYear.toString() + ' Schuljahr';
+  String getFormattedSchoolYear() => "${schoolYear.toString()}. Schuljahr";
 
-  String getFormattedOccurrence() => occurrence + " | " + time.substring(0,5);
+  String getFormattedOccurrence() => "$occurrence | ${time.substring(0,5)}";
 
   String getFormattedOrganiser() {
-    return organizer.length > 0 ? 'Infos: ' + organizer : '';
+    return organizer.length > 0 ? "Infos: $organizer" : '';
   }
 }
