@@ -28,7 +28,7 @@ kontakte:
     - ansprechpartner
     - social media
   image: assets/images/kontakte.jpg
-  route: contact
+  route: contacts
 
 über uns:
   groups:

@@ -8,6 +8,7 @@ class Address {
   final String city;
   final String country;
   final String room;
+  final String latLong;
 
   Address(
       {this.name,
@@ -16,7 +17,7 @@ class Address {
       this.zip,
       this.city,
       this.country,
-      this.room});
+      this.room, this.latLong});
 
   factory Address.fromJson(Map<String, dynamic> json) => Address(
         name: json["name"] == null ? null : json['name'],
@@ -25,6 +26,7 @@ class Address {
         zip: json["zip"] == null ? null : json['zip'],
         city: json["city"] == null ? null : json['city'],
         country: json["country"] == null ? null : json['country'],
+        latLong: json["latLong"] == null ? null : json['latLong'],
         room: json["room"] == null ? null : json['room'],
       );
 
@@ -37,6 +39,8 @@ class Address {
         'country': country == null ? null : this.country,
         'room': room == null ? null : this.room,
       };
+
+  String getName() => "Addresse";
 
   String getStreetAndNumber() {
     return '$street $houseNumber';

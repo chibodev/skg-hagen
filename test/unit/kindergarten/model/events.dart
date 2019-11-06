@@ -1,7 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:skg_hagen/src/kindergarten/model/events.dart';
-import 'package:skg_hagen/src/offer/model/group.dart';
-import 'package:skg_hagen/src/offer/model/offer.dart';
 
 void main() {
   Events subject;
@@ -21,6 +19,4 @@ void main() {
       expect(subject.getFormattedOccurrence(), 'DO. 26.9.19');
     });
   });
-
-
 }

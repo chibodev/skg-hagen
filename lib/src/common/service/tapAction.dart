@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 class TapAction {
   void sendMail(String email, String title) async {
     // Android and iOS
-    final String uri = 'mailto:$email?subject=Angebot: $title';
+    final String uri = 'mailto:$email?subject=$title';
     if (await canLaunch(uri)) {
       await launch(uri);
     } else {
@@ -16,7 +16,8 @@ class TapAction {
 
   void openMap(String location) async {
     // Android
-    final String longLat = Location(location.toLowerCase()).getLongtideLatitude();
+    final String longLat =
+        Location(location.toLowerCase()).getLongtideLatitude();
 
     if (longLat != null) {
       String url = 'geo:$longLat';
@@ -48,14 +49,7 @@ class TapAction {
     if (await canLaunch(uri)) {
       await launch(uri);
     } else {
-      // iOS
-      //TODO conver + to 00
-      final String uri = 'tel:$phoneNumber';
-      if (await canLaunch(uri)) {
-        await launch(uri);
-      } else {
-        throw 'Could not launch $uri';
-      }
+      throw 'Could not launch $uri';
     }
   }
 }

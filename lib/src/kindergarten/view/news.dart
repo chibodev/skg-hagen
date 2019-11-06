@@ -15,7 +15,7 @@ class News extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
-    double thirty = SizeConfig.getSafeBlockVerticalBy(3.5);
+    final double thirty = SizeConfig.getSafeBlockVerticalBy(3.5);
     return Scaffold(
       body: Container(
         child: CustomScrollView(

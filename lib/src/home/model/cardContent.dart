@@ -21,6 +21,6 @@ class CardContent {
   String get routeName => _routeName;
 
   Image getImageAsset() {
-    return (custom != null) ? Image.asset(custom, fit: BoxFit.fill,) : null;
+    return (custom != null) ? Image.asset(custom, fit: BoxFit.fitWidth,) : null;
   }
 }
