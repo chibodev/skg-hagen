@@ -1,22 +1,20 @@
 {
   "history": [
     {
-      "description": "Die Ev.-Luth. Stadtkirchengemeinde Hagen\r\nDie Stadtkirchengemeinde Hagen ist die wohl größte Gemeinde in Hagen und umfasst nahezu 8000 Gemeindeglieder.",
+      "description": "Die Ev.-Luth. Stadtkirchengemeinde Hagen\r\nDie Stadtkirchengemeinde Hagen ist die wohl größte Gemeinde in Hagen und umfasst nahezu 8000 Gemeindeglieder."
     }
   ],
   "presbytery": [
     {
       "salutation": "Frau",
-      "surname": "a Campo",
-      "firstname": "Eva-Carolin",
-      "description": "",
-      "valid": "2019-11-04",
-      "validUntil": "9999-12-31",
+      "surname": "Bali",
+      "firstname": "Olympia",
+      "description": "She is nice lady"
     }
   ],
   "imprint": [
     {
-      "url": "https://skg-hagen.chibo.org/#impressum",
+      "url": "https://skg-hagen.de/#impressum"
     }
   ]
 }

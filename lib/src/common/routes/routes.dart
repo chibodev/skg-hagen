@@ -1,3 +1,4 @@
+import 'package:skg_hagen/src/aboutus/controller/aboutus.dart';
 import 'package:skg_hagen/src/appointment/controller/appointment.dart';
 import 'package:skg_hagen/src/contacts/controller/contacts.dart';
 import 'package:skg_hagen/src/home/controller/home.dart';
@@ -10,4 +11,5 @@ class Routes {
   static const String offer = Offer.route;
   static const String kindergarten = Kindergarten.route;
   static const String contacts = Contacts.route;
+  static const String aboutUs = AboutUs.route;
 }

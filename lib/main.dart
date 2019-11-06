@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:skg_hagen/src/aboutus/controller/aboutus.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/contacts/controller/contacts.dart';
 import 'package:skg_hagen/src/home/controller/home.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         Routes.offer: (BuildContext context) => Offer(),
         Routes.kindergarten: (BuildContext context) => Kindergarten(),
         Routes.contacts: (BuildContext context) => Contacts(),
+        Routes.aboutUs: (BuildContext context) => AboutUs(),
       },
       theme: ThemeData(primaryColor: Colors.white, fontFamily: 'Optima'),
       home: Home(),
