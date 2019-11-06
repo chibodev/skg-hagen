@@ -34,6 +34,13 @@ flutter:
   assets:
     #Cards
     - assets/config/cards.yaml
+    #Icons
+    - assets/images/icon/facebook.png
+    - assets/images/icon/instagram.png
+    - assets/images/icon/twitter.png
+    - assets/images/icon/whatsapp.png
+    - assets/images/icon/paypal.png
+    - assets/images/icon/pdf.png
     #Images
     - assets/images/termine.jpg
     - assets/images/angebote.jpg
@@ -46,6 +53,8 @@ flutter:
     - assets/images/skg-green.png
     - assets/images/skg.jpg
     - assets/images/kindergarten.jpg
+    - assets/images/johanniskirche.jpg
+    - assets/images/markuskirche.jpg
 
   fonts:
      - family: Optima
