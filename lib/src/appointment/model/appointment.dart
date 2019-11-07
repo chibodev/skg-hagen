@@ -17,6 +17,7 @@ class Appointment {
   final String zip;
   final String city;
   final String country;
+  final String latLong;
 
   Appointment({
     this.title,
@@ -32,6 +33,7 @@ class Appointment {
     this.zip,
     this.city,
     this.country,
+    this.latLong
   }) {
     this.address = Address(
         name: name,
@@ -40,6 +42,7 @@ class Appointment {
         zip: zip,
         city: city,
         country: country,
+        latLong: latLong,
         room: room);
   }
 
@@ -58,6 +61,7 @@ class Appointment {
       zip: json["zip"] == null ? null : json["zip"],
       city: json["city"] == null ? null : json["city"],
       country: json["country"] == null ? null : json["country"],
+      latLong: json["latLong"] == null ? null : json['latLong']
     );
   }
 

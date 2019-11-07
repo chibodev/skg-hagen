@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:skg_hagen/src/common/model/dioHttpClient.dart';
+import 'package:skg_hagen/src/common/service/dioHttpClient.dart';
 import 'package:skg_hagen/src/token/model/token.dart';
 import 'package:skg_hagen/src/token/repository/tokenClient.dart';
 

@@ -15,6 +15,7 @@ class Group {
   final String zip;
   final String city;
   final String country;
+  final String latLong;
 
   Group(
       {this.title,
@@ -30,6 +31,7 @@ class Group {
       this.houseNumber,
       this.zip,
       this.city,
+      this.latLong,
       this.country}) {
     this.address = Address(
         name: name,
@@ -38,6 +40,7 @@ class Group {
         zip: zip,
         city: city,
         country: country,
+        latLong: latLong,
         room: room);
   }
 
@@ -55,9 +58,10 @@ class Group {
         zip: json["zip"] == null ? null : json["zip"],
         city: json["city"] == null ? null : json["city"],
         country: json["country"] == null ? null : json["country"],
+        latLong: json["latLong"] == null ? null : json['latLong'],
       );
 
   String getName() => "Gruppen und Kreisen";
 
-  String getFormattedOccurrence() => occurrence + " | " + time.substring(0,5);
+  String getFormattedOccurrence() => occurrence + " | " + time.substring(0, 5);
 }

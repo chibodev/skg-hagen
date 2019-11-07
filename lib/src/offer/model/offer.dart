@@ -20,6 +20,7 @@ class Offer {
   final String zip;
   final String city;
   final String country;
+  final String latLong;
 
   Offer(
       {this.title,
@@ -37,6 +38,7 @@ class Offer {
       this.houseNumber,
       this.zip,
       this.city,
+      this.latLong,
       this.country}) {
     this.address = Address(
         name: name,
@@ -45,6 +47,7 @@ class Offer {
         zip: zip,
         city: city,
         country: country,
+        latLong: latLong,
         room: room);
 
     this.ageRange = AgeRange(start: ageStart, end: ageEnd);
@@ -67,13 +70,14 @@ class Offer {
         zip: json["zip"] == null ? null : json["zip"],
         city: json["city"] == null ? null : json["city"],
         country: json["country"] == null ? null : json["country"],
+        latLong: json["latLong"] == null ? null : json['latLong'],
       );
 
   String getName() => "Angebote";
 
   String getFormattedSchoolYear() => "${schoolYear.toString()}. Schuljahr";
 
-  String getFormattedOccurrence() => "$occurrence | ${time.substring(0,5)}";
+  String getFormattedOccurrence() => "$occurrence | ${time.substring(0, 5)}";
 
   String getFormattedOrganiser() {
     return organizer.length > 0 ? "Infos: $organizer" : '';

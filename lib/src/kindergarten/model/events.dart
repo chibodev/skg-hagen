@@ -15,6 +15,7 @@ class Events {
   final String zip;
   final String city;
   final String country;
+  final String latLong;
 
   Events(
       {this.title,
@@ -28,6 +29,7 @@ class Events {
       this.houseNumber,
       this.zip,
       this.city,
+      this.latLong,
       this.country}) {
     this.address = Address(
         name: name,
@@ -35,6 +37,7 @@ class Events {
         houseNumber: houseNumber,
         zip: zip,
         city: city,
+        latLong: latLong,
         country: country);
   }
 
@@ -50,6 +53,7 @@ class Events {
         zip: json["zip"] == null ? null : json["zip"],
         city: json["city"] == null ? null : json["city"],
         country: json["country"] == null ? null : json["country"],
+        latLong: json["latLong"] == null ? null : json['latLong'],
       );
 
   String getName() => "Events";

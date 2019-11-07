@@ -84,7 +84,7 @@ class CustomWidget {
       height: SizeConfig.getSafeBlockHorizontalBy(22.5),
       child: InkWell(
         splashColor: Color(Default.COLOR_GREEN),
-        onTap: () => TapAction().openMap(address.name),
+        onTap: () => TapAction().openMap(address.latLong, address.name),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
