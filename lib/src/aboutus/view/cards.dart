@@ -87,7 +87,7 @@ class Cards {
                   padding: EdgeInsets.all(
                     SizeConfig.getSafeBlockVerticalBy(2),
                   ),
-                  child: Text(
+                  child: Text(  //TODO replace txt with icon for url
                     card.url,
                     style: TextStyle(
                       fontSize: SizeConfig.getSafeBlockVerticalBy(2),

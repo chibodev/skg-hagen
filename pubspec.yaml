@@ -16,6 +16,7 @@ dependencies:
   dio: 3.0.3
   dio_http_cache: ^0.2.0
   map_launcher: any
+  firebase_crashlytics: ^0.1.0+3
 
 dev_dependencies:
   flutter_test:

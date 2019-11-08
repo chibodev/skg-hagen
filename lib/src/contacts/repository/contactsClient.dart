@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:skg_hagen/src/common/service/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/contacts/model/contacts.dart';
@@ -17,6 +18,8 @@ class ContactsClient {
         )
         .then(
           (Response<dynamic> response) => Contacts.fromJson(response.data),
-        );
+        ).catchError((dynamic onError) {
+      Crashlytics.instance.log(onError.error.toString());
+    });
   }
 }

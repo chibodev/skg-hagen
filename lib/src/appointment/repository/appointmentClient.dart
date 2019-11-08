@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:skg_hagen/src/appointment/model/appointments.dart';
 import 'package:skg_hagen/src/common/service/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
@@ -16,6 +17,9 @@ class AppointmentClient {
     return await http
         .get(path: PATH, options: options, queryParameters: queryParameters)
         .then((Response<dynamic> response) =>
-            Appointments.fromJson(response.data));
+            Appointments.fromJson(response.data))
+        .catchError((dynamic onError) {
+      Crashlytics.instance.log(onError.error.toString());
+    });
   }
 }

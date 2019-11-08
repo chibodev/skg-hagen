@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:skg_hagen/src/common/service/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/offer/model/offers.dart';
@@ -15,6 +16,11 @@ class OfferClient {
           path: PATH,
           options: options,
         )
-        .then((Response<dynamic> response) => Offers.fromJson(response.data));
+        .then(
+          (Response<dynamic> response) => Offers.fromJson(response.data),
+        )
+        .catchError((dynamic onError) {
+      Crashlytics.instance.log(onError.error.toString());
+    });
   }
 }

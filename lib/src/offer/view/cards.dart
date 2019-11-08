@@ -22,6 +22,7 @@ class Cards {
   }
 
   Widget _buildTileForOffers(dynamic card) {
+    //TODO add right padding for text
     return Material(
       child: Card(
         child: Row(
