@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skg_hagen/src/aboutus/controller/aboutus.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/contacts/controller/contacts.dart';
 import 'package:skg_hagen/src/home/controller/home.dart';
@@ -12,7 +14,7 @@ import 'package:skg_hagen/src/offer/controller/offer.dart';
 import 'package:skg_hagen/src/kindergarten/controller/kindergarten.dart';
 
 void main() async {
-  final bool isInDebugMode = false;
+  final bool isInDebugMode = true;
 
   FlutterError.onError = (FlutterErrorDetails details) {
     if (isInDebugMode) {
@@ -26,10 +28,15 @@ void main() async {
   };
 
   runZoned<Future<void>>(() async {
-    SystemChrome.setPreferredOrientations(
-        <DeviceOrientation>[DeviceOrientation.portraitUp]).then((_) {
-      runApp(MyApp());
+    SharedPreferences.getInstance().then((SharedPreferences sp) {
+      sharedPreferences = sp;
+
+      SystemChrome.setPreferredOrientations(
+          <DeviceOrientation>[DeviceOrientation.portraitUp]).then((_) {
+        runApp(MyApp());
+      });
     });
+
   }, onError: Crashlytics.instance.recordError);
 }
 

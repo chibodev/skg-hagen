@@ -19,7 +19,7 @@ class TokenInterceptor extends Interceptor {
       http.client.lock();
       return await _tokenClient.getToken(DioHTTPClient()).then((Token tkn) {
         options.headers[HttpHeaders.authorizationHeader] =
-            token = "${tkn.tokenType} ${tkn.jwtToken}";
+            token = "${tkn?.tokenType} ${tkn?.jwtToken}";
         return options;
       }).whenComplete(() => http.client.unlock());
     } else {
@@ -44,7 +44,7 @@ class TokenInterceptor extends Interceptor {
         http.client.interceptors.errorLock.lock();
         return _tokenClient.getToken(http).then((Token tkn) {
           options.headers[HttpHeaders.authorizationHeader] =
-              token = "${tkn.tokenType} ${tkn.jwtToken}";
+              token = "${tkn?.tokenType} ${tkn?.jwtToken}";
         }).whenComplete(() {
           http.client.unlock();
           http.client.interceptors.responseLock.unlock();

@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:skg_hagen/src/appointment/model/appointments.dart';
 import 'package:skg_hagen/src/common/service/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 
 class AppointmentClient {
   static const String PATH = 'app/appointments';
+  static const String CACHE_DATA = 'app/appointments/data';
 
   Future<Appointments> getAppointments(DioHTTPClient http, Network network,
       {int index, bool refresh}) async {
@@ -14,12 +14,18 @@ class AppointmentClient {
     final Map<String, dynamic> queryParameters =
         http.getQueryParameters(index: index);
 
-    return await http
-        .get(path: PATH, options: options, queryParameters: queryParameters)
-        .then((Response<dynamic> response) =>
-            Appointments.fromJson(response.data))
-        .catchError((dynamic onError) {
-      Crashlytics.instance.log(onError.error.toString());
-    });
+    final Map<String, dynamic> jsonResponse = await http.getResponse(
+        http: http,
+        options: options,
+        path: PATH,
+        object: Appointments,
+        cacheData: CACHE_DATA,
+        queryParameters: queryParameters);
+
+    if (jsonResponse != null) {
+      return Appointments.fromJson(jsonResponse);
+    }
+
+    return null;
   }
 }

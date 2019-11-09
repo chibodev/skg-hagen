@@ -1,7 +1,12 @@
 import 'dart:collection';
+import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
+import 'package:skg_hagen/src/common/service/cacheInterceptor.dart';
 import 'package:skg_hagen/src/common/service/debugInterceptor.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/token/service/tokenInterceptor.dart';
@@ -29,10 +34,7 @@ class DioHTTPClient {
         break;
 
       case 'cache':
-        this
-            .client
-            .interceptors
-            .add(DioCacheManager(CacheConfig()).interceptor);
+        this.client.interceptors.add(CacheInterceptor());
         break;
 
       case 'token':
@@ -41,28 +43,50 @@ class DioHTTPClient {
     }
   }
 
-  Future<Options> setGetOptions(DioHTTPClient http, Network network, bool refresh) async {
+  Future<Options> setGetOptions(
+      DioHTTPClient http, Network network, bool refresh) async {
     Options options =
-    buildCacheOptions(Duration(days: 7), maxStale: Duration(days: 10));
+        buildCacheOptions(Duration(days: 7), maxStale: Duration(days: 10));
 
     http.initialiseInterceptors('debug');
     http.initialiseInterceptors('cache');
     http.initialiseInterceptors('token');
 
-    final bool hasInternet = await network.hasInternet();
+    final bool refreshState = refresh != null;
+    final bool hasInternet = await Network().hasInternet();
 
-    if (hasInternet || refresh) {
+    if (hasInternet || (refreshState && refresh == true)) {
       options = buildCacheOptions(Duration(days: 7),
           maxStale: Duration(days: 10), forceRefresh: true);
     }
     return options;
   }
 
+  Future<dynamic> getResponse(
+      {@required DioHTTPClient http,
+      @required Options options,
+      Map<String, dynamic> queryParameters,
+      @required String path,
+      @required dynamic object,
+      @required String cacheData}) async {
+    return await http
+        .get(path: path, options: options, queryParameters: queryParameters)
+        .then((Response<dynamic> response) => jsonDecode(response.data))
+        .catchError((dynamic onError) {
+      if (sharedPreferences.containsKey(cacheData)) {
+        return jsonDecode(sharedPreferences.get(cacheData));
+      } else {
+        Crashlytics.instance.log(onError.error.toString());
+        return null;
+      }
+    });
+  }
+
   Map<String, dynamic> getQueryParameters({int index = 0}) {
     final Map<String, dynamic> queryParameters = HashMap<String, dynamic>();
     queryParameters.putIfAbsent(
         "index",
-            () => (index == null || index <= 0)
+        () => (index == null || index <= 0)
             ? START_INDEX
             : MAX_PAGE_RANGE * index);
     queryParameters.putIfAbsent("page", () => MAX_PAGE_RANGE);
@@ -70,11 +94,17 @@ class DioHTTPClient {
     return queryParameters;
   }
 
-  Future<Response<dynamic>> post({String path, dynamic data, Options options}) async {
+  Future<Response<dynamic>> post(
+      {String path, dynamic data, Options options}) async {
     return await this._client.post(path, options: options, data: data);
   }
 
-  Future<Response<dynamic>> get({String path, Options options, Map<String, dynamic> queryParameters}) async {
-    return await this._client.get(path, options: options, queryParameters: queryParameters);
+  Future<Response<dynamic>> get(
+      {String path,
+      Options options,
+      Map<String, dynamic> queryParameters}) async {
+    return await this
+        ._client
+        .get(path, options: options, queryParameters: queryParameters);
   }
 }

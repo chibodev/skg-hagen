@@ -17,6 +17,8 @@ dependencies:
   dio_http_cache: ^0.2.0
   map_launcher: any
   firebase_crashlytics: ^0.1.0+3
+  shared_preferences: ^0.5.4+3
+  flutter_html: ^0.11.0
 
 dev_dependencies:
   flutter_test:
@@ -34,9 +36,10 @@ flutter:
   uses-material-design: true
 
   assets:
-    #Cards
+    #Config
     - assets/config/cards.yaml
     - assets/config/api.yaml
+    - assets/config/legal.yaml
     #Icons
     - assets/images/icon/facebook.png
     - assets/images/icon/instagram.png
@@ -58,7 +61,9 @@ flutter:
     - assets/images/kindergarten.jpg
     - assets/images/johanniskirche.jpg
     - assets/images/markuskirche.jpg
-
+    #Text
+    - assets/text/imprint.html
+    - assets/text/privacy.html
   fonts:
      - family: Optima
        fonts:
