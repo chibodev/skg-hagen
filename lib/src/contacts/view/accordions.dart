@@ -15,6 +15,7 @@ class Accordions extends State<Controller.Contacts> {
   List<dynamic> _options;
   final ScrollController _scrollController = ScrollController();
   bool _isPerformingRequest = false;
+  bool _hasInternet = false;
 
   @override
   void initState() {
@@ -38,6 +39,12 @@ class Accordions extends State<Controller.Contacts> {
           _getContacts();
         },
         child: _buildCards(context),
+      ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          !_hasInternet ? CustomWidget.noInternet() : Container()
+        ],
       ),
     );
   }
@@ -86,6 +93,8 @@ class Accordions extends State<Controller.Contacts> {
   Future<void> _getContacts() async {
     if (!_isPerformingRequest) {
       setState(() => _isPerformingRequest = true);
+
+      _hasInternet = await Network().hasInternet();
 
       _contacts = await ContactsClient().getContacts(
         DioHTTPClient(),

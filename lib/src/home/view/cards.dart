@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/service/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/assetClient.dart';
+import 'package:skg_hagen/src/common/service/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/home/model/cardContent.dart';
 import 'package:skg_hagen/src/home/model/monthlyScripture.dart';
-import 'package:skg_hagen/src/home/service/singleCard.dart';
 import 'package:skg_hagen/src/home/repository/monthlyScriptureClient.dart';
+import 'package:skg_hagen/src/home/service/singleCard.dart';
 import 'package:skg_hagen/src/menu/controller/menu.dart';
 
 class Cards {
@@ -37,16 +37,17 @@ class Cards {
                         text: TextSpan(
                             text: response.data.getModifiedText(),
                             style: TextStyle(
-                                fontSize: SizeConfig.safeBlockHorizontal * 3,
+                                fontSize: SizeConfig.getSafeBlockVerticalBy(
+                                    Default.STANDARD_FONT_SIZE),
                                 color: Colors.white,
-                                fontFamily: 'Optima'),
+                                fontFamily: Default.FONT),
                             children: <TextSpan>[
                       TextSpan(
                           text: response.data.getFormattedBook(),
                           style: TextStyle(
                               fontSize: 10,
                               color: Colors.white,
-                              fontFamily: 'Optima'))
+                              fontFamily: Default.FONT))
                     ])));
               }
               return Text('');
@@ -95,7 +96,7 @@ class Cards {
   }
 
   Widget _buildRows(CardContent card) {
-    final double thirtyPercent = SizeConfig.getSafeBlockHorizontalBy(3);
+    final double thirtyPercent = SizeConfig.getSafeBlockVerticalBy(2.5);
     final double tenPercent = SizeConfig.getSafeBlockHorizontalBy(1);
 
     return Material(
@@ -120,8 +121,8 @@ class Cards {
                 alignment: AlignmentDirectional.centerStart,
                 child: Text(
                   card.title.toLowerCase(),
-                  style:
-                      TextStyle(fontFamily: 'Optima', fontSize: thirtyPercent),
+                  style: TextStyle(
+                      fontFamily: Default.FONT, fontSize: thirtyPercent),
                 ),
               ),
               Container(
@@ -131,7 +132,7 @@ class Cards {
                 child: Text(card.joinedSubtitle.toUpperCase(),
                     style: TextStyle(
                         color: Colors.black45,
-                        fontFamily: 'Optima',
+                        fontFamily: Default.FONT,
                         fontSize: thirtyPercent)),
               ),
             ],

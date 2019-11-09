@@ -5,8 +5,8 @@ import 'package:skg_hagen/src/appointment/model/appointment.dart' as Model;
 import 'package:skg_hagen/src/appointment/model/appointments.dart';
 import 'package:skg_hagen/src/appointment/repository/appointmentClient.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/service/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/service/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/menu/controller/menu.dart';
@@ -16,6 +16,7 @@ class Cards extends State<Controller.Appointment> {
   Appointments appointments;
   final ScrollController _scrollController = ScrollController();
   bool _isPerformingRequest = false;
+  bool _hasInternet = false;
 
   @override
   void initState() {
@@ -46,17 +47,27 @@ class Cards extends State<Controller.Appointment> {
         },
         child: _buildCards(context, appointments),
       ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          !_hasInternet ? CustomWidget.noInternet() : Container()
+        ],
+      ),
     );
   }
 
   Future<void> _getInitialAppointments() async {
     if (!_isPerformingRequest) {
       setState(() => _isPerformingRequest = true);
+      _hasInternet = true;
 
       appointments = await AppointmentClient()
           .getAppointments(DioHTTPClient(), Network()); //returns empty list
 
-      if (appointments.appointments.isEmpty) {
+      final bool status = appointments?.appointments != null;
+      _hasInternet = await Network().hasInternet();
+
+      if (status && appointments.appointments.isEmpty) {
         final double edge = 50.0;
         final double offsetFromBottom =
             _scrollController.position.maxScrollExtent -
@@ -78,32 +89,39 @@ class Cards extends State<Controller.Appointment> {
   Future<void> _getMoreAppointments() async {
     if (!_isPerformingRequest) {
       setState(() => _isPerformingRequest = true);
+      _hasInternet = true;
 
-      final Appointments newAppointments = await AppointmentClient()
-          .getAppointments(DioHTTPClient(), Network(),
-              index: _indexCounter); //returns empty list
-
-      final List<Model.Appointment> newEntries = newAppointments.appointments;
-      final bool isResponseEmpty = newEntries.isEmpty;
-      if (isResponseEmpty) {
-        final double edge = 50.0;
-        final double offsetFromBottom =
-            _scrollController.position.maxScrollExtent -
-                _scrollController.position.pixels;
-        if (offsetFromBottom < edge) {
-          _scrollController.animateTo(
-              _scrollController.offset - (edge - offsetFromBottom),
-              duration: Duration(milliseconds: 500),
-              curve: Curves.easeOut);
-        }
-      }
-      setState(() {
+      final bool hasInternet = await Network().hasInternet();
+      if (!hasInternet) {
+        _hasInternet = false;
         _isPerformingRequest = false;
-        if (!isResponseEmpty) {
-          appointments.appointments.addAll(newEntries);
-          _indexCounter++;
+      } else {
+        final Appointments newAppointments = await AppointmentClient()
+            .getAppointments(DioHTTPClient(), Network(),
+                index: _indexCounter); //returns empty list
+
+        final List<Model.Appointment> newEntries = newAppointments.appointments;
+        final bool isResponseEmpty = newEntries.isEmpty;
+        if (isResponseEmpty) {
+          final double edge = 50.0;
+          final double offsetFromBottom =
+              _scrollController.position.maxScrollExtent -
+                  _scrollController.position.pixels;
+          if (offsetFromBottom < edge) {
+            _scrollController.animateTo(
+                _scrollController.offset - (edge - offsetFromBottom),
+                duration: Duration(milliseconds: 500),
+                curve: Curves.easeOut);
+          }
         }
-      });
+        setState(() {
+          _isPerformingRequest = false;
+          if (!isResponseEmpty) {
+            appointments.appointments.addAll(newEntries);
+            _indexCounter++;
+          }
+        });
+      }
     }
   }
 
@@ -135,7 +153,9 @@ class Cards extends State<Controller.Appointment> {
           ),
         ),
         SliverToBoxAdapter(
-          child: CustomWidget.buildProgressIndicator(_isPerformingRequest),
+          child: (_hasInternet)
+              ? Container()
+              : CustomWidget.buildProgressIndicator(_isPerformingRequest),
         )
       ],
     );

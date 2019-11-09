@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/service/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/service/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/kindergarten/controller/kindergarten.dart'
@@ -16,6 +16,7 @@ class Accordions extends State<Controller.Kindergarten> {
   List<dynamic> _options;
   final ScrollController _scrollController = ScrollController();
   bool _isPerformingRequest = false;
+  bool _hasInternet = false;
 
   @override
   void initState() {
@@ -40,18 +41,25 @@ class Accordions extends State<Controller.Kindergarten> {
         },
         child: _buildCards(context),
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(
-            bottom: SizeConfig.getSafeBlockVerticalBy(1.5),
-            top: SizeConfig.getSafeBlockVerticalBy(1.5)),
-        child: Text(
-          Kindergarten.FOOTER,
-          style: TextStyle(
-            color: Colors.grey,
-            fontSize: SizeConfig.getSafeBlockVerticalBy(1.4),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(
+                bottom: SizeConfig.getSafeBlockVerticalBy(1.5),
+                top: SizeConfig.getSafeBlockVerticalBy(1.5)),
+            child: Text(
+              Kindergarten.FOOTER,
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: SizeConfig.getSafeBlockVerticalBy(
+                    Default.SUBSTANDARD_FONT_SIZE),
+              ),
+              textAlign: TextAlign.center,
+            ),
           ),
-          textAlign: TextAlign.center,
-        ),
+          !_hasInternet ? CustomWidget.noInternet() : Container()
+        ],
       ),
     );
   }
@@ -101,6 +109,7 @@ class Accordions extends State<Controller.Kindergarten> {
     if (!_isPerformingRequest) {
       setState(() => _isPerformingRequest = true);
 
+      _hasInternet = await Network().hasInternet();
       _kindergarten = await KindergartenClient()
           .getAppointments(DioHTTPClient(), Network());
       _options = List<dynamic>();

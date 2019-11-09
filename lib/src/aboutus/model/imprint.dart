@@ -9,5 +9,5 @@ class Imprint {
     url: json["url"],
   );
 
-  String getName() => "Impressum";
+  String getName() => "Legal";
 }

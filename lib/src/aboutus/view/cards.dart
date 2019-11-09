@@ -42,7 +42,7 @@ class Cards {
                 child: Text(
                   card.description,
                   style: TextStyle(
-                    fontSize: SizeConfig.getSafeBlockVerticalBy(2),
+                    fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
                   ),
                 ),
               ),
@@ -63,7 +63,7 @@ class Cards {
               title: Text(
                 card.getPresbyter(),
                 style: TextStyle(
-                  fontSize: SizeConfig.getSafeBlockVerticalBy(2),
+                  fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
                 ),
               ),
             )
@@ -90,7 +90,7 @@ class Cards {
                   child: Text(  //TODO replace txt with icon for url
                     card.url,
                     style: TextStyle(
-                      fontSize: SizeConfig.getSafeBlockVerticalBy(2),
+                      fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
                     ),
                   ),
                 ),

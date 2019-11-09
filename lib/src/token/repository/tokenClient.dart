@@ -54,7 +54,6 @@ class TokenClient {
             Token.fromJson(jsonDecode(response.data)))
     .catchError((dynamic onError) {
       Crashlytics.instance.log(onError.error.toString());
-      Crashlytics.instance.crash();
     });
   }
 }

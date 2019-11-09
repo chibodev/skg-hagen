@@ -25,7 +25,7 @@ class CustomWidget {
       name,
       style: TextStyle(
         color: Colors.white,
-        fontSize: SizeConfig.getSafeBlockVerticalBy(2.5),
+        fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
         shadows: <Shadow>[
           Shadow(
             offset: Offset(SizeConfig.getSafeBlockVerticalBy(0.2),
@@ -53,7 +53,7 @@ class CustomWidget {
       child: Text(
         title,
         style: TextStyle(
-          fontSize: SizeConfig.getSafeBlockVerticalBy(2),
+          fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
           color: textColor == true ? Colors.white : Colors.black,
         ),
       ),
@@ -71,7 +71,7 @@ class CustomWidget {
         style: TextStyle(
           color: Colors.grey,
           fontWeight: FontWeight.bold,
-          fontSize: SizeConfig.getSafeBlockVerticalBy(2),
+          fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
         ),
       ),
     );
@@ -93,21 +93,21 @@ class CustomWidget {
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: SizeConfig.getSafeBlockVerticalBy(1.7),
+                fontSize: SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
               ),
             ),
             Text(
               address.getStreetAndNumber(),
               style: TextStyle(
                 color: Colors.white,
-                fontSize: SizeConfig.getSafeBlockVerticalBy(1.7),
+                fontSize: SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
               ),
             ),
             Text(
               address.getZipAndCity(),
               style: TextStyle(
                 color: Colors.white,
-                fontSize: SizeConfig.getSafeBlockVerticalBy(1.7),
+                fontSize: SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
               ),
             ),
           ],
@@ -133,7 +133,7 @@ class CustomWidget {
                         ? Color(Default.COLOR_GREEN)
                         : Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: SizeConfig.getSafeBlockVerticalBy(1.7),
+                    fontSize: SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
                   ),
                 )
               : Text(""),
@@ -142,7 +142,7 @@ class CustomWidget {
             style: TextStyle(
               color:
                   textColor == true ? Color(Default.COLOR_GREEN) : Colors.white,
-              fontSize: SizeConfig.getSafeBlockVerticalBy(1.7),
+              fontSize: SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
             ),
           ),
           Text(
@@ -150,7 +150,7 @@ class CustomWidget {
             style: TextStyle(
               color:
                   textColor == true ? Color(Default.COLOR_GREEN) : Colors.white,
-              fontSize: SizeConfig.getSafeBlockVerticalBy(1.7),
+              fontSize: SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
             ),
           ),
         ],
@@ -197,16 +197,17 @@ class CustomWidget {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.white,
-              fontSize: SizeConfig.getSafeBlockVerticalBy(1.7),
+              fontSize: SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(left: twenty, right: twenty, bottom: twenty),
+            padding:
+                EdgeInsets.only(left: twenty, right: twenty, bottom: twenty),
             child: Text(
               opening,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: SizeConfig.getSafeBlockVerticalBy(1.7),
+                fontSize: SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
               ),
             ),
           ),
@@ -318,7 +319,7 @@ class CustomWidget {
         text,
         style: TextStyle(
           color: textColor == true ? Colors.white : Colors.grey,
-          fontSize: SizeConfig.getSafeBlockVerticalBy(1.7),
+          fontSize: SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
         ),
       ),
     );
@@ -360,6 +361,26 @@ class CustomWidget {
           ),
         ),
       ],
+    );
+  }
+
+  static Widget noInternet() {
+    return Container(
+      color: Colors.red,
+      child: Padding(
+        padding: const EdgeInsets.all(1.0),
+        child:
+        ListTile(
+          leading: Icon(Icons.info, color: Colors.white,),
+          title: Text(
+            "Keine Netzverbinding!",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

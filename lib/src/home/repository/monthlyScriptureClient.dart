@@ -1,8 +1,4 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/service/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/home/model/monthlyScripture.dart';
@@ -23,7 +19,7 @@ class MonthlyScriptureClient {
       cacheData: CACHE_DATA,
     );
 
-    if (jsonResponse != null){
+    if (jsonResponse != null) {
       return MonthlyScripture.fromJson(jsonResponse);
     }
 

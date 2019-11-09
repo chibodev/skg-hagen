@@ -15,6 +15,7 @@ class Accordions extends State<Controller.Offer> {
   List<dynamic> _options;
   final ScrollController _scrollController = ScrollController();
   bool _isPerformingRequest = false;
+  bool _hasInternet = false;
 
   @override
   void initState() {
@@ -39,18 +40,26 @@ class Accordions extends State<Controller.Offer> {
         },
         child: _buildCards(context),
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(
-            bottom: SizeConfig.getSafeBlockVerticalBy(1.5),
-            top: SizeConfig.getSafeBlockVerticalBy(1.5)),
-        child: Text(
-          Offers.FOOTER,
-          style: TextStyle(
-            color: Colors.grey,
-            fontSize: SizeConfig.getSafeBlockVerticalBy(1.4),
+      bottomNavigationBar:
+      Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(
+                bottom: SizeConfig.getSafeBlockVerticalBy(1.5),
+                top: SizeConfig.getSafeBlockVerticalBy(1.5)),
+            child: Text(
+              Offers.FOOTER,
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
+              ),
+              textAlign: TextAlign.center,
+            ),
           ),
-          textAlign: TextAlign.center,
-        ),
+          !_hasInternet ? CustomWidget.noInternet() : Container(),
+
+        ],
       ),
     );
   }
@@ -101,6 +110,7 @@ class Accordions extends State<Controller.Offer> {
     if (!_isPerformingRequest) {
       setState(() => _isPerformingRequest = true);
 
+      _hasInternet = await Network().hasInternet();
       _offers = await OfferClient().getOffers(DioHTTPClient(), Network());
       _options = List<dynamic>();
       _options.add(_offers.offers);

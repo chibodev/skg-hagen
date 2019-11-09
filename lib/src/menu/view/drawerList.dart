@@ -79,7 +79,7 @@ class DrawerList {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.all(SizeConfig.getSafeBlockVerticalBy(2.5)),
-            child: Text(text, style: TextStyle(fontFamily: 'Optima', fontSize: SizeConfig.getSafeBlockHorizontalBy(3))),
+            child: Text(text, style: TextStyle(fontFamily: Default.FONT, fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE))),
           ),
         ],
       ),
