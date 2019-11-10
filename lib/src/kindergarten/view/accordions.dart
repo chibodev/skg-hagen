@@ -9,7 +9,6 @@ import 'package:skg_hagen/src/kindergarten/controller/kindergarten.dart'
 import 'package:skg_hagen/src/kindergarten/model/kindergarten.dart';
 import 'package:skg_hagen/src/kindergarten/repository/kindergartenClient.dart';
 import 'package:skg_hagen/src/kindergarten/view/cards.dart';
-import 'package:skg_hagen/src/menu/controller/menu.dart';
 
 class Accordions extends State<Controller.Kindergarten> {
   Kindergarten _kindergarten;

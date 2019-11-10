@@ -55,6 +55,8 @@ flutter:
     - assets/images/lesen.jpg
     - assets/images/spende.jpg
     - assets/images/kontakte.jpg
+    - assets/images/imprint.jpg
+    - assets/images/privacy.jpg
     - assets/images/skg-green.png
     - assets/images/skg.jpg
     - assets/images/kindergarten.jpg

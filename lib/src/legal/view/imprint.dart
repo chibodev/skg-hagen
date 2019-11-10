@@ -1,25 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
-import 'package:skg_hagen/src/common/service/dioHttpClient.dart';
-import 'package:skg_hagen/src/common/service/network.dart';
+import 'package:skg_hagen/src/common/service/assetClient.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
-import 'package:skg_hagen/src/offer/controller/offer.dart' as Controller;
-import 'package:skg_hagen/src/offer/model/offers.dart';
-import 'package:skg_hagen/src/offer/repository/offerClient.dart';
-import 'package:skg_hagen/src/offer/view/cards.dart';
+import 'package:skg_hagen/src/legal/controller/imprint.dart' as Controller;
+import 'package:skg_hagen/src/legal/model/imprint.dart';
+import 'package:skg_hagen/src/legal/repository/legalClient.dart';
+import 'package:skg_hagen/src/legal/view/page.dart';
 
-class Accordions extends State<Controller.Offer> {
-  Offers _offers;
-  List<dynamic> _options;
+class ImprintView extends State<Controller.Imprint> {
+  Imprint _imprint;
   final ScrollController _scrollController = ScrollController();
   bool _isPerformingRequest = false;
-  bool _hasInternet = true;
 
   @override
   void initState() {
     super.initState();
-    _getOffers();
+    _getImprint();
   }
 
   @override
@@ -34,21 +31,14 @@ class Accordions extends State<Controller.Offer> {
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: () async {
-          _getOffers();
+          _getImprint();
         },
-        child: _buildCards(context),
-      ),
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          CustomWidget.getFooter(Offers.FOOTER),
-          !_hasInternet ? CustomWidget.noInternet() : Container(),
-        ],
+        child: _buildContent(context),
       ),
     );
   }
 
-  Widget _buildCards(BuildContext context) {
+  Widget _buildContent(BuildContext context) {
     return CustomScrollView(
       controller: _scrollController,
       slivers: <Widget>[
@@ -58,18 +48,17 @@ class Accordions extends State<Controller.Offer> {
           expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
           backgroundColor: Color(Default.COLOR_GREEN),
           flexibleSpace: FlexibleSpaceBar(
-            title: CustomWidget.getTitle(Offers.NAME),
+            title: CustomWidget.getTitle(Imprint.NAME),
             background: Image.asset(
-              Offers.IMAGE,
+              Imprint.IMAGE,
               fit: BoxFit.cover,
             ),
           ),
         ),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              if (_offers.offers.isEmpty) {
-                return SizedBox(
+        SliverToBoxAdapter(
+          child: _imprint != null
+              ? Page().buildHtml(_imprint.imprint)
+              : SizedBox(
                   height: MediaQuery.of(context).size.height * 2,
                   child: Align(
                     alignment: Alignment.topCenter,
@@ -79,29 +68,17 @@ class Accordions extends State<Controller.Offer> {
                       ),
                     ),
                   ),
-                );
-              }
-              return Cards().buildRows(_options[index]);
-            },
-            childCount: _options?.length ?? 0,
-          ),
+                ),
         ),
       ],
     );
   }
 
-  Future<void> _getOffers() async {
+  Future<void> _getImprint() async {
     if (!_isPerformingRequest) {
       setState(() => _isPerformingRequest = true);
 
-      _hasInternet = await Network().hasInternet();
-      _offers = await OfferClient().getOffers(DioHTTPClient(), Network());
-      _options = List<dynamic>();
-
-      if (_offers != null) {
-        _options.add(_offers.offers);
-        _options.add(_offers.groups);
-      }
+      _imprint = await LegalClient().getImprint(AssetClient());
 
       setState(() {
         _isPerformingRequest = false;

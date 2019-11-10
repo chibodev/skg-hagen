@@ -12,7 +12,6 @@ class News extends StatelessWidget {
 
   const News({Key key, this.context, @required this.news}) : super(key: key);
 
-  //TODO: enable zoom
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);

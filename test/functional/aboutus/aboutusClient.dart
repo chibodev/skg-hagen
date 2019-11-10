@@ -50,8 +50,6 @@ void main() {
     expect(aboutus.presbytery.first.firstname, 'Olympia');
     expect(aboutus.presbytery.first.description, 'She is nice lady');
     expect(aboutus.presbytery.length, 1);
-
-    expect(aboutus.imprint.first.url, 'https://skg-hagen.de/#impressum');
   });
 
   test('AboutUsClient fails and throws Exception', () async {

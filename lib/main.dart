@@ -10,6 +10,8 @@ import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/contacts/controller/contacts.dart';
 import 'package:skg_hagen/src/home/controller/home.dart';
 import 'package:skg_hagen/src/appointment/controller/appointment.dart';
+import 'package:skg_hagen/src/legal/controller/imprint.dart';
+import 'package:skg_hagen/src/legal/controller/privacy.dart';
 import 'package:skg_hagen/src/offer/controller/offer.dart';
 import 'package:skg_hagen/src/kindergarten/controller/kindergarten.dart';
 
@@ -52,6 +54,8 @@ class MyApp extends StatelessWidget {
         Routes.kindergarten: (BuildContext context) => Kindergarten(),
         Routes.contacts: (BuildContext context) => Contacts(),
         Routes.aboutUs: (BuildContext context) => AboutUs(),
+        Routes.imprint: (BuildContext context) => Imprint(),
+        Routes.privacy: (BuildContext context) => Privacy(),
       },
       theme: ThemeData(primaryColor: Colors.white, fontFamily: 'Optima'),
       home: Home(),

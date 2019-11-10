@@ -1,10 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/aboutus/model/history.dart';
-import 'package:skg_hagen/src/aboutus/model/imprint.dart';
 import 'package:skg_hagen/src/aboutus/model/presbytery.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
-import 'package:skg_hagen/src/common/service/tapAction.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 
 class Cards {
@@ -18,10 +17,6 @@ class Cards {
     else if (card is List<Presbytery>)
       for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForPresbytery(card[i]));
-      }
-    else if (card is List<Imprint>)
-      for (int i = 0; i < card.length; i++) {
-        list.add(_buildTileForImprint(card[i]));
       }
 
     return ExpansionTile(
@@ -70,37 +65,6 @@ class Cards {
                 ),
               ),
             )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTileForImprint(Imprint card) {
-    return Material(
-      child: Card(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Flexible(
-              child: InkWell(
-                splashColor: Color(Default.COLOR_GREEN),
-                onTap: () => TapAction().launchURL(card.url),
-                child: Padding(
-                  padding: EdgeInsets.all(
-                    SizeConfig.getSafeBlockVerticalBy(2),
-                  ),
-                  child: Text(
-                    //TODO replace txt with icon for url
-                    card.url,
-                    style: TextStyle(
-                      fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          Default.STANDARD_FONT_SIZE),
-                    ),
-                  ),
-                ),
-              ),
-            ),
           ],
         ),
       ),

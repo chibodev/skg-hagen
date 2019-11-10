@@ -9,7 +9,6 @@ import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
-import 'package:skg_hagen/src/menu/controller/menu.dart';
 
 class Cards extends State<Controller.Appointment> {
   int _indexCounter = 0;

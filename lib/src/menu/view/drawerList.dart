@@ -5,6 +5,8 @@ import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/assetClient.dart';
 import 'package:skg_hagen/src/home/model/cardContent.dart';
 import 'package:skg_hagen/src/home/service/singleCard.dart';
+import 'package:skg_hagen/src/legal/model/imprint.dart';
+import 'package:skg_hagen/src/legal/model/privacy.dart';
 
 class DrawerList {
   static const String LOGO = 'assets/images/skg-green.png';
@@ -41,19 +43,44 @@ class DrawerList {
   static List<Widget> _cardList(BuildContext context, List<CardContent> cards) {
     final List<Widget> list = List<Widget>();
 
-    list.add(_createHeader(
-        () => Navigator.pushReplacementNamed(context, Routes.home)));
+    list.add(
+      _createHeader(
+        () => Navigator.of(context).popAndPushNamed(Routes.home),
+      ),
+    );
 
-    list.add(_createDrawerItem(
+    list.add(
+      _createDrawerItem(
         text: HOME_NAME,
-        onTap: () => Navigator.pushReplacementNamed(context, Routes.home)));
+        onTap: () => Navigator.of(context).popAndPushNamed(Routes.home),
+      ),
+    );
 
     for (int i = 0; i < cards.length; i++) {
-      list.add(_createDrawerItem(
+      list.add(
+        _createDrawerItem(
           text: Default.capitalize(cards[i].title),
           onTap: () =>
-              Navigator.pushReplacementNamed(context, cards[i].routeName)));
+              Navigator.of(context).popAndPushNamed(cards[i].routeName),
+        ),
+      );
     }
+
+    //Legal
+    list.add(
+      _createLegalDrawerItem(
+        text: Imprint.NAME,
+        onTap: () => Navigator.of(context).popAndPushNamed(Routes.imprint),
+      ),
+    );
+
+    list.add(
+      _createLegalDrawerItem(
+        text: Privacy.NAME,
+        onTap: () => Navigator.of(context).popAndPushNamed(Routes.privacy),
+      ),
+    );
+
     return list;
   }
 
@@ -79,7 +106,35 @@ class DrawerList {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.all(SizeConfig.getSafeBlockVerticalBy(2.5)),
-            child: Text(text, style: TextStyle(fontFamily: Default.FONT, fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE))),
+            child: Text(
+              text,
+              style: TextStyle(
+                fontFamily: Default.FONT,
+                fontSize: SizeConfig.getSafeBlockVerticalBy(
+                    Default.STANDARD_FONT_SIZE),
+              ),
+            ),
+          ),
+        ],
+      ),
+      onTap: onTap,
+    );
+  }
+
+  static Widget _createLegalDrawerItem(
+      {String text, GestureTapCallback onTap, bool smallFontSize}) {
+    return ListTile(
+      title: Row(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(left: SizeConfig.getSafeBlockVerticalBy(2.5)),
+            child: Text(
+              text,
+              style: TextStyle(
+                fontFamily: Default.FONT,
+                fontSize: SizeConfig.getSafeBlockVerticalBy(1.5),
+              ),
+            ),
           ),
         ],
       ),

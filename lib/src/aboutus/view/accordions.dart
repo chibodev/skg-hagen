@@ -4,11 +4,10 @@ import 'package:skg_hagen/src/aboutus/model/aboutus.dart';
 import 'package:skg_hagen/src/aboutus/repository/aboutusClient.dart';
 import 'package:skg_hagen/src/aboutus/view/cards.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/service/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/service/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
-import 'package:skg_hagen/src/menu/controller/menu.dart';
 
 class Accordions extends State<Controller.AboutUs> {
   AboutUs _aboutUs;
@@ -68,7 +67,7 @@ class Accordions extends State<Controller.AboutUs> {
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
-              if (_aboutUs.history.isEmpty) {
+              if (_options.isEmpty) {
                 return SizedBox(
                   height: MediaQuery.of(context).size.height * 2,
                   child: Align(
@@ -98,10 +97,9 @@ class Accordions extends State<Controller.AboutUs> {
       _aboutUs = await AboutUsClient().getData(DioHTTPClient(), Network());
 
       _options = List<dynamic>();
-      if(_aboutUs != null) {
+      if (_aboutUs != null) {
         _options.add(_aboutUs.history);
         _options.add(_aboutUs.presbytery);
-        _options.add(_aboutUs.imprint);
       }
 
       setState(() {
