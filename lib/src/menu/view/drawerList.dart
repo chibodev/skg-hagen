@@ -9,7 +9,7 @@ import 'package:skg_hagen/src/legal/model/imprint.dart';
 import 'package:skg_hagen/src/legal/model/privacy.dart';
 
 class DrawerList {
-  static const String LOGO = 'assets/images/skg-green.png';
+  static const String LOGO = 'assets/images/skg-transparent.png';
   static const String HOME_NAME = 'Home';
 
   static Widget getList(BuildContext context) {
@@ -18,20 +18,32 @@ class DrawerList {
     SizeConfig().init(context);
 
     return Drawer(
-      child: FutureBuilder<List<CardContent>>(
-        future: cards,
-        builder:
-            (BuildContext context, AsyncSnapshot<List<CardContent>> response) {
-          if (response.connectionState == ConnectionState.done &&
-              response.data != null) {
-            return _buildListView(context, response.data);
-          }
-          return CircularProgressIndicator(
-            valueColor:
-                AlwaysStoppedAnimation<Color>(Color(Default.COLOR_GREEN)),
-          );
-        },
-      ),
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Color(Default.COLOR_GREEN),
+              Colors.white
+            ]
+          )
+        ),
+        child: FutureBuilder<List<CardContent>>(
+          future: cards,
+          builder:
+              (BuildContext context, AsyncSnapshot<List<CardContent>> response) {
+            if (response.connectionState == ConnectionState.done &&
+                response.data != null) {
+              return _buildListView(context, response.data);
+            }
+            return CircularProgressIndicator(
+              valueColor:
+              AlwaysStoppedAnimation<Color>(Color(Default.COLOR_GREEN)),
+            );
+          },
+        ),
+      )
     );
   }
 
@@ -66,6 +78,8 @@ class DrawerList {
       );
     }
 
+    list.add(Divider());
+
     //Legal
     list.add(
       _createLegalDrawerItem(
@@ -86,12 +100,12 @@ class DrawerList {
 
   static Widget _createHeader(GestureTapCallback onTap) {
     return DrawerHeader(
-      margin: EdgeInsets.all(SizeConfig.getSafeBlockVerticalBy(3)),
+      margin: EdgeInsets.all(SizeConfig.getSafeBlockVerticalBy(1)),
       padding: EdgeInsets.zero,
       child: OverflowBox(
         minWidth: 0.0,
         minHeight: 0.0,
-        maxWidth: SizeConfig.getSafeBlockVerticalBy(18),
+        maxWidth: SizeConfig.getSafeBlockVerticalBy(25),
         child: GestureDetector(
           onTap: onTap,
           child: Image(image: AssetImage(LOGO), fit: BoxFit.cover),
@@ -105,7 +119,10 @@ class DrawerList {
       title: Row(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.all(SizeConfig.getSafeBlockVerticalBy(2.5)),
+            padding: EdgeInsets.only(
+              left: SizeConfig.getSafeBlockVerticalBy(1.5),
+              bottom: SizeConfig.getSafeBlockVerticalBy(0.5),
+            ),
             child: Text(
               text,
               style: TextStyle(
@@ -127,7 +144,9 @@ class DrawerList {
       title: Row(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(left: SizeConfig.getSafeBlockVerticalBy(2.5)),
+            padding: EdgeInsets.only(
+              left: SizeConfig.getSafeBlockVerticalBy(1.5),
+            ),
             child: Text(
               text,
               style: TextStyle(

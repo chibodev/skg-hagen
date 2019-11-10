@@ -58,6 +58,8 @@ flutter:
     - assets/images/imprint.jpg
     - assets/images/privacy.jpg
     - assets/images/skg-green.png
+    - assets/images/skg-gray.png
+    - assets/images/skg-transparent.png
     - assets/images/skg.jpg
     - assets/images/kindergarten.jpg
     - assets/images/johanniskirche.jpg
