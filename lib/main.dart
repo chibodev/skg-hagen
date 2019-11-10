@@ -16,7 +16,7 @@ import 'package:skg_hagen/src/offer/controller/offer.dart';
 import 'package:skg_hagen/src/kindergarten/controller/kindergarten.dart';
 
 void main() async {
-  final bool isInDebugMode = true;
+  final bool isInDebugMode = false;
 
   FlutterError.onError = (FlutterErrorDetails details) {
     if (isInDebugMode) {
