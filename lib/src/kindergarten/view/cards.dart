@@ -23,7 +23,7 @@ class Cards {
     }
 
     return ExpansionTile(
-      title: Text(card.first.getName()),
+      title: CustomWidget.getAccordionTitle(card.first.getName()),
       children: list,
     );
   }
@@ -40,13 +40,13 @@ class Cards {
                 children: <Widget>[
                   CustomWidget.getCardTitle(card.title),
                   CustomWidget.getOccurrence(card.getFormattedOccurrence()),
-                  _getComment(card.comment)
+                  _getComment(card.comment),
+                    (card.address.name == null || card.address.street == null)
+                      ? CustomWidget.getNoLocation()
+                      : CustomWidget.getAddressWithAction(card.address)
                 ],
               ),
             ),
-            (card.address.name == null || card.address.street == null)
-                ? CustomWidget.getNoLocation()
-                : CustomWidget.getAddressWithoutAction(card.address)
           ],
         ),
       ),
@@ -78,14 +78,19 @@ class Cards {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    CustomWidget.getCardTitle(card.title),
-                  ],
-                ),
+                child: Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(1.0),
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.info_outline,
+                        color: Color(Default.COLOR_GREEN),
+                      ),
+                      title: CustomWidget.getCardTitle(card.title),
+                    ),
+                  ),
+                )
               ),
-              CustomWidget.getInfoIcon()
             ],
           ),
         ),

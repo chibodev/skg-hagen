@@ -11,7 +11,8 @@ class News extends StatelessWidget {
   final BuildContext context;
 
   const News({Key key, this.context, @required this.news}) : super(key: key);
-  //TODO: enable zoom and copy text
+
+  //TODO: enable zoom
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -38,15 +39,26 @@ class News extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(left: thirty, right: thirty, top: thirty),
+                    padding: EdgeInsets.only(
+                        left: thirty, right: thirty, top: thirty),
                     child: Text(
                       news.title,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: SizeConfig.getSafeBlockVerticalBy(
+                            Default.STANDARD_FONT_SIZE),
+                      ),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.all(thirty),
-                    child: Text(news.description),
+                    child: SelectableText(
+                      news.description,
+                      style: TextStyle(
+                        fontSize: SizeConfig.getSafeBlockVerticalBy(
+                            Default.STANDARD_FONT_SIZE),
+                      ),
+                    ),
                   ),
                 ],
               ),

@@ -28,9 +28,7 @@ class Cards {
     }
 
     return ExpansionTile(
-      title: Text(
-        card.first.getName(),
-      ),
+      title: CustomWidget.getAccordionTitle(card.first.getName()),
       children: list,
     );
   }
@@ -51,12 +49,12 @@ class Cards {
                     width: SizeConfig.getSafeBlockHorizontalBy(100),
                     child: CustomWidget.getImageByName(card.name),
                   ),
+                  (card.street == null || card.name == null)
+                      ? CustomWidget.getNoLocation()
+                      : CustomWidget.getAddressWithAction(card)
                 ],
               ),
             ),
-            (card.street == null || card.name == null)
-                ? CustomWidget.getNoLocation()
-                : CustomWidget.getAddressWithAction(card)
           ],
         ),
       ),

@@ -26,10 +26,6 @@ class Cards {
             future: _getText(),
             builder: (BuildContext context,
                 AsyncSnapshot<MonthlyScripture> response) {
-              if (response.connectionState == ConnectionState.none) {
-                print('monthlyverse snapshot data is: ${response.data}');
-                return Text('');
-              }
               if (response.connectionState == ConnectionState.done &&
                   response.data != null) {
                 return Center(
@@ -38,14 +34,14 @@ class Cards {
                             text: response.data.getModifiedText(),
                             style: TextStyle(
                                 fontSize: SizeConfig.getSafeBlockVerticalBy(
-                                    Default.STANDARD_FONT_SIZE),
+                                    2.3),
                                 color: Colors.white,
                                 fontFamily: Default.FONT),
                             children: <TextSpan>[
                       TextSpan(
                           text: response.data.getFormattedBook(),
                           style: TextStyle(
-                              fontSize: 10,
+                              fontSize: SizeConfig.getSafeBlockVerticalBy(1.5),
                               color: Colors.white,
                               fontFamily: Default.FONT))
                     ])));
@@ -96,13 +92,13 @@ class Cards {
   }
 
   Widget _buildRows(CardContent card) {
-    final double thirtyPercent = SizeConfig.getSafeBlockVerticalBy(2.5);
-    final double tenPercent = SizeConfig.getSafeBlockHorizontalBy(1);
+    final double thirtyPercent = SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE);
+    final double tenPercent = SizeConfig.getSafeBlockHorizontalBy(Default.SUBSTANDARD_FONT_SIZE);
 
     return Material(
-      child: GestureDetector(
+      child: InkWell(
         onTap: () =>
-            Navigator.pushReplacementNamed(this._context, card.routeName),
+        Navigator.of(this._context).pushNamed(card.routeName),
         child: Card(
           child: Column(
             mainAxisSize: MainAxisSize.min,

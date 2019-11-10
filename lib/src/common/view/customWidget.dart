@@ -53,7 +53,8 @@ class CustomWidget {
       child: Text(
         title,
         style: TextStyle(
-          fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+          fontSize:
+              SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
           color: textColor == true ? Colors.white : Colors.black,
         ),
       ),
@@ -65,13 +66,15 @@ class CustomWidget {
       padding: EdgeInsets.only(
         left: SizeConfig.getSafeBlockVerticalBy(2),
         top: SizeConfig.getSafeBlockVerticalBy(1),
+        bottom: SizeConfig.getSafeBlockVerticalBy(1),
       ),
       child: Text(
         occurrence,
         style: TextStyle(
           color: Colors.grey,
           fontWeight: FontWeight.bold,
-          fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+          fontSize:
+              SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
         ),
       ),
     );
@@ -79,9 +82,9 @@ class CustomWidget {
 
   static Container getAddressWithAction(Address address) {
     return Container(
-      color: Color(Default.COLOR_GREEN),
-      width: SizeConfig.getSafeBlockVerticalBy(17),
+      width: SizeConfig.screenHeight,
       height: SizeConfig.getSafeBlockHorizontalBy(22.5),
+      decoration: BoxDecoration(color: Color(Default.COLOR_GREEN)),
       child: InkWell(
         splashColor: Color(Default.COLOR_GREEN),
         onTap: () => TapAction().openMap(address.latLong, address.name),
@@ -93,21 +96,24 @@ class CustomWidget {
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
+                fontSize: SizeConfig.getSafeBlockVerticalBy(
+                    Default.SUBSTANDARD_FONT_SIZE),
               ),
             ),
             Text(
               address.getStreetAndNumber(),
               style: TextStyle(
                 color: Colors.white,
-                fontSize: SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
+                fontSize: SizeConfig.getSafeBlockVerticalBy(
+                    Default.SUBSTANDARD_FONT_SIZE),
               ),
             ),
             Text(
               address.getZipAndCity(),
               style: TextStyle(
                 color: Colors.white,
-                fontSize: SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
+                fontSize: SizeConfig.getSafeBlockVerticalBy(
+                    Default.SUBSTANDARD_FONT_SIZE),
               ),
             ),
           ],
@@ -116,44 +122,35 @@ class CustomWidget {
     );
   }
 
-  static Container getAddressWithoutAction(Address address,
+  static Widget getAddressWithoutAction(Address address,
       {bool noColor, bool textColor}) {
-    return Container(
-      color: noColor == true ? Colors.white : Color(Default.COLOR_GREEN),
-      width: SizeConfig.getSafeBlockVerticalBy(17),
-      height: SizeConfig.getSafeBlockHorizontalBy(22.5),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          address.name != null
-              ? Text(
-                  Default.capitalize(address.name),
-                  style: TextStyle(
-                    color: textColor == true
-                        ? Color(Default.COLOR_GREEN)
-                        : Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
-                  ),
-                )
-              : Text(""),
-          Text(
-            address.getStreetAndNumber(),
-            style: TextStyle(
-              color:
-                  textColor == true ? Color(Default.COLOR_GREEN) : Colors.white,
-              fontSize: SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
+    return Expanded(
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              address.getStreetAndNumber(),
+              style: TextStyle(
+                color: textColor == false
+                    ? Color(Default.COLOR_GREEN)
+                    : Colors.white,
+                fontSize: SizeConfig.getSafeBlockVerticalBy(
+                    Default.SUBSTANDARD_FONT_SIZE),
+              ),
             ),
-          ),
-          Text(
-            address.getZipAndCity(),
-            style: TextStyle(
-              color:
-                  textColor == true ? Color(Default.COLOR_GREEN) : Colors.white,
-              fontSize: SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
+            Text(
+              address.getZipAndCity(),
+              style: TextStyle(
+                color: textColor == false
+                    ? Color(Default.COLOR_GREEN)
+                    : Colors.white,
+                fontSize: SizeConfig.getSafeBlockVerticalBy(
+                    Default.SUBSTANDARD_FONT_SIZE),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -161,7 +158,7 @@ class CustomWidget {
   static Container getInfoIcon() {
     return Container(
       color: Color(Default.COLOR_GREEN),
-      width: SizeConfig.getSafeBlockVerticalBy(17),
+      width: SizeConfig.screenHeight,
       height: SizeConfig.getSafeBlockHorizontalBy(22.5),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -178,40 +175,45 @@ class CustomWidget {
   static Container getNoLocation() {
     return Container(
       color: Color(Default.COLOR_GREEN),
-      width: SizeConfig.getSafeBlockVerticalBy(17),
+      width: SizeConfig.screenHeight,
       height: SizeConfig.getSafeBlockHorizontalBy(22.5),
     );
   }
 
-  static Container getOpening(String opening, {bool colorWhite}) {
+  static Widget getOpening(String opening, {bool colorWhite}) {
     final double twenty = SizeConfig.getSafeBlockVerticalBy(2);
-    return Container(
-      color: Color(Default.COLOR_GREEN),
-      width: SizeConfig.getSafeBlockVerticalBy(17),
-      height: SizeConfig.getSafeBlockHorizontalBy(22.5),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'Öffnungszeiten',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              fontSize: SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
-            ),
-          ),
-          Padding(
-            padding:
-                EdgeInsets.only(left: twenty, right: twenty, bottom: twenty),
-            child: Text(
-              opening,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
+    return Expanded(
+      child: Container(
+        color: Color(Default.COLOR_GREEN),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(twenty),
+              child: Text(
+                'Öffnungszeiten',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: SizeConfig.getSafeBlockVerticalBy(
+                      Default.SUBSTANDARD_FONT_SIZE),
+                ),
               ),
             ),
-          ),
-        ],
+            Padding(
+              padding:
+                  EdgeInsets.only(left: twenty, right: twenty, bottom: twenty),
+              child: Text(
+                opening,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: SizeConfig.getSafeBlockVerticalBy(
+                      Default.SUBSTANDARD_FONT_SIZE),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -221,13 +223,18 @@ class CustomWidget {
       padding: EdgeInsets.only(
         left: SizeConfig.getSafeBlockVerticalBy(2),
         top: SizeConfig.getSafeBlockVerticalBy(1),
+        bottom: SizeConfig.getSafeBlockVerticalBy(2),
       ),
       child: Row(
         children: <Widget>[
           Text(
             organizer,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(color: Colors.grey),
+            style: TextStyle(
+              color: Colors.grey,
+              fontSize: SizeConfig.getSafeBlockVerticalBy(
+                  Default.SUBSTANDARD_FONT_SIZE),
+            ),
           ),
           InkWell(
             splashColor: Color(Default.COLOR_GREEN),
@@ -239,7 +246,7 @@ class CustomWidget {
               child: Icon(
                 Icons.email,
                 color: Colors.grey,
-                size: SizeConfig.getSafeBlockVerticalBy(3),
+                size: SizeConfig.getSafeBlockVerticalBy(4),
                 semanticLabel: 'Email',
               ),
             ),
@@ -319,7 +326,8 @@ class CustomWidget {
         text,
         style: TextStyle(
           color: textColor == true ? Colors.white : Colors.grey,
-          fontSize: SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
+          fontSize:
+              SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
         ),
       ),
     );
@@ -369,18 +377,46 @@ class CustomWidget {
       color: Colors.red,
       child: Padding(
         padding: const EdgeInsets.all(1.0),
-        child:
-        ListTile(
-          leading: Icon(Icons.info, color: Colors.white,),
+        child: ListTile(
+          leading: Icon(
+            Icons.info,
+            color: Colors.white,
+          ),
           title: Text(
             "Keine Netzverbinding!",
             style: TextStyle(
               color: Colors.white,
-              fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+              fontSize:
+                  SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  static Padding getFooter(String text) {
+    return Padding(
+      padding: EdgeInsets.all(SizeConfig.getSafeBlockVerticalBy(1.5)),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: Colors.grey,
+          fontSize:
+              SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  static Widget getAccordionTitle(String name) {
+    return Text(
+        name,
+        style: TextStyle(
+          fontSize:
+              SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+        ),
     );
   }
 }

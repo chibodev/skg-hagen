@@ -15,7 +15,7 @@ class Accordions extends State<Controller.Contacts> {
   List<dynamic> _options;
   final ScrollController _scrollController = ScrollController();
   bool _isPerformingRequest = false;
-  bool _hasInternet = false;
+  bool _hasInternet = true;
 
   @override
   void initState() {
@@ -33,7 +33,6 @@ class Accordions extends State<Controller.Contacts> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      drawer: Menu(),
       body: RefreshIndicator(
         onRefresh: () async {
           _getContacts();
@@ -101,10 +100,11 @@ class Accordions extends State<Controller.Contacts> {
         Network(),
       );
       _options = List<dynamic>();
-      _options.add(_contacts.address);
-      _options.add(_contacts.contact);
-      _options.add(_contacts.social);
-
+      if (_contacts != null) {
+        _options.add(_contacts.address);
+        _options.add(_contacts.contact);
+        _options.add(_contacts.social);
+      }
       setState(() {
         _isPerformingRequest = false;
       });

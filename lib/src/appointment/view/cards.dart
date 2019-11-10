@@ -16,7 +16,7 @@ class Cards extends State<Controller.Appointment> {
   Appointments appointments;
   final ScrollController _scrollController = ScrollController();
   bool _isPerformingRequest = false;
-  bool _hasInternet = false;
+  bool _hasInternet = true;
 
   @override
   void initState() {
@@ -40,7 +40,6 @@ class Cards extends State<Controller.Appointment> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      drawer: Menu(),
       body: RefreshIndicator(
         onRefresh: () async {
           _getInitialAppointments();
@@ -89,11 +88,9 @@ class Cards extends State<Controller.Appointment> {
   Future<void> _getMoreAppointments() async {
     if (!_isPerformingRequest) {
       setState(() => _isPerformingRequest = true);
-      _hasInternet = true;
 
-      final bool hasInternet = await Network().hasInternet();
-      if (!hasInternet) {
-        _hasInternet = false;
+      _hasInternet = await Network().hasInternet();
+      if (!_hasInternet) {
         _isPerformingRequest = false;
       } else {
         final Appointments newAppointments = await AppointmentClient()
@@ -153,7 +150,7 @@ class Cards extends State<Controller.Appointment> {
           ),
         ),
         SliverToBoxAdapter(
-          child: (_hasInternet)
+          child: (!_hasInternet)
               ? Container()
               : CustomWidget.buildProgressIndicator(_isPerformingRequest),
         )
@@ -173,11 +170,11 @@ class Cards extends State<Controller.Appointment> {
                 children: <Widget>[
                   CustomWidget.getCardTitle(card.title),
                   CustomWidget.getOccurrence(card.getFormattedTime()),
-                  CustomWidget.getCardSubtitle(card.getFormattedOrganiser())
+                  CustomWidget.getCardSubtitle(card.getFormattedOrganiser()),
+                  CustomWidget.getAddressWithAction(card.address)
                 ],
               ),
             ),
-            CustomWidget.getAddressWithAction(card.address)
           ],
         ),
       ),

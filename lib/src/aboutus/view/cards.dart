@@ -5,6 +5,7 @@ import 'package:skg_hagen/src/aboutus/model/presbytery.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
+import 'package:skg_hagen/src/common/view/customWidget.dart';
 
 class Cards {
   Widget buildRows(dynamic card) {
@@ -24,7 +25,7 @@ class Cards {
       }
 
     return ExpansionTile(
-      title: Text(card.first.getName()),
+      title: CustomWidget.getAccordionTitle(card.first.getName()),
       children: list,
     );
   }
@@ -39,10 +40,11 @@ class Cards {
             Flexible(
               child: Padding(
                 padding: EdgeInsets.all(thirty),
-                child: Text(
+                child: SelectableText(
                   card.description,
                   style: TextStyle(
-                    fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+                    fontSize: SizeConfig.getSafeBlockVerticalBy(
+                        Default.STANDARD_FONT_SIZE),
                   ),
                 ),
               ),
@@ -63,7 +65,8 @@ class Cards {
               title: Text(
                 card.getPresbyter(),
                 style: TextStyle(
-                  fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+                  fontSize: SizeConfig.getSafeBlockVerticalBy(
+                      Default.STANDARD_FONT_SIZE),
                 ),
               ),
             )
@@ -87,10 +90,12 @@ class Cards {
                   padding: EdgeInsets.all(
                     SizeConfig.getSafeBlockVerticalBy(2),
                   ),
-                  child: Text(  //TODO replace txt with icon for url
+                  child: Text(
+                    //TODO replace txt with icon for url
                     card.url,
                     style: TextStyle(
-                      fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+                      fontSize: SizeConfig.getSafeBlockVerticalBy(
+                          Default.STANDARD_FONT_SIZE),
                     ),
                   ),
                 ),

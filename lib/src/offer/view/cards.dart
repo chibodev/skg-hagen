@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:skg_hagen/src/common/model/default.dart';
+import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/model/offer.dart';
 
@@ -16,7 +18,7 @@ class Cards {
       }
 
     return ExpansionTile(
-      title: Text(card.first.getName()),
+      title: CustomWidget.getAccordionTitle(card.first.getName()),
       children: list,
     );
   }
@@ -36,12 +38,13 @@ class Cards {
                   CustomWidget.getOccurrence(card.getFormattedOccurrence()),
                   CustomWidget.getEmail(
                       card.getFormattedOrganiser(), card.email, card.title),
+                  (card.address.street == null || card.address.name == null)
+                      ? CustomWidget.getNoLocation()
+                      : CustomWidget.getAddressWithAction(card.address),
                 ],
               ),
             ),
-            (card.address.street == null || card.address.name == null)
-                ? CustomWidget.getNoLocation()
-                : CustomWidget.getAddressWithAction(card.address)
+
           ],
         ),
       ),
@@ -60,10 +63,11 @@ class Cards {
                 children: <Widget>[
                   CustomWidget.getCardTitle(card.title),
                   CustomWidget.getOccurrence(card.getFormattedOccurrence()),
+                  CustomWidget.getAddressWithAction(card.address),
                 ],
               ),
             ),
-            CustomWidget.getAddressWithAction(card.address)
+
           ],
         ),
       ),

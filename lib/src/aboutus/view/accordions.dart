@@ -15,6 +15,7 @@ class Accordions extends State<Controller.AboutUs> {
   List<dynamic> _options;
   final ScrollController _scrollController = ScrollController();
   bool _isPerformingRequest = false;
+  bool _hasInternet = true;
 
   @override
   void initState() {
@@ -32,12 +33,17 @@ class Accordions extends State<Controller.AboutUs> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      drawer: Menu(),
       body: RefreshIndicator(
         onRefresh: () async {
           _getAboutUs();
         },
         child: _buildCards(context),
+      ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          !_hasInternet ? CustomWidget.noInternet() : Container()
+        ],
       ),
     );
   }
@@ -88,11 +94,15 @@ class Accordions extends State<Controller.AboutUs> {
     if (!_isPerformingRequest) {
       setState(() => _isPerformingRequest = true);
 
+      _hasInternet = await Network().hasInternet();
       _aboutUs = await AboutUsClient().getData(DioHTTPClient(), Network());
+
       _options = List<dynamic>();
-      _options.add(_aboutUs.history);
-      _options.add(_aboutUs.presbytery);
-      _options.add(_aboutUs.imprint);
+      if(_aboutUs != null) {
+        _options.add(_aboutUs.history);
+        _options.add(_aboutUs.presbytery);
+        _options.add(_aboutUs.imprint);
+      }
 
       setState(() {
         _isPerformingRequest = false;

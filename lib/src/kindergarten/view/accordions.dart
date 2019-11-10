@@ -16,7 +16,7 @@ class Accordions extends State<Controller.Kindergarten> {
   List<dynamic> _options;
   final ScrollController _scrollController = ScrollController();
   bool _isPerformingRequest = false;
-  bool _hasInternet = false;
+  bool _hasInternet = true;
 
   @override
   void initState() {
@@ -34,7 +34,6 @@ class Accordions extends State<Controller.Kindergarten> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      drawer: Menu(),
       body: RefreshIndicator(
         onRefresh: () async {
           _getInfos();
@@ -44,20 +43,7 @@ class Accordions extends State<Controller.Kindergarten> {
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(
-                bottom: SizeConfig.getSafeBlockVerticalBy(1.5),
-                top: SizeConfig.getSafeBlockVerticalBy(1.5)),
-            child: Text(
-              Kindergarten.FOOTER,
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: SizeConfig.getSafeBlockVerticalBy(
-                    Default.SUBSTANDARD_FONT_SIZE),
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
+          CustomWidget.getFooter(Kindergarten.FOOTER),
           !_hasInternet ? CustomWidget.noInternet() : Container()
         ],
       ),
@@ -112,10 +98,13 @@ class Accordions extends State<Controller.Kindergarten> {
       _hasInternet = await Network().hasInternet();
       _kindergarten = await KindergartenClient()
           .getAppointments(DioHTTPClient(), Network());
-      _options = List<dynamic>();
-      _options.add(_kindergarten.events);
-      _options.add(_kindergarten.news);
 
+      _options = List<dynamic>();
+
+      if (_kindergarten != null) {
+        _options.add(_kindergarten.events);
+        _options.add(_kindergarten.news);
+      }
       setState(() {
         _isPerformingRequest = false;
       });

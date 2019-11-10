@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/service/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/service/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/menu/controller/menu.dart';
@@ -15,7 +15,7 @@ class Accordions extends State<Controller.Offer> {
   List<dynamic> _options;
   final ScrollController _scrollController = ScrollController();
   bool _isPerformingRequest = false;
-  bool _hasInternet = false;
+  bool _hasInternet = true;
 
   @override
   void initState() {
@@ -33,32 +33,17 @@ class Accordions extends State<Controller.Offer> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      drawer: Menu(),
       body: RefreshIndicator(
         onRefresh: () async {
           _getOffers();
         },
         child: _buildCards(context),
       ),
-      bottomNavigationBar:
-      Column(
+      bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(
-                bottom: SizeConfig.getSafeBlockVerticalBy(1.5),
-                top: SizeConfig.getSafeBlockVerticalBy(1.5)),
-            child: Text(
-              Offers.FOOTER,
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
+          CustomWidget.getFooter(Offers.FOOTER),
           !_hasInternet ? CustomWidget.noInternet() : Container(),
-
         ],
       ),
     );
@@ -113,8 +98,11 @@ class Accordions extends State<Controller.Offer> {
       _hasInternet = await Network().hasInternet();
       _offers = await OfferClient().getOffers(DioHTTPClient(), Network());
       _options = List<dynamic>();
-      _options.add(_offers.offers);
-      _options.add(_offers.groups);
+
+      if (_offers != null) {
+        _options.add(_offers.offers);
+        _options.add(_offers.groups);
+      }
 
       setState(() {
         _isPerformingRequest = false;

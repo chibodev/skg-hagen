@@ -40,7 +40,7 @@ class Address {
         'room': room == null ? null : this.room,
       };
 
-  String getName() => "Addresse";
+  String getName() => "Adresse";
 
   String getStreetAndNumber() {
     return '$street $houseNumber';
