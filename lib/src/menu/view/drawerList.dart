@@ -23,7 +23,7 @@ class DrawerList {
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [
+            colors: <Color>[
               Color(Default.COLOR_GREEN),
               Colors.white
             ]

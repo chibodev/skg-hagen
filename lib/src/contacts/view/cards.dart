@@ -289,14 +289,14 @@ class Cards {
     if (name.contains('johannis')) {
       image = Image.asset(
         Address.MAP_IMAGE_JOHANNISKIRCHE,
-        fit: BoxFit.fill,
+        fit: BoxFit.contain,
       );
     }
 
     if (name.contains('markus')) {
       image = Image.asset(
         Address.MAP_IMAGE_MARKUSKIRCHE,
-        fit: BoxFit.fill,
+        fit: BoxFit.contain,
       );
     }
 

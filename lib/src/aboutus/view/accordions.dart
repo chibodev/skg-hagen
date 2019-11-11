@@ -60,7 +60,7 @@ class Accordions extends State<Controller.AboutUs> {
             title: CustomWidget.getTitle(AboutUs.NAME),
             background: Image.asset(
               AboutUs.IMAGE,
-              fit: BoxFit.cover,
+              fit: BoxFit.scaleDown,
             ),
           ),
         ),

@@ -11,7 +11,7 @@ angebote:
     - gruppen
     - kreisen
     - musik
-  image: assets/images/angebote.jpg
+  image: assets/images/gruppen.jpg
   route: offer
 
 ev.kindergarten:

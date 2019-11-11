@@ -21,26 +21,26 @@ class CustomWidget {
     );
   }
 
-  static Text getTitle(String name) {
+  static Text getTitle(String name, {bool noShadow, Color color, Color shadowInner, Color shadowOuter}) {
     return Text(
       name,
       style: TextStyle(
-        color: Colors.white,
+        color: (color != null) ? color : Colors.white,
         fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
-        shadows: <Shadow>[
+        shadows: noShadow == null ? <Shadow>[
           Shadow(
             offset: Offset(SizeConfig.getSafeBlockVerticalBy(0.2),
                 SizeConfig.getSafeBlockVerticalBy(0.2)),
             blurRadius: 3.0,
-            color: Colors.black45,
+            color: shadowInner != null ? shadowInner : Colors.black45,
           ),
           Shadow(
             offset: Offset(SizeConfig.getSafeBlockVerticalBy(0.2),
                 SizeConfig.getSafeBlockVerticalBy(0.2)),
             blurRadius: 8.0,
-            color: Colors.black45,
+            color: shadowOuter != null ? shadowOuter : Colors.black45,
           ),
-        ],
+        ] : <Shadow>[],
       ),
     );
   }

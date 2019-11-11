@@ -53,6 +53,7 @@ class Accordions extends State<Controller.Contacts> {
       slivers: <Widget>[
         SliverAppBar(
           pinned: true,
+          iconTheme: IconThemeData(color: Colors.white),
           expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
           backgroundColor: Color(Default.COLOR_GREEN),
           flexibleSpace: FlexibleSpaceBar(
