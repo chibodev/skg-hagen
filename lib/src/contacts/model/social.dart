@@ -1,4 +1,6 @@
 class Social {
+  static const String FACEBOOK = 'assets/images/icon/facebook.png';
+
   String name;
   String url;
 

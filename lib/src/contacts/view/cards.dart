@@ -47,7 +47,7 @@ class Cards {
                     padding: EdgeInsets.zero,
                     height: SizeConfig.getSafeBlockVerticalBy(14),
                     width: SizeConfig.getSafeBlockHorizontalBy(100),
-                    child: CustomWidget.getImageByName(card.name),
+                    child: _getImageByName(card.name),
                   ),
                   (card.street == null || card.name == null)
                       ? CustomWidget.getNoLocation()
@@ -71,13 +71,13 @@ class Cards {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             card.administration == 0
-                ? CustomWidget.getCircleAvatar(card.imageUrl)
+                ? _getCircleAvatar(card.imageUrl)
                 : Container(),
             _getContacts(card),
             card.administration == 0
-                ? CustomWidget.getAddressWithoutAction(card.address,
+                ? _getAddressWithoutAction(card.address,
                     noColor: true, textColor: true)
-                : CustomWidget.getOpening(card.opening, colorWhite: true),
+                : _getOpening(card.opening, colorWhite: true),
           ],
         ),
       ),
@@ -108,7 +108,7 @@ class Cards {
               SizeConfig.getSafeBlockVerticalBy(2),
             ),
             child: Image.asset(
-              'assets/images/icon/facebook.png',
+              Social.FACEBOOK,
               fit: BoxFit.scaleDown,
               width: SizeConfig.getSafeBlockVerticalBy(10),
               height: SizeConfig.getSafeBlockHorizontalBy(10),
@@ -129,9 +129,177 @@ class Cards {
               textColor: card.administration == 0),
           CustomWidget.getCardSubtitle(card.role,
               textColor: card.administration == 0),
-          CustomWidget.getPhoneAndEmail(card.phone, card.email, card.role)
+          _getPhoneAndEmail(card.phone, card.email, card.role)
         ],
       ),
     );
+  }
+
+  Widget _getAddressWithoutAction(Address address,
+      {bool noColor, bool textColor}) {
+    return Expanded(
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              address.getStreetAndNumber(),
+              style: TextStyle(
+                color: textColor == false
+                    ? Color(Default.COLOR_GREEN)
+                    : Colors.white,
+                fontSize: SizeConfig.getSafeBlockVerticalBy(
+                    Default.SUBSTANDARD_FONT_SIZE),
+              ),
+            ),
+            Text(
+              address.getZipAndCity(),
+              style: TextStyle(
+                color: textColor == false
+                    ? Color(Default.COLOR_GREEN)
+                    : Colors.white,
+                fontSize: SizeConfig.getSafeBlockVerticalBy(
+                    Default.SUBSTANDARD_FONT_SIZE),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+   Widget _getOpening(String opening, {bool colorWhite}) {
+    final double twenty = SizeConfig.getSafeBlockVerticalBy(2);
+    return Expanded(
+      child: Container(
+        color: Color(Default.COLOR_GREEN),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(twenty),
+              child: Text(
+                'Öffnungszeiten',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: SizeConfig.getSafeBlockVerticalBy(
+                      Default.SUBSTANDARD_FONT_SIZE),
+                ),
+              ),
+            ),
+            Padding(
+              padding:
+              EdgeInsets.only(left: twenty, right: twenty, bottom: twenty),
+              child: Text(
+                opening,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: SizeConfig.getSafeBlockVerticalBy(
+                      Default.SUBSTANDARD_FONT_SIZE),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Column _getCircleAvatar(String imageUrl) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(
+            left: SizeConfig.getSafeBlockVerticalBy(2),
+          ),
+          child: CircleAvatar(
+            backgroundImage: NetworkImage(
+              imageUrl,
+            ),
+            minRadius: SizeConfig.getSafeBlockVerticalBy(4),
+            maxRadius: SizeConfig.getSafeBlockHorizontalBy(8),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Padding _getPhoneAndEmail(String phone, String email, String title) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: SizeConfig.getSafeBlockVerticalBy(1),
+      ),
+      child: Row(
+        children: <Widget>[
+          phone != ""
+              ? InkWell(
+            splashColor: Color(Default.COLOR_GREEN),
+            onTap: () => TapAction().callMe(phone),
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: SizeConfig.getSafeBlockVerticalBy(1),
+                bottom: SizeConfig.getSafeBlockVerticalBy(1),
+              ),
+              child: Icon(
+                Icons.phone,
+                color: Colors.black,
+                size: SizeConfig.getSafeBlockVerticalBy(3),
+                semanticLabel: 'Phone',
+              ),
+            ),
+          )
+              : Padding(
+            padding: EdgeInsets.only(
+              left: SizeConfig.getSafeBlockVerticalBy(4),
+              bottom: SizeConfig.getSafeBlockVerticalBy(1),
+            ),
+          ),
+          email != ""
+              ? InkWell(
+            splashColor: Color(Default.COLOR_GREEN),
+            onTap: () => TapAction().sendMail(email, title),
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: SizeConfig.getSafeBlockVerticalBy(5),
+                bottom: SizeConfig.getSafeBlockVerticalBy(1),
+              ),
+              child: Icon(
+                Icons.email,
+                color: Colors.black,
+                size: SizeConfig.getSafeBlockVerticalBy(3),
+                semanticLabel: 'Email',
+              ),
+            ),
+          )
+              : Padding(
+            padding: EdgeInsets.only(
+              left: SizeConfig.getSafeBlockVerticalBy(4),
+              bottom: SizeConfig.getSafeBlockVerticalBy(1),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Image _getImageByName(String name) {
+    Image image;
+    if (name.contains('johannis')) {
+      image = Image.asset(
+        Address.MAP_IMAGE_JOHANNISKIRCHE,
+        fit: BoxFit.fill,
+      );
+    }
+
+    if (name.contains('markus')) {
+      image = Image.asset(
+        Address.MAP_IMAGE_MARKUSKIRCHE,
+        fit: BoxFit.fill,
+      );
+    }
+
+    return image;
   }
 }

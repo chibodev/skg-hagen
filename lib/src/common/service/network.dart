@@ -1,6 +1,8 @@
 import 'dart:io';
 
 class Network {
+  static const String NO_INTERNET = 'Keine Netzverbinding!';
+
   Future<bool> hasInternet() async {
     bool hasInternet;
 

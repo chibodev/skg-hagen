@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
-import 'package:skg_hagen/src/common/service/assetClient.dart';
-import 'package:skg_hagen/src/common/service/dioHttpClient.dart';
+import 'package:skg_hagen/src/common/service/client/assetClient.dart';
+import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/home/model/cardContent.dart';
 import 'package:skg_hagen/src/home/model/monthlyScripture.dart';

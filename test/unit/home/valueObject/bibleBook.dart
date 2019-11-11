@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:skg_hagen/src/common/valueObject/bibleBook.dart';
+import 'package:skg_hagen/src/home/valueObject/bibleBook.dart';
 
 void main(){
   test('BibleBook instantiation with correct parameter', (){

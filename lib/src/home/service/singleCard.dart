@@ -1,4 +1,4 @@
-import 'package:skg_hagen/src/common/service/assetClient.dart';
+import 'package:skg_hagen/src/common/service/client/assetClient.dart';
 import 'package:skg_hagen/src/home/model/cardContent.dart';
 import 'package:yaml/yaml.dart';
 

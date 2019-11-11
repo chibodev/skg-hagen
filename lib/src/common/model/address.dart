@@ -1,6 +1,9 @@
 import 'package:skg_hagen/src/common/model/default.dart';
 
 class Address {
+  static const String MAP_IMAGE_JOHANNISKIRCHE = 'assets/images/johanniskirche.jpg';
+  static const String MAP_IMAGE_MARKUSKIRCHE = 'assets/images/markuskirche.jpg';
+
   final String name;
   final String street;
   final String houseNumber;

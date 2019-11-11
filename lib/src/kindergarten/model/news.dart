@@ -9,5 +9,5 @@ class News {
         description: json['description'],
       );
 
-  String getName() => "Mitteilungen";
+  String getName() => "Aktionen";
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
-import 'package:skg_hagen/src/common/service/assetClient.dart';
+import 'package:skg_hagen/src/common/service/client/assetClient.dart';
 import 'package:skg_hagen/src/home/model/cardContent.dart';
 import 'package:skg_hagen/src/home/service/singleCard.dart';
 import 'package:skg_hagen/src/legal/model/imprint.dart';

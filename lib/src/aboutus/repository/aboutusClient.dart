@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:skg_hagen/src/aboutus/model/aboutus.dart';
-import 'package:skg_hagen/src/common/service/dioHttpClient.dart';
+import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 
 class AboutUsClient {

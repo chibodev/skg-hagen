@@ -1,4 +1,6 @@
-import 'package:skg_hagen/src/common/valueObject/bibleBook.dart';
+
+
+import 'package:skg_hagen/src/home/valueObject/bibleBook.dart';
 
 class MonthlyScripture {
   String text;
