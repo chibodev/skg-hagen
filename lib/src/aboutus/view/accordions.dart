@@ -12,20 +12,14 @@ import 'package:skg_hagen/src/common/view/customWidget.dart';
 class Accordions extends State<Controller.AboutUs> {
   AboutUs _aboutUs;
   List<dynamic> _options;
-  final ScrollController _scrollController = ScrollController();
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
+  bool _dataAvailable = false;
 
   @override
   void initState() {
     super.initState();
     _getAboutUs();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
   }
 
   @override
@@ -49,7 +43,6 @@ class Accordions extends State<Controller.AboutUs> {
 
   Widget _buildCards(BuildContext context) {
     return CustomScrollView(
-      controller: _scrollController,
       slivers: <Widget>[
         SliverAppBar(
           pinned: true,
@@ -67,7 +60,7 @@ class Accordions extends State<Controller.AboutUs> {
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
-              if (_options.isEmpty) {
+              if (!_dataAvailable) {
                 return SizedBox(
                   height: MediaQuery.of(context).size.height * 2,
                   child: Align(
@@ -100,6 +93,7 @@ class Accordions extends State<Controller.AboutUs> {
       if (_aboutUs != null) {
         _options.add(_aboutUs.history);
         _options.add(_aboutUs.presbytery);
+        _dataAvailable = true;
       }
 
       setState(() {

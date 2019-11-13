@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/service/cacheInterceptor.dart';
 import 'package:skg_hagen/src/common/service/debugInterceptor.dart';
+import 'package:skg_hagen/src/common/service/environment.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/token/service/tokenInterceptor.dart';
 
@@ -48,7 +49,10 @@ class DioHTTPClient {
     Options options =
         buildCacheOptions(Duration(days: 7), maxStale: Duration(days: 10));
 
-    http.initialiseInterceptors('debug');
+
+    if (!Environment.isProduction()) {
+      http.initialiseInterceptors('debug');
+    }
     http.initialiseInterceptors('cache');
     http.initialiseInterceptors('token');
 

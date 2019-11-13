@@ -10,19 +10,12 @@ import 'package:skg_hagen/src/legal/view/page.dart';
 
 class PrivacyView extends State<Controller.Privacy> {
   Privacy _privacy;
-  final ScrollController _scrollController = ScrollController();
   bool _isPerformingRequest = false;
 
   @override
   void initState() {
     super.initState();
     _getPrivacy();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
   }
 
   @override
@@ -40,7 +33,6 @@ class PrivacyView extends State<Controller.Privacy> {
 
   Widget _buildContent(BuildContext context) {
     return CustomScrollView(
-      controller: _scrollController,
       slivers: <Widget>[
         SliverAppBar(
           pinned: true,

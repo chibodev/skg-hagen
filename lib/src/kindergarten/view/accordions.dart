@@ -13,20 +13,14 @@ import 'package:skg_hagen/src/kindergarten/view/cards.dart';
 class Accordions extends State<Controller.Kindergarten> {
   Kindergarten _kindergarten;
   List<dynamic> _options;
-  final ScrollController _scrollController = ScrollController();
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
+  bool _dataAvailable = false;
 
   @override
   void initState() {
     super.initState();
     _getInfos();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
   }
 
   @override
@@ -51,7 +45,6 @@ class Accordions extends State<Controller.Kindergarten> {
 
   Widget _buildCards(BuildContext context) {
     return CustomScrollView(
-      controller: _scrollController,
       slivers: <Widget>[
         SliverAppBar(
           pinned: true,
@@ -70,7 +63,7 @@ class Accordions extends State<Controller.Kindergarten> {
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
-              if (_kindergarten.news.isEmpty) {
+              if (!_dataAvailable) {
                 return SizedBox(
                   height: MediaQuery.of(context).size.height * 2,
                   child: Align(
@@ -105,6 +98,7 @@ class Accordions extends State<Controller.Kindergarten> {
       if (_kindergarten != null) {
         _options.add(_kindergarten.events);
         _options.add(_kindergarten.news);
+        _dataAvailable = true;
       }
       setState(() {
         _isPerformingRequest = false;

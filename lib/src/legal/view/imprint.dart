@@ -10,19 +10,12 @@ import 'package:skg_hagen/src/legal/view/page.dart';
 
 class ImprintView extends State<Controller.Imprint> {
   Imprint _imprint;
-  final ScrollController _scrollController = ScrollController();
   bool _isPerformingRequest = false;
 
   @override
   void initState() {
     super.initState();
     _getImprint();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
   }
 
   @override
@@ -40,7 +33,6 @@ class ImprintView extends State<Controller.Imprint> {
 
   Widget _buildContent(BuildContext context) {
     return CustomScrollView(
-      controller: _scrollController,
       slivers: <Widget>[
         SliverAppBar(
           pinned: true,

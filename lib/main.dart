@@ -6,7 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skg_hagen/src/aboutus/controller/aboutus.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
+import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
+import 'package:skg_hagen/src/common/service/environment.dart';
 import 'package:skg_hagen/src/contacts/controller/contacts.dart';
 import 'package:skg_hagen/src/home/controller/home.dart';
 import 'package:skg_hagen/src/appointment/controller/appointment.dart';
@@ -16,16 +18,11 @@ import 'package:skg_hagen/src/offer/controller/offer.dart';
 import 'package:skg_hagen/src/kindergarten/controller/kindergarten.dart';
 
 void main() async {
-  final bool isInDebugMode = false;
-
   FlutterError.onError = (FlutterErrorDetails details) {
-    if (isInDebugMode) {
-      // In development mode simply print to console.
+    if (!Environment.isProduction()) {
       FlutterError.dumpErrorToConsole(details);
     } else {
-      // In production mode report to the application zone to report to Crashlytics.
       FlutterError.onError = Crashlytics.instance.recordFlutterError;
-      Crashlytics.instance.setUserEmail('dev@chibo.org');
     }
   };
 
@@ -57,7 +54,7 @@ class MyApp extends StatelessWidget {
         Routes.imprint: (BuildContext context) => Imprint(),
         Routes.privacy: (BuildContext context) => Privacy(),
       },
-      theme: ThemeData(primaryColor: Colors.white, fontFamily: 'Optima'),
+      theme: ThemeData(primaryColor: Colors.white, fontFamily: Default.FONT),
       home: Home(),
     );
   }

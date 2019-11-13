@@ -12,20 +12,14 @@ import 'package:skg_hagen/src/offer/view/cards.dart';
 class Accordions extends State<Controller.Offer> {
   Offers _offers;
   List<dynamic> _options;
-  final ScrollController _scrollController = ScrollController();
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
+  bool _dataAvailable = false;
 
   @override
   void initState() {
     super.initState();
     _getOffers();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
   }
 
   @override
@@ -50,7 +44,6 @@ class Accordions extends State<Controller.Offer> {
 
   Widget _buildCards(BuildContext context) {
     return CustomScrollView(
-      controller: _scrollController,
       slivers: <Widget>[
         SliverAppBar(
           pinned: true,
@@ -68,7 +61,7 @@ class Accordions extends State<Controller.Offer> {
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
-              if (_offers.offers.isEmpty) {
+              if (!_dataAvailable) {
                 return SizedBox(
                   height: MediaQuery.of(context).size.height * 2,
                   child: Align(
@@ -101,6 +94,7 @@ class Accordions extends State<Controller.Offer> {
       if (_offers != null) {
         _options.add(_offers.offers);
         _options.add(_offers.groups);
+        _dataAvailable = true;
       }
 
       setState(() {
