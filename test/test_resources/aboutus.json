@@ -1,0 +1,20 @@
+{
+  "history": [
+    {
+      "description": "Die Ev.-Luth. Stadtkirchengemeinde Hagen\r\nDie Stadtkirchengemeinde Hagen ist die wohl größte Gemeinde in Hagen und umfasst nahezu 8000 Gemeindeglieder."
+    }
+  ],
+  "presbytery": [
+    {
+      "salutation": "Frau",
+      "surname": "Bali",
+      "firstname": "Olympia",
+      "description": "She is nice lady"
+    }
+  ],
+  "imprint": [
+    {
+      "url": "https://skg-hagen.de/#impressum"
+    }
+  ]
+}
