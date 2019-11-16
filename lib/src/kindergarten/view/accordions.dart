@@ -52,8 +52,7 @@ class Accordions extends State<Controller.Kindergarten> {
           backgroundColor: Color(Default.COLOR_GREEN),
           flexibleSpace: FlexibleSpaceBar(
             title: CustomWidget.getTitle(Kindergarten.NAME,
-                color: Colors.black,
-                noShadow: true),
+                color: Colors.black, noShadow: true),
             background: Image.asset(
               Kindergarten.IMAGE,
               fit: BoxFit.cover,
@@ -62,25 +61,17 @@ class Accordions extends State<Controller.Kindergarten> {
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              if (!_dataAvailable) {
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height * 2,
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        Color(Default.COLOR_GREEN),
-                      ),
-                    ),
-                  ),
-                );
-              }
-              return Cards().buildRows(context, _options[index]);
-            },
+            (BuildContext context, int index) => !_dataAvailable
+                ? CustomWidget.buildSliverSpinner(_isPerformingRequest)
+                : Cards().buildRows(context, _options[index]),
             childCount: _options?.length ?? 0,
           ),
         ),
+        !_dataAvailable
+            ? SliverToBoxAdapter(
+                child: CustomWidget.buildSliverSpinner(_isPerformingRequest),
+              )
+            : SliverToBoxAdapter(),
       ],
     );
   }

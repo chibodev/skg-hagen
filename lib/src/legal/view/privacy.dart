@@ -50,18 +50,14 @@ class PrivacyView extends State<Controller.Privacy> {
         SliverToBoxAdapter(
           child: _privacy != null
               ? Page().buildHtml(_privacy.privacy)
-              : SizedBox(
-                  height: MediaQuery.of(context).size.height * 2,
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        Color(Default.COLOR_GREEN),
-                      ),
-                    ),
-                  ),
-                ),
+              : CustomWidget.buildSliverSpinner(_isPerformingRequest),
         ),
+        _privacy == null
+            ? SliverToBoxAdapter(
+          child:
+          CustomWidget.buildSliverSpinner(_isPerformingRequest),
+        )
+            : SliverToBoxAdapter(),
       ],
     );
   }

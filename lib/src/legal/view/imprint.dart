@@ -50,18 +50,14 @@ class ImprintView extends State<Controller.Imprint> {
         SliverToBoxAdapter(
           child: _imprint != null
               ? Page().buildHtml(_imprint.imprint)
-              : SizedBox(
-                  height: MediaQuery.of(context).size.height * 2,
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        Color(Default.COLOR_GREEN),
-                      ),
-                    ),
-                  ),
-                ),
+              : CustomWidget.buildSliverSpinner(_isPerformingRequest),
         ),
+        _imprint == null
+            ? SliverToBoxAdapter(
+          child:
+          CustomWidget.buildSliverSpinner(_isPerformingRequest),
+        )
+            : SliverToBoxAdapter(),
       ],
     );
   }

@@ -10,39 +10,55 @@ class CustomWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Center(
-        child:
-        AnimatedOpacity(
+        child: AnimatedOpacity(
           duration: Duration.zero,
           opacity: _isPerformingRequest ? 1.0 : 0.0,
           child: CircularProgressIndicator(
-            valueColor:
-            AlwaysStoppedAnimation<Color>(Color(Default.COLOR_GREEN)),
+            valueColor: AlwaysStoppedAnimation<Color>(
+              Color(Default.COLOR_GREEN),
+            ),
           ),
         ),
-        ),
+      ),
     );
   }
 
-  static Text getTitle(String name, {bool noShadow, Color color, Color shadowInner, Color shadowOuter}) {
+  static Widget buildSliverSpinner(bool _isPerformingRequest) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Center(
+        child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(
+            Color(Default.COLOR_GREEN),
+          ),
+        ),
+      ),
+    );
+  }
+
+  static Text getTitle(String name,
+      {bool noShadow, Color color, Color shadowInner, Color shadowOuter}) {
     return Text(
       name,
       style: TextStyle(
         color: (color != null) ? color : Colors.white,
         fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
-        shadows: noShadow == null ? <Shadow>[
-          Shadow(
-            offset: Offset(SizeConfig.getSafeBlockVerticalBy(0.2),
-                SizeConfig.getSafeBlockVerticalBy(0.2)),
-            blurRadius: 3.0,
-            color: shadowInner != null ? shadowInner : Colors.black45,
-          ),
-          Shadow(
-            offset: Offset(SizeConfig.getSafeBlockVerticalBy(0.2),
-                SizeConfig.getSafeBlockVerticalBy(0.2)),
-            blurRadius: 8.0,
-            color: shadowOuter != null ? shadowOuter : Colors.black45,
-          ),
-        ] : <Shadow>[],
+        shadows: noShadow == null
+            ? <Shadow>[
+                Shadow(
+                  offset: Offset(SizeConfig.getSafeBlockVerticalBy(0.2),
+                      SizeConfig.getSafeBlockVerticalBy(0.2)),
+                  blurRadius: 3.0,
+                  color: shadowInner != null ? shadowInner : Colors.black45,
+                ),
+                Shadow(
+                  offset: Offset(SizeConfig.getSafeBlockVerticalBy(0.2),
+                      SizeConfig.getSafeBlockVerticalBy(0.2)),
+                  blurRadius: 8.0,
+                  color: shadowOuter != null ? shadowOuter : Colors.black45,
+                ),
+              ]
+            : <Shadow>[],
       ),
     );
   }
@@ -192,11 +208,10 @@ class CustomWidget {
 
   static Widget getAccordionTitle(String name) {
     return Text(
-        name,
-        style: TextStyle(
-          fontSize:
-              SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
-        ),
+      name,
+      style: TextStyle(
+        fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+      ),
     );
   }
 }

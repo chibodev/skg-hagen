@@ -60,25 +60,18 @@ class Accordions extends State<Controller.Offer> {
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              if (!_dataAvailable) {
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height * 2,
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        Color(Default.COLOR_GREEN),
-                      ),
-                    ),
-                  ),
-                );
-              }
-              return Cards().buildRows(_options[index]);
-            },
+            (BuildContext context, int index) => _dataAvailable
+                ? Cards().buildRows(_options[index])
+                : CustomWidget.buildSliverSpinner(_isPerformingRequest),
             childCount: _options?.length ?? 0,
           ),
         ),
+        !_dataAvailable
+            ? SliverToBoxAdapter(
+                child:
+                    CustomWidget.buildSliverSpinner(_isPerformingRequest),
+              )
+            : SliverToBoxAdapter(),
       ],
     );
   }
