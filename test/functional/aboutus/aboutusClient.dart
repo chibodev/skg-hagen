@@ -28,7 +28,10 @@ void main() {
   test('AboutUsClient successfully retrieves data', () async {
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(
-      httpClient.get(
+      httpClient.getResponse(
+        http: httpClient,
+        object: AboutUs,
+        cacheData: anyNamed('cacheData'),
         path: 'app/aboutus',
         options: anyNamed('options'),
       ),
@@ -57,7 +60,10 @@ void main() {
 
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(
-      httpClient.get(
+      httpClient.getResponse(
+        http: httpClient,
+        object: AboutUs,
+        cacheData: anyNamed('cacheData'),
         path: 'app/aboutus',
         options: anyNamed('options'),
       ),

@@ -28,9 +28,12 @@ void main() {
   test('OfferClient successfully retrieves data', () async {
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(
-      httpClient.get(
+      httpClient.getResponse(
+        http: httpClient,
         path: 'app/offers',
+        object: Offers,
         options: anyNamed('options'),
+        cacheData: 'app/offers/data',
       ),
     ).thenAnswer((_) async => HTTPClientMock.getRequest(
         statusCode: HttpStatus.ok, path: 'offers.json'));
@@ -58,7 +61,8 @@ void main() {
     expect(offers.offers.length, 2);
 
     expect(offers.groups, isNotEmpty);
-    expect(offers.groups.last.title, 'Frauenhilfe (Infos bei den Pfarrerinnen)');
+    expect(
+        offers.groups.last.title, 'Frauenhilfe (Infos bei den Pfarrerinnen)');
     expect(offers.groups.last.occurrence, 'Mittwochs');
     expect(offers.groups.last.time, '15:00:00');
     expect(offers.groups.last.placeName, 'markuskirche');
@@ -79,9 +83,12 @@ void main() {
 
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(
-      httpClient.get(
+      httpClient.getResponse(
+        http: httpClient,
         path: 'app/offers',
+        object: Offers,
         options: anyNamed('options'),
+        cacheData: 'app/offers/data',
       ),
     ).thenAnswer((_) async =>
         HTTPClientMock.getRequest(statusCode: HttpStatus.unauthorized));

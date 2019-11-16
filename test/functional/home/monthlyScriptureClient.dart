@@ -27,10 +27,18 @@ void main() {
 
   test('MonthlyScriptureClient successfully retrieves data', () async {
     when(network.hasInternet()).thenAnswer((_) async => false);
-    when(httpClient.get(
-            path: 'app/monthly-devotion', options: anyNamed('options')))
-        .thenAnswer((_) async =>
-            HTTPClientMock.getRequest(statusCode: HttpStatus.ok, path: 'monthlyScripture.json'));
+    when(
+      httpClient.getResponse(
+        http: httpClient,
+        object: MonthlyScripture,
+        cacheData: anyNamed('cacheData'),
+        path: 'app/monthly-devotion',
+        options: anyNamed('options'),
+      ),
+    ).thenAnswer(
+      (_) async => HTTPClientMock.getRequest(
+          statusCode: HttpStatus.ok, path: 'monthlyScripture.json'),
+    );
 
     final MonthlyScripture verse = await subject.getVerse(httpClient, network);
 
@@ -44,10 +52,16 @@ void main() {
     DioError error;
 
     when(network.hasInternet()).thenAnswer((_) async => false);
-    when(httpClient.get(
-            path: 'app/monthly-devotion', options: anyNamed('options')))
-        .thenAnswer((_) async => HTTPClientMock.getRequest(
-            statusCode: HttpStatus.unauthorized));
+    when(
+      httpClient.getResponse(
+        http: httpClient,
+        object: MonthlyScripture,
+        cacheData: anyNamed('cacheData'),
+        path: 'app/monthly-devotion',
+        options: anyNamed('options'),
+      ),
+    ).thenAnswer((_) async =>
+        HTTPClientMock.getRequest(statusCode: HttpStatus.unauthorized));
 
     try {
       await subject.getVerse(httpClient, network);

@@ -27,12 +27,17 @@ void main() {
 
   test('AppointmentClient successfully retrieves data', () async {
     when(network.hasInternet()).thenAnswer((_) async => false);
-    when(httpClient.get(
-            path: 'app/appointments',
-            options: anyNamed('options'),
-            queryParameters: anyNamed('queryParameters')))
-        .thenAnswer((_) async => HTTPClientMock.getRequest(
-            statusCode: HttpStatus.ok, path: 'appointments.json'));
+    when(
+      httpClient.getResponse(
+        http: httpClient,
+        object: Appointments,
+        cacheData: anyNamed('cacheData'),
+        path: 'app/appointments',
+        options: anyNamed('options'),
+        queryParameters: anyNamed('queryParameters'),
+      ),
+    ).thenAnswer((_) async => HTTPClientMock.getRequest(
+        statusCode: HttpStatus.ok, path: 'appointments.json'));
 
     final Appointments appointments = await subject
         .getAppointments(httpClient, network, index: 0, refresh: true);
@@ -63,11 +68,16 @@ void main() {
     DioError error;
 
     when(network.hasInternet()).thenAnswer((_) async => false);
-    when(httpClient.get(
-            path: 'app/appointments',
-            options: anyNamed('options'),
-            queryParameters: anyNamed('queryParameters')))
-        .thenAnswer((_) async =>
+    when(
+      httpClient.getResponse(
+        http: httpClient,
+        object: Appointments,
+        cacheData: anyNamed('cacheData'),
+        path: 'app/appointments',
+        options: anyNamed('options'),
+        queryParameters: anyNamed('queryParameters'),
+      ),
+    ).thenAnswer((_) async =>
             HTTPClientMock.getRequest(statusCode: HttpStatus.unauthorized));
 
     try {

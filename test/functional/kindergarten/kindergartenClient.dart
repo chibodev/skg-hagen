@@ -28,10 +28,12 @@ void main() {
   test('KindergartenClient successfully retrieves data', () async {
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(
-      httpClient.get(
-        path: 'app/kindergarten',
-        options: anyNamed('options'),
-      ),
+      httpClient.getResponse(
+          http: httpClient,
+          path: 'app/kindergarten',
+          object: Kindergarten,
+          options: anyNamed('options'),
+          cacheData: anyNamed('cacheData')),
     ).thenAnswer((_) async => HTTPClientMock.getRequest(
         statusCode: HttpStatus.ok, path: 'kindergarten.json'));
 
@@ -39,10 +41,14 @@ void main() {
         await subject.getAppointments(httpClient, network, refresh: true);
 
     expect(kindergarten.events, isNotEmpty);
-    expect(kindergarten.events.first.title, 'Demonstration gegen Bienensterben');
+    expect(
+        kindergarten.events.first.title, 'Demonstration gegen Bienensterben');
     expect(kindergarten.events.first.occurrence, DateTime.parse('2019-09-27'));
     expect(kindergarten.events.first.time, '00:00:00');
-    expect(kindergarten.events.first.comment.contains('Das sagen die Kinder verschiedener Kitas in Hagen'), true);
+    expect(
+        kindergarten.events.first.comment
+            .contains('Das sagen die Kinder verschiedener Kitas in Hagen'),
+        true);
     expect(kindergarten.events.first.placeName, 'kindergarten');
     expect(kindergarten.events.first.name, 'kindergarten');
     expect(kindergarten.events.first.street, 'Rheinstraße');
@@ -54,7 +60,10 @@ void main() {
 
     expect(kindergarten.news, isNotEmpty);
     expect(kindergarten.news.first.title, 'Aktion der Nächstenliebe');
-    expect(kindergarten.news.first.description.contains('Jedes Jahr findet zu Weihnachten'), true);
+    expect(
+        kindergarten.news.first.description
+            .contains('Jedes Jahr findet zu Weihnachten'),
+        true);
     expect(kindergarten.news.length, 1);
   });
 
@@ -63,15 +72,18 @@ void main() {
 
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(
-      httpClient.get(
-        path: 'app/kindergarten',
-        options: anyNamed('options'),
-      ),
+      httpClient.getResponse(
+          http: httpClient,
+          path: 'app/kindergarten',
+          object: Kindergarten,
+          options: anyNamed('options'),
+          cacheData: anyNamed('cacheData')),
     ).thenAnswer((_) async =>
         HTTPClientMock.getRequest(statusCode: HttpStatus.unauthorized));
 
     try {
-      await subject.getAppointments(httpClient, network, index: 0, refresh: false);
+      await subject.getAppointments(httpClient, network,
+          index: 0, refresh: false);
     } catch (e) {
       error = e;
     }

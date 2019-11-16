@@ -28,7 +28,10 @@ void main() {
   test('ContactsClient successfully retrieves data', () async {
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(
-      httpClient.get(
+      httpClient.getResponse(
+        http: httpClient,
+        cacheData: anyNamed('cacheData'),
+        object: Contacts,
         path: 'app/contact',
         options: anyNamed('options'),
       ),
@@ -56,14 +59,14 @@ void main() {
     expect(contacts.contact.first.phone, '02331 83929');
     expect(contacts.contact.first.email, 'flasshoffen@skg-hagen.de');
     expect(contacts.contact.first.administration, 1);
-    expect(contacts.contact.first.opening, 'Mo, Di, Do und Fr 9-12Uhr | Mi 16 -18 Uhr');
+    expect(contacts.contact.first.opening,
+        'Mo, Di, Do und Fr 9-12Uhr | Mi 16 -18 Uhr');
     expect(contacts.contact.first.street, 'Rheineck');
     expect(contacts.contact.first.houseNumber, '30a');
     expect(contacts.contact.first.zip, '58090');
     expect(contacts.contact.first.city, 'Hagena');
     expect(contacts.contact.first.country, 'DE');
     expect(contacts.contact.length, 1);
-
 
     expect(contacts.social, isEmpty);
   });
@@ -73,7 +76,10 @@ void main() {
 
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(
-      httpClient.get(
+      httpClient.getResponse(
+        http: httpClient,
+        cacheData: anyNamed('cacheData'),
+        object: Contacts,
         path: 'app/contact',
         options: anyNamed('options'),
       ),

@@ -13,8 +13,31 @@ class TokenClient {
   static const String _PATH = 'token';
   static const String CONFIG_FILE = 'assets/config/api.yaml';
 
-  Future<Credentials> getCredentials() async {
-    final String apiCredentials = await AssetClient().loadAsset(CONFIG_FILE);
+  Future<Token> getToken(DioHTTPClient http, AssetClient assetClient) async {
+    http.initialiseInterceptors('debug');
+    http.initialiseInterceptors('cache');
+    final Options options = Options();
+    buildCacheOptions(Duration(minutes: 30), maxStale: Duration(hours: 1));
+    options.contentType = Headers.formUrlEncodedContentType;
+    final Credentials credentials = await _getCredentials(assetClient);
+
+    return await http
+        .post(
+            path: _PATH,
+            data: <String, String>{
+              'username': credentials.username,
+              'password': credentials.password
+            },
+            options: options)
+        .then((Response<dynamic> response) =>
+            Token.fromJson(jsonDecode(response.data)))
+    .catchError((dynamic onError) {
+      Crashlytics.instance.log(onError.error.toString());
+    });
+  }
+
+  Future<Credentials> _getCredentials(AssetClient assetClient) async {
+    final String apiCredentials = await assetClient.loadAsset(CONFIG_FILE);
     final YamlMap apiConfig = loadYaml(apiCredentials);
     final Credentials credentials = Credentials(username: null, password: null);
 
@@ -32,28 +55,5 @@ class TokenClient {
     }
 
     return credentials;
-  }
-
-  Future<Token> getToken(DioHTTPClient http) async {
-    http.initialiseInterceptors('debug');
-    http.initialiseInterceptors('cache');
-    final Options options = Options();
-    buildCacheOptions(Duration(minutes: 30), maxStale: Duration(hours: 1));
-    options.contentType = Headers.formUrlEncodedContentType;
-    final Credentials credentials = await getCredentials();
-
-    return await http
-        .post(
-            path: _PATH,
-            data: <String, String>{
-              'username': credentials.username,
-              'password': credentials.password
-            },
-            options: options)
-        .then((Response<dynamic> response) =>
-            Token.fromJson(jsonDecode(response.data)))
-    .catchError((dynamic onError) {
-      Crashlytics.instance.log(onError.error.toString());
-    });
   }
 }
