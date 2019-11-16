@@ -10,14 +10,16 @@ class CustomWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Center(
-        child: Opacity(
+        child:
+        AnimatedOpacity(
+          duration: Duration.zero,
           opacity: _isPerformingRequest ? 1.0 : 0.0,
           child: CircularProgressIndicator(
             valueColor:
-                AlwaysStoppedAnimation<Color>(Color(Default.COLOR_GREEN)),
+            AlwaysStoppedAnimation<Color>(Color(Default.COLOR_GREEN)),
           ),
         ),
-      ),
+        ),
     );
   }
 
