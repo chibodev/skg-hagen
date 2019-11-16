@@ -1,39 +1,13 @@
-import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
-import 'package:json_annotation/json_annotation.dart';
-
-part 'news.g.dart';
-
-@JsonSerializable()
 class News {
   final String title;
-  final DateTime date;
-  final String content;
-  final String link;
-  @JsonKey(name: 'link_text')
-  final String linkText;
+  final String description;
 
-  News(this.title, this.date, this.content, this.link, this.linkText);
+  News({this.title, this.description});
 
-  factory News.fromJson(Map<String, dynamic> json) => _$NewsFromJson(json);
+  factory News.fromJson(Map<String, dynamic> json) => News(
+        title: json['title'],
+        description: json['description'],
+      );
 
-  Map<String, dynamic> toJson() => _$NewsToJson(this);
-
-  String getFormattedTime() {
-    initializeDateFormatting('de_DE', null);
-    return DateFormat("E d.M.yy", "de_DE")
-        .format(date)
-        .toString()
-        .toUpperCase();
-  }
-
-  String getFormattedDate() {
-    initializeDateFormatting('de_DE', null);
-    return DateFormat("d.M.yy", "de_DE")
-        .format(date)
-        .toString()
-        .toUpperCase();
-  }
-
-  String getName() => "Mitteilungen";
+  String getName() => "Aktionen";
 }

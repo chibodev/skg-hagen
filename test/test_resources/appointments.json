@@ -1,0 +1,36 @@
+{
+  "appointments": [
+    {
+      "title": "EAT & PRAY",
+      "occurrence": "2019-11-02",
+      "time": "12:00:00",
+      "placeName": "johanniskirche",
+      "room": "",
+      "organizer": "",
+      "email": "",
+      "active": "1",
+      "name": "johanniskirche",
+      "street": "Johanniskirchplatz",
+      "houseNumber": "10",
+      "zip": "58095",
+      "city": "Hagen",
+      "country": "DE"
+    },
+    {
+      "title": "Kindergartengottesdienst",
+      "occurrence": "2019-11-06",
+      "time": "14:15:00",
+      "placeName": "markuskirche",
+      "room": "",
+      "organizer": "",
+      "email": "",
+      "active": "1",
+      "name": "markuskirche",
+      "street": "Rheinstraße",
+      "houseNumber": "26",
+      "zip": "58097",
+      "city": "Hagen",
+      "country": "DE"
+    }
+  ]
+}

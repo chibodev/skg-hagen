@@ -1,0 +1,37 @@
+{
+  "events": [
+    {
+      "title": "Demonstration gegen Bienensterben",
+      "occurrence": "2019-09-27",
+      "time": "00:00:00",
+      "comment": "\"Rettet die Bienen!\" - Das sagen die Kinder verschiedener Kitas in Hagen. Auf dem Friedrich-Ebert-Platz haben sie jetzt gegen das Bienensterben demonstriert.",
+      "placeName": "kindergarten",
+      "name": "kindergarten",
+      "street": "Rheinstraße",
+      "houseNumber": "26a",
+      "zip": "58097",
+      "city": "Hagen",
+      "country": "DE"
+    },
+    {
+      "title": "Test without Location",
+      "comment": "",
+      "occurrence": "2019-11-22",
+      "time": "07:00:00",
+      "placeName": "",
+      "createdAt": "2019-11-05 16:20:01",
+      "name": null,
+      "street": null,
+      "houseNumber": null,
+      "zip": null,
+      "city": null,
+      "country": null
+    }
+  ],
+  "news": [
+    {
+      "title": "Aktion der Nächstenliebe",
+      "description": "Jedes Jahr findet zu Weihnachten eine besondere Aktion der Nächstenliebe statt:\r\nJedes Kind erhält leihweise eine kleine Spardose und sammelt Geld für bedürftige Kinder in Hagen. Das von allen Kindern gesammelte Geld wird zu Beginn des nächsten Jahres dem Hagener Kinderschutzbund gespendet. Dieser verwendet es für das Mittagsangebot \\\"Der Suppenkasper\\\": frisch gekochtes Mittagessen für bedürftige Kinder und ihre Familien.\r\nWelch eine schöne Aktion, besonders in der Weihnachtszeit an andere Kinder, die Hilfe brauchen, zu denken!"
+    }
+  ]
+}

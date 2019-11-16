@@ -6,7 +6,6 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Cards cards = new Cards();
-    return cards.getCards(context);
+    return Cards().getCards(context);
   }
 }

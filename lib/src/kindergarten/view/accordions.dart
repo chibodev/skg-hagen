@@ -1,63 +1,99 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/menu/controller/menu.dart';
-import 'package:skg_hagen/src/kindergarten/model/kindergarten.dart';
-import 'package:skg_hagen/src/kindergarten/repository/kindergartenClient.dart';
+import 'package:skg_hagen/src/common/model/default.dart';
+import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
+import 'package:skg_hagen/src/common/service/network.dart';
+import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/kindergarten/controller/kindergarten.dart'
     as Controller;
+import 'package:skg_hagen/src/kindergarten/model/kindergarten.dart';
+import 'package:skg_hagen/src/kindergarten/repository/kindergartenClient.dart';
 import 'package:skg_hagen/src/kindergarten/view/cards.dart';
 
 class Accordions extends State<Controller.Kindergarten> {
+  Kindergarten _kindergarten;
+  List<dynamic> _options;
+  bool _isPerformingRequest = false;
+  bool _hasInternet = true;
+  bool _dataAvailable = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _getInfos();
+  }
+
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
-        drawer: Menu(),
-        appBar: AppBar(
-          title: Text('Ev.Kindergarten'),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          _getInfos();
+        },
+        child: _buildCards(context),
+      ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          CustomWidget.getFooter(Kindergarten.FOOTER),
+          !_hasInternet ? CustomWidget.noInternet() : Container()
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCards(BuildContext context) {
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverAppBar(
+          pinned: true,
+          expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
+          backgroundColor: Color(Default.COLOR_GREEN),
+          flexibleSpace: FlexibleSpaceBar(
+            title: CustomWidget.getTitle(Kindergarten.NAME,
+                color: Colors.black, noShadow: true),
+            background: Image.asset(
+              Kindergarten.IMAGE,
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
-        bottomNavigationBar: Padding(
-            padding: EdgeInsets.only(bottom: 30),
-            child: Text(
-              'Für weitere Infos bitte direkt an das Kindergarten wenden',
-              style: TextStyle(color: Colors.grey, fontSize: 10),
-              textAlign: TextAlign.center,
-            )),
-        body: FutureBuilder(
-            future: getInfos(),
-            builder:
-                (BuildContext context, AsyncSnapshot<Kindergarten> response) {
-              if (response.connectionState == ConnectionState.none &&
-                  response.hasData == null) {
-                print('project snapshot data is: ${response.data}');
-                return Container();
-              }
-              if (response.data != null) {
-                final List<dynamic> options = List<dynamic>();
-                options.add(response.data.events);
-                options.add(response.data.news);
-                return _buildCards(options);
-              }
-              return Container();
-            }));
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) => !_dataAvailable
+                ? CustomWidget.buildSliverSpinner(_isPerformingRequest)
+                : Cards().buildRows(context, _options[index]),
+            childCount: _options?.length ?? 0,
+          ),
+        ),
+        !_dataAvailable
+            ? SliverToBoxAdapter(
+                child: CustomWidget.buildSliverSpinner(_isPerformingRequest),
+              )
+            : SliverToBoxAdapter(),
+      ],
+    );
   }
 
-  Widget _buildCards(List<dynamic> options) {
-    return ListView.builder(
-        padding: EdgeInsets.zero,
-        itemCount: options.length + 1,
-        itemBuilder: (BuildContext context, int index) {
-          if (index == 0) {
-            // return the header
-            return Column(
-              children: <Widget>[Image.asset('assets/images/kindergarten.jpg')],
-            );
-          }
-          index -= 1;
+  Future<void> _getInfos() async {
+    if (!_isPerformingRequest) {
+      setState(() => _isPerformingRequest = true);
 
-          return Cards().buildRows(context, options[index]);
-        });
-  }
+      _hasInternet = await Network().hasInternet();
+      _kindergarten = await KindergartenClient()
+          .getAppointments(DioHTTPClient(), Network());
 
-  Future<Kindergarten> getInfos() async {
-    return await KindergartenClient().getInfos();
+      _options = List<dynamic>();
+
+      if (_kindergarten != null) {
+        _options.add(_kindergarten.events);
+        _options.add(_kindergarten.news);
+        _dataAvailable = true;
+      }
+      setState(() {
+        _isPerformingRequest = false;
+      });
+    }
   }
 }

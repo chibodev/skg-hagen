@@ -1,0 +1,8 @@
+termine:
+  groups:
+    - gottesdienst
+    - veranstaltung
+    - events
+  image: assets/images/termine.jpg
+  route: appointment
+

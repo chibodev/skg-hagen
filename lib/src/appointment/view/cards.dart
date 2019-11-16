@@ -1,97 +1,179 @@
 import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/appointment/controller/appointment.dart'
     as Controller;
-import 'package:skg_hagen/src/appointment/model/appointment.dart' as DTO;
+import 'package:skg_hagen/src/appointment/model/appointment.dart' as Model;
+import 'package:skg_hagen/src/appointment/model/appointments.dart';
 import 'package:skg_hagen/src/appointment/repository/appointmentClient.dart';
-import 'package:skg_hagen/src/common/service/tapAction.dart';
-import 'package:skg_hagen/src/menu/controller/menu.dart';
+import 'package:skg_hagen/src/common/model/default.dart';
+import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
+import 'package:skg_hagen/src/common/service/network.dart';
+import 'package:skg_hagen/src/common/view/customWidget.dart';
 
 class Cards extends State<Controller.Appointment> {
+  int _indexCounter = 0;
+  Appointments appointments;
+  final ScrollController _scrollController = ScrollController();
+  bool _isPerformingRequest = false;
+  bool _hasInternet = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _getInitialAppointments();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        _getMoreAppointments();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Termine'),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          _getInitialAppointments();
+        },
+        child: _buildCards(context, appointments),
       ),
-      drawer: Menu(),
-      body: _buildCards(),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          !_hasInternet ? CustomWidget.noInternet() : Container()
+        ],
+      ),
     );
   }
 
-  Widget _buildCards() {
-    final List<DTO.Appointment> appointments = AppointmentClient().getAppointments();
+  Future<void> _getInitialAppointments() async {
+    if (!_isPerformingRequest) {
+      setState(() => _isPerformingRequest = true);
+      _hasInternet = true;
 
-    return ListView.builder(
-        padding: EdgeInsets.zero,
-        itemCount: appointments.length+1,
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            // return the header
-            return Column(
-              children: <Widget>[Image.asset('assets/images/termine.jpg')],
-            );
-          }
-          index -= 1;
+      appointments = await AppointmentClient()
+          .getAppointments(DioHTTPClient(), Network()); //returns empty list
 
-          return _buildRows(appointments[index]);
-        });
+      final bool status = appointments?.appointments != null;
+      _hasInternet = await Network().hasInternet();
+
+      if (status && appointments.appointments.isEmpty) {
+        final double edge = 50.0;
+        final double offsetFromBottom =
+            _scrollController.position.maxScrollExtent -
+                _scrollController.position.pixels;
+        if (offsetFromBottom < edge) {
+          _scrollController.animateTo(
+              _scrollController.offset - (edge - offsetFromBottom),
+              duration: Duration(milliseconds: 500),
+              curve: Curves.easeOut);
+        }
+      }
+      setState(() {
+        _isPerformingRequest = false;
+        _indexCounter = 1;
+      });
+    }
   }
 
-  Widget _buildRows(DTO.Appointment card) {
-    String organizer = (card.organizer != null) ? 'Infos: ' + card.organizer : '';
+  Future<void> _getMoreAppointments() async {
+    if (!_isPerformingRequest) {
+      setState(() => _isPerformingRequest = true);
+
+      _hasInternet = await Network().hasInternet();
+      if (!_hasInternet) {
+        _isPerformingRequest = false;
+      } else {
+        final Appointments newAppointments = await AppointmentClient()
+            .getAppointments(DioHTTPClient(), Network(),
+                index: _indexCounter); //returns empty list
+
+        final List<Model.Appointment> newEntries = newAppointments.appointments;
+        final bool isResponseEmpty = newEntries.isEmpty;
+        if (isResponseEmpty) {
+          final double edge = 50.0;
+          final double offsetFromBottom =
+              _scrollController.position.maxScrollExtent -
+                  _scrollController.position.pixels;
+          if (offsetFromBottom < edge) {
+            _scrollController.animateTo(
+                _scrollController.offset - (edge - offsetFromBottom),
+                duration: Duration(milliseconds: 500),
+                curve: Curves.easeOut);
+          }
+        }
+        setState(() {
+          _isPerformingRequest = false;
+          if (!isResponseEmpty) {
+            appointments.appointments.addAll(newEntries);
+            _indexCounter++;
+          }
+        });
+      }
+    }
+  }
+
+  Widget _buildCards(BuildContext context, Appointments appointments) {
+    return CustomScrollView(
+      controller: _scrollController,
+      slivers: <Widget>[
+        SliverAppBar(
+          iconTheme: IconThemeData(color: Colors.white),
+          pinned: true,
+          expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
+          backgroundColor: Color(Default.COLOR_GREEN),
+          flexibleSpace: FlexibleSpaceBar(
+            title: CustomWidget.getTitle(Appointments.NAME),
+            background: Image.asset(
+              Appointments.IMAGE,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              return appointments == null
+                  ? CustomWidget.buildProgressIndicator(_isPerformingRequest)
+                  : _buildRows(appointments.appointments[index]);
+            },
+            childCount: appointments?.appointments?.length ?? 0,
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: (!_hasInternet)
+              ? Container()
+              : CustomWidget.buildProgressIndicator(_isPerformingRequest),
+        )
+      ],
+    );
+  }
+
+  Widget _buildRows(Model.Appointment card) {
     return Material(
       child: Card(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 10),
+            Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.all(3.0),
-                    child: Text(card.title),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(3.0),
-                    child: Text(
-                      card.getFormattedTime(),
-                      style: TextStyle(
-                          color: Colors.grey, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(3.0),
-                    child: Text(organizer,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(color: Colors.grey)),
-                  ),
+                  CustomWidget.getCardTitle(card.title),
+                  CustomWidget.getOccurrence(card.getFormattedTime()),
+                  CustomWidget.getCardSubtitle(card.getFormattedOrganiser()),
+                  CustomWidget.getAddressWithAction(card.address)
                 ],
               ),
             ),
-            Container(
-              color: Color(0xFF8EBC6B),
-              width: 125,
-              height: 100,
-              child: InkWell(
-                splashColor: Color(0xFF8EBC6B),
-                onTap: () =>
-                    TapAction().openMap(card.address.churchName),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(card.address.churchName,
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.bold)),
-                    Text(card.address.address1,
-                        style: TextStyle(color: Colors.white)),
-                    Text(card.address.getZipAndCity(),
-                        style: TextStyle(color: Colors.white)),
-                  ],
-                ),
-              ),
-            )
           ],
         ),
       ),

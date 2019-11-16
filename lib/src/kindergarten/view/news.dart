@@ -1,69 +1,70 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/common/service/tapAction.dart';
+import 'package:flutter/rendering.dart';
+import 'package:skg_hagen/src/common/model/default.dart';
+import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/view/customWidget.dart';
+import 'package:skg_hagen/src/kindergarten/model/kindergarten.dart';
 import 'package:skg_hagen/src/kindergarten/model/news.dart' as Model;
-import 'package:skg_hagen/src/menu/controller/menu.dart';
 
 class News extends StatelessWidget {
   final Model.News news;
+  final BuildContext context;
 
-  News({Key key, @required this.news}) : super(key: key);
+  const News({Key key, this.context, @required this.news}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    final double thirty = SizeConfig.getSafeBlockVerticalBy(3.5);
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Mitteilung'),
-      ),
-      body: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints viewportConstraints) {
-          return SingleChildScrollView(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: viewportConstraints.maxHeight,
+      body: Container(
+        child: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              pinned: true,
+              expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
+              backgroundColor: Color(Default.COLOR_GREEN),
+              flexibleSpace: FlexibleSpaceBar(
+                title: CustomWidget.getTitle(this.news.getName()),
+                background: Image.asset(
+                  Kindergarten.IMAGE,
+                  fit: BoxFit.cover,
+                ),
               ),
+            ),
+            SliverToBoxAdapter(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  Image.asset('assets/images/kindergarten.jpg'),
                   Padding(
-                    padding: EdgeInsets.only(left: 30, right: 30, top: 30),
+                    padding: EdgeInsets.only(
+                        left: thirty, right: thirty, top: thirty),
                     child: Text(
-                      news.title + ' - ' + news.getFormattedDate(),
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      news.title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: SizeConfig.getSafeBlockVerticalBy(
+                            Default.STANDARD_FONT_SIZE),
+                      ),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(30),
-                    child: Text(news.content),
+                    padding: EdgeInsets.all(thirty),
+                    child: SelectableText(
+                      news.description,
+                      style: TextStyle(
+                        fontSize: SizeConfig.getSafeBlockVerticalBy(
+                            Default.STANDARD_FONT_SIZE),
+                      ),
+                    ),
                   ),
-                  Divider(),
-                  _setLink(),
                 ],
               ),
             ),
-          );
-        },
-      ),
-      drawer: Menu(),
-    );
-  }
-
-  Widget _setLink() {
-    if (this.news.linkText != null && this.news.link != null) {
-      return InkWell(
-        splashColor: Color(0xFF8EBC6B),
-        onTap: () => TapAction().launchURL(this.news.link),
-        child: Padding(
-          padding: EdgeInsets.all(30),
-          child: Text(
-            news.linkText,
-            style: TextStyle(
-                decoration: TextDecoration.underline, color: Colors.blue),
-          ),
+          ],
         ),
-      );
-    }
-    return Container();
+      ),
+    );
   }
 }

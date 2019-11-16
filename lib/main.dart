@@ -1,28 +1,60 @@
+import 'dart:async';
+
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:skg_hagen/src/aboutus/controller/aboutus.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
+import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
+import 'package:skg_hagen/src/common/service/environment.dart';
+import 'package:skg_hagen/src/contacts/controller/contacts.dart';
 import 'package:skg_hagen/src/home/controller/home.dart';
 import 'package:skg_hagen/src/appointment/controller/appointment.dart';
+import 'package:skg_hagen/src/legal/controller/imprint.dart';
+import 'package:skg_hagen/src/legal/controller/privacy.dart';
 import 'package:skg_hagen/src/offer/controller/offer.dart';
 import 'package:skg_hagen/src/kindergarten/controller/kindergarten.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  FlutterError.onError = (FlutterErrorDetails details) {
+    if (!Environment.isProduction()) {
+      FlutterError.dumpErrorToConsole(details);
+    } else {
+      FlutterError.onError = Crashlytics.instance.recordFlutterError;
+    }
+  };
+
+  runZoned<Future<void>>(() async {
+    SharedPreferences.getInstance().then((SharedPreferences sp) {
+      sharedPreferences = sp;
+
+      SystemChrome.setPreferredOrientations(
+          <DeviceOrientation>[DeviceOrientation.portraitUp]).then((_) {
+        runApp(MyApp());
+      });
+    });
+
+  }, onError: Crashlytics.instance.recordError);
+}
 
 class MyApp extends StatelessWidget {
-  //TODO add cache.
-  // TODO If offline, load from cache (add date of loaded so as to add message if older that X days) otherwise show static offline page
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'skg-hagen',
-      routes: {
+      routes: <String, Widget Function(BuildContext)>{
         Routes.home: (BuildContext context) => Home(),
         Routes.appointment: (BuildContext context) => Appointment(),
         Routes.offer: (BuildContext context) => Offer(),
         Routes.kindergarten: (BuildContext context) => Kindergarten(),
+        Routes.contacts: (BuildContext context) => Contacts(),
+        Routes.aboutUs: (BuildContext context) => AboutUs(),
+        Routes.imprint: (BuildContext context) => Imprint(),
+        Routes.privacy: (BuildContext context) => Privacy(),
       },
-      theme: ThemeData(primaryColor: Colors.white, fontFamily: 'Optima'),
+      theme: ThemeData(primaryColor: Colors.white, fontFamily: Default.FONT),
       home: Home(),
     );
   }

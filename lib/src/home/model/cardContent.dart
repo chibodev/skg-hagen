@@ -1,20 +1,26 @@
+import 'package:flutter/material.dart';
+
 class CardContent {
-  String _title;
-  List _subtitle;
-  String _custom;
-  String _routeName;
+  final String _title;
+  final List<String> _subtitle;
+  final String _custom;
+  final String _routeName;
 
   CardContent(this._title, this._subtitle, this._routeName, [this._custom]);
 
   String get custom => _custom;
 
-  List get subtitle => _subtitle;
+  List<String> get subtitle => _subtitle;
 
   String get joinedSubtitle => _subtitle.join(" | ");
 
   String get title => _title;
 
-  List get subtitleList => _subtitle;
+  List<String> get subtitleList => _subtitle;
 
   String get routeName => _routeName;
+
+  Image getImageAsset() {
+    return (custom != null) ? Image.asset(custom, fit: BoxFit.fitWidth,) : null;
+  }
 }

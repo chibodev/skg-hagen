@@ -1,12 +1,10 @@
-import 'dart:io';
-
-import 'package:skg_hagen/src/common/model/location.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TapAction {
   void sendMail(String email, String title) async {
     // Android and iOS
-    final String uri = 'mailto:$email?subject=Angebot: $title';
+    final String uri = 'mailto:$email?subject=$title';
     if (await canLaunch(uri)) {
       await launch(uri);
     } else {
@@ -14,22 +12,21 @@ class TapAction {
     }
   }
 
-  void openMap(String location) async {
-    // Android
-    final String longLat = Location(location.toLowerCase()).getLongtideLatitude();
+  void openMap(String longLat, String name) async {
+    final bool noLongLat = longLat == null;
 
-    if (longLat != null) {
-      String url = 'geo:$longLat';
-      if (Platform.isIOS) {
-        // iOS
-        url = 'http://maps.apple.com/?ll=$longLat';
-      }
-      if (await canLaunch(url)) {
-        await launch(url);
-      } else {
-        throw 'Could not launch $url';
-      }
+    if (noLongLat == true) {
+      return;
     }
+
+    final List<String> location = longLat.split(',');
+
+    final List<AvailableMap> availableMaps = await MapLauncher.installedMaps;
+
+    await availableMaps.first.showMarker(
+        coords: Coords(double.parse(location[0]), double.parse(location[1])),
+        description: "Location for $longLat",
+        title: name);
   }
 
   void launchURL(String url) async {
@@ -48,14 +45,7 @@ class TapAction {
     if (await canLaunch(uri)) {
       await launch(uri);
     } else {
-      // iOS
-      //TODO conver + to 00
-      final String uri = 'tel:$phoneNumber';
-      if (await canLaunch(uri)) {
-        await launch(uri);
-      } else {
-        throw 'Could not launch $uri';
-      }
+      throw 'Could not launch $uri';
     }
   }
 }

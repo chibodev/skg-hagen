@@ -1,61 +1,98 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/menu/controller/menu.dart';
+import 'package:skg_hagen/src/common/model/default.dart';
+import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
+import 'package:skg_hagen/src/common/service/network.dart';
+import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/offer.dart' as Controller;
 import 'package:skg_hagen/src/offer/model/offers.dart';
 import 'package:skg_hagen/src/offer/repository/offerClient.dart';
 import 'package:skg_hagen/src/offer/view/cards.dart';
 
 class Accordions extends State<Controller.Offer> {
+  Offers _offers;
+  List<dynamic> _options;
+  bool _isPerformingRequest = false;
+  bool _hasInternet = true;
+  bool _dataAvailable = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _getOffers();
+  }
+
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return Scaffold(
-        drawer: Menu(),
-        appBar: AppBar(
-          title: Text('Angebote'),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          _getOffers();
+        },
+        child: _buildCards(context),
+      ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          CustomWidget.getFooter(Offers.FOOTER),
+          !_hasInternet ? CustomWidget.noInternet() : Container(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCards(BuildContext context) {
+    return CustomScrollView(
+      slivers: <Widget>[
+        SliverAppBar(
+          pinned: true,
+          iconTheme: IconThemeData(color: Colors.white),
+          expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
+          backgroundColor: Color(Default.COLOR_GREEN),
+          flexibleSpace: FlexibleSpaceBar(
+            title: CustomWidget.getTitle(Offers.NAME),
+            background: Image.asset(
+              Offers.IMAGE,
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
-        bottomNavigationBar: Padding(
-            padding: EdgeInsets.only(bottom: 30),
-            child: Text(
-              'Ob Gruppen oder Kreise stattfinden bitte bei den Gruppenleitungen erfragen!',
-              style: TextStyle(color: Colors.grey, fontSize: 10),
-              textAlign: TextAlign.center,
-            )),
-        body: FutureBuilder(
-            future: getOffers(),
-            builder: (BuildContext context, AsyncSnapshot<Offers> response) {
-              if (response.connectionState == ConnectionState.none &&
-                  response.hasData == null) {
-                print('project snapshot data is: ${response.data}');
-                return Container();
-              }
-              if (response.data != null) {
-                final List<dynamic> options = List<dynamic>();
-                options.add(response.data.offers);
-                options.add(response.data.groups);
-                return _buildCards(options);
-              }
-              return Container();
-            }));
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) => _dataAvailable
+                ? Cards().buildRows(_options[index])
+                : CustomWidget.buildSliverSpinner(_isPerformingRequest),
+            childCount: _options?.length ?? 0,
+          ),
+        ),
+        !_dataAvailable
+            ? SliverToBoxAdapter(
+                child:
+                    CustomWidget.buildSliverSpinner(_isPerformingRequest),
+              )
+            : SliverToBoxAdapter(),
+      ],
+    );
   }
 
-  Widget _buildCards(List<dynamic> options) {
-    return ListView.builder(
-        padding: EdgeInsets.zero,
-        itemCount: options.length + 1,
-        itemBuilder: (BuildContext context, int index) {
-          if (index == 0) {
-            // return the header
-            return Column(
-              children: <Widget>[Image.asset('assets/images/angebote.jpg')],
-            );
-          }
-          index -= 1;
+  Future<void> _getOffers() async {
+    if (!_isPerformingRequest) {
+      setState(() => _isPerformingRequest = true);
 
-          return Cards().buildRows(options[index]);
-        });
-  }
+      _hasInternet = await Network().hasInternet();
+      _offers = await OfferClient().getOffers(DioHTTPClient(), Network());
+      _options = List<dynamic>();
 
-  Future<Offers> getOffers() async {
-    return await OfferClient().getOffers();
+      if (_offers != null) {
+        _options.add(_offers.offers);
+        _options.add(_offers.groups);
+        _dataAvailable = true;
+      }
+
+      setState(() {
+        _isPerformingRequest = false;
+      });
+    }
   }
 }
