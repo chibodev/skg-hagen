@@ -28,23 +28,38 @@ class Cards {
                 AsyncSnapshot<MonthlyScripture> response) {
               if (response.connectionState == ConnectionState.done &&
                   response.data != null) {
-                return Center(
-                    child: RichText(
-                        text: TextSpan(
-                            text: response.data.getModifiedText(),
+                return InkWell(
+                  onTap: () {
+                    return showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          backgroundColor: Color(Default.COLOR_GREEN),
+                          title: Text(
+                            MonthlyScripture.TITLE,
                             style: TextStyle(
-                                fontSize: SizeConfig.getSafeBlockVerticalBy(
-                                    2.3),
-                                color: Colors.white,
-                                fontFamily: Default.FONT),
-                            children: <TextSpan>[
-                      TextSpan(
-                          text: response.data.getFormattedBook(),
-                          style: TextStyle(
-                              fontSize: SizeConfig.getSafeBlockVerticalBy(1.5),
                               color: Colors.white,
-                              fontFamily: Default.FONT))
-                    ])));
+                              fontWeight: FontWeight.bold,
+                              fontSize: SizeConfig.getSafeBlockVerticalBy(
+                                  Default.STANDARD_FONT_SIZE),
+                            ),
+                          ),
+                          content: SingleChildScrollView(
+                            child: _getScripture(
+                                response.data.text,
+                                response.data.getFormattedBook(),
+                                Default.STANDARD_FONT_SIZE,
+                                Default.SUBSTANDARD_FONT_SIZE),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: Center(
+                    child: _getScripture(response.data.getModifiedText(),
+                        response.data.getFormattedBook(), 2.3, 1.5),
+                  ),
+                );
               }
               return Text('');
             },
@@ -74,6 +89,27 @@ class Cards {
     );
   }
 
+  Widget _getScripture(String scripture, String book, double scriptureFontSize,
+      double verseFontSize) {
+    return RichText(
+      text: TextSpan(
+        text: scripture,
+        style: TextStyle(
+            fontSize: SizeConfig.getSafeBlockVerticalBy(2.3),
+            color: Colors.white,
+            fontFamily: Default.FONT),
+        children: <TextSpan>[
+          TextSpan(
+              text: book,
+              style: TextStyle(
+                  fontSize: SizeConfig.getSafeBlockVerticalBy(1.5),
+                  color: Colors.white,
+                  fontFamily: Default.FONT))
+        ],
+      ),
+    );
+  }
+
   Future<MonthlyScripture> _getText() async {
     return await MonthlyScriptureClient().getVerse(DioHTTPClient(), Network());
   }
@@ -92,13 +128,14 @@ class Cards {
   }
 
   Widget _buildRows(CardContent card) {
-    final double thirtyPercent = SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE);
-    final double tenPercent = SizeConfig.getSafeBlockHorizontalBy(Default.SUBSTANDARD_FONT_SIZE);
+    final double thirtyPercent =
+        SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE);
+    final double tenPercent =
+        SizeConfig.getSafeBlockHorizontalBy(Default.SUBSTANDARD_FONT_SIZE);
 
     return Material(
       child: InkWell(
-        onTap: () =>
-        Navigator.of(this._context).pushNamed(card.routeName),
+        onTap: () => Navigator.of(this._context).pushNamed(card.routeName),
         child: Card(
           child: Column(
             mainAxisSize: MainAxisSize.min,

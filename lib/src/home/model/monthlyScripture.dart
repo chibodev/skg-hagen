@@ -1,8 +1,9 @@
-
-
 import 'package:skg_hagen/src/home/valueObject/bibleBook.dart';
 
 class MonthlyScripture {
+  static const int TEXT_LIMIT = 56;
+  static const String TITLE = 'Biblevers';
+
   String text;
   String book;
   String chapter;
@@ -36,8 +37,8 @@ class MonthlyScripture {
   }
 
   String getModifiedText() {
-    return text.length > 37
-        ? "${text.substring(0, 37)}..."
+    return text.length > TEXT_LIMIT
+        ? "${text.substring(0, TEXT_LIMIT)}..."
         : text.length > 2 ? text : '';
   }
 }

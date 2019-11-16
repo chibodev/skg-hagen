@@ -13,7 +13,7 @@ import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/token/service/tokenInterceptor.dart';
 
 class DioHTTPClient {
-  static const String BASE_URL = 'https://skg-hagen.chibo.org/wp-json/api/v1/';
+  static const String BASE_URL = 'https://app.skghagen.de/wp-json/api/v1/';
   static const int TIMEOUT = 5000;
   static const int START_INDEX = 0;
   static const int MAX_PAGE_RANGE = 10;
