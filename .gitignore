@@ -132,3 +132,4 @@ crashlytics-bild.properties
 /assets/config/api.yaml
 !/ios/Flutter/App.framework/Info.plist
 /android/key.properties
+/.env

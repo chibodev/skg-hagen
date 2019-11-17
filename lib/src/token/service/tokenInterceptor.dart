@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/token/model/token.dart';
@@ -18,7 +19,7 @@ class TokenInterceptor extends Interceptor {
     if (token == null) {
       final DioHTTPClient http = DioHTTPClient();
       http.client.lock();
-      return await _tokenClient.getToken(DioHTTPClient(), AssetClient()).then((Token tkn) {
+      return await _tokenClient.getToken(DioHTTPClient(), DotEnv()).then((Token tkn) {
         options.headers[HttpHeaders.authorizationHeader] =
             token = "${tkn?.tokenType} ${tkn?.jwtToken}";
         return options;
@@ -43,7 +44,7 @@ class TokenInterceptor extends Interceptor {
         http.client.lock();
         http.client.interceptors.responseLock.lock();
         http.client.interceptors.errorLock.lock();
-        return _tokenClient.getToken(http, AssetClient()).then((Token tkn) {
+        return _tokenClient.getToken(http, DotEnv()).then((Token tkn) {
           options.headers[HttpHeaders.authorizationHeader] =
               token = "${tkn?.tokenType} ${tkn?.jwtToken}";
         }).whenComplete(() {
