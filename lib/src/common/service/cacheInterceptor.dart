@@ -20,7 +20,6 @@ class CacheInterceptor extends Interceptor {
 
   @override
   Future<dynamic> onError(DioError e) async {
-    print('onError: $e');
     if (e.type == DioErrorType.CONNECT_TIMEOUT ||
         e.type == DioErrorType.DEFAULT) {
       final String keyData = "${e.request.path}/data";

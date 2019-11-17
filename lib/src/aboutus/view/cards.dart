@@ -64,6 +64,15 @@ class Cards {
                       Default.STANDARD_FONT_SIZE),
                 ),
               ),
+              subtitle: (card.description.length > 1)
+                  ? Text(
+                      card.description,
+                      style: TextStyle(
+                        fontSize: SizeConfig.getSafeBlockVerticalBy(
+                            Default.SUBSTANDARD_FONT_SIZE),
+                      ),
+                    )
+                  : null,
             )
           ],
         ),
