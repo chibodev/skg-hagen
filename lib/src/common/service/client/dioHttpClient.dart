@@ -44,11 +44,12 @@ class DioHTTPClient {
     }
   }
 
-  Future<Options> setGetOptions(
+  Future<Options> setOptions(
       DioHTTPClient http, Network network, bool refresh) async {
-    Options options =
-        buildCacheOptions(Duration(days: 7), maxStale: Duration(days: 10));
-
+    Options options = buildCacheOptions(
+      Duration(days: 2),
+      maxStale: Duration(days: 3),
+    );
 
     if (!Environment.isProduction()) {
       http.initialiseInterceptors('debug');
@@ -59,9 +60,10 @@ class DioHTTPClient {
     final bool refreshState = refresh != null;
     final bool hasInternet = await Network().hasInternet();
 
-    if (hasInternet || (refreshState && refresh == true)) {
-      options = buildCacheOptions(Duration(days: 7),
-          maxStale: Duration(days: 10), forceRefresh: true);
+    if (hasInternet) {
+      options = buildCacheOptions(Duration(days: 2),
+          maxStale: Duration(days: 3),
+          forceRefresh: (refreshState && refresh == true) ? true : false);
     }
     return options;
   }

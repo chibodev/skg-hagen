@@ -60,7 +60,7 @@ class Cards extends State<Controller.Appointment> {
       _hasInternet = true;
 
       appointments = await AppointmentClient()
-          .getAppointments(DioHTTPClient(), Network()); //returns empty list
+          .getAppointments(DioHTTPClient(), Network(), refresh: true);
 
       final bool status = appointments?.appointments != null;
       _hasInternet = await Network().hasInternet();
@@ -94,7 +94,7 @@ class Cards extends State<Controller.Appointment> {
       } else {
         final Appointments newAppointments = await AppointmentClient()
             .getAppointments(DioHTTPClient(), Network(),
-                index: _indexCounter); //returns empty list
+                index: _indexCounter, refresh: true);
 
         final List<Model.Appointment> newEntries = newAppointments.appointments;
         final bool isResponseEmpty = newEntries.isEmpty;

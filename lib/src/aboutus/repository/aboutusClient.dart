@@ -9,7 +9,7 @@ class AboutUsClient {
 
   Future<AboutUs> getData(DioHTTPClient http, Network network,
       {int index, bool refresh}) async {
-    final Options options = await http.setGetOptions(http, network, refresh);
+    final Options options = await http.setOptions(http, network, refresh);
 
     final Map<String, dynamic> jsonResponse = await http.getResponse(
       http: http,
