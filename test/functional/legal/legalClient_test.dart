@@ -28,7 +28,7 @@ void main() {
   });
 
   test('LegalClient successfully retrieves privacy', () async {
-    final String filename = 'imprint.html';
+    final String filename = 'privacy.html';
 
     final AssetClient assetClient = MockAssetClient();
     final LegalClient subject = LegalClient();
