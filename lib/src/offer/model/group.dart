@@ -61,7 +61,7 @@ class Group {
         latLong: json["latLong"] == null ? null : json['latLong'],
       );
 
-  String getName() => "Gruppen und Kreise";
+  String getName() => "Gruppe und Kreise";
 
   String getFormattedOccurrence() => occurrence + " | " + time.substring(0, 5);
 }

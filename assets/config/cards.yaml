@@ -8,8 +8,8 @@ termine:
 
 angebote:
   groups:
-    - gruppen
-    - kreisen
+    - gruppe
+    - kreise
     - musik
   image: assets/images/gruppen.jpg
   route: offer
@@ -17,7 +17,7 @@ angebote:
 ev.kindergarten:
   groups:
     - events
-    - mittteilung
+    - aktionen
   image: assets/images/kindergarten.jpg
   route: kindergarten
 
