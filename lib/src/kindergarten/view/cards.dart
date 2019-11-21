@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/kindergarten/model/events.dart';
+import 'package:skg_hagen/src/kindergarten/model/news.dart' as Model;
 import 'package:skg_hagen/src/kindergarten/view/news.dart';
 
 class Cards {
@@ -28,7 +29,7 @@ class Cards {
     );
   }
 
-  Widget _buildTileForEvents(dynamic card) {
+  Widget _buildTileForEvents(Events card) {
     return Material(
       child: Card(
         child: Row(
@@ -60,7 +61,7 @@ class Cards {
     return null;
   }
 
-  Widget _buildTileForNews(dynamic card) {
+  Widget _buildTileForNews(Model.News card) {
     return Material(
       child: Card(
         child: InkWell(

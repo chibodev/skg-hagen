@@ -33,7 +33,7 @@ class Cards {
     );
   }
 
-  Widget _buildTileForAddress(dynamic card) {
+  Widget _buildTileForAddress(Address card) {
     return Material(
       child: Card(
         child: Row(
@@ -61,22 +61,21 @@ class Cards {
     );
   }
 
-  Widget _buildTileForContacts(dynamic card) {
+  Widget _buildTileForContacts(Contact card) {
+    final Color color = card.administration == 0
+        ? Color(Default.COLOR_GREEN)
+        : Colors.white;
     return Material(
       child: Card(
-        color: card.administration == 0
-            ? Color(Default.COLOR_GREEN)
-            : Colors.white,
+        color: color,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            card.administration == 0
-                ? _getCircleAvatar(card.imageUrl)
-                : Container(),
+            _getCircleAvatar(card.imageUrl, color),
             _getContacts(card),
             card.administration == 0
                 ? _getAddressWithoutAction(card.address,
-                    noColor: true, textColor: true)
+                noColor: true, textColor: true)
                 : _getOpening(card.opening, colorWhite: true),
           ],
         ),
@@ -84,7 +83,7 @@ class Cards {
     );
   }
 
-  Widget _buildTileForSocial(dynamic card) {
+  Widget _buildTileForSocial(Social card) {
     return Material(
       child: Card(
         child: Column(
@@ -99,24 +98,24 @@ class Cards {
     final String name = card.name.toLowerCase();
     return card.isSocialValid(name)
         ? InkWell(
-            splashColor: Color(Default.COLOR_GREEN),
-            onTap: () => TapAction().launchURL(card.url),
-            child: ListTile(
-              leading: Image.asset(
-                card.getSocialImage(name),
-                fit: BoxFit.scaleDown,
-                width: SizeConfig.getSafeBlockVerticalBy(7),
-                height: SizeConfig.getSafeBlockHorizontalBy(7),
-              ),
-              title: Text(
-                card.location,
-                style: TextStyle(
-                  fontSize: SizeConfig.getSafeBlockVerticalBy(
-                      Default.SUBSTANDARD_FONT_SIZE),
-                ),
-              ),
-            ),
-          )
+      splashColor: Color(Default.COLOR_GREEN),
+      onTap: () => TapAction().launchURL(card.url),
+      child: ListTile(
+        leading: Image.asset(
+          card.getSocialImage(name),
+          fit: BoxFit.scaleDown,
+          width: SizeConfig.getSafeBlockVerticalBy(7),
+          height: SizeConfig.getSafeBlockHorizontalBy(7),
+        ),
+        title: Text(
+          card.location,
+          style: TextStyle(
+            fontSize: SizeConfig.getSafeBlockVerticalBy(
+                Default.SUBSTANDARD_FONT_SIZE),
+          ),
+        ),
+      ),
+    )
         : Container();
   }
 
@@ -190,7 +189,7 @@ class Cards {
             ),
             Padding(
               padding:
-                  EdgeInsets.only(left: twenty, right: twenty, bottom: twenty),
+              EdgeInsets.only(left: twenty, right: twenty, bottom: twenty),
               child: Text(
                 opening,
                 style: TextStyle(
@@ -206,8 +205,24 @@ class Cards {
     );
   }
 
-  Column _getCircleAvatar(String imageUrl) {
-    return Column(
+  Column _getCircleAvatar(String imageUrl, Color color) {
+    return imageUrl == null
+        ? Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(
+            left: SizeConfig.getSafeBlockVerticalBy(2),
+          ),
+          child: CircleAvatar(
+            backgroundColor: color,
+            minRadius: SizeConfig.getSafeBlockVerticalBy(4),
+            maxRadius: SizeConfig.getSafeBlockHorizontalBy(8),
+          ),
+        ),
+      ],
+    )
+        : Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
         Padding(
@@ -235,50 +250,50 @@ class Cards {
         children: <Widget>[
           phone != ""
               ? InkWell(
-                  splashColor: Color(Default.COLOR_GREEN),
-                  onTap: () => TapAction().callMe(phone),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: SizeConfig.getSafeBlockVerticalBy(1),
-                      bottom: SizeConfig.getSafeBlockVerticalBy(1),
-                    ),
-                    child: Icon(
-                      Icons.phone,
-                      color: Colors.black,
-                      size: SizeConfig.getSafeBlockVerticalBy(3),
-                      semanticLabel: 'Phone',
-                    ),
-                  ),
-                )
+            splashColor: Color(Default.COLOR_GREEN),
+            onTap: () => TapAction().callMe(phone),
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: SizeConfig.getSafeBlockVerticalBy(1),
+                bottom: SizeConfig.getSafeBlockVerticalBy(1),
+              ),
+              child: Icon(
+                Icons.phone,
+                color: Colors.black,
+                size: SizeConfig.getSafeBlockVerticalBy(3),
+                semanticLabel: 'Phone',
+              ),
+            ),
+          )
               : Padding(
-                  padding: EdgeInsets.only(
-                    left: SizeConfig.getSafeBlockVerticalBy(4),
-                    bottom: SizeConfig.getSafeBlockVerticalBy(1),
-                  ),
-                ),
+            padding: EdgeInsets.only(
+              left: SizeConfig.getSafeBlockVerticalBy(4),
+              bottom: SizeConfig.getSafeBlockVerticalBy(1),
+            ),
+          ),
           email != ""
               ? InkWell(
-                  splashColor: Color(Default.COLOR_GREEN),
-                  onTap: () => TapAction().sendMail(email, title),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: SizeConfig.getSafeBlockVerticalBy(5),
-                      bottom: SizeConfig.getSafeBlockVerticalBy(1),
-                    ),
-                    child: Icon(
-                      Icons.email,
-                      color: Colors.black,
-                      size: SizeConfig.getSafeBlockVerticalBy(3),
-                      semanticLabel: 'Email',
-                    ),
-                  ),
-                )
+            splashColor: Color(Default.COLOR_GREEN),
+            onTap: () => TapAction().sendMail(email, title),
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: SizeConfig.getSafeBlockVerticalBy(5),
+                bottom: SizeConfig.getSafeBlockVerticalBy(1),
+              ),
+              child: Icon(
+                Icons.email,
+                color: Colors.black,
+                size: SizeConfig.getSafeBlockVerticalBy(3),
+                semanticLabel: 'Email',
+              ),
+            ),
+          )
               : Padding(
-                  padding: EdgeInsets.only(
-                    left: SizeConfig.getSafeBlockVerticalBy(4),
-                    bottom: SizeConfig.getSafeBlockVerticalBy(1),
-                  ),
-                ),
+            padding: EdgeInsets.only(
+              left: SizeConfig.getSafeBlockVerticalBy(4),
+              bottom: SizeConfig.getSafeBlockVerticalBy(1),
+            ),
+          ),
         ],
       ),
     );

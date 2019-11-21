@@ -88,7 +88,7 @@ class CustomWidget {
         bottom: SizeConfig.getSafeBlockVerticalBy(1),
       ),
       child: Text(
-        occurrence,
+        Default.capitalize(occurrence),
         style: TextStyle(
           color: Colors.grey,
           fontWeight: FontWeight.bold,
