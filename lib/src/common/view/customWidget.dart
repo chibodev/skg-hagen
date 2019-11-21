@@ -110,7 +110,7 @@ class CustomWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
+            address.name != null ? Text(
               Default.capitalize(address.name),
               style: TextStyle(
                 color: Colors.white,
@@ -118,7 +118,7 @@ class CustomWidget {
                 fontSize: SizeConfig.getSafeBlockVerticalBy(
                     Default.SUBSTANDARD_FONT_SIZE),
               ),
-            ),
+            ) : Container(),
             Text(
               address.getStreetAndNumber(),
               style: TextStyle(
@@ -211,6 +211,80 @@ class CustomWidget {
       name,
       style: TextStyle(
         fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+      ),
+    );
+  }
+
+  static Padding getSinglePageTitle(double thirty, String title) {
+    return Padding(
+      padding: EdgeInsets.only(left: thirty, right: thirty, top: thirty),
+      child: Text(
+        title,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize:
+          SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+        ),
+      ),
+    );
+  }
+
+  static Padding getSinglePageDescription(double thirty, String description) {
+    return Padding(
+      padding: EdgeInsets.all(thirty),
+      child: SelectableText(
+        description,
+        style: TextStyle(
+          fontSize:
+          SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+        ),
+      ),
+    );
+  }
+
+  static Padding getSinglePageOccurrence(double thirty, String occurrence) {
+    return Padding(
+      padding: EdgeInsets.only(left: thirty),
+      child: Text(
+        "Termin: $occurrence",
+        style: TextStyle(
+          color: Colors.grey,
+          fontWeight: FontWeight.bold,
+          fontSize:
+          SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+        ),
+      ),
+    );
+  }
+
+  static Padding getSinglePageEmail(double thirty, String email, String title) {
+    return Padding(
+      padding: EdgeInsets.only(left: thirty, bottom: thirty),
+      child: InkWell(
+        splashColor: Color(Default.COLOR_GREEN),
+        onTap: () =>
+            TapAction().sendMail(email, title),
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: SizeConfig.getSafeBlockVerticalBy(1),
+          ),
+          child: Icon(
+            Icons.email,
+            color: Colors.grey,
+            size: SizeConfig.getSafeBlockVerticalBy(4),
+            semanticLabel: 'Email',
+          ),
+        ),
+      ),
+    );
+  }
+
+  static Padding getImageFromNetwork(double thirty, String imageUrl) {
+    return Padding(
+      padding: EdgeInsets.all(thirty),
+      child: Image.network(
+        imageUrl,
+        fit: BoxFit.scaleDown,
       ),
     );
   }
