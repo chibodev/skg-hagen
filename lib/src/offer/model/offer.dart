@@ -76,7 +76,7 @@ class Offer {
         latLong: json["latLong"] == null ? null : json['latLong'],
       );
 
-  String getName() => "Angebote";
+  String getName() => "Einladung";
 
   String getFormattedSchoolYear() => "${schoolYear.toString()}. Schuljahr";
 

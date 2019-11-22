@@ -141,7 +141,7 @@ class Cards {
                 fontSize: SizeConfig.getSafeBlockVerticalBy(
                     Default.SUBSTANDARD_FONT_SIZE),
               ),
-            ) : Container(),
+            ) : Text(''),
           ),
           (email != null) ? InkWell(
             splashColor: Color(Default.COLOR_GREEN),
@@ -157,7 +157,7 @@ class Cards {
                 semanticLabel: 'Email',
               ),
             ),
-          ) : Container(),
+          ) : Text(''),
         ],
       ),
     );

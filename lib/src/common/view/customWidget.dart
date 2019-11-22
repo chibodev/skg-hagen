@@ -253,7 +253,7 @@ class CustomWidget {
 
   static Padding getSinglePageOccurrence(double thirty, String occurrence) {
     return Padding(
-      padding: EdgeInsets.only(left: thirty),
+      padding: EdgeInsets.only(left: thirty, bottom: SizeConfig.getSafeBlockVerticalBy(2)),
       child: Text(
         "Termin: $occurrence",
         style: TextStyle(

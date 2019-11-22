@@ -141,7 +141,7 @@ class Cards {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            address.name != null ? Text(
+            address.street != null ? Text(
               address.getStreetAndNumber(),
               style: TextStyle(
                 color: textColor == false
@@ -150,8 +150,8 @@ class Cards {
                 fontSize: SizeConfig.getSafeBlockVerticalBy(
                     Default.SUBSTANDARD_FONT_SIZE),
               ),
-            ) : Container(),
-            address.name != null ? Text(
+            ) : Text(''),
+            address.zip != null ? Text(
               address.getZipAndCity(),
               style: TextStyle(
                 color: textColor == false
@@ -160,7 +160,7 @@ class Cards {
                 fontSize: SizeConfig.getSafeBlockVerticalBy(
                     Default.SUBSTANDARD_FONT_SIZE),
               ),
-            ) : Container(),
+            ) : Text(''),
           ],
         ),
       ),
