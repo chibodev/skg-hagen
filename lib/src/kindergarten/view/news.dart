@@ -40,6 +40,9 @@ class News extends StatelessWidget {
                 children: <Widget>[
                   CustomWidget.getSinglePageTitle(thirty, news.title),
                   CustomWidget.getSinglePageDescription(thirty, news.description),
+                  news.imageUrl != null
+                      ? CustomWidget.getImageFromNetwork(thirty, news.imageUrl)
+                      : Container(),
                 ],
               ),
             ),
