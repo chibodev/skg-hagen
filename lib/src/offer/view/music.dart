@@ -55,7 +55,7 @@ class Music extends StatelessWidget {
                       : Container(),
                   Padding(
                     padding: EdgeInsets.only(bottom: SizeConfig.getSafeBlockVerticalBy(1)),
-                    child: CustomWidget.getAddressWithAction(music.address),
+                    child: CustomWidget.getAddressWithAction(music.address, room: music.room),
                   ),
                 ],
               ),

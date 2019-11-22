@@ -50,7 +50,7 @@ class Cards {
                       card.getFormattedOrganiser(), card.email, card.title),
                   (card.address.street == null || card.address.name == null)
                       ? CustomWidget.getNoLocation()
-                      : CustomWidget.getAddressWithAction(card.address),
+                      : CustomWidget.getAddressWithAction(card.address, room: card.room),
                 ],
               ),
             ),
@@ -72,7 +72,7 @@ class Cards {
                 children: <Widget>[
                   CustomWidget.getCardTitle(card.title),
                   CustomWidget.getOccurrence(card.getFormattedOccurrence()),
-                  CustomWidget.getAddressWithAction(card.address),
+                  CustomWidget.getAddressWithAction(card.address, room: card.room),
                 ],
               ),
             ),

@@ -1,7 +1,6 @@
 import 'package:skg_hagen/src/common/model/address.dart';
 
 class Music {
-
   static const int URL_MIN = 7;
 
   final String title;
@@ -11,6 +10,7 @@ class Music {
   Address address;
   final String occurrence;
   final String time;
+  final String timeUntil;
   final String placeName;
   final String room;
   final String name;
@@ -28,6 +28,7 @@ class Music {
       this.email,
       this.occurrence,
       this.time,
+      this.timeUntil,
       this.placeName,
       this.room,
       this.name,
@@ -51,12 +52,15 @@ class Music {
   factory Music.fromJson(Map<String, dynamic> json) => Music(
         title: json['title'],
         description: json['description'],
-        imageUrl: json['imageUrl'].toString().length > URL_MIN ? json['imageUrl'] : null,
+        imageUrl: json['imageUrl'].toString().length > URL_MIN
+            ? json['imageUrl']
+            : null,
         email: json['email'],
         occurrence: json['occurrence'],
         time: json["time"],
+        timeUntil: json["timeUntil"],
         placeName: json["placeName"],
-        room: json["room"],
+        room: json["room"] == "" ? null : json["room"],
         name: json["name"] == null ? null : json["name"],
         street: json["street"] == null ? null : json["street"],
         houseNumber: json["houseNumber"] == null ? null : json["houseNumber"],
@@ -68,5 +72,9 @@ class Music {
 
   String getName() => "Musik";
 
-  String getFormattedOccurrence() => occurrence + " | " + time.substring(0, 5);
+  String getFormattedOccurrence() {
+    final String occurrenceTime =
+        (time == "00:00:00") ? '--' : time.substring(0, 5);
+    return "$occurrence | $occurrenceTime";
+  }
 }

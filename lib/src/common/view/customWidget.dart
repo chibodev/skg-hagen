@@ -99,7 +99,7 @@ class CustomWidget {
     );
   }
 
-  static Container getAddressWithAction(Address address) {
+  static Container getAddressWithAction(Address address, {String room}) {
     return Container(
       width: SizeConfig.screenHeight,
       height: SizeConfig.getSafeBlockHorizontalBy(22.5),
@@ -110,6 +110,15 @@ class CustomWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            room != null ? Text(
+              Default.capitalize(room),
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: SizeConfig.getSafeBlockVerticalBy(
+                    Default.SUBSTANDARD_FONT_SIZE),
+              ),
+            ) : Container(),
             address.name != null ? Text(
               Default.capitalize(address.name),
               style: TextStyle(
@@ -119,22 +128,22 @@ class CustomWidget {
                     Default.SUBSTANDARD_FONT_SIZE),
               ),
             ) : Container(),
-            Text(
+            address.street != null ? Text(
               address.getStreetAndNumber(),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: SizeConfig.getSafeBlockVerticalBy(
                     Default.SUBSTANDARD_FONT_SIZE),
               ),
-            ),
-            Text(
+            ) : Container(),
+            address.zip != null ? Text(
               address.getZipAndCity(),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: SizeConfig.getSafeBlockVerticalBy(
                     Default.SUBSTANDARD_FONT_SIZE),
               ),
-            ),
+            ) : Container(),
           ],
         ),
       ),
