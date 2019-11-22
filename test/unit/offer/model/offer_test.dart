@@ -11,7 +11,7 @@ void main() {
           Offer(title: 'Kinderchor', occurrence: 'Montags', time: "19:15:00");
 
       expect(subject.title, 'Kinderchor');
-      expect(subject.getFormattedOccurrence(), 'Montags | 19:15');
+      expect(subject.getFormattedOccurrence(), 'Montags | 19:15 ');
     });
 
     test('Group model successfully gets occurrence text', () {
@@ -22,7 +22,7 @@ void main() {
 
       expect(subject.title, 'Kinderchor');
       expect(
-          subject.getFormattedOccurrence(), 'Jede 1. Montag im Monat | 17:30');
+          subject.getFormattedOccurrence(), 'Jede 1. Montag im Monat | 17:30 ');
     });
   });
 

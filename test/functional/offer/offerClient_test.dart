@@ -46,7 +46,7 @@ void main() {
     expect(offers.offers.first.occurrence, 'Donnerstags');
     expect(offers.offers.first.time, '18:00:00');
     expect(offers.offers.first.placeName, 'markuskirche');
-    expect(offers.offers.first.room, '');
+    expect(offers.offers.first.room, 'room');
     expect(offers.offers.first.organizer, 'Jonas Lehmann');
     expect(offers.offers.first.email, 'leimann@gmail.com');
     expect(offers.offers.first.ageStart, 4);
@@ -66,9 +66,9 @@ void main() {
     expect(offers.groups.last.occurrence, 'Mittwochs');
     expect(offers.groups.last.time, '15:00:00');
     expect(offers.groups.last.placeName, 'markuskirche');
-    expect(offers.groups.last.room, '');
-    expect(offers.groups.last.organizer, isNull);
-    expect(offers.groups.last.email, isNull);
+    expect(offers.groups.last.room, isNull);
+    expect(offers.groups.last.organizer, '');
+    expect(offers.groups.last.email, '');
     expect(offers.groups.last.name, 'markuskirche');
     expect(offers.groups.last.street, 'Rheinstraße');
     expect(offers.groups.last.houseNumber, '26');
