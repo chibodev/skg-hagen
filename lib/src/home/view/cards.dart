@@ -51,6 +51,21 @@ class Cards {
                                 Default.STANDARD_FONT_SIZE,
                                 Default.SUBSTANDARD_FONT_SIZE),
                           ),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text("Schließen",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: SizeConfig.getSafeBlockVerticalBy(
+                                      Default.SUBSTANDARD_FONT_SIZE),
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
                         );
                       },
                     );

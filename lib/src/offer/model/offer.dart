@@ -62,8 +62,8 @@ class Offer {
         timeUntil: json["timeUntil"],
         placeName: json["placeName"],
         room: json["room"] == "" ? null : json["room"],
-        organizer: json["organizer"] == null ? null : json["organizer"],
-        email: json["email"] == null ? null : json["email"],
+        organizer: json["organizer"] == "" ? null : json["organizer"],
+        email: json["email"] == "" ? null : json["email"],
         ageStart: json['ageStart'] == "" ? null : int.parse(json['ageStart']),
         ageEnd: json['ageEnd'] == "" ? null : int.parse(json['ageEnd']),
         schoolYear: json['schoolYear'],
@@ -90,5 +90,5 @@ class Offer {
   }
 
   String getFormattedOrganiser() =>
-      organizer.length > 0 ? "Infos: $organizer" : '';
+      organizer != null ? "Infos: $organizer" : organizer;
 }

@@ -8,7 +8,7 @@ termine:
 
 angebote:
   groups:
-    - gruppe
+    - gruppen
     - kreise
     - musik
   image: assets/images/gruppen.jpg

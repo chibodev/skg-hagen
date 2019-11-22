@@ -50,7 +50,7 @@ class Address {
   }
 
   String getZipAndCity() {
-    return '$zip, $city';
+    return '$zip $city';
   }
 
   String getCapitalizedAddressName() {

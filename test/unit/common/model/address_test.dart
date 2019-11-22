@@ -33,7 +33,7 @@ void main() {
   });
 
   test('Address gets correct formatted property', () {
-    expect(subject.getZipAndCity(), '$zip, $city');
+    expect(subject.getZipAndCity(), '$zip $city');
   });
 
   test('Address successfully converts json string', () {

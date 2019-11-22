@@ -72,7 +72,11 @@ class Cards {
                 children: <Widget>[
                   CustomWidget.getCardTitle(card.title),
                   CustomWidget.getOccurrence(card.getFormattedOccurrence()),
-                  CustomWidget.getAddressWithAction(card.address, room: card.room),
+                  _getEmail(
+                      card.getFormattedOrganiser(), card.email, card.title),
+                  (card.address.street == null || card.address.name == null)
+                      ? CustomWidget.getNoLocation()
+                      : CustomWidget.getAddressWithAction(card.address, room: card.room),
                 ],
               ),
             ),
@@ -129,7 +133,7 @@ class Cards {
       child: Row(
         children: <Widget>[
           Flexible(
-            child: Text(
+            child: (organizer != null) ? Text(
               organizer,
               overflow: TextOverflow.visible,
               style: TextStyle(
@@ -137,9 +141,9 @@ class Cards {
                 fontSize: SizeConfig.getSafeBlockVerticalBy(
                     Default.SUBSTANDARD_FONT_SIZE),
               ),
-            ),
+            ) : Container(),
           ),
-          InkWell(
+          (email != null) ? InkWell(
             splashColor: Color(Default.COLOR_GREEN),
             onTap: () => TapAction().sendMail(email, title),
             child: Padding(
@@ -153,7 +157,7 @@ class Cards {
                 semanticLabel: 'Email',
               ),
             ),
-          )
+          ) : Container(),
         ],
       ),
     );

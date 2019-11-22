@@ -53,8 +53,8 @@ class Group {
         timeUntil: json["timeUntil"],
         placeName: json["placeName"],
         room: json["room"] == "" ? null : json["room"],
-        organizer: json["organizer"] == null ? "" : json["organizer"],
-        email: json["email"] == null ? "" : json["email"],
+        organizer: json["organizer"] == "" ? null : json["organizer"],
+        email: json["email"] == "" ? null : json["email"],
         name: json["name"] == null ? null : json["name"],
         street: json["street"] == null ? null : json["street"],
         houseNumber: json["houseNumber"] == null ? null : json["houseNumber"],
@@ -64,7 +64,10 @@ class Group {
         latLong: json["latLong"] == null ? null : json['latLong'],
       );
 
-  String getName() => "Gruppe und Kreise";
+  String getName() => "Gruppen und Kreise";
+
+  String getFormattedOrganiser() =>
+      organizer != null ? "Infos: $organizer" : organizer;
 
   String getFormattedOccurrence() {
     final String occurrenceTime =
