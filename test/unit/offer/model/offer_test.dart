@@ -34,10 +34,10 @@ void main() {
   });
 
   test('Offer model does not have organiser', () {
-    subject = Offer(title: 'No organiser', organizer: '');
+    subject = Offer(title: 'No organiser', organizer: null);
 
     expect(subject.title, 'No organiser');
-    expect(subject.getFormattedOrganiser(), '');
+    expect(subject.getFormattedOrganiser(), isNull);
   });
 
   test('Offer model successfully gets school year text', () {

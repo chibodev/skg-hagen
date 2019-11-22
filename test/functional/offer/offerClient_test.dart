@@ -67,8 +67,8 @@ void main() {
     expect(offers.groups.last.time, '15:00:00');
     expect(offers.groups.last.placeName, 'markuskirche');
     expect(offers.groups.last.room, isNull);
-    expect(offers.groups.last.organizer, '');
-    expect(offers.groups.last.email, '');
+    expect(offers.groups.last.organizer, isNull);
+    expect(offers.groups.last.email, isNull);
     expect(offers.groups.last.name, 'markuskirche');
     expect(offers.groups.last.street, 'Rheinstraße');
     expect(offers.groups.last.houseNumber, '26');
