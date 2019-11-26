@@ -9,6 +9,7 @@ class Group {
   final String room;
   final String organizer;
   final String email;
+  final String infoTitle;
   Address address;
   final String name;
   final String street;
@@ -25,6 +26,7 @@ class Group {
       this.timeUntil,
       this.placeName,
       this.room,
+      this.infoTitle,
       this.organizer,
       this.email,
       this.address,
@@ -53,6 +55,7 @@ class Group {
         timeUntil: json["timeUntil"],
         placeName: json["placeName"],
         room: json["room"] == "" ? null : json["room"],
+        infoTitle: json["infoTitle"] == "" ? null : json["infoTitle"],
         organizer: json["organizer"] == "" ? null : json["organizer"],
         email: json["email"] == "" ? null : json["email"],
         name: json["name"] == null ? null : json["name"],
@@ -66,14 +69,23 @@ class Group {
 
   String getName() => "Gruppen und Kreise";
 
-  String getFormattedOrganiser() =>
-      organizer != null ? "Infos: $organizer" : organizer;
+  String getFormattedOrganiser() {
+    String text;
+
+    if (organizer != null) {
+      text = infoTitle != null ? "$infoTitle: $organizer" : organizer;
+    }
+
+    return text;
+  }
 
   String getFormattedOccurrence() {
     final String occurrenceTime =
         (time == "00:00:00") ? '--' : time.substring(0, 5);
     final String occurrenceTimeUntil =
-        (timeUntil == "00:00:00" || timeUntil == null) ? '' : "- ${timeUntil.substring(0, 5)}";
+        (timeUntil == "00:00:00" || timeUntil == null)
+            ? ''
+            : "- ${timeUntil.substring(0, 5)}";
 
     return "$occurrence | $occurrenceTime $occurrenceTimeUntil";
   }
