@@ -84,7 +84,7 @@ class Cards {
                     padding: const EdgeInsets.all(1.0),
                     child: ListTile(
                       leading: Icon(
-                        Icons.info_outline,
+                        Icons.info,
                         color: Color(Default.COLOR_GREEN),
                       ),
                       title: CustomWidget.getCardTitle(card.title),

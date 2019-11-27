@@ -68,8 +68,7 @@ class Accordions extends State<Controller.Offer> {
         ),
         !_dataAvailable
             ? SliverToBoxAdapter(
-                child:
-                    CustomWidget.buildSliverSpinner(_isPerformingRequest),
+                child: CustomWidget.buildSliverSpinner(_isPerformingRequest),
               )
             : SliverToBoxAdapter(),
       ],
@@ -86,8 +85,8 @@ class Accordions extends State<Controller.Offer> {
 
       if (_offers != null) {
         _options.add(_offers.offers);
-        _options.add(_offers.groups);
         _options.add(_offers.music);
+        _options.add(_offers.projects);
         _dataAvailable = true;
       }
 

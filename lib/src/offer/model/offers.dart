@@ -1,35 +1,41 @@
-import 'package:skg_hagen/src/offer/model/group.dart';
 import 'package:skg_hagen/src/offer/model/music.dart';
 import 'package:skg_hagen/src/offer/model/offer.dart';
+import 'package:skg_hagen/src/offer/model/project.dart';
 
 class Offers {
   final List<Offer> offers;
-  final List<Group> groups;
+  final List<Project> projects;
   final List<Music> music;
   static const String NAME = 'Angebote';
   static const String IMAGE = 'assets/images/angebote.jpg';
   static const String FOOTER =
       'Ob Angebote, Gruppe oder Kreise stattfinden bitte bei per Email erfragen!';
 
-  Offers({this.offers, this.groups, this.music});
+  Offers({this.offers, this.projects, this.music});
 
   factory Offers.fromJson(Map<String, dynamic> json) {
     return Offers(
-      offers: json["offers"] == null ? null : List<Offer>.from(
-        json["offers"].map(
-          (dynamic x) => Offer.fromJson(x),
-        ),
-      ),
-      groups: json["groups"] == null ? null : List<Group>.from(
-        json["groups"].map(
-          (dynamic x) => Group.fromJson(x),
-        ),
-      ),
-      music: json["music"] == null ? null : List<Music>.from(
-        json["music"].map(
-          (dynamic x) => Music.fromJson(x),
-        ),
-      ),
+      offers: json["offers"] == null
+          ? null
+          : List<Offer>.from(
+              json["offers"].map(
+                (dynamic x) => Offer.fromJson(x),
+              ),
+            ),
+      projects: json["projects"] == null
+          ? null
+          : List<Project>.from(
+              json["projects"].map(
+                (dynamic x) => Project.fromJson(x),
+              ),
+            ),
+      music: json["music"] == null
+          ? null
+          : List<Music>.from(
+              json["music"].map(
+                (dynamic x) => Music.fromJson(x),
+              ),
+            ),
     );
   }
 }

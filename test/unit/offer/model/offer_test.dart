@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:skg_hagen/src/offer/model/group.dart';
 import 'package:skg_hagen/src/offer/model/offer.dart';
+import 'package:skg_hagen/src/offer/model/project.dart';
 
 void main() {
   Offer subject;
@@ -15,22 +15,23 @@ void main() {
     });
 
     test('Group model successfully gets occurrence text', () {
-      final Group subject = Group(
-          title: 'Kinderchor',
-          occurrence: 'Jede 1. Montag im Monat',
-          time: "17:30:05");
+      final Project subject = Project(
+          title: 'New project',
+          description: 'a brief description',
+          imageUrl: "");
 
-      expect(subject.title, 'Kinderchor');
-      expect(
-          subject.getFormattedOccurrence(), 'Jede 1. Montag im Monat | 17:30 ');
+      expect(subject.getName(), 'Projekte');
+      expect(subject.title, 'New project');
+      expect(subject.description, 'a brief description');
     });
   });
 
   test('Offer model successfully gets formatted organiser', () {
-    subject = Offer(title: 'New Offer', organizer: 'Allison Gray');
+    subject = Offer(
+        title: 'New Offer', organizer: 'Allison Gray', infoTitle: 'Leitung');
 
     expect(subject.title, 'New Offer');
-    expect(subject.getFormattedOrganiser(), 'Infos: Allison Gray');
+    expect(subject.getFormattedOrganiser(), 'Leitung: Allison Gray');
   });
 
   test('Offer model does not have organiser', () {

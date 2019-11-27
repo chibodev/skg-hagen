@@ -15,10 +15,11 @@ void main() {
   });
 
   test('Appointment model successfully gets formatted organiser', () {
-    subject = Appointment(title: 'New appointment', organizer: 'Billing Gray');
+    subject = Appointment(
+        title: 'New appointment', organizer: 'Billing Gray', infoTitle: 'Info');
 
     expect(subject.title, 'New appointment');
-    expect(subject.getFormattedOrganiser(), 'Infos: Billing Gray');
+    expect(subject.getFormattedOrganiser(), 'Info: Billing Gray');
   });
 
   test('Appointment model does not have organiser', () {

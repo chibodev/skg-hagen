@@ -60,22 +60,30 @@ void main() {
     expect(offers.offers.first.country, 'DE');
     expect(offers.offers.length, 2);
 
-    expect(offers.groups, isNotEmpty);
+    expect(offers.projects, isNotEmpty);
+    expect(offers.projects.first.title, 'New');
     expect(
-        offers.groups.last.title, 'Frauenhilfe (Infos bei den Pfarrerinnen)');
-    expect(offers.groups.last.occurrence, 'Mittwochs');
-    expect(offers.groups.last.time, '15:00:00');
-    expect(offers.groups.last.placeName, 'markuskirche');
-    expect(offers.groups.last.room, isNull);
-    expect(offers.groups.last.organizer, isNull);
-    expect(offers.groups.last.email, isNull);
-    expect(offers.groups.last.name, 'markuskirche');
-    expect(offers.groups.last.street, 'Rheinstraße');
-    expect(offers.groups.last.houseNumber, '26');
-    expect(offers.groups.last.zip, '58097');
-    expect(offers.groups.last.city, 'Hagen');
-    expect(offers.groups.last.country, 'DE');
-    expect(offers.groups.length, 2);
+        offers.projects.first.description
+            .contains('Project description'),
+        true);
+    expect(offers.projects.length, 1);
+
+    expect(offers.music, isNotEmpty);
+    expect(offers.music.first.description,
+        'Der Kinderchor - unter der Leitung Meister Meistermann');
+    expect(offers.music.first.occurrence, 'Montags');
+    expect(offers.music.first.time, '16:15:00');
+    expect(offers.music.first.placeName, 'marchurch');
+    expect(offers.music.first.room, 'Großer Saal');
+    expect(offers.music.first.email, '');
+    expect(offers.music.first.name, 'marchurch');
+    expect(offers.music.first.street, 'MaxStr');
+    expect(offers.music.first.houseNumber, '20');
+    expect(offers.music.first.zip, '58090');
+    expect(offers.music.first.city, 'Hagen');
+    expect(offers.music.first.country, 'DE');
+    expect(offers.music.first.latLong, 'lat&Long');
+    expect(offers.music.length, 1);
   });
 
   test('OfferClient fails and throws Exception', () async {

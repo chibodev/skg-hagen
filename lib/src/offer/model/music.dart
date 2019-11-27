@@ -8,6 +8,7 @@ class Music {
   final String imageUrl;
   final String email;
   Address address;
+  final String organizer;
   final String occurrence;
   final String time;
   final String timeUntil;
@@ -26,6 +27,7 @@ class Music {
       this.description,
       this.imageUrl,
       this.email,
+      this.organizer,
       this.occurrence,
       this.time,
       this.timeUntil,
@@ -56,6 +58,7 @@ class Music {
             ? json['imageUrl']
             : null,
         email: json['email'],
+        organizer: json["organizer"] == "" ? null : json["organizer"],
         occurrence: json['occurrence'],
         time: json["time"],
         timeUntil: json["timeUntil"],
