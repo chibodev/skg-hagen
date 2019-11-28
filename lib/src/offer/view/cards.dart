@@ -48,7 +48,7 @@ class Cards {
                 children: <Widget>[
                   CustomWidget.getCardTitle(card.title),
                   CustomWidget.getOccurrence(card.getFormattedOccurrence()),
-                  _getEmail(
+                  CustomWidget.getCardOrganizerWithEmail(
                       card.getFormattedOrganiser(), card.email, card.title),
                   (card.address.street == null || card.address.name == null)
                       ? CustomWidget.getNoLocation()

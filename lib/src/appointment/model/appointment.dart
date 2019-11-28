@@ -57,7 +57,7 @@ class Appointment {
       room: json["room"],
         infoTitle: json["infoTitle"] == "" ? null : json["infoTitle"],
       organizer: json["organizer"],
-      email: json["email"],
+      email: json["email"] == "" ? null : json["email"],
       name: json["name"] == null ? null : json["name"],
       street: json["street"] == null ? null : json["street"],
       houseNumber: json["houseNumber"] == null ? null : json["houseNumber"],

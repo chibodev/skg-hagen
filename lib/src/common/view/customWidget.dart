@@ -177,6 +177,50 @@ class CustomWidget {
     );
   }
 
+  static Padding getCardOrganizerWithEmail(String organizer, String email, String title) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: SizeConfig.getSafeBlockVerticalBy(2),
+        top: SizeConfig.getSafeBlockVerticalBy(1),
+        bottom: SizeConfig.getSafeBlockVerticalBy(2),
+      ),
+      child: Row(
+        children: <Widget>[
+          Flexible(
+            child: (organizer != null)
+                ? Text(
+              organizer,
+              overflow: TextOverflow.visible,
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: SizeConfig.getSafeBlockVerticalBy(
+                    Default.SUBSTANDARD_FONT_SIZE),
+              ),
+            )
+                : Text(''),
+          ),
+          (email != null)
+              ? InkWell(
+            splashColor: Color(Default.COLOR_GREEN),
+            onTap: () => TapAction().sendMail(email, title),
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: SizeConfig.getSafeBlockVerticalBy(1),
+              ),
+              child: Icon(
+                Icons.email,
+                color: Colors.grey,
+                size: SizeConfig.getSafeBlockVerticalBy(4),
+                semanticLabel: 'Email',
+              ),
+            ),
+          )
+              : Text(''),
+        ],
+      ),
+    );
+  }
+
   static Widget noInternet() {
     return Container(
       color: Colors.red,
