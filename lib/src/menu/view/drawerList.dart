@@ -71,7 +71,7 @@ class DrawerList {
     for (int i = 0; i < cards.length; i++) {
       list.add(
         _createDrawerItem(
-          text: Default.capitalize(cards[i].title),
+          text: Default.capitalize(cards[i].name),
           onTap: () =>
               Navigator.of(context).popAndPushNamed(cards[i].routeName),
         ),

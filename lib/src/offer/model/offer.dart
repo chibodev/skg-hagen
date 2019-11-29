@@ -91,7 +91,7 @@ class Offer {
             ? ''
             : "- ${timeUntil.substring(0, 5)}";
 
-    return "$occurrence | $occurrenceTime $occurrenceTimeUntil";
+    return occurrence == '' ? occurrence : "$occurrence | $occurrenceTime $occurrenceTimeUntil";
   }
 
   String getFormattedOrganiser() {

@@ -9,7 +9,7 @@ class Offers {
   static const String NAME = 'Angebote';
   static const String IMAGE = 'assets/images/angebote.jpg';
   static const String FOOTER =
-      'Ob Angebote, Gruppe oder Kreise stattfinden bitte bei per Email erfragen!';
+      'Ob Angebote, Gruppen oder Kreise stattfinden, erfragen Sie bitte per E-Mail.';
 
   Offers({this.offers, this.projects, this.music});
 

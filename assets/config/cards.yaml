@@ -5,6 +5,7 @@ termine:
     - events
   image: assets/images/termine.jpg
   route: appointment
+  name: Termine
 
 angebote:
   groups:
@@ -13,6 +14,7 @@ angebote:
     - musik
   image: assets/images/gruppen.jpg
   route: offer
+  name: Angebote
 
 ev.kindergarten:
   groups:
@@ -20,6 +22,7 @@ ev.kindergarten:
     - aktionen
   image: assets/images/kindergarten.jpg
   route: kindergarten
+  name: Ev.Kindergarten
 
 
 kontakte:
@@ -29,6 +32,7 @@ kontakte:
     - social media
   image: assets/images/kontakte.jpg
   route: contacts
+  name: Kontakte
 
 über uns:
   groups:
@@ -37,6 +41,7 @@ kontakte:
     - impressum
   image: assets/images/skg.jpg
   route: aboutus
+  name: Über uns
 
 #andacht:
 #  groups:

@@ -17,7 +17,7 @@ class SingleCard {
 
     cardConfig.forEach((dynamic key, dynamic value) {
       final List<String> subtitle = <String>[];
-      String img = '', route = '';
+      String img = '', route = '', cardName = '';
 
       value.forEach((dynamic group, dynamic name) {
         if (name is YamlList) {
@@ -31,17 +31,20 @@ class SingleCard {
         if (name is String && group == 'route') {
           route = name;
         }
+        if (name is String && group == 'name') {
+          cardName = name;
+        }
       });
 
-      cards.add(_createNewCard(key, subtitle, "/$route", img));
+      cards.add(_createNewCard(key, subtitle, "/$route", cardName, img));
     });
 
     return cards;
   }
 
   CardContent _createNewCard(
-      String title, List<String> subtitle, String routeName,
+      String title, List<String> subtitle, String routeName, String name,
       [String imagePath]) {
-    return CardContent(title, subtitle, routeName, imagePath);
+    return CardContent(title, subtitle, routeName, name, imagePath);
   }
 }
