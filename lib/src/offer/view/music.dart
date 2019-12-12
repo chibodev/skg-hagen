@@ -51,7 +51,7 @@ class Music extends StatelessWidget {
                       : Container(),
                   music.email.length > 2
                       ? CustomWidget.getSinglePageEmail(
-                          thirty, music.email, music.title)
+                          thirty, music.email, music.title, context)
                       : Container(),
                   Padding(
                     padding: EdgeInsets.only(bottom: SizeConfig.getSafeBlockVerticalBy(1)),

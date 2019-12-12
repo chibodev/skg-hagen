@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
@@ -10,7 +11,11 @@ import 'package:skg_hagen/src/offer/view/music.dart' as View;
 import 'package:skg_hagen/src/offer/view/projects.dart';
 
 class Cards {
+  BuildContext _buildContext;
+
   Widget buildRows(BuildContext context, dynamic card) {
+    this._buildContext = context;
+
     final List<Widget> list = List<Widget>();
 
     if (card is List<Offer>) {
@@ -21,8 +26,7 @@ class Cards {
       for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForMusic(context, card[i]));
       }
-    }
-    else if (card is List<Project>) {
+    } else if (card is List<Project>) {
       for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForProjects(context, card[i]));
       }
@@ -49,7 +53,10 @@ class Cards {
                   CustomWidget.getCardTitle(card.title),
                   CustomWidget.getOccurrence(card.getFormattedOccurrence()),
                   CustomWidget.getCardOrganizerWithEmail(
-                      card.getFormattedOrganiser(), card.email, card.title),
+                      card.getFormattedOrganiser(),
+                      card.email,
+                      card.title,
+                      this._buildContext),
                   (card.address.street == null || card.address.name == null)
                       ? CustomWidget.getNoLocation()
                       : CustomWidget.getAddressWithAction(card.address,
@@ -133,50 +140,6 @@ class Cards {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Padding _getEmail(String organizer, String email, String title) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: SizeConfig.getSafeBlockVerticalBy(2),
-        top: SizeConfig.getSafeBlockVerticalBy(1),
-        bottom: SizeConfig.getSafeBlockVerticalBy(2),
-      ),
-      child: Row(
-        children: <Widget>[
-          Flexible(
-            child: (organizer != null)
-                ? Text(
-                    organizer,
-                    overflow: TextOverflow.visible,
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          Default.SUBSTANDARD_FONT_SIZE),
-                    ),
-                  )
-                : Text(''),
-          ),
-          (email != null)
-              ? InkWell(
-                  splashColor: Color(Default.COLOR_GREEN),
-                  onTap: () => TapAction().sendMail(email, title),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: SizeConfig.getSafeBlockVerticalBy(1),
-                    ),
-                    child: Icon(
-                      Icons.email,
-                      color: Colors.grey,
-                      size: SizeConfig.getSafeBlockVerticalBy(4),
-                      semanticLabel: 'Email',
-                    ),
-                  ),
-                )
-              : Text(''),
-        ],
       ),
     );
   }
