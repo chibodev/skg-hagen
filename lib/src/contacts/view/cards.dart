@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:skg_hagen/src/common/model/address.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
@@ -8,7 +9,10 @@ import 'package:skg_hagen/src/contacts/model/contact.dart';
 import 'package:skg_hagen/src/contacts/model/social.dart';
 
 class Cards {
-  Widget buildRows(dynamic card) {
+  BuildContext _buildContext;
+
+  Widget buildRows(dynamic card, BuildContext context) {
+    this._buildContext = context;
     final List<Widget> list = List<Widget>();
 
     if (card is List<Address>) {
@@ -33,7 +37,7 @@ class Cards {
     );
   }
 
-  Widget _buildTileForAddress(dynamic card) {
+  Widget _buildTileForAddress(Address card) {
     return Material(
       child: Card(
         child: Row(
@@ -61,18 +65,16 @@ class Cards {
     );
   }
 
-  Widget _buildTileForContacts(dynamic card) {
+  Widget _buildTileForContacts(Contact card) {
+    final Color color =
+        card.administration == 0 ? Color(Default.COLOR_GREEN) : Colors.white;
     return Material(
       child: Card(
-        color: card.administration == 0
-            ? Color(Default.COLOR_GREEN)
-            : Colors.white,
+        color: color,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            card.administration == 0
-                ? _getCircleAvatar(card.imageUrl)
-                : Container(),
+            _getCircleAvatar(card.imageUrl, color),
             _getContacts(card),
             card.administration == 0
                 ? _getAddressWithoutAction(card.address,
@@ -84,11 +86,11 @@ class Cards {
     );
   }
 
-  Widget _buildTileForSocial(dynamic card) {
+  Widget _buildTileForSocial(Social card) {
     return Material(
       child: Card(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[_getSocialMediaIcon(card)],
         ),
       ),
@@ -96,28 +98,28 @@ class Cards {
   }
 
   Widget _getSocialMediaIcon(Social card) {
-    Widget widget = Container();
-
-    switch (card.name.toLowerCase()) {
-      case 'facebook':
-        widget = InkWell(
-          splashColor: Color(Default.COLOR_GREEN),
-          onTap: () => TapAction().launchURL(card.url),
-          child: Padding(
-            padding: EdgeInsets.all(
-              SizeConfig.getSafeBlockVerticalBy(2),
+    final String name = card.name.toLowerCase();
+    return card.isSocialValid(name)
+        ? InkWell(
+            splashColor: Color(Default.COLOR_GREEN),
+            onTap: () => TapAction().launchURL(card.url),
+            child: ListTile(
+              leading: Image.asset(
+                card.getSocialImage(name),
+                fit: BoxFit.scaleDown,
+                width: SizeConfig.getSafeBlockVerticalBy(7),
+                height: SizeConfig.getSafeBlockHorizontalBy(7),
+              ),
+              title: Text(
+                card.location,
+                style: TextStyle(
+                  fontSize: SizeConfig.getSafeBlockVerticalBy(
+                      Default.SUBSTANDARD_FONT_SIZE),
+                ),
+              ),
             ),
-            child: Image.asset(
-              Social.FACEBOOK,
-              fit: BoxFit.scaleDown,
-              width: SizeConfig.getSafeBlockVerticalBy(10),
-              height: SizeConfig.getSafeBlockHorizontalBy(10),
-            ),
-          ),
-        );
-        break;
-    }
-    return widget;
+          )
+        : Container();
   }
 
   Expanded _getContacts(Contact card) {
@@ -142,33 +144,37 @@ class Cards {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              address.getStreetAndNumber(),
-              style: TextStyle(
-                color: textColor == false
-                    ? Color(Default.COLOR_GREEN)
-                    : Colors.white,
-                fontSize: SizeConfig.getSafeBlockVerticalBy(
-                    Default.SUBSTANDARD_FONT_SIZE),
-              ),
-            ),
-            Text(
-              address.getZipAndCity(),
-              style: TextStyle(
-                color: textColor == false
-                    ? Color(Default.COLOR_GREEN)
-                    : Colors.white,
-                fontSize: SizeConfig.getSafeBlockVerticalBy(
-                    Default.SUBSTANDARD_FONT_SIZE),
-              ),
-            ),
+            address.street != null
+                ? Text(
+                    address.getStreetAndNumber(),
+                    style: TextStyle(
+                      color: textColor == false
+                          ? Color(Default.COLOR_GREEN)
+                          : Colors.white,
+                      fontSize: SizeConfig.getSafeBlockVerticalBy(
+                          Default.SUBSTANDARD_FONT_SIZE),
+                    ),
+                  )
+                : Text(''),
+            address.zip != null
+                ? Text(
+                    address.getZipAndCity(),
+                    style: TextStyle(
+                      color: textColor == false
+                          ? Color(Default.COLOR_GREEN)
+                          : Colors.white,
+                      fontSize: SizeConfig.getSafeBlockVerticalBy(
+                          Default.SUBSTANDARD_FONT_SIZE),
+                    ),
+                  )
+                : Text(''),
           ],
         ),
       ),
     );
   }
 
-   Widget _getOpening(String opening, {bool colorWhite}) {
+  Widget _getOpening(String opening, {bool colorWhite}) {
     final double twenty = SizeConfig.getSafeBlockVerticalBy(2);
     return Expanded(
       child: Container(
@@ -190,7 +196,7 @@ class Cards {
             ),
             Padding(
               padding:
-              EdgeInsets.only(left: twenty, right: twenty, bottom: twenty),
+                  EdgeInsets.only(left: twenty, right: twenty, bottom: twenty),
               child: Text(
                 opening,
                 style: TextStyle(
@@ -206,24 +212,40 @@ class Cards {
     );
   }
 
-  Column _getCircleAvatar(String imageUrl) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(
-            left: SizeConfig.getSafeBlockVerticalBy(2),
-          ),
-          child: CircleAvatar(
-            backgroundImage: NetworkImage(
-              imageUrl,
-            ),
-            minRadius: SizeConfig.getSafeBlockVerticalBy(4),
-            maxRadius: SizeConfig.getSafeBlockHorizontalBy(8),
-          ),
-        ),
-      ],
-    );
+  Column _getCircleAvatar(String imageUrl, Color color) {
+    return imageUrl == null
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(
+                  left: SizeConfig.getSafeBlockVerticalBy(2),
+                ),
+                child: CircleAvatar(
+                  backgroundColor: color,
+                  minRadius: SizeConfig.getSafeBlockVerticalBy(4),
+                  maxRadius: SizeConfig.getSafeBlockHorizontalBy(8),
+                ),
+              ),
+            ],
+          )
+        : Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(
+                  left: SizeConfig.getSafeBlockVerticalBy(2),
+                ),
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    imageUrl,
+                  ),
+                  minRadius: SizeConfig.getSafeBlockVerticalBy(4),
+                  maxRadius: SizeConfig.getSafeBlockHorizontalBy(8),
+                ),
+              ),
+            ],
+          );
   }
 
   Padding _getPhoneAndEmail(String phone, String email, String title) {
@@ -235,50 +257,70 @@ class Cards {
         children: <Widget>[
           phone != ""
               ? InkWell(
-            splashColor: Color(Default.COLOR_GREEN),
-            onTap: () => TapAction().callMe(phone),
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: SizeConfig.getSafeBlockVerticalBy(1),
-                bottom: SizeConfig.getSafeBlockVerticalBy(1),
-              ),
-              child: Icon(
-                Icons.phone,
-                color: Colors.black,
-                size: SizeConfig.getSafeBlockVerticalBy(3),
-                semanticLabel: 'Phone',
-              ),
-            ),
-          )
+                  splashColor: Color(Default.COLOR_GREEN),
+                  onTap: () => TapAction().callMe(phone),
+                  onLongPress: () => <void>{
+                    Clipboard.setData(ClipboardData(text: phone)),
+                    showDialog(
+                        context: this._buildContext,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                              title: Text('Telefon'),
+                              content: SelectableText(phone));
+                        }),
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: SizeConfig.getSafeBlockVerticalBy(1),
+                      bottom: SizeConfig.getSafeBlockVerticalBy(1),
+                    ),
+                    child: Icon(
+                      Icons.phone,
+                      color: Colors.black,
+                      size: SizeConfig.getSafeBlockVerticalBy(3),
+                      semanticLabel: 'Phone',
+                    ),
+                  ),
+                )
               : Padding(
-            padding: EdgeInsets.only(
-              left: SizeConfig.getSafeBlockVerticalBy(4),
-              bottom: SizeConfig.getSafeBlockVerticalBy(1),
-            ),
-          ),
+                  padding: EdgeInsets.only(
+                    left: SizeConfig.getSafeBlockVerticalBy(4),
+                    bottom: SizeConfig.getSafeBlockVerticalBy(1),
+                  ),
+                ),
           email != ""
               ? InkWell(
-            splashColor: Color(Default.COLOR_GREEN),
-            onTap: () => TapAction().sendMail(email, title),
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: SizeConfig.getSafeBlockVerticalBy(5),
-                bottom: SizeConfig.getSafeBlockVerticalBy(1),
-              ),
-              child: Icon(
-                Icons.email,
-                color: Colors.black,
-                size: SizeConfig.getSafeBlockVerticalBy(3),
-                semanticLabel: 'Email',
-              ),
-            ),
-          )
+                  splashColor: Color(Default.COLOR_GREEN),
+                  onTap: () => TapAction().sendMail(email, title),
+                  onLongPress: () => <void>{
+                    Clipboard.setData(ClipboardData(text: email)),
+                    showDialog(
+                        context: this._buildContext,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                              title: Text('E-Mail'),
+                              content: SelectableText(email));
+                        }),
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: SizeConfig.getSafeBlockVerticalBy(5),
+                      bottom: SizeConfig.getSafeBlockVerticalBy(1),
+                    ),
+                    child: Icon(
+                      Icons.email,
+                      color: Colors.black,
+                      size: SizeConfig.getSafeBlockVerticalBy(3),
+                      semanticLabel: 'E-Mail',
+                    ),
+                  ),
+                )
               : Padding(
-            padding: EdgeInsets.only(
-              left: SizeConfig.getSafeBlockVerticalBy(4),
-              bottom: SizeConfig.getSafeBlockVerticalBy(1),
-            ),
-          ),
+                  padding: EdgeInsets.only(
+                    left: SizeConfig.getSafeBlockVerticalBy(4),
+                    bottom: SizeConfig.getSafeBlockVerticalBy(1),
+                  ),
+                ),
         ],
       ),
     );

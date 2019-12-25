@@ -1,30 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
+import 'package:skg_hagen/src/offer/model/music.dart';
 import 'package:skg_hagen/src/offer/model/offer.dart';
+import 'package:skg_hagen/src/offer/model/project.dart';
+import 'package:skg_hagen/src/offer/view/music.dart' as View;
+import 'package:skg_hagen/src/offer/view/projects.dart';
 
 class Cards {
-  Widget buildRows(dynamic card) {
+  BuildContext _buildContext;
+
+  Widget buildRows(BuildContext context, dynamic card) {
+    this._buildContext = context;
+
     final List<Widget> list = List<Widget>();
 
-    if (card is List<Offer>)
+    if (card is List<Offer>) {
       for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForOffers(card[i]));
       }
-    else
+    } else if (card is List<Music>) {
       for (int i = 0; i < card.length; i++) {
-        list.add(_buildTileForGroups(card[i]));
+        list.add(_buildTileForMusic(context, card[i]));
       }
+    } else if (card is List<Project>) {
+      for (int i = 0; i < card.length; i++) {
+        list.add(_buildTileForProjects(context, card[i]));
+      }
+    }
 
-    return ExpansionTile(
-      title: CustomWidget.getAccordionTitle(card.first.getName()),
-      children: list,
-    );
+    return card != null
+        ? ExpansionTile(
+            title: CustomWidget.getAccordionTitle(card?.first?.getName()),
+            children: list.length > 0 ? list : Container(),
+          )
+        : Container();
   }
 
-  Widget _buildTileForOffers(dynamic card) {
+  Widget _buildTileForOffers(Offer card) {
     return Material(
       child: Card(
         child: Row(
@@ -36,78 +52,94 @@ class Cards {
                 children: <Widget>[
                   CustomWidget.getCardTitle(card.title),
                   CustomWidget.getOccurrence(card.getFormattedOccurrence()),
-                  _getEmail(
-                      card.getFormattedOrganiser(), card.email, card.title),
+                  CustomWidget.getCardOrganizerWithEmail(
+                      card.getFormattedOrganiser(),
+                      card.email,
+                      card.title,
+                      this._buildContext),
                   (card.address.street == null || card.address.name == null)
                       ? CustomWidget.getNoLocation()
-                      : CustomWidget.getAddressWithAction(card.address),
+                      : CustomWidget.getAddressWithAction(card.address,
+                          room: card.room),
                 ],
               ),
             ),
-
           ],
         ),
       ),
     );
   }
 
-  Widget _buildTileForGroups(dynamic card) {
+  Widget _buildTileForProjects(BuildContext context, Project card) {
     return Material(
       child: Card(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  CustomWidget.getCardTitle(card.title),
-                  CustomWidget.getOccurrence(card.getFormattedOccurrence()),
-                  CustomWidget.getAddressWithAction(card.address),
-                ],
+        child: InkWell(
+          splashColor: Color(Default.COLOR_GREEN),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute<dynamic>(
+              builder: (BuildContext _context) => Projects(
+                projects: card,
+                context: context,
               ),
             ),
-
-          ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Flexible(
+                  child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.info,
+                      color: Color(Default.COLOR_GREEN),
+                    ),
+                    title: CustomWidget.getCardTitle(card.title),
+                  ),
+                ),
+              )),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Padding _getEmail(String organizer, String email, String title) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: SizeConfig.getSafeBlockVerticalBy(2),
-        top: SizeConfig.getSafeBlockVerticalBy(1),
-        bottom: SizeConfig.getSafeBlockVerticalBy(2),
-      ),
-      child: Row(
-        children: <Widget>[
-          Text(
-            organizer,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: SizeConfig.getSafeBlockVerticalBy(
-                  Default.SUBSTANDARD_FONT_SIZE),
+  Widget _buildTileForMusic(BuildContext context, Music card) {
+    return Material(
+      child: Card(
+        child: InkWell(
+          splashColor: Color(Default.COLOR_GREEN),
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute<dynamic>(
+              builder: (BuildContext _context) => View.Music(
+                music: card,
+                context: context,
+              ),
             ),
           ),
-          InkWell(
-            splashColor: Color(Default.COLOR_GREEN),
-            onTap: () => TapAction().sendMail(email, title),
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: SizeConfig.getSafeBlockVerticalBy(1),
-              ),
-              child: Icon(
-                Icons.email,
-                color: Colors.grey,
-                size: SizeConfig.getSafeBlockVerticalBy(4),
-                semanticLabel: 'Email',
-              ),
-            ),
-          )
-        ],
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Flexible(
+                  child: Container(
+                child: Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.info,
+                      color: Color(Default.COLOR_GREEN),
+                    ),
+                    title: CustomWidget.getCardTitle(card.title),
+                  ),
+                ),
+              )),
+            ],
+          ),
+        ),
       ),
     );
   }

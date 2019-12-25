@@ -1,6 +1,8 @@
 import 'package:skg_hagen/src/common/model/address.dart';
 
 class Contact {
+  static const int URL_MIN = 7;
+
   String title;
   String surname;
   String firstname;
@@ -51,7 +53,7 @@ class Contact {
         role: json["role"],
         phone: json["phone"],
         email: json["email"],
-        imageUrl: json["imageUrl"],
+        imageUrl: json['imageUrl'].toString().length > URL_MIN ? json['imageUrl'] : null,
         administration: int.parse(json["administration"]),
         opening: json["opening"],
         name: (json["name"] == "--" || json["name"] == "") ? null : json["name"],

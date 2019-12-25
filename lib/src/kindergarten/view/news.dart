@@ -34,31 +34,15 @@ class News extends StatelessWidget {
             ),
             SliverToBoxAdapter(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: thirty, right: thirty, top: thirty),
-                    child: Text(
-                      news.title,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: SizeConfig.getSafeBlockVerticalBy(
-                            Default.STANDARD_FONT_SIZE),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(thirty),
-                    child: SelectableText(
-                      news.description,
-                      style: TextStyle(
-                        fontSize: SizeConfig.getSafeBlockVerticalBy(
-                            Default.STANDARD_FONT_SIZE),
-                      ),
-                    ),
-                  ),
+                  CustomWidget.getSinglePageTitle(thirty, news.title),
+                  CustomWidget.getSinglePageDescription(thirty, news.description),
+                  news.imageUrl != null
+                      ? CustomWidget.getImageFromNetwork(thirty, news.imageUrl)
+                      : Container(),
                 ],
               ),
             ),

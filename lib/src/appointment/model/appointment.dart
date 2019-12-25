@@ -9,6 +9,7 @@ class Appointment {
   final String time;
   final String placeName;
   final String room;
+  final String infoTitle;
   final String organizer;
   final String email;
   final String name;
@@ -25,6 +26,7 @@ class Appointment {
     this.time,
     this.placeName,
     this.room,
+    this.infoTitle,
     this.organizer,
     this.email,
     this.name,
@@ -53,8 +55,9 @@ class Appointment {
       time: json["time"],
       placeName: json["placeName"],
       room: json["room"],
+        infoTitle: json["infoTitle"] == "" ? null : json["infoTitle"],
       organizer: json["organizer"],
-      email: json["email"],
+      email: json["email"] == "" ? null : json["email"],
       name: json["name"] == null ? null : json["name"],
       street: json["street"] == null ? null : json["street"],
       houseNumber: json["houseNumber"] == null ? null : json["houseNumber"],
@@ -94,6 +97,12 @@ class Appointment {
   }
 
   String getFormattedOrganiser() {
-    return organizer.length > 0 ? 'Infos: ' + organizer : '';
+    String text;
+
+    if (organizer != null) {
+      text = infoTitle != null ? "$infoTitle: $organizer" : organizer;
+    }
+
+    return text;
   }
 }

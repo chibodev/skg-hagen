@@ -61,15 +61,14 @@ class Accordions extends State<Controller.Offer> {
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) => _dataAvailable
-                ? Cards().buildRows(_options[index])
+                ? Cards().buildRows(context, _options[index])
                 : CustomWidget.buildSliverSpinner(_isPerformingRequest),
             childCount: _options?.length ?? 0,
           ),
         ),
         !_dataAvailable
             ? SliverToBoxAdapter(
-                child:
-                    CustomWidget.buildSliverSpinner(_isPerformingRequest),
+                child: CustomWidget.buildSliverSpinner(_isPerformingRequest),
               )
             : SliverToBoxAdapter(),
       ],
@@ -86,7 +85,8 @@ class Accordions extends State<Controller.Offer> {
 
       if (_offers != null) {
         _options.add(_offers.offers);
-        _options.add(_offers.groups);
+        _options.add(_offers.music);
+        _options.add(_offers.projects);
         _dataAvailable = true;
       }
 

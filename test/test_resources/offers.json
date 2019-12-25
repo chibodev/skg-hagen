@@ -5,9 +5,10 @@
       "occurrence": "Donnerstags",
       "time": "18:00:00",
       "placeName": "markuskirche",
-      "room": "",
+      "room": "room",
       "organizer": "Jonas Lehmann",
       "email": "leimann@gmail.com",
+      "infoTitel": "Leitung",
       "ageStart": "4",
       "ageEnd": "10",
       "schoolYear": "",
@@ -24,6 +25,7 @@
       "time": "16:00:00",
       "placeName": "markuskirche",
       "room": "Gemeindehaus",
+      "infoTitel": "Leitung",
       "organizer": "Jessica Tonn",
       "email": "tonn@skg-hagen.de",
       "ageStart": "4",
@@ -37,36 +39,39 @@
       "country": "DE"
     }
   ],
-  "groups": [
+  "projects": [
     {
-      "title": "Bezirksverband der Frauenhilfe",
-      "occurrence": "Jede 1. Montag im Monat",
-      "time": "14:30:00",
-      "placeName": "johanniskirche",
-      "room": "",
-      "organizer": null,
-      "email": null,
-      "name": "johanniskirche",
-      "street": "Johanniskirchplatz",
-      "houseNumber": "10",
-      "zip": "58095",
-      "city": "Hagen",
-      "country": "DE"
-    },
+      "id": "1",
+      "title": "New",
+      "imageUrl": "https:/",
+      "description": "Project description",
+      "active": "1",
+      "createdAt": "2019-11-27 19:12:28"
+    }
+  ],
+  "music": [
     {
-      "title": "Frauenhilfe (Infos bei den Pfarrerinnen)",
-      "occurrence": "Mittwochs",
-      "time": "15:00:00",
-      "placeName": "markuskirche",
-      "room": "",
-      "organizer": null,
-      "email": null,
-      "name": "markuskirche",
-      "street": "Rheinstraße",
-      "houseNumber": "26",
-      "zip": "58097",
+      "id": "5",
+      "title": "Kinderchor",
+      "description": "Der Kinderchor - unter der Leitung Meister Meistermann",
+      "occurrence": "Montags",
+      "time": "16:15:00",
+      "placeName": "marchurch",
+      "room": "Großer Saal",
+      "organizer": "Jamie Ali",
+      "email": "",
+      "imageUrl": "https:/",
+      "addressId": "59",
+      "active": "1",
+      "createdAt": "2019-11-22 16:07:48",
+      "name": "marchurch",
+      "street": "MaxStr",
+      "houseNumber": "20",
+      "zip": "58090",
       "city": "Hagen",
-      "country": "DE"
+      "country": "DE",
+      "branch": "0",
+      "latLong": "lat&Long"
     }
   ]
 }

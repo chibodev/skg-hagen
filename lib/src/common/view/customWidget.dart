@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:skg_hagen/src/common/model/address.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
@@ -88,7 +89,7 @@ class CustomWidget {
         bottom: SizeConfig.getSafeBlockVerticalBy(1),
       ),
       child: Text(
-        occurrence,
+        Default.capitalize(occurrence),
         style: TextStyle(
           color: Colors.grey,
           fontWeight: FontWeight.bold,
@@ -99,7 +100,7 @@ class CustomWidget {
     );
   }
 
-  static Container getAddressWithAction(Address address) {
+  static Container getAddressWithAction(Address address, {String room}) {
     return Container(
       width: SizeConfig.screenHeight,
       height: SizeConfig.getSafeBlockHorizontalBy(22.5),
@@ -110,31 +111,48 @@ class CustomWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              Default.capitalize(address.name),
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: SizeConfig.getSafeBlockVerticalBy(
-                    Default.SUBSTANDARD_FONT_SIZE),
-              ),
-            ),
-            Text(
-              address.getStreetAndNumber(),
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: SizeConfig.getSafeBlockVerticalBy(
-                    Default.SUBSTANDARD_FONT_SIZE),
-              ),
-            ),
-            Text(
-              address.getZipAndCity(),
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: SizeConfig.getSafeBlockVerticalBy(
-                    Default.SUBSTANDARD_FONT_SIZE),
-              ),
-            ),
+            room != null
+                ? Text(
+                    Default.capitalize(room),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: SizeConfig.getSafeBlockVerticalBy(
+                          Default.SUBSTANDARD_FONT_SIZE),
+                    ),
+                  )
+                : Container(),
+            address.name != null
+                ? Text(
+                    Default.capitalize(address.name),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: SizeConfig.getSafeBlockVerticalBy(
+                          Default.SUBSTANDARD_FONT_SIZE),
+                    ),
+                  )
+                : Container(),
+            address.street != null
+                ? Text(
+                    address.getStreetAndNumber(),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: SizeConfig.getSafeBlockVerticalBy(
+                          Default.SUBSTANDARD_FONT_SIZE),
+                    ),
+                  )
+                : Container(),
+            address.zip != null
+                ? Text(
+                    address.getZipAndCity(),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: SizeConfig.getSafeBlockVerticalBy(
+                          Default.SUBSTANDARD_FONT_SIZE),
+                    ),
+                  )
+                : Container(),
           ],
         ),
       ),
@@ -164,6 +182,62 @@ class CustomWidget {
           fontSize:
               SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
         ),
+      ),
+    );
+  }
+
+  static Padding getCardOrganizerWithEmail(
+      String organizer, String email, String title,
+      BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: SizeConfig.getSafeBlockVerticalBy(2),
+        top: SizeConfig.getSafeBlockVerticalBy(1),
+        bottom: SizeConfig.getSafeBlockVerticalBy(2),
+      ),
+      child: Row(
+        children: <Widget>[
+          Flexible(
+            child: (organizer != null)
+                ? Text(
+                    organizer,
+                    overflow: TextOverflow.visible,
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: SizeConfig.getSafeBlockVerticalBy(
+                          Default.SUBSTANDARD_FONT_SIZE),
+                    ),
+                  )
+                : Text(''),
+          ),
+          (email != null)
+              ? InkWell(
+                  splashColor: Color(Default.COLOR_GREEN),
+                  onTap: () => TapAction().sendMail(email, title),
+                  onLongPress: () => <void>{
+                    Clipboard.setData(ClipboardData(text: email)),
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                              title: Text('E-Mail'),
+                              content: SelectableText(email));
+                        }),
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: SizeConfig.getSafeBlockVerticalBy(1),
+                    ),
+                    child: Icon(
+                      Icons.email,
+                      color: Colors.grey,
+                      size: SizeConfig.getSafeBlockVerticalBy(4),
+                      semanticLabel: 'Email',
+                    ),
+                  ),
+                )
+              : Text(''),
+        ],
       ),
     );
   }
@@ -211,6 +285,90 @@ class CustomWidget {
       name,
       style: TextStyle(
         fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+      ),
+    );
+  }
+
+  static Padding getSinglePageTitle(double thirty, String title) {
+    return Padding(
+      padding: EdgeInsets.only(left: thirty, right: thirty, top: thirty),
+      child: Text(
+        title,
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize:
+              SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+        ),
+      ),
+    );
+  }
+
+  static Padding getSinglePageDescription(double thirty, String description) {
+    return Padding(
+      padding: EdgeInsets.all(thirty),
+      child: SelectableText(
+        description,
+        style: TextStyle(
+          fontSize:
+              SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+        ),
+      ),
+    );
+  }
+
+  static Padding getSinglePageOccurrence(double thirty, String occurrence) {
+    return Padding(
+      padding: EdgeInsets.only(
+          left: thirty, bottom: SizeConfig.getSafeBlockVerticalBy(2)),
+      child: Text(
+        "Termin: $occurrence",
+        style: TextStyle(
+          color: Colors.grey,
+          fontWeight: FontWeight.bold,
+          fontSize:
+              SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+        ),
+      ),
+    );
+  }
+
+  static Padding getSinglePageEmail(double thirty, String email, String title, BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(left: thirty, bottom: thirty),
+      child: InkWell(
+        splashColor: Color(Default.COLOR_GREEN),
+        onTap: () => TapAction().sendMail(email, title),
+        onLongPress: () => <void>{
+          Clipboard.setData(ClipboardData(text: email)),
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                    title: Text('E-Mail'),
+                    content: SelectableText(email));
+              }),
+        },
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: SizeConfig.getSafeBlockVerticalBy(1),
+          ),
+          child: Icon(
+            Icons.email,
+            color: Colors.grey,
+            size: SizeConfig.getSafeBlockVerticalBy(4),
+            semanticLabel: 'Email',
+          ),
+        ),
+      ),
+    );
+  }
+
+  static Padding getImageFromNetwork(double thirty, String imageUrl) {
+    return Padding(
+      padding: EdgeInsets.all(thirty),
+      child: Image.network(
+        imageUrl,
+        fit: BoxFit.scaleDown,
       ),
     );
   }

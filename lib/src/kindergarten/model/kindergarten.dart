@@ -7,7 +7,7 @@ class Kindergarten {
   static const String NAME = 'Ev.Kindergarten';
   static const String IMAGE = 'assets/images/kindergarten.jpg';
   static const String FOOTER =
-      'Für weitere Infos bitte direkt an das Kindergarten wenden.';
+      'Für weitere Informationen wenden Sie sich bitte an Mitarbeiter des Kindergartens.';
 
   Kindergarten({this.events, this.news});
 

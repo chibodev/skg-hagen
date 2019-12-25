@@ -60,7 +60,7 @@ class Cards extends State<Controller.Appointment> {
       _hasInternet = true;
 
       appointments = await AppointmentClient()
-          .getAppointments(DioHTTPClient(), Network()); //returns empty list
+          .getAppointments(DioHTTPClient(), Network(), refresh: true);
 
       final bool status = appointments?.appointments != null;
       _hasInternet = await Network().hasInternet();
@@ -94,7 +94,7 @@ class Cards extends State<Controller.Appointment> {
       } else {
         final Appointments newAppointments = await AppointmentClient()
             .getAppointments(DioHTTPClient(), Network(),
-                index: _indexCounter); //returns empty list
+                index: _indexCounter, refresh: true);
 
         final List<Model.Appointment> newEntries = newAppointments.appointments;
         final bool isResponseEmpty = newEntries.isEmpty;
@@ -143,7 +143,7 @@ class Cards extends State<Controller.Appointment> {
             (BuildContext context, int index) {
               return appointments == null
                   ? CustomWidget.buildProgressIndicator(_isPerformingRequest)
-                  : _buildRows(appointments.appointments[index]);
+                  : _buildRows(context, appointments.appointments[index]);
             },
             childCount: appointments?.appointments?.length ?? 0,
           ),
@@ -157,7 +157,7 @@ class Cards extends State<Controller.Appointment> {
     );
   }
 
-  Widget _buildRows(Model.Appointment card) {
+  Widget _buildRows(BuildContext context, Model.Appointment card) {
     return Material(
       child: Card(
         child: Row(
@@ -169,7 +169,8 @@ class Cards extends State<Controller.Appointment> {
                 children: <Widget>[
                   CustomWidget.getCardTitle(card.title),
                   CustomWidget.getOccurrence(card.getFormattedTime()),
-                  CustomWidget.getCardSubtitle(card.getFormattedOrganiser()),
+                  CustomWidget.getCardOrganizerWithEmail(
+                      card.getFormattedOrganiser(), card.email, card.title, context),
                   CustomWidget.getAddressWithAction(card.address)
                 ],
               ),

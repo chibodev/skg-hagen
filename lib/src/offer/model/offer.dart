@@ -5,10 +5,12 @@ class Offer {
   final String title;
   final String occurrence;
   final String time;
+  final String timeUntil;
   final String placeName;
   final String room;
   final String organizer;
   final String email;
+  final String infoTitle;
   AgeRange ageRange;
   final int ageStart;
   final int ageEnd;
@@ -26,8 +28,10 @@ class Offer {
       {this.title,
       this.occurrence,
       this.time,
+      this.timeUntil,
       this.placeName,
       this.room,
+      this.infoTitle,
       this.organizer,
       this.email,
       this.ageStart,
@@ -57,10 +61,12 @@ class Offer {
         title: json['title'],
         occurrence: json['occurrence'],
         time: json["time"],
+        timeUntil: json["timeUntil"],
         placeName: json["placeName"],
-        room: json["room"],
-        organizer: json["organizer"] == null ? null : json["organizer"],
-        email: json["email"] == null ? null : json["email"],
+        room: json["room"] == "" ? null : json["room"],
+        infoTitle: json["infoTitle"] == "" ? null : json["infoTitle"],
+        organizer: json["organizer"] == "" ? null : json["organizer"],
+        email: json["email"] == "" ? null : json["email"],
         ageStart: json['ageStart'] == "" ? null : int.parse(json['ageStart']),
         ageEnd: json['ageEnd'] == "" ? null : int.parse(json['ageEnd']),
         schoolYear: json['schoolYear'],
@@ -73,13 +79,28 @@ class Offer {
         latLong: json["latLong"] == null ? null : json['latLong'],
       );
 
-  String getName() => "Angebote";
+  String getName() => "Offene Angebote";
 
   String getFormattedSchoolYear() => "${schoolYear.toString()}. Schuljahr";
 
-  String getFormattedOccurrence() => "$occurrence | ${time.substring(0, 5)}";
+  String getFormattedOccurrence() {
+    final String occurrenceTime =
+        (time == "00:00:00") ? '--' : time.substring(0, 5);
+    final String occurrenceTimeUntil =
+        (timeUntil == "00:00:00" || timeUntil == null)
+            ? ''
+            : "- ${timeUntil.substring(0, 5)}";
+
+    return occurrence == '' ? occurrence : "$occurrence | $occurrenceTime $occurrenceTimeUntil";
+  }
 
   String getFormattedOrganiser() {
-    return organizer.length > 0 ? "Infos: $organizer" : '';
+    String text;
+
+    if (organizer != null) {
+      text = infoTitle != null ? "$infoTitle: $organizer" : organizer;
+    }
+
+    return text;
   }
 }
