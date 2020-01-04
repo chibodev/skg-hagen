@@ -52,29 +52,41 @@ class Cards {
 
   Widget _buildTileForPresbytery(Presbytery card) {
     return Material(
-      child: Card(
-        child: Column(
-          children: <Widget>[
-            ListTile(
-              leading: Icon(Icons.person),
-              title: Text(
-                card.getPresbyter(),
-                style: TextStyle(
-                  fontSize: SizeConfig.getSafeBlockVerticalBy(
-                      Default.STANDARD_FONT_SIZE),
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: SizeConfig.getSafeBlockHorizontalBy(3),
+        ),
+        child: Card(
+          elevation: 7,
+          shape: Border(
+            right: BorderSide(
+              color: Color(Default.COLOR_GREEN),
+              width: SizeConfig.getSafeBlockHorizontalBy(1),
+            ),
+          ),
+          child: Column(
+            children: <Widget>[
+              ListTile(
+                leading: Icon(Icons.person),
+                title: Text(
+                  card.getPresbyter(),
+                  style: TextStyle(
+                    fontSize: SizeConfig.getSafeBlockVerticalBy(
+                        Default.STANDARD_FONT_SIZE),
+                  ),
                 ),
-              ),
-              subtitle: (card.description.length > 1)
-                  ? Text(
-                      card.description,
-                      style: TextStyle(
-                        fontSize: SizeConfig.getSafeBlockVerticalBy(
-                            Default.SUBSTANDARD_FONT_SIZE),
-                      ),
-                    )
-                  : null,
-            )
-          ],
+                subtitle: (card.description.length > 1)
+                    ? Text(
+                        card.description,
+                        style: TextStyle(
+                          fontSize: SizeConfig.getSafeBlockVerticalBy(
+                              Default.SUBSTANDARD_FONT_SIZE),
+                        ),
+                      )
+                    : null,
+              )
+            ],
+          ),
         ),
       ),
     );

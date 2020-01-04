@@ -186,20 +186,18 @@ class CustomWidget {
     );
   }
 
-  static Padding getCardOrganizerWithEmail(
-      String organizer, String email, String title,
-      BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: SizeConfig.getSafeBlockVerticalBy(2),
-        top: SizeConfig.getSafeBlockVerticalBy(1),
-        bottom: SizeConfig.getSafeBlockVerticalBy(2),
-      ),
-      child: Row(
-        children: <Widget>[
-          Flexible(
-            child: (organizer != null)
-                ? Text(
+  static Widget getCardOrganizer(String organizer, BuildContext context) {
+    return (organizer != null)
+        ? Padding(
+            padding: EdgeInsets.only(
+              left: SizeConfig.getSafeBlockVerticalBy(2),
+              top: SizeConfig.getSafeBlockVerticalBy(1),
+              bottom: SizeConfig.getSafeBlockVerticalBy(2),
+            ),
+            child: Row(
+              children: <Widget>[
+                Flexible(
+                  child: Text(
                     organizer,
                     overflow: TextOverflow.visible,
                     style: TextStyle(
@@ -207,39 +205,51 @@ class CustomWidget {
                       fontSize: SizeConfig.getSafeBlockVerticalBy(
                           Default.SUBSTANDARD_FONT_SIZE),
                     ),
-                  )
-                : Text(''),
-          ),
-          (email != null)
-              ? InkWell(
-                  splashColor: Color(Default.COLOR_GREEN),
-                  onTap: () => TapAction().sendMail(email, title),
-                  onLongPress: () => <void>{
-                    Clipboard.setData(ClipboardData(text: email)),
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                              title: Text('E-Mail'),
-                              content: SelectableText(email));
-                        }),
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: SizeConfig.getSafeBlockVerticalBy(1),
-                    ),
-                    child: Icon(
-                      Icons.email,
-                      color: Colors.grey,
-                      size: SizeConfig.getSafeBlockVerticalBy(4),
-                      semanticLabel: 'Email',
-                    ),
                   ),
-                )
-              : Text(''),
-        ],
-      ),
-    );
+                ),
+              ],
+            ),
+          )
+        : Text('');
+  }
+
+  static Widget getCardEmail(String email, String title, BuildContext context) {
+    return (email != null)
+        ? Padding(
+            padding: EdgeInsets.only(
+              bottom: SizeConfig.getSafeBlockVerticalBy(2),
+              left: SizeConfig.getSafeBlockVerticalBy(1),
+            ),
+            child: InkWell(
+              splashColor: Color(Default.COLOR_GREEN),
+              onTap: () => TapAction().sendMail(email, title),
+              onLongPress: () => <void>{
+                Clipboard.setData(
+                  ClipboardData(text: email),
+                ),
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('E-Mail'),
+                        content: SelectableText(email),
+                      );
+                    }),
+              },
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: SizeConfig.getSafeBlockVerticalBy(1),
+                ),
+                child: Icon(
+                  Icons.email,
+                  color: Colors.grey,
+                  size: SizeConfig.getSafeBlockVerticalBy(4),
+                  semanticLabel: 'Email',
+                ),
+              ),
+            ),
+          )
+        : Text('');
   }
 
   static Widget noInternet() {
@@ -332,7 +342,8 @@ class CustomWidget {
     );
   }
 
-  static Padding getSinglePageEmail(double thirty, String email, String title, BuildContext context) {
+  static Padding getSinglePageEmail(
+      double thirty, String email, String title, BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(left: thirty, bottom: thirty),
       child: InkWell(
@@ -344,8 +355,7 @@ class CustomWidget {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                    title: Text('E-Mail'),
-                    content: SelectableText(email));
+                    title: Text('E-Mail'), content: SelectableText(email));
               }),
         },
         child: Padding(

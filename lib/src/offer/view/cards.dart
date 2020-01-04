@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
-import 'package:skg_hagen/src/common/service/tapAction.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/model/music.dart';
 import 'package:skg_hagen/src/offer/model/offer.dart';
@@ -42,29 +40,42 @@ class Cards {
 
   Widget _buildTileForOffers(Offer card) {
     return Material(
-      child: Card(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  CustomWidget.getCardTitle(card.title),
-                  CustomWidget.getOccurrence(card.getFormattedOccurrence()),
-                  CustomWidget.getCardOrganizerWithEmail(
-                      card.getFormattedOrganiser(),
-                      card.email,
-                      card.title,
-                      this._buildContext),
-                  (card.address.street == null || card.address.name == null)
-                      ? CustomWidget.getNoLocation()
-                      : CustomWidget.getAddressWithAction(card.address,
-                          room: card.room),
-                ],
-              ),
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: SizeConfig.getSafeBlockHorizontalBy(3),
+        ),
+        child: Card(
+          elevation: 7,
+          shape: Border(
+            right: BorderSide(
+              color: Color(Default.COLOR_GREEN),
+              width: SizeConfig.getSafeBlockHorizontalBy(1),
             ),
-          ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    CustomWidget.getCardTitle(card.title),
+                    CustomWidget.getOccurrence(
+                      card.getFormattedOccurrence(),
+                    ),
+                    CustomWidget.getCardOrganizer(
+                        card.getFormattedOrganiser(), this._buildContext),
+                    CustomWidget.getCardEmail(
+                        card.email, card.title, this._buildContext),
+                    (card.address.street == null || card.address.name == null)
+                        ? CustomWidget.getNoLocation()
+                        : CustomWidget.getAddressWithAction(card.address,
+                            room: card.room),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -72,35 +83,47 @@ class Cards {
 
   Widget _buildTileForProjects(BuildContext context, Project card) {
     return Material(
-      child: Card(
-        child: InkWell(
-          splashColor: Color(Default.COLOR_GREEN),
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute<dynamic>(
-              builder: (BuildContext _context) => Projects(
-                projects: card,
-                context: context,
-              ),
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: SizeConfig.getSafeBlockHorizontalBy(3),
+        ),
+        child: Card(
+          elevation: 7,
+          shape: Border(
+            right: BorderSide(
+              color: Color(Default.COLOR_GREEN),
+              width: SizeConfig.getSafeBlockHorizontalBy(1),
             ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Flexible(
-                  child: Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(1.0),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.info,
-                      color: Color(Default.COLOR_GREEN),
-                    ),
-                    title: CustomWidget.getCardTitle(card.title),
-                  ),
+          child: InkWell(
+            splashColor: Color(Default.COLOR_GREEN),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute<dynamic>(
+                builder: (BuildContext _context) => Projects(
+                  projects: card,
+                  context: context,
                 ),
-              )),
-            ],
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Flexible(
+                    child: Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(1.0),
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.info,
+                        color: Color(Default.COLOR_GREEN),
+                      ),
+                      title: CustomWidget.getCardTitle(card.title),
+                    ),
+                  ),
+                )),
+              ],
+            ),
           ),
         ),
       ),
@@ -109,35 +132,47 @@ class Cards {
 
   Widget _buildTileForMusic(BuildContext context, Music card) {
     return Material(
-      child: Card(
-        child: InkWell(
-          splashColor: Color(Default.COLOR_GREEN),
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute<dynamic>(
-              builder: (BuildContext _context) => View.Music(
-                music: card,
-                context: context,
-              ),
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: SizeConfig.getSafeBlockHorizontalBy(3),
+        ),
+        child: Card(
+          elevation: 7,
+          shape: Border(
+            right: BorderSide(
+              color: Color(Default.COLOR_GREEN),
+              width: SizeConfig.getSafeBlockHorizontalBy(1),
             ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Flexible(
-                  child: Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(1.0),
-                  child: ListTile(
-                    leading: Icon(
-                      Icons.info,
-                      color: Color(Default.COLOR_GREEN),
-                    ),
-                    title: CustomWidget.getCardTitle(card.title),
-                  ),
+          child: InkWell(
+            splashColor: Color(Default.COLOR_GREEN),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute<dynamic>(
+                builder: (BuildContext _context) => View.Music(
+                  music: card,
+                  context: context,
                 ),
-              )),
-            ],
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Flexible(
+                    child: Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(1.0),
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.info,
+                        color: Color(Default.COLOR_GREEN),
+                      ),
+                      title: CustomWidget.getCardTitle(card.title),
+                    ),
+                  ),
+                )),
+              ],
+            ),
           ),
         ),
       ),

@@ -39,27 +39,39 @@ class Cards {
 
   Widget _buildTileForAddress(Address card) {
     return Material(
-      child: Card(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.zero,
-                    height: SizeConfig.getSafeBlockVerticalBy(14),
-                    width: SizeConfig.getSafeBlockHorizontalBy(100),
-                    child: _getImageByName(card.name),
-                  ),
-                  (card.street == null || card.name == null)
-                      ? CustomWidget.getNoLocation()
-                      : CustomWidget.getAddressWithAction(card)
-                ],
-              ),
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: SizeConfig.getSafeBlockHorizontalBy(3),
+        ),
+        child: Card(
+          elevation: 7,
+          shape: Border(
+            right: BorderSide(
+              color: Color(Default.COLOR_GREEN),
+              width: SizeConfig.getSafeBlockHorizontalBy(1),
             ),
-          ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.zero,
+                      height: SizeConfig.getSafeBlockVerticalBy(14),
+                      width: SizeConfig.getSafeBlockHorizontalBy(100),
+                      child: _getImageByName(card.name),
+                    ),
+                    (card.street == null || card.name == null)
+                        ? CustomWidget.getNoLocation()
+                        : CustomWidget.getAddressWithAction(card)
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -88,10 +100,22 @@ class Cards {
 
   Widget _buildTileForSocial(Social card) {
     return Material(
-      child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[_getSocialMediaIcon(card)],
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: SizeConfig.getSafeBlockHorizontalBy(3),
+        ),
+        child: Card(
+          elevation: 7,
+          shape: Border(
+            right: BorderSide(
+              color: Color(Default.COLOR_GREEN),
+              width: SizeConfig.getSafeBlockHorizontalBy(1),
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[_getSocialMediaIcon(card)],
+          ),
         ),
       ),
     );

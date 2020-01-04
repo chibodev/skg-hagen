@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
+import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/kindergarten/model/events.dart';
 import 'package:skg_hagen/src/kindergarten/model/news.dart' as Model;
@@ -31,24 +32,38 @@ class Cards {
 
   Widget _buildTileForEvents(Events card) {
     return Material(
-      child: Card(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  CustomWidget.getCardTitle(card.title),
-                  CustomWidget.getOccurrence(card.getFormattedOccurrence()),
-                  _getComment(card.comment),
-                    (card.address.name == null || card.address.street == null)
-                      ? CustomWidget.getNoLocation()
-                      : CustomWidget.getAddressWithAction(card.address)
-                ],
-              ),
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: SizeConfig.getSafeBlockHorizontalBy(3),
+        ),
+        child: Card(
+          elevation: 7,
+          shape: Border(
+            right: BorderSide(
+              color: Color(Default.COLOR_GREEN),
+              width: SizeConfig.getSafeBlockHorizontalBy(1),
             ),
-          ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    CustomWidget.getCardTitle(card.title),
+                    CustomWidget.getOccurrence(
+                      card.getFormattedOccurrence(),
+                    ),
+                    _getComment(card.comment),
+                    (card.address.name == null || card.address.street == null)
+                        ? CustomWidget.getNoLocation()
+                        : CustomWidget.getAddressWithAction(card.address)
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -63,23 +78,34 @@ class Cards {
 
   Widget _buildTileForNews(Model.News card) {
     return Material(
-      child: Card(
-        child: InkWell(
-          splashColor: Color(Default.COLOR_GREEN),
-          onTap: () => Navigator.push(
-            _context,
-            MaterialPageRoute<dynamic>(
-              builder: (BuildContext _context) => News(
-                news: card,
-                context: _context,
-              ),
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: SizeConfig.getSafeBlockHorizontalBy(3),
+        ),
+        child: Card(
+          elevation: 7,
+          shape: Border(
+            right: BorderSide(
+              color: Color(Default.COLOR_GREEN),
+              width: SizeConfig.getSafeBlockHorizontalBy(1),
             ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Flexible(
-                child: Container(
+          child: InkWell(
+            splashColor: Color(Default.COLOR_GREEN),
+            onTap: () => Navigator.push(
+              _context,
+              MaterialPageRoute<dynamic>(
+                builder: (BuildContext _context) => News(
+                  news: card,
+                  context: _context,
+                ),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Flexible(
+                    child: Container(
                   child: Padding(
                     padding: const EdgeInsets.all(1.0),
                     child: ListTile(
@@ -90,9 +116,9 @@ class Cards {
                       title: CustomWidget.getCardTitle(card.title),
                     ),
                   ),
-                )
-              ),
-            ],
+                )),
+              ],
+            ),
           ),
         ),
       ),
