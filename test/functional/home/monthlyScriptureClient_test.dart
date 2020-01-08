@@ -8,6 +8,7 @@ import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/home/model/monthlyScripture.dart';
 import 'package:skg_hagen/src/home/repository/monthlyScriptureClient.dart';
 
+import '../../mock/fileClientMock.dart';
 import '../../mock/httpClientMock.dart';
 
 class MockDioHTTPClient extends Mock implements DioHTTPClient {}
@@ -26,51 +27,24 @@ void main() {
   });
 
   test('MonthlyScriptureClient successfully retrieves data', () async {
+    final String filename = 'monthlyScripture.html';
+
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(
-      httpClient.getResponse(
+      httpClient.getHTMLResponse(
         http: httpClient,
-        object: MonthlyScripture,
         cacheData: anyNamed('cacheData'),
-        path: 'app/monthly-devotion',
+        path: anyNamed('path'),
         options: anyNamed('options'),
       ),
     ).thenAnswer(
-      (_) async => HTTPClientMock.getRequest(
-          statusCode: HttpStatus.ok, path: 'monthlyScripture.json'),
+      (_) async => HTTPClientMock.getHTMLRequest(
+          statusCode: HttpStatus.ok, path: filename),
     );
 
-    final MonthlyScripture verse = await subject.getVerse(httpClient, network);
+    final MonthlyScripture verse = await subject.getDevotion(httpClient, network);
 
-    expect(verse.text, 'Suchet der Stadt Beste');
-    expect(verse.book, 'Jeremia');
-    expect(verse.chapter, '27');
-    expect(verse.verse, '12');
-  });
-
-  test('MonthlyScriptureClient fails and throws Exception', () async {
-    DioError error;
-
-    when(network.hasInternet()).thenAnswer((_) async => false);
-    when(
-      httpClient.getResponse(
-        http: httpClient,
-        object: MonthlyScripture,
-        cacheData: anyNamed('cacheData'),
-        path: 'app/monthly-devotion',
-        options: anyNamed('options'),
-      ),
-    ).thenAnswer((_) async =>
-        HTTPClientMock.getRequest(statusCode: HttpStatus.unauthorized));
-
-    try {
-      await subject.getVerse(httpClient, network);
-    } catch (e) {
-      error = e;
-    }
-
-    expect(error, isNotNull);
-    expect(error is Exception, isTrue);
-    expect(error.error.statusCode, HttpStatus.unauthorized);
+    expect(verse.oldTestamentText.contains('Wer wird uns Gutes sehen lassen?'), true);
+    expect(verse.newTestamentText.contains('Ich bin das Licht der Welt.'), true);
   });
 }

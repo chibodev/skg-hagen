@@ -11,7 +11,7 @@ class KindergartenClient {
       {int index, bool refresh}) async {
     final Options options = await http.setOptions(http, network, refresh);
 
-    final Map<String, dynamic> jsonResponse = await http.getResponse(
+    final Map<String, dynamic> jsonResponse = await http.getJSONResponse(
       http: http,
       options: options,
       path: PATH,

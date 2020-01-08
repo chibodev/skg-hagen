@@ -28,13 +28,13 @@ void main() {
   test('KindergartenClient successfully retrieves data', () async {
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(
-      httpClient.getResponse(
+      httpClient.getJSONResponse(
           http: httpClient,
           path: 'app/kindergarten',
           object: Kindergarten,
           options: anyNamed('options'),
           cacheData: anyNamed('cacheData')),
-    ).thenAnswer((_) async => HTTPClientMock.getRequest(
+    ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(
         statusCode: HttpStatus.ok, path: 'kindergarten.json'));
 
     final Kindergarten kindergarten =
@@ -72,14 +72,14 @@ void main() {
 
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(
-      httpClient.getResponse(
+      httpClient.getJSONResponse(
           http: httpClient,
           path: 'app/kindergarten',
           object: Kindergarten,
           options: anyNamed('options'),
           cacheData: anyNamed('cacheData')),
     ).thenAnswer((_) async =>
-        HTTPClientMock.getRequest(statusCode: HttpStatus.unauthorized));
+        HTTPClientMock.getJSONRequest(statusCode: HttpStatus.unauthorized));
 
     try {
       await subject.getAppointments(httpClient, network,

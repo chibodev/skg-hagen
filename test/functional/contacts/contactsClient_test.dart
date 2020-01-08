@@ -28,14 +28,14 @@ void main() {
   test('ContactsClient successfully retrieves data', () async {
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(
-      httpClient.getResponse(
+      httpClient.getJSONResponse(
         http: httpClient,
         cacheData: anyNamed('cacheData'),
         object: Contacts,
         path: 'app/contact',
         options: anyNamed('options'),
       ),
-    ).thenAnswer((_) async => HTTPClientMock.getRequest(
+    ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(
         statusCode: HttpStatus.ok, path: 'contacts.json'));
 
     final Contacts contacts =
@@ -76,7 +76,7 @@ void main() {
 
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(
-      httpClient.getResponse(
+      httpClient.getJSONResponse(
         http: httpClient,
         cacheData: anyNamed('cacheData'),
         object: Contacts,
@@ -84,7 +84,7 @@ void main() {
         options: anyNamed('options'),
       ),
     ).thenAnswer((_) async =>
-        HTTPClientMock.getRequest(statusCode: HttpStatus.unauthorized));
+        HTTPClientMock.getJSONRequest(statusCode: HttpStatus.unauthorized));
 
     try {
       await subject.getContacts(httpClient, network, index: 0, refresh: false);

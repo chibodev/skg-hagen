@@ -28,7 +28,7 @@ void main() {
   test('AppointmentClient successfully retrieves data', () async {
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(
-      httpClient.getResponse(
+      httpClient.getJSONResponse(
         http: httpClient,
         object: Appointments,
         cacheData: anyNamed('cacheData'),
@@ -36,7 +36,7 @@ void main() {
         options: anyNamed('options'),
         queryParameters: anyNamed('queryParameters'),
       ),
-    ).thenAnswer((_) async => HTTPClientMock.getRequest(
+    ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(
         statusCode: HttpStatus.ok, path: 'appointments.json'));
 
     final Appointments appointments = await subject
@@ -69,7 +69,7 @@ void main() {
 
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(
-      httpClient.getResponse(
+      httpClient.getJSONResponse(
         http: httpClient,
         object: Appointments,
         cacheData: anyNamed('cacheData'),
@@ -78,7 +78,7 @@ void main() {
         queryParameters: anyNamed('queryParameters'),
       ),
     ).thenAnswer((_) async =>
-            HTTPClientMock.getRequest(statusCode: HttpStatus.unauthorized));
+            HTTPClientMock.getJSONRequest(statusCode: HttpStatus.unauthorized));
 
     try {
       await subject.getAppointments(httpClient, network,

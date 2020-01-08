@@ -6,21 +6,22 @@ void main() {
   String title;
   List<String> subtitle;
   String routeName;
-  String custom;
+  String name;
 
   setUpAll(() {
     title = 'title';
     subtitle = <String>['first', 'second'];
     routeName = '/route';
-    custom = 'custom';
-    subject = CardContent(title, subtitle, routeName, custom);
+    name = 'custom';
+    subject = CardContent(title, subtitle, routeName, name);
   });
 
   test('CardContent model creates and gets properties successfully', () {
+
     expect(subject.title, title);
     expect(subject.subtitle, subtitle);
     expect(subject.routeName, routeName);
-    expect(subject.custom, custom);
+    expect(subject.name, name);
   });
 
   test('CardContent gets correct formatted property', () {

@@ -6,6 +6,7 @@ import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:html/parser.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/service/cacheInterceptor.dart';
 import 'package:skg_hagen/src/common/service/debugInterceptor.dart';
@@ -24,7 +25,8 @@ class DioHTTPClient {
     final BaseOptions options = BaseOptions(
         baseUrl: DotEnv().env['API'],
         connectTimeout: TIMEOUT,
-        receiveTimeout: TIMEOUT);
+        receiveTimeout: TIMEOUT
+    );
     _client = Dio(options);
   }
 
@@ -75,7 +77,7 @@ class DioHTTPClient {
     return options;
   }
 
-  Future<dynamic> getResponse(
+  Future<dynamic> getJSONResponse(
       {@required DioHTTPClient http,
       @required Options options,
       Map<String, dynamic> queryParameters,
@@ -90,6 +92,30 @@ class DioHTTPClient {
         .catchError((dynamic onError) {
       if (sharedPreferences.containsKey(cacheData)) {
         return jsonDecode(
+          sharedPreferences.get(cacheData),
+        );
+      } else {
+        Crashlytics.instance.log(
+          onError.error.toString(),
+        );
+        return null;
+      }
+    });
+  }
+
+  Future<dynamic> getHTMLResponse(
+      {@required DioHTTPClient http, @required Options options,
+      @required String path,
+      @required String cacheData}) async {
+    _client.options.baseUrl = '';
+    return await http
+        .get(path: path, options: options)
+        .then(
+          (Response<dynamic> response) => parse(response.data),
+        )
+        .catchError((dynamic onError) {
+      if (sharedPreferences.containsKey(cacheData)) {
+        return parse(
           sharedPreferences.get(cacheData),
         );
       } else {

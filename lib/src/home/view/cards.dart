@@ -45,15 +45,14 @@ class Cards {
                             ),
                           ),
                           content: SingleChildScrollView(
-                            child: _getScripture(
-                                response.data.text,
-                                response.data.getFormattedBook(),
-                                Default.STANDARD_FONT_SIZE,
-                                Default.SUBSTANDARD_FONT_SIZE),
-                          ),
+                              child: _getDevionalAndLesson(
+                            response.data.oldTestamentText,
+                            response.data.newTestamentText,
+                          )),
                           actions: <Widget>[
                             FlatButton(
-                              child: Text("Schließen",
+                              child: Text(
+                                "Schließen",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -71,8 +70,7 @@ class Cards {
                     );
                   },
                   child: Center(
-                    child: _getScripture(response.data.getModifiedText(),
-                        response.data.getFormattedBook(), 2.3, 1.5),
+                    child: _getDevotional(response.data.getModifiedText()),
                   ),
                 );
               }
@@ -104,29 +102,44 @@ class Cards {
     );
   }
 
-  Widget _getScripture(String scripture, String book, double scriptureFontSize,
-      double verseFontSize) {
+  Widget _getDevotional(String oldTestamentText) {
+    TextStyle style = TextStyle(
+        fontSize: SizeConfig.getSafeBlockVerticalBy(2.3),
+        color: Colors.white,
+        fontFamily: Default.FONT);
+
+    return Text(
+      oldTestamentText,
+      style: style,
+    );
+  }
+
+  Widget _getDevionalAndLesson(
+      String oldTestamentText, String newTestamentText) {
+    TextStyle style = TextStyle(
+        fontSize: SizeConfig.getSafeBlockVerticalBy(2.3),
+        color: Colors.white,
+        fontFamily: Default.FONT);
+
     return RichText(
       text: TextSpan(
-        text: scripture,
-        style: TextStyle(
-            fontSize: SizeConfig.getSafeBlockVerticalBy(2.3),
-            color: Colors.white,
-            fontFamily: Default.FONT),
+        text: oldTestamentText,
+        style: style,
         children: <TextSpan>[
-          TextSpan(
-              text: book,
-              style: TextStyle(
-                  fontSize: SizeConfig.getSafeBlockVerticalBy(1.5),
-                  color: Colors.white,
-                  fontFamily: Default.FONT))
+          newTestamentText != null ? TextSpan(text: '\n\n') : TextSpan(),
+          newTestamentText != null
+              ? TextSpan(
+                  text: newTestamentText,
+                  style: style,
+                )
+              : TextSpan(),
         ],
       ),
     );
   }
 
   Future<MonthlyScripture> _getText() async {
-    return await MonthlyScriptureClient().getVerse(DioHTTPClient(), Network());
+    return await MonthlyScriptureClient().getDevotion(DioHTTPClient(), Network());
   }
 
   Future<List<CardContent>> _getAllCards() async {

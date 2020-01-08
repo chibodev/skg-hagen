@@ -14,7 +14,7 @@ class AppointmentClient {
     final Map<String, dynamic> queryParameters =
         http.getQueryParameters(index: index);
 
-    final Map<String, dynamic> jsonResponse = await http.getResponse(
+    final Map<String, dynamic> jsonResponse = await http.getJSONResponse(
         http: http,
         options: options,
         path: PATH,
