@@ -103,7 +103,7 @@ class Cards {
   }
 
   Widget _getDevotional(String oldTestamentText) {
-    TextStyle style = TextStyle(
+    final TextStyle style = TextStyle(
         fontSize: SizeConfig.getSafeBlockVerticalBy(2.3),
         color: Colors.white,
         fontFamily: Default.FONT);
@@ -116,7 +116,7 @@ class Cards {
 
   Widget _getDevionalAndLesson(
       String oldTestamentText, String newTestamentText) {
-    TextStyle style = TextStyle(
+    final TextStyle style = TextStyle(
         fontSize: SizeConfig.getSafeBlockVerticalBy(2.3),
         color: Colors.white,
         fontFamily: Default.FONT);
