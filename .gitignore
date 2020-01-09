@@ -134,3 +134,4 @@ crashlytics-bild.properties
 /android/key.properties
 /.env
 /coverage
+/.flutter-plugins-dependencies

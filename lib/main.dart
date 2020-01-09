@@ -19,6 +19,7 @@ import 'package:skg_hagen/src/offer/controller/offer.dart';
 import 'package:skg_hagen/src/kindergarten/controller/kindergarten.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   FlutterError.onError = (FlutterErrorDetails details) {
     if (!Environment.isProduction()) {
       FlutterError.dumpErrorToConsole(details);
@@ -29,11 +30,11 @@ void main() async {
 
   runZoned<Future<void>>(() async {
     SharedPreferences.getInstance().then(
-          (SharedPreferences sp) {
+      (SharedPreferences sp) {
         sharedPreferences = sp;
         SystemChrome.setPreferredOrientations(
             <DeviceOrientation>[DeviceOrientation.portraitUp]).then(
-              (_) {
+          (_) {
             DotEnv().load('.env').then((_) => runApp(MyApp()));
           },
         );
