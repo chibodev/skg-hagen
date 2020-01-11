@@ -81,6 +81,9 @@ Temporary Items
 
 # Gradle files
 .gradle/
+/android/captures/
+/android/gradlew
+/android/gradlew.bat
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -88,6 +91,11 @@ local.properties
 # IntelliJ
 *.iml
 .idea
+
+# Crashlytics plugin (for Android Studio and IntelliJ)
+com_crashlytics_export_strings.xml
+crashlytics.properties
+crashlytics-bild.properties
 
 ios/.generated/
 packages
@@ -116,7 +124,6 @@ pubspec.lock
 /ios/**/DerivedData/
 /ios/**/Icon?
 /ios/**/Pods/
-/ios/**/.symlinks/
 /ios/**/profile
 /ios/.generated/
 /ios/Flutter/Flutter.framework
@@ -124,14 +131,14 @@ pubspec.lock
 /ios/Flutter/app.zip
 /ios/Flutter/flutter_assets/
 /ios/Runner/GeneratedPluginRegistrant.*
-
-# Crashlytics plugin (for Android Studio and IntelliJ)
-com_crashlytics_export_strings.xml
-crashlytics.properties
-crashlytics-bild.properties
-/assets/config/api.yaml
 !/ios/Flutter/App.framework/Info.plist
+/ios/Flutter/Flutter.podspec
+
 /android/key.properties
+
 /.env
 /coverage
 /.flutter-plugins-dependencies
+xcuserdata
+**/.symlinks/
+profile
