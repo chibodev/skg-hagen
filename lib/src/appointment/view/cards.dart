@@ -169,7 +169,7 @@ class Cards extends State<Controller.Appointment> {
           shape: Border(
             right: BorderSide(
               color: Color(Default.COLOR_GREEN),
-              width: SizeConfig.getSafeBlockHorizontalBy(3),
+              width: SizeConfig.getSafeBlockHorizontalBy(1),
             ),
           ),
           child: Column(
