@@ -20,7 +20,7 @@ void main() {
   });
 
   test('MonthlyScripture gets correct modified text', (){
-    subject.newTestamentText = 'Psalmen Psalmen Psalmen Psalmen Psalmen Psalmen Psalmen Psalmen';
+    subject.oldTestamentText = 'Psalmen Psalmen Psalmen Psalmen Psalmen Psalmen Psalmen Psalmen';
     expect(subject.getModifiedText(), 'Psalmen Psalmen Psalmen Psalmen Psalmen Psalmen Psalmen ...');
   });
 }

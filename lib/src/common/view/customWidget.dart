@@ -1,3 +1,4 @@
+import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:skg_hagen/src/common/model/address.dart';
@@ -76,6 +77,30 @@ class CustomWidget {
           fontSize:
               SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
           color: textColor == true ? Colors.white : Colors.black,
+        ),
+      ),
+    );
+  }
+
+  static Widget getAddToCalender(String title, String info, Address address,
+      DateTime startDateTime, DateTime endDateTime, BuildContext context) {
+    final Event event = Event(
+        title: title,
+        description: info,
+        location: "${address.getStreetAndNumber()}, ${address.getZipAndCity()}",
+        startDate: startDateTime,
+        endDate: endDateTime);
+
+    return InkWell(
+      onTap: () => Add2Calendar.addEvent2Cal(event),
+      child: Padding(
+        padding: EdgeInsets.only(right: SizeConfig.getSafeBlockHorizontalBy(1)),
+        child: Align(
+          alignment: Alignment.topRight,
+          child: Icon(
+            Icons.calendar_today,
+            color: Color(Default.COLOR_GREEN),
+          ),
         ),
       ),
     );
@@ -228,13 +253,14 @@ class CustomWidget {
                   ClipboardData(text: email),
                 ),
                 showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text('E-Mail'),
-                        content: SelectableText(email),
-                      );
-                    }),
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('E-Mail'),
+                      content: SelectableText(email),
+                    );
+                  },
+                ),
               },
               child: Padding(
                 padding: EdgeInsets.only(
@@ -352,11 +378,12 @@ class CustomWidget {
         onLongPress: () => <void>{
           Clipboard.setData(ClipboardData(text: email)),
           showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                    title: Text('E-Mail'), content: SelectableText(email));
-              }),
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                  title: Text('E-Mail'), content: SelectableText(email));
+            },
+          ),
         },
         child: Padding(
           padding: EdgeInsets.only(

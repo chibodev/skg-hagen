@@ -169,15 +169,23 @@ class Cards extends State<Controller.Appointment> {
           shape: Border(
             right: BorderSide(
               color: Color(Default.COLOR_GREEN),
-              width: SizeConfig.getSafeBlockHorizontalBy(1),
+              width: SizeConfig.getSafeBlockHorizontalBy(3),
             ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+              card.endOccurrence != null ? CustomWidget.getAddToCalender(
+                card.title,
+                card.getFormattedOrganiser(),
+                card.address,
+                card.getFormattedTime(),
+                card.getFormattedClosingTime(),
+                context,
+              ) : Text(''),
               CustomWidget.getCardTitle(card.title),
               CustomWidget.getOccurrence(
-                card.getFormattedTime(),
+                card.getFormattedTimeAsString(),
               ),
               CustomWidget.getCardOrganizer(
                   card.getFormattedOrganiser(), context),

@@ -3,7 +3,9 @@
     {
       "title": "EAT & PRAY",
       "occurrence": "2019-11-02",
+      "endoccurrence": "2019-11-02",
       "time": "12:00:00",
+      "endtime": "00:00:00",
       "placeName": "johanniskirche",
       "room": "",
       "organizer": "",
@@ -20,6 +22,8 @@
       "title": "Kindergartengottesdienst",
       "occurrence": "2019-11-06",
       "time": "14:15:00",
+      "endoccurrence": "2019-11-06",
+      "endtime": "16:15:00",
       "placeName": "markuskirche",
       "room": "",
       "organizer": "",

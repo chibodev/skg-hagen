@@ -8,8 +8,8 @@ class MonthlyScripture {
   MonthlyScripture({this.oldTestamentText, this.newTestamentText});
 
   String getModifiedText() {
-    return newTestamentText.length > TEXT_LIMIT
-        ? "${newTestamentText.substring(0, TEXT_LIMIT)}..."
-        : newTestamentText.length > 2 ? newTestamentText : '';
+    return oldTestamentText.length > TEXT_LIMIT
+        ? "${oldTestamentText.substring(0, TEXT_LIMIT)}..."
+        : oldTestamentText.length > 2 ? oldTestamentText : '';
   }
 }

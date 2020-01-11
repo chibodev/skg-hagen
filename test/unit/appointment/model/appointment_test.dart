@@ -11,7 +11,7 @@ void main() {
         time: "17:00");
 
     expect(subject.title, 'Formatted time');
-    expect(subject.getFormattedTime(), 'FR. 1.11.19 | 17:00');
+    expect(subject.getFormattedTimeAsString(), 'FR. 1.11.19 | 17:00');
   });
 
   test('Appointment model successfully gets formatted organiser', () {
