@@ -31,7 +31,8 @@ void main() {
 
     when(env.env).thenReturn(localEnv);
 
-    when(httpClient.post(
+    when(httpClient.postJSON(
+            http: httpClient,
             path: 'token',
             data: anyNamed('data'),
             options: anyNamed('options')))
