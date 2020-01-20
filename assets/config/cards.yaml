@@ -16,6 +16,13 @@ angebote:
   route: offer
   name: Angebote
 
+fürbitte:
+  groups:
+    - gebetswunsch
+  image: assets/images/gebet.jpg
+  route: intercession
+  name: Fürbitte
+
 ev.kindergarten:
   groups:
     - events

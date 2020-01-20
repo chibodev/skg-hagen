@@ -13,6 +13,7 @@ import 'package:skg_hagen/src/common/service/environment.dart';
 import 'package:skg_hagen/src/contacts/controller/contacts.dart';
 import 'package:skg_hagen/src/home/controller/home.dart';
 import 'package:skg_hagen/src/appointment/controller/appointment.dart';
+import 'package:skg_hagen/src/intercession/controller/intercession.dart';
 import 'package:skg_hagen/src/legal/controller/imprint.dart';
 import 'package:skg_hagen/src/legal/controller/privacy.dart';
 import 'package:skg_hagen/src/offer/controller/offer.dart';
@@ -47,11 +48,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: !Environment.isProduction(),
       routes: <String, Widget Function(BuildContext)>{
         Routes.home: (BuildContext context) => Home(),
         Routes.appointment: (BuildContext context) => Appointment(),
         Routes.offer: (BuildContext context) => Offer(),
+        Routes.intercession: (BuildContext context) => Intercession(),
         Routes.kindergarten: (BuildContext context) => Kindergarten(),
         Routes.contacts: (BuildContext context) => Contacts(),
         Routes.aboutUs: (BuildContext context) => AboutUs(),

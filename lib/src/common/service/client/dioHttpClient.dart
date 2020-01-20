@@ -25,8 +25,7 @@ class DioHTTPClient {
     final BaseOptions options = BaseOptions(
         baseUrl: DotEnv().env['API'],
         connectTimeout: TIMEOUT,
-        receiveTimeout: TIMEOUT
-    );
+        receiveTimeout: TIMEOUT);
     _client = Dio(options);
   }
 
@@ -77,6 +76,18 @@ class DioHTTPClient {
     return options;
   }
 
+  Map<String, dynamic> getQueryParameters({int index = 0}) {
+    final Map<String, dynamic> queryParameters = HashMap<String, dynamic>();
+    queryParameters.putIfAbsent(
+        "index",
+        () => (index == null || index <= 0)
+            ? START_INDEX
+            : MAX_PAGE_RANGE * index);
+    queryParameters.putIfAbsent("page", () => MAX_PAGE_RANGE);
+
+    return queryParameters;
+  }
+
   Future<dynamic> getJSONResponse(
       {@required DioHTTPClient http,
       @required Options options,
@@ -85,7 +96,7 @@ class DioHTTPClient {
       @required dynamic object,
       @required String cacheData}) async {
     return await http
-        .get(path: path, options: options, queryParameters: queryParameters)
+        ._get(path: path, options: options, queryParameters: queryParameters)
         .then(
           (Response<dynamic> response) => jsonDecode(response.data),
         )
@@ -104,12 +115,13 @@ class DioHTTPClient {
   }
 
   Future<dynamic> getHTMLResponse(
-      {@required DioHTTPClient http, @required Options options,
+      {@required DioHTTPClient http,
+      @required Options options,
       @required String path,
       @required String cacheData}) async {
     _client.options.baseUrl = '';
     return await http
-        .get(path: path, options: options)
+        ._get(path: path, options: options)
         .then(
           (Response<dynamic> response) => parse(response.data),
         )
@@ -127,24 +139,31 @@ class DioHTTPClient {
     });
   }
 
-  Map<String, dynamic> getQueryParameters({int index = 0}) {
-    final Map<String, dynamic> queryParameters = HashMap<String, dynamic>();
-    queryParameters.putIfAbsent(
-        "index",
-        () => (index == null || index <= 0)
-            ? START_INDEX
-            : MAX_PAGE_RANGE * index);
-    queryParameters.putIfAbsent("page", () => MAX_PAGE_RANGE);
-
-    return queryParameters;
+  Future<dynamic> postJSON({
+    @required DioHTTPClient http,
+    @required Options options,
+    @required String path,
+    dynamic data,
+  }) async {
+    return await http
+        ._post(path: path, options: options, data: data)
+        .then(
+          (Response<dynamic> response) =>
+              response,
+        )
+        .catchError((dynamic onError) {
+      Crashlytics.instance.log(
+        onError.error.toString(),
+      );
+    });
   }
 
-  Future<Response<dynamic>> post(
+  Future<Response<dynamic>> _post(
       {String path, dynamic data, Options options}) async {
     return await this._client.post(path, options: options, data: data);
   }
 
-  Future<Response<dynamic>> get(
+  Future<Response<dynamic>> _get(
       {String path,
       Options options,
       Map<String, dynamic> queryParameters}) async {
