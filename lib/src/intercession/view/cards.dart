@@ -139,7 +139,7 @@ class Page extends State<Controller.Intercession> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text('Alternativ eine E-Mail schicken?'),
+                      Text(Model.Intercession.EMAIL_TEXT),
                       InkWell(
                         splashColor: Color(Default.COLOR_GREEN),
                         onTap: () => TapAction().sendMail(
