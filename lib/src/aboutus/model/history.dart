@@ -1,5 +1,6 @@
 class History {
   String description;
+  static const String NAME = 'Geschichte';
 
   History({
     this.description,
@@ -8,6 +9,4 @@ class History {
   factory History.fromJson(Map<String, dynamic> json) => History(
     description: json["description"],
   );
-
-  String getName() => "Geschichte";
 }

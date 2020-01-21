@@ -54,9 +54,8 @@ class PrivacyView extends State<Controller.Privacy> {
         ),
         _privacy == null
             ? SliverToBoxAdapter(
-          child:
-          CustomWidget.buildSliverSpinner(_isPerformingRequest),
-        )
+                child: CustomWidget.buildSliverSpinner(_isPerformingRequest),
+              )
             : SliverToBoxAdapter(),
       ],
     );

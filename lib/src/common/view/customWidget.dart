@@ -381,7 +381,7 @@ class CustomWidget {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                  title: Text('E-Mail'), content: SelectableText(email));
+                  title: Text('E-Mail'), content: SelectableText(email),);
             },
           ),
         },
@@ -407,6 +407,15 @@ class CustomWidget {
         imageUrl,
         fit: BoxFit.scaleDown,
       ),
+    );
+  }
+
+  static Padding noEntry() {
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: SizeConfig.getSafeBlockHorizontalBy(3),
+      ),
+      child: Text(Default.NO_CONTENT),
     );
   }
 }

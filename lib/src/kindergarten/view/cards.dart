@@ -13,19 +13,26 @@ class Cards {
     this._context = context;
 
     final List<Widget> list = List<Widget>();
+    String subjectName = "";
 
     if (card is List<Events>) {
+      subjectName = Events.NAME;
       for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForEvents(card[i]));
       }
-    } else {
+    } else if (card is List<Model.News>) {
+      subjectName = Model.News.NAME;
       for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForNews(card[i]));
       }
     }
 
+    if (card.isEmpty) {
+      list.add(CustomWidget.noEntry());
+    }
+
     return ExpansionTile(
-      title: CustomWidget.getAccordionTitle(card.first.getName()),
+      title: CustomWidget.getAccordionTitle(subjectName),
       children: list,
     );
   }

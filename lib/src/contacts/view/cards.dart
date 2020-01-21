@@ -14,25 +14,33 @@ class Cards {
   Widget buildRows(dynamic card, BuildContext context) {
     this._buildContext = context;
     final List<Widget> list = List<Widget>();
+    String subjectName = "";
 
     if (card is List<Address>) {
+      subjectName = Address.NAME;
       for (int i = 0; i < card.length; i++) {
         list.add(
           _buildTileForAddress(card[i]),
         );
       }
     } else if (card is List<Contact>) {
+      subjectName = Contact.NAME;
       for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForContacts(card[i]));
       }
-    } else {
+    } else if (card is List<Social>){
+      subjectName = Social.NAME;
       for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForSocial(card[i]));
       }
     }
 
+    if (card.isEmpty) {
+      list.add(CustomWidget.noEntry());
+    }
+
     return ExpansionTile(
-      title: CustomWidget.getAccordionTitle(card.first.getName()),
+      title: CustomWidget.getAccordionTitle(subjectName),
       children: list,
     );
   }

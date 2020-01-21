@@ -3,6 +3,9 @@ import 'package:intl/intl.dart';
 import 'package:skg_hagen/src/common/model/address.dart';
 
 class Events {
+
+  static const String NAME = 'Events';
+
   final String title;
   final DateTime occurrence;
   final String time;
@@ -55,8 +58,6 @@ class Events {
         country: json["country"] == null ? null : json["country"],
         latLong: json["latLong"] == null ? null : json['latLong'],
       );
-
-  String getName() => "Events";
 
   String getFormattedOccurrence() {
     initializeDateFormatting('de_DE', null);

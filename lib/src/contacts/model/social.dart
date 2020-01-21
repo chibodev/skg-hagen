@@ -3,6 +3,7 @@ class Social {
   static const String INSTAGRAM = 'assets/images/icon/instagram.png';
   static const String TWITTER = 'assets/images/icon/twitter.png';
   static const String WHATSAPP = 'assets/images/icon/whatsapp.png';
+  static const String NAME = 'Social Media';
 
   static const List<String> VALID_SOCIAL = <String>[
     'facebook', 'instagram', 'twitter', 'whatsapp'
@@ -23,8 +24,6 @@ class Social {
         url: json["url"],
         location: json["location"],
       );
-
-  String getName() => "Social Media";
 
   bool isSocialValid(String name) =>  VALID_SOCIAL.contains(name);
 

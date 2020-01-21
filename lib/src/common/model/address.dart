@@ -3,6 +3,7 @@ import 'package:skg_hagen/src/common/model/default.dart';
 class Address {
   static const String MAP_IMAGE_JOHANNISKIRCHE = 'assets/images/johanniskirche.jpg';
   static const String MAP_IMAGE_MARKUSKIRCHE = 'assets/images/markuskirche.jpg';
+  static const String NAME = 'Adresse';
 
   final String name;
   final String street;
@@ -42,8 +43,6 @@ class Address {
         'country': country == null ? null : this.country,
         'room': room == null ? null : this.room,
       };
-
-  String getName() => "Adresse";
 
   String getStreetAndNumber() {
     return '$street $houseNumber';

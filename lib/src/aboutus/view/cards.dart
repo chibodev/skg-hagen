@@ -9,18 +9,26 @@ import 'package:skg_hagen/src/common/view/customWidget.dart';
 class Cards {
   Widget buildRows(dynamic card) {
     final List<Widget> list = List<Widget>();
+    String subjectName = "";
 
-    if (card is List<History>)
+    if (card is List<History>) {
+      subjectName = History.NAME;
       for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForHistory(card[i]));
       }
-    else if (card is List<Presbytery>)
+    } else if (card is List<Presbytery>) {
+      subjectName = Presbytery.NAME;
       for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForPresbytery(card[i]));
       }
+    }
+
+    if (card.isEmpty) {
+      list.add(CustomWidget.noEntry());
+    }
 
     return ExpansionTile(
-      title: CustomWidget.getAccordionTitle(card.first.getName()),
+      title: CustomWidget.getAccordionTitle(subjectName),
       children: list,
     );
   }
@@ -54,10 +62,9 @@ class Cards {
     return Material(
       child: Padding(
         padding: EdgeInsets.only(
-          bottom: SizeConfig.getSafeBlockHorizontalBy(3),
+          bottom: SizeConfig.getSafeBlockHorizontalBy(0),
         ),
         child: Card(
-          elevation: 7,
           shape: Border(
             right: BorderSide(
               color: Color(Default.COLOR_GREEN),
