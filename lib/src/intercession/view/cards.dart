@@ -54,7 +54,6 @@ class Page extends State<Controller.Intercession> {
     );
   }
 
-  //TODO: Fix overlapping
   Widget _buildPage(BuildContext context) {
     return CustomScrollView(
       slivers: <Widget>[
@@ -140,7 +139,15 @@ class Page extends State<Controller.Intercession> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(Model.Intercession.EMAIL_TEXT),
+                      Flexible(
+                        child: Text(
+                          Model.Intercession.EMAIL_TEXT,
+                          style: TextStyle(
+                            fontSize: SizeConfig.getSafeBlockVerticalBy(
+                                Default.SUBSTANDARD_FONT_SIZE),
+                          ),
+                        ),
+                      ),
                       InkWell(
                         splashColor: Color(Default.COLOR_GREEN),
                         onTap: () => TapAction().sendMail(
