@@ -40,7 +40,7 @@ class Quote extends StatelessWidget {
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) => dataAvailable
                     ? _buildRows(this.quote[index], context)
-                    : CustomWidget.buildSliverSpinner(false),
+                    : CustomWidget.buildSliverSpinner(),
                 childCount: quote?.length ?? 0,
               ),
             ),

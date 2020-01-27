@@ -42,7 +42,7 @@ class ConfirmationAppointment extends StatelessWidget {
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) => dataAvailable
                     ? _buildRows(this.appointment[index], context)
-                    : CustomWidget.buildSliverSpinner(false),
+                    : CustomWidget.buildSliverSpinner(),
                 childCount: appointment?.length ?? 0,
               ),
             ),

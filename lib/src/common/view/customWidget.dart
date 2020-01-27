@@ -26,7 +26,7 @@ class CustomWidget {
   }
 
   //TODO: remove parameter
-  static Widget buildSliverSpinner(bool _isPerformingRequest) {
+  static Widget buildSliverSpinner() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Center(
