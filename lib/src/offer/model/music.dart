@@ -21,6 +21,7 @@ class Music {
   final String city;
   final String country;
   final String latLong;
+  static const String NAME = 'Musik';
 
   Music(
       {this.title,
@@ -72,8 +73,6 @@ class Music {
         country: json["country"] == null ? null : json["country"],
         latLong: json["latLong"] == null ? null : json['latLong'],
       );
-
-  String getName() => "Musik";
 
   String getFormattedOccurrence() {
     final String occurrenceTime =

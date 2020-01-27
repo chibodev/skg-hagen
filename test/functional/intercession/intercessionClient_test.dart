@@ -6,11 +6,8 @@ import 'package:mockito/mockito.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/intercession/repository/intercessionClient.dart';
-import 'package:skg_hagen/src/token/model/token.dart';
-import 'package:skg_hagen/src/token/repository/tokenClient.dart';
 
 import '../../mock/httpClientIntercessionMock.dart';
-import '../../mock/httpClientTokenMock.dart';
 
 class MockDioHTTPClient extends Mock implements DioHTTPClient {}
 

@@ -20,7 +20,7 @@ void main() {
           description: 'a brief description',
           imageUrl: "");
 
-      expect(subject.getName(), 'Projekte');
+      expect(Project.NAME, 'Projekte');
       expect(subject.title, 'New project');
       expect(subject.description, 'a brief description');
     });

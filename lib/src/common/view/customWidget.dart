@@ -25,6 +25,7 @@ class CustomWidget {
     );
   }
 
+  //TODO: remove parameter
   static Widget buildSliverSpinner(bool _isPerformingRequest) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -235,7 +236,7 @@ class CustomWidget {
               ],
             ),
           )
-        : Text('');
+        : Container();
   }
 
   static Widget getCardEmail(String email, String title, BuildContext context) {
@@ -275,7 +276,7 @@ class CustomWidget {
               ),
             ),
           )
-        : Text('');
+        : Container();
   }
 
   static Widget noInternet() {

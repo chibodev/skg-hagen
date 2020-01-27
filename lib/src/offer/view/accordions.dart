@@ -5,12 +5,15 @@ import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/offer.dart' as Controller;
+import 'package:skg_hagen/src/offer/model/confirmation.dart';
 import 'package:skg_hagen/src/offer/model/offers.dart';
+import 'package:skg_hagen/src/offer/repository/confirmationClient.dart';
 import 'package:skg_hagen/src/offer/repository/offerClient.dart';
 import 'package:skg_hagen/src/offer/view/cards.dart';
 
 class Accordions extends State<Controller.Offer> {
   Offers _offers;
+  Confirmation _confirmation;
   List<dynamic> _options;
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
@@ -61,7 +64,7 @@ class Accordions extends State<Controller.Offer> {
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) => _dataAvailable
-                ? Cards().buildRows(context, _options[index])
+                ? Cards().buildRows(context, _options[index], _dataAvailable)
                 : CustomWidget.buildSliverSpinner(_isPerformingRequest),
             childCount: _options?.length ?? 0,
           ),
@@ -81,12 +84,21 @@ class Accordions extends State<Controller.Offer> {
 
       _hasInternet = await Network().hasInternet();
       _offers = await OfferClient().getOffers(DioHTTPClient(), Network());
+      _confirmation = await ConfirmationClient()
+          .getConfirmation(DioHTTPClient(), Network());
+
       _options = List<dynamic>();
 
+      //TODO: use somewhat of a tag service to avoid always extending
       if (_offers != null) {
         _options.add(_offers.offers);
         _options.add(_offers.music);
         _options.add(_offers.projects);
+        _dataAvailable = true;
+      }
+
+      if (_confirmation != null) {
+        _options.add(_confirmation);
         _dataAvailable = true;
       }
 

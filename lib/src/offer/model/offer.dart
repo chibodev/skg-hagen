@@ -23,6 +23,7 @@ class Offer {
   final String city;
   final String country;
   final String latLong;
+  static const String NAME = 'Offene Angebote';
 
   Offer(
       {this.title,
@@ -78,8 +79,6 @@ class Offer {
         country: json["country"] == null ? null : json["country"],
         latLong: json["latLong"] == null ? null : json['latLong'],
       );
-
-  String getName() => "Offene Angebote";
 
   String getFormattedSchoolYear() => "${schoolYear.toString()}. Schuljahr";
 

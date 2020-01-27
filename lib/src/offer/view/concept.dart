@@ -3,14 +3,19 @@ import 'package:flutter/rendering.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
+import 'package:skg_hagen/src/offer/model/concept.dart' as Model;
 import 'package:skg_hagen/src/offer/model/offers.dart';
-import 'package:skg_hagen/src/offer/model/project.dart';
 
-class Projects extends StatelessWidget {
-  final Project projects;
+class Concept extends StatelessWidget {
+  final Model.Concept concept;
   final BuildContext context;
+  final bool dataAvailable;
 
-  const Projects({Key key, this.context, @required this.projects})
+  const Concept(
+      {Key key,
+      this.context,
+      @required this.concept,
+      this.dataAvailable = true})
       : super(key: key);
 
   @override
@@ -27,7 +32,7 @@ class Projects extends StatelessWidget {
               expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
               backgroundColor: Color(Default.COLOR_GREEN),
               flexibleSpace: FlexibleSpaceBar(
-                title: CustomWidget.getTitle(Project.NAME),
+                title: CustomWidget.getTitle(Model.Concept.PAGE_NAME),
                 background: Image.asset(
                   Offers.IMAGE,
                   fit: BoxFit.cover,
@@ -35,23 +40,32 @@ class Projects extends StatelessWidget {
               ),
             ),
             SliverToBoxAdapter(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  CustomWidget.getSinglePageTitle(thirty, projects.title),
-                  CustomWidget.getSinglePageDescription(
-                      thirty, projects.description),
-                  projects.imageUrl != null
-                      ? CustomWidget.getImageFromNetwork(
-                          thirty, projects.imageUrl)
-                      : Container(),
+                  Flexible(
+                    child: Padding(
+                      padding: EdgeInsets.all(thirty),
+                      child: SelectableText(
+                        concept.description,
+                        style: TextStyle(
+                          fontSize: SizeConfig.getSafeBlockVerticalBy(
+                              Default.STANDARD_FONT_SIZE),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          !dataAvailable ? CustomWidget.noInternet() : Container(),
+        ],
       ),
     );
   }
