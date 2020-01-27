@@ -4,7 +4,7 @@ class Quote {
   String chapter;
   String verse;
   static const String NAME = 'Auswahl an Konfirmationssprüchen';
-  static const String PAGE_NAME = 'Konfi-Sprüchen';
+  static const String PAGE_NAME = 'Konfi-Sprüche';
 
   Quote({this.text, this.book, this.chapter, this.verse});
 
