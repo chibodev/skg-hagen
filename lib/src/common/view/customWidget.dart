@@ -25,7 +25,6 @@ class CustomWidget {
     );
   }
 
-  //TODO: remove parameter
   static Widget buildSliverSpinner() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -382,7 +381,9 @@ class CustomWidget {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                  title: Text('E-Mail'), content: SelectableText(email),);
+                title: Text('E-Mail'),
+                content: SelectableText(email),
+              );
             },
           ),
         },

@@ -175,17 +175,21 @@ class Cards extends State<Controller.Appointment> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              card.endOccurrence != null ? CustomWidget.getAddToCalender(
-                card.title,
-                card.getFormattedOrganiser(),
-                card.address,
-                card.getFormattedTime(),
-                card.getFormattedClosingTime(),
-                context,
-              ) : Text(''),
+              card.endOccurrence != null
+                  ? CustomWidget.getAddToCalender(
+                      card.title,
+                      card.getFormattedOrganiser(),
+                      card.address,
+                      card.getFormattedTime(),
+                      card.getFormattedClosingTime(),
+                      context,
+                    )
+                  : Text(''),
               CustomWidget.getCardTitle(card.title),
-              CustomWidget.getOccurrence(
-                card.getFormattedTimeAsString(),
+              Flexible(
+                child: CustomWidget.getOccurrence(
+                  card.getFormattedTimeAsString(),
+                ),
               ),
               CustomWidget.getCardOrganizer(
                   card.getFormattedOrganiser(), context),

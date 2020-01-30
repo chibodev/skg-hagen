@@ -104,10 +104,17 @@ class Appointment {
 
   String getFormattedTimeAsString() {
     initializeDateFormatting('de_DE', null);
-    return DateFormat("E d.M.yy | HH:mm", "de_DE")
-        .format(getFormattedTime())
-        .toString()
-        .toUpperCase();
+    String formattedTime = '';
+
+    if (this.endOccurrence != null) {
+      formattedTime = this.endOccurrence == this.occurrence
+          ? "${_getDateFormat('E d.M.yy | HH:mm', getFormattedTime())} - ${_getDateFormat('HH:mm', getFormattedClosingTime())}"
+          : "${_getDateFormat("E d.M.yy | HH:mm", getFormattedTime())} - ${_getDateFormat("E d.M.yy | HH:mm", getFormattedClosingTime())}";
+    } else {
+      formattedTime = _getDateFormat("E d.M.yy | HH:mm", getFormattedTime());
+    }
+
+    return formattedTime;
   }
 
   String getFormattedOrganiser() {
@@ -125,5 +132,12 @@ class Appointment {
     final List<String> timeSplit = time.split(':');
     return DateTime(occurrence.year, occurrence.month, occurrence.day,
         int.parse(timeSplit[0]), int.parse(timeSplit[1]));
+  }
+
+  String _getDateFormat(String format, DateTime dateTime) {
+    return DateFormat("$format", "de_DE")
+        .format(dateTime)
+        .toString()
+        .toUpperCase();
   }
 }
