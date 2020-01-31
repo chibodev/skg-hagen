@@ -142,3 +142,4 @@ pubspec.lock
 xcuserdata
 **/.symlinks/
 profile
+/ios/GoogleService-Info.plist
