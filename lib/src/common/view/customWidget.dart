@@ -1,9 +1,9 @@
 import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:skg_hagen/src/common/model/address.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/service/clipboard.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
 
@@ -248,20 +248,8 @@ class CustomWidget {
             child: InkWell(
               splashColor: Color(Default.COLOR_GREEN),
               onTap: () => TapAction().sendMail(email, title),
-              onLongPress: () => <void>{
-                Clipboard.setData(
-                  ClipboardData(text: email),
-                ),
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text('E-Mail'),
-                      content: SelectableText(email),
-                    );
-                  },
-                ),
-              },
+              onLongPress: () =>
+                  ClipboardService.copyAndNotify(context: context, text: email),
               child: Padding(
                 padding: EdgeInsets.only(
                   left: SizeConfig.getSafeBlockVerticalBy(1),
@@ -375,18 +363,7 @@ class CustomWidget {
       child: InkWell(
         splashColor: Color(Default.COLOR_GREEN),
         onTap: () => TapAction().sendMail(email, title),
-        onLongPress: () => <void>{
-          Clipboard.setData(ClipboardData(text: email)),
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('E-Mail'),
-                content: SelectableText(email),
-              );
-            },
-          ),
-        },
+        onLongPress: () => ClipboardService.copyAndNotify(context: context, text: email),
         child: Padding(
           padding: EdgeInsets.only(
             left: SizeConfig.getSafeBlockVerticalBy(1),

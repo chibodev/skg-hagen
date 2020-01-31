@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:skg_hagen/src/common/model/address.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/service/clipboard.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/contacts/model/contact.dart';
@@ -28,7 +29,7 @@ class Cards {
       for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForContacts(card[i]));
       }
-    } else if (card is List<Social>){
+    } else if (card is List<Social>) {
       subjectName = Social.NAME;
       for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForSocial(card[i]));
@@ -291,16 +292,8 @@ class Cards {
               ? InkWell(
                   splashColor: Color(Default.COLOR_GREEN),
                   onTap: () => TapAction().callMe(phone),
-                  onLongPress: () => <void>{
-                    Clipboard.setData(ClipboardData(text: phone)),
-                    showDialog(
-                        context: this._buildContext,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                              title: Text('Telefon'),
-                              content: SelectableText(phone));
-                        }),
-                  },
+                  onLongPress: () => ClipboardService.copyAndNotify(
+                      context: _buildContext, text: phone),
                   child: Padding(
                     padding: EdgeInsets.only(
                       left: SizeConfig.getSafeBlockVerticalBy(1),
@@ -324,16 +317,8 @@ class Cards {
               ? InkWell(
                   splashColor: Color(Default.COLOR_GREEN),
                   onTap: () => TapAction().sendMail(email, title),
-                  onLongPress: () => <void>{
-                    Clipboard.setData(ClipboardData(text: email)),
-                    showDialog(
-                        context: this._buildContext,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                              title: Text('E-Mail'),
-                              content: SelectableText(email));
-                        }),
-                  },
+                  onLongPress: () => ClipboardService.copyAndNotify(
+                      context: this._buildContext, text: email),
                   child: Padding(
                     padding: EdgeInsets.only(
                       left: SizeConfig.getSafeBlockVerticalBy(5),

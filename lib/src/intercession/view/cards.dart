@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
+import 'package:skg_hagen/src/common/service/clipboard.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
@@ -152,18 +153,8 @@ class Page extends State<Controller.Intercession> {
                         splashColor: Color(Default.COLOR_GREEN),
                         onTap: () => TapAction().sendMail(
                             Model.Intercession.EMAIL, Model.Intercession.NAME),
-                        onLongPress: () => <void>{
-                          Clipboard.setData(
-                              ClipboardData(text: Model.Intercession.EMAIL)),
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                    title: Text('E-Mail'),
-                                    content: SelectableText(
-                                        Model.Intercession.EMAIL));
-                              }),
-                        },
+                        onLongPress: () => ClipboardService.copyAndNotify(
+                            context: context, text: Model.Intercession.EMAIL),
                         child: Padding(
                           padding: EdgeInsets.only(
                             left: SizeConfig.getSafeBlockVerticalBy(1),

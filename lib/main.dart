@@ -48,7 +48,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: !Environment.isProduction(),
       routes: <String, Widget Function(BuildContext)>{
         Routes.home: (BuildContext context) => Home(),
         Routes.appointment: (BuildContext context) => Appointment(),

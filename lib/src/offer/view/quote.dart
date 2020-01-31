@@ -81,7 +81,7 @@ class Quote extends StatelessWidget {
                     Scaffold.of(context).showSnackBar(
                       SnackBar(
                         backgroundColor: Color(Default.COLOR_GREEN),
-                        content: Text('Kopiert'),
+                        content: Text(Default.COPIED),
                         duration: Duration(seconds: 3),
                       ),
                     ),

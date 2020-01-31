@@ -4,7 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 class TapAction {
   void sendMail(String email, String title) async {
     // Android and iOS
-    final String uri = 'mailto:$email?subject=$title';
+    final String uri = 'mailto:$email?subject=${Uri.encodeComponent(title)}';
     if (await canLaunch(uri)) {
       await launch(uri);
     } else {
@@ -25,7 +25,7 @@ class TapAction {
 
     await availableMaps.first.showMarker(
         coords: Coords(double.parse(location[0]), double.parse(location[1])),
-        description: "Location for $longLat",
+        description: "Längen- und Breitengrad: $longLat",
         title: name);
   }
 
@@ -40,8 +40,8 @@ class TapAction {
   }
 
   void callMe(String phoneNumber) async {
-    // Android
-    final String uri = 'tel:$phoneNumber';
+    // Android and iOS
+    final String uri = 'tel:${Uri.encodeComponent(phoneNumber)}';
     if (await canLaunch(uri)) {
       await launch(uri);
     } else {
