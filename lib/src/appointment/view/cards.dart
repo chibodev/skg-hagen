@@ -186,10 +186,8 @@ class Cards extends State<Controller.Appointment> {
                     )
                   : Text(''),
               CustomWidget.getCardTitle(card.title),
-              Flexible(
-                child: CustomWidget.getOccurrence(
-                  card.getFormattedTimeAsString(),
-                ),
+              CustomWidget.getOccurrence(
+                card.getFormattedTimeAsString(),
               ),
               CustomWidget.getCardOrganizer(
                   card.getFormattedOrganiser(), context),

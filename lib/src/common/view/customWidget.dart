@@ -65,23 +65,6 @@ class CustomWidget {
     );
   }
 
-  static Padding getCardTitle(String title, {bool textColor}) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: SizeConfig.getSafeBlockVerticalBy(2),
-        top: SizeConfig.getSafeBlockVerticalBy(2),
-      ),
-      child: Text(
-        title,
-        style: TextStyle(
-          fontSize:
-              SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
-          color: textColor == true ? Colors.white : Colors.black,
-        ),
-      ),
-    );
-  }
-
   static Widget getAddToCalender(String title, String info, Address address,
       DateTime startDateTime, DateTime endDateTime, BuildContext context) {
     final Event event = Event(
@@ -101,6 +84,23 @@ class CustomWidget {
             Icons.calendar_today,
             color: Color(Default.COLOR_GREEN),
           ),
+        ),
+      ),
+    );
+  }
+
+  static Padding getCardTitle(String title, {bool textColor}) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: SizeConfig.getSafeBlockVerticalBy(2),
+        top: SizeConfig.getSafeBlockVerticalBy(2),
+      ),
+      child: Text(
+        title,
+        style: TextStyle(
+          fontSize:
+              SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+          color: textColor == true ? Colors.white : Colors.black,
         ),
       ),
     );
@@ -417,6 +417,13 @@ class CustomWidget {
       padding: EdgeInsets.only(
         bottom: SizeConfig.getSafeBlockHorizontalBy(3),
       ),
+      child: Text(Default.NO_CONTENT),
+    );
+  }
+
+  static Center centeredNoEntry() {
+    return Center(
+      heightFactor: SizeConfig.getSafeBlockHorizontalBy(1),
       child: Text(Default.NO_CONTENT),
     );
   }

@@ -42,7 +42,6 @@ class Cards {
         list.add(_buildTileForProjects(context, card[i]));
       }
     } else if (card is Confirmation) {
-      print(card);
       subjectName = Confirmation.NAME;
       list.add(_buildTileForConfirmation(context, card));
     }
@@ -50,7 +49,7 @@ class Cards {
     return card != null
         ? ExpansionTile(
             title: CustomWidget.getAccordionTitle(subjectName),
-            children: list.length > 0 ? list : Container(),
+            children: list,
           )
         : Container();
   }
@@ -223,7 +222,7 @@ class Cards {
                           context,
                           MaterialPageRoute<dynamic>(
                             builder: (BuildContext _context) => View.Concept(
-                              concept: card.concept.first,
+                              concept: card.concept,
                               context: context,
                               dataAvailable: this._dataAvailable,
                             ),
@@ -324,7 +323,8 @@ class Cards {
                                 Icons.list,
                                 color: Color(Default.COLOR_GREEN),
                               ),
-                              title: CustomWidget.getCardTitle(Appointment.NAME),
+                              title:
+                                  CustomWidget.getCardTitle(Appointment.NAME),
                             ),
                           ),
                         ),

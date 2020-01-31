@@ -7,7 +7,7 @@ import 'package:skg_hagen/src/offer/model/concept.dart' as Model;
 import 'package:skg_hagen/src/offer/model/offers.dart';
 
 class Concept extends StatelessWidget {
-  final Model.Concept concept;
+  final List<Model.Concept> concept;
   final BuildContext context;
   final bool dataAvailable;
 
@@ -44,16 +44,16 @@ class Concept extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Flexible(
-                    child: Padding(
+                    child: concept.isNotEmpty ? Padding(
                       padding: EdgeInsets.all(thirty),
                       child: SelectableText(
-                        concept.description,
+                        concept?.first?.description,
                         style: TextStyle(
                           fontSize: SizeConfig.getSafeBlockVerticalBy(
                               Default.STANDARD_FONT_SIZE),
                         ),
                       ),
-                    ),
+                    ) : CustomWidget.centeredNoEntry(),
                   ),
                 ],
               ),
