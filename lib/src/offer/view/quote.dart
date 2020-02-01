@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/service/clipboard.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/model/offers.dart';
 import 'package:skg_hagen/src/offer/model/quote.dart' as Model;
@@ -73,19 +73,14 @@ class Quote extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(
-                    right: SizeConfig.getSafeBlockHorizontalBy(1)),
+                  right: SizeConfig.getSafeBlockHorizontalBy(1),
+                ),
                 child: InkWell(
                   splashColor: Color(Default.COLOR_GREEN),
-                  onTap: () => <void>{
-                    Clipboard.setData(ClipboardData(text: quote.getText())),
-                    Scaffold.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor: Color(Default.COLOR_GREEN),
-                        content: Text(Default.COPIED),
-                        duration: Duration(seconds: 3),
-                      ),
-                    ),
-                  },
+                  onTap: () => ClipboardService.copyAndNotify(
+                    context: context,
+                    text: quote.getText(),
+                  ),
                   child: Align(
                     alignment: Alignment.topRight,
                     child: Icon(
@@ -104,14 +99,20 @@ class Quote extends StatelessWidget {
                   ),
                 ),
                 subtitle: (quote.getBook().length > 1)
-                    ? Text(
-                        quote.getBook(),
-                        style: TextStyle(
-                          fontSize: SizeConfig.getSafeBlockVerticalBy(
-                              Default.SUBSTANDARD_FONT_SIZE),
+                    ? Padding(
+                        padding: EdgeInsets.only(
+                          top: SizeConfig.getSafeBlockHorizontalBy(2),
+                          bottom: SizeConfig.getSafeBlockHorizontalBy(2),
+                        ),
+                        child: Text(
+                          quote.getBook(),
+                          style: TextStyle(
+                            fontSize: SizeConfig.getSafeBlockVerticalBy(
+                                Default.SUBSTANDARD_FONT_SIZE),
+                          ),
                         ),
                       )
-                    : null,
+                    : Text(''),
               )
             ],
           ),
