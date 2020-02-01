@@ -66,7 +66,9 @@ class Appointment {
         placeName: json["placeName"],
         room: json["room"],
         infoTitle: json["infoTitle"] == "" ? null : json["infoTitle"],
-        organizer: json["organizer"],
+        organizer: json["organizer"] == null || json["organizer"] == ""
+            ? null
+            : json["organizer"],
         email: json["email"] == "" ? null : json["email"],
         name: json["name"] == null || json["name"] == "" ? null : json["name"],
         street: json["street"] == null || json["street"] == ""
