@@ -21,7 +21,8 @@ class Address {
       this.zip,
       this.city,
       this.country,
-      this.room, this.latLong});
+      this.room,
+      this.latLong});
 
   factory Address.fromJson(Map<String, dynamic> json) => Address(
         name: json["name"] == null ? null : json['name'],
