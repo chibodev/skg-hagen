@@ -51,7 +51,7 @@ void main() {
     expect(confirmation.appointment.first.infoTitle, null);
     expect(confirmation.appointment.first.placeName, 'markuskirche');
     expect(confirmation.appointment.first.room, '');
-    expect(confirmation.appointment.first.organizer, '');
+    expect(confirmation.appointment.first.organizer, null);
     expect(confirmation.appointment.first.email, null);
     expect(confirmation.appointment.first.name, 'markuskirche');
     expect(confirmation.appointment.first.street, 'Rheinstraße');
