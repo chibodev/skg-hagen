@@ -36,27 +36,19 @@ class Cards {
                       builder: (BuildContext context) {
                         return AlertDialog(
                           backgroundColor: Color(Default.COLOR_GREEN),
-                          title: Text(
-                            MonthlyScripture.TITLE,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: SizeConfig.getSafeBlockVerticalBy(
-                                  Default.STANDARD_FONT_SIZE),
-                            ),
-                          ),
-                          content: SingleChildScrollView(
-                            child: _getDevionalAndLesson(
-                              response.data.oldTestamentText,
-                              response.data.newTestamentText,
-                            ),
-                          ),
-                          actions: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(
-                                right: SizeConfig.getSafeBlockVerticalBy(2),
+                          title: Row(
+                            children: <Widget>[
+                              Text(
+                                MonthlyScripture.TITLE,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: SizeConfig.getSafeBlockVerticalBy(
+                                      Default.STANDARD_FONT_SIZE),
+                                ),
                               ),
-                              child: FlatButton(
+                              Spacer(),
+                              FlatButton(
                                 onPressed: () => Share.share(
                                     response.data.getSharableContent(),
                                     subject: MonthlyScripture.TITLE),
@@ -65,7 +57,15 @@ class Cards {
                                   color: Colors.white,
                                 ),
                               ),
+                            ],
+                          ),
+                          content: SingleChildScrollView(
+                            child: _getDevionalAndLesson(
+                              response.data.oldTestamentText,
+                              response.data.newTestamentText,
                             ),
+                          ),
+                          actions: <Widget>[
                             FlatButton(
                               child: Text(
                                 'Schließen',
