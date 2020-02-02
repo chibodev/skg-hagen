@@ -385,7 +385,7 @@ class CustomWidget {
   }
 
   static IconSlideAction getSlidableCalender(String title, String info,
-      Address address, DateTime startDateTime, DateTime endDateTime) {
+      Address address, DateTime startDateTime, DateTime endDateTime, [double size = 5]) {
     final Event event = Event(
         title: title,
         description: info,
@@ -399,14 +399,14 @@ class CustomWidget {
       foregroundColor: Colors.white,
       iconWidget: Icon(
         Icons.calendar_today,
-        size: SizeConfig.getSafeBlockVerticalBy(7),
+        size: SizeConfig.getSafeBlockVerticalBy(size),
         color: Colors.white,
       ),
       onTap: () => Add2Calendar.addEvent2Cal(event),
     );
   }
 
-  static Widget getSlidableShare(String subject, String text, [double size = 7]) {
+  static Widget getSlidableShare(String subject, String text, [double size = 5]) {
     return IconSlideAction(
       caption: Default.SHARE,
       color: Colors.black45,
