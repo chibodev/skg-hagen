@@ -84,6 +84,7 @@ Temporary Items
 /android/captures/
 /android/gradlew
 /android/gradlew.bat
+/android/key.properties
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -133,8 +134,8 @@ pubspec.lock
 /ios/Runner/GeneratedPluginRegistrant.*
 !/ios/Flutter/App.framework/Info.plist
 /ios/Flutter/Flutter.podspec
+/ios/Runner/GoogleService-Info.plist
 
-/android/key.properties
 
 /.env
 /coverage
@@ -142,4 +143,4 @@ pubspec.lock
 xcuserdata
 **/.symlinks/
 profile
-/ios/Runner/GoogleService-Info.plist
+/DEPLOYMENT.md
