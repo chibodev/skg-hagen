@@ -44,32 +44,33 @@ class Cards {
         padding: EdgeInsets.only(
           bottom: SizeConfig.getSafeBlockHorizontalBy(3),
         ),
-        child: Slidable(
-          actionPane: SlidableDrawerActionPane(),
-          actionExtentRatio: 0.25,
-          actions: <Widget>[
-            CustomWidget.getSlidableShare(
-              card.title,
-              Default.getSharableContent(
-                card.title,
-                card.getFormattedOccurrence(),
-                card.comment,
-                card?.address,
-              ),
+        child: Card(
+          elevation: 7,
+          shape: Border(
+            left: BorderSide(
+              color: Color(Default.COLOR_GREEN),
+              width: SizeConfig.getSafeBlockHorizontalBy(1),
             ),
-          ],
-          child: Card(
-            elevation: 7,
-            shape: Border(
-              left: BorderSide(
-                color: Color(Default.COLOR_GREEN),
-                width: SizeConfig.getSafeBlockHorizontalBy(1),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Flexible(
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Slidable(
+                actionPane: SlidableDrawerActionPane(),
+                actionExtentRatio: Default.SLIDE_RATIO,
+                actions: <Widget>[
+                  CustomWidget.getSlidableShare(
+                    card.title,
+                    Default.getSharableContent(
+                      card.title,
+                      card.getFormattedOccurrence(),
+                      card.comment,
+                      card?.address,
+                    ),
+                  ),
+                ],
+                child: Container(
+                  width: SizeConfig.screenHeight,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -77,26 +78,21 @@ class Cards {
                       CustomWidget.getOccurrence(
                         card.getFormattedOccurrence(),
                       ),
-                      _getComment(card.comment),
-                      (card.address.name == null || card.address.street == null)
-                          ? CustomWidget.getNoLocation()
-                          : CustomWidget.getAddressWithAction(card.address)
+                      card.comment.isEmpty
+                          ? CustomWidget.getCardSubtitle(card.comment)
+                          : Text(''),
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+              (card.address.name == null || card.address.street == null)
+                  ? CustomWidget.getNoLocation()
+                  : CustomWidget.getAddressWithAction(card.address)
+            ],
           ),
         ),
       ),
     );
-  }
-
-  Widget _getComment(String comment) {
-    if (comment != "" || comment != null) {
-      return CustomWidget.getCardSubtitle(comment);
-    }
-    return null;
   }
 
   Widget _buildTileForNews(Model.News card) {

@@ -65,43 +65,48 @@ class ConfirmationAppointment extends StatelessWidget {
         padding: EdgeInsets.only(
           bottom: SizeConfig.getSafeBlockHorizontalBy(3),
         ),
-        child: Slidable(
-          actionPane: SlidableDrawerActionPane(),
-          actionExtentRatio: 0.25,
-          actions: card.endOccurrence != null
-              ? _getSlidableWithCalendar(card)
-              : <Widget>[
-                  CustomWidget.getSlidableShare(
-                    card.title,
-                    Default.getSharableContent(
-                      card.title,
+        child: Card(
+          elevation: 7,
+          shape: Border(
+            left: BorderSide(
+              color: Color(Default.COLOR_GREEN),
+              width: SizeConfig.getSafeBlockHorizontalBy(1),
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Slidable(
+                actionPane: SlidableDrawerActionPane(),
+                actionExtentRatio: Default.SLIDE_RATIO,
+                actions: card.endOccurrence != null
+                    ? _getSlidableWithCalendar(card)
+                    : <Widget>[
+                        CustomWidget.getSlidableShare(
+                          card.title,
+                          Default.getSharableContent(
+                            card.title,
+                            card.getFormattedTimeAsString(),
+                            card.getFormattedOrganiser(),
+                            card.address,
+                          ),
+                        )
+                      ],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    CustomWidget.getCardTitle(card.title),
+                    CustomWidget.getOccurrence(
                       card.getFormattedTimeAsString(),
-                      card.getFormattedOrganiser(),
-                      card.address,
                     ),
-                  )
-                ],
-          child: Card(
-            elevation: 7,
-            shape: Border(
-              left: BorderSide(
-                color: Color(Default.COLOR_GREEN),
-                width: SizeConfig.getSafeBlockHorizontalBy(1),
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                CustomWidget.getCardTitle(card.title),
-                CustomWidget.getOccurrence(
-                  card.getFormattedTimeAsString(),
+                    CustomWidget.getCardOrganizer(
+                        card.getFormattedOrganiser(), context),
+                    CustomWidget.getCardEmail(card.email, card.title, context),
+                  ],
                 ),
-                CustomWidget.getCardOrganizer(
-                    card.getFormattedOrganiser(), context),
-                CustomWidget.getCardEmail(card.email, card.title, context),
-                CustomWidget.getAddressWithAction(card.address)
-              ],
-            ),
+              ),
+              CustomWidget.getAddressWithAction(card.address)
+            ],
           ),
         ),
       ),

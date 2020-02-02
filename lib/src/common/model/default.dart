@@ -10,6 +10,8 @@ class Default {
   static const String COPIED = 'In die Zwischenablage kopiert!';
   static const String CALENDER = 'Kalender';
   static const String SHARE = 'Teilen';
+  static const double SLIDE_ICON_SIZE = 4.0;
+  static const double SLIDE_RATIO = 0.25;
 
   static String capitalize(String value) =>
       value[0].toUpperCase() + value.substring(1);

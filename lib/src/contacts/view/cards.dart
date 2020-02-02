@@ -52,42 +52,42 @@ class Cards {
         padding: EdgeInsets.only(
           bottom: SizeConfig.getSafeBlockHorizontalBy(3),
         ),
-        child: Slidable(
-          actionPane: SlidableDrawerActionPane(),
-          actionExtentRatio: 0.25,
-          actions: <Widget>[
-            CustomWidget.getSlidableShare(
-                card.getCapitalizedAddressName(), card.toString())
-          ],
-          child: Card(
-            elevation: 7,
-            shape: Border(
-              left: BorderSide(
-                color: Color(Default.COLOR_GREEN),
-                width: SizeConfig.getSafeBlockHorizontalBy(1),
-              ),
+        child: Card(
+          elevation: 7,
+          shape: Border(
+            left: BorderSide(
+              color: Color(Default.COLOR_GREEN),
+              width: SizeConfig.getSafeBlockHorizontalBy(1),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Slidable(
+                      actionPane: SlidableDrawerActionPane(),
+                      actionExtentRatio: Default.SLIDE_RATIO,
+                      actions: <Widget>[
+                        CustomWidget.getSlidableShare(
+                            card.getCapitalizedAddressName(), card.toString())
+                      ],
+                      child: Container(
                         padding: EdgeInsets.zero,
                         height: SizeConfig.getSafeBlockVerticalBy(14),
                         width: SizeConfig.getSafeBlockHorizontalBy(100),
                         child: _getImageByName(card.name),
                       ),
-                      (card.street == null || card.name == null)
-                          ? CustomWidget.getNoLocation()
-                          : CustomWidget.getAddressWithAction(card)
-                    ],
-                  ),
+                    ),
+                    (card.street == null || card.name == null)
+                        ? CustomWidget.getNoLocation()
+                        : CustomWidget.getAddressWithAction(card)
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -121,25 +121,26 @@ class Cards {
         padding: EdgeInsets.only(
           bottom: SizeConfig.getSafeBlockHorizontalBy(3),
         ),
-        child: Slidable(
-          actionPane: SlidableDrawerActionPane(),
-          actionExtentRatio: 0.25,
-          actions: <Widget>[
-            CustomWidget.getSlidableShare(
-                card.name, Default.getSharableContent(card.url), 3)
-          ],
-          child: Card(
-            elevation: 7,
-            shape: Border(
-              left: BorderSide(
-                color: Color(Default.COLOR_GREEN),
-                width: SizeConfig.getSafeBlockHorizontalBy(1),
-              ),
+        child: Card(
+          elevation: 7,
+          shape: Border(
+            left: BorderSide(
+              color: Color(Default.COLOR_GREEN),
+              width: SizeConfig.getSafeBlockHorizontalBy(1),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[_getSocialMediaIcon(card)],
-            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Slidable(
+                  actionPane: SlidableDrawerActionPane(),
+                  actionExtentRatio: Default.SLIDE_RATIO,
+                  actions: <Widget>[
+                    CustomWidget.getSlidableShare(
+                        card.name, Default.getSharableContent(card.url), 3)
+                  ],
+                  child: _getSocialMediaIcon(card)),
+            ],
           ),
         ),
       ),

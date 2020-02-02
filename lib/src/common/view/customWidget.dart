@@ -385,7 +385,8 @@ class CustomWidget {
   }
 
   static IconSlideAction getSlidableCalender(String title, String info,
-      Address address, DateTime startDateTime, DateTime endDateTime, [double size = 5]) {
+      Address address, DateTime startDateTime, DateTime endDateTime,
+      [double size = Default.SLIDE_ICON_SIZE]) {
     final Event event = Event(
         title: title,
         description: info,
@@ -406,7 +407,8 @@ class CustomWidget {
     );
   }
 
-  static Widget getSlidableShare(String subject, String text, [double size = 5]) {
+  static Widget getSlidableShare(String subject, String text,
+      [double size = Default.SLIDE_ICON_SIZE]) {
     return IconSlideAction(
       caption: Default.SHARE,
       color: Colors.black45,

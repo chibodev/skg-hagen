@@ -62,25 +62,25 @@ class Quote extends StatelessWidget {
         padding: EdgeInsets.only(
           bottom: SizeConfig.getSafeBlockHorizontalBy(0),
         ),
-        child: Slidable(
-          actionPane: SlidableDrawerActionPane(),
-          actionExtentRatio: 0.25,
-          actions: <Widget>[
-            CustomWidget.getSlidableShare(
-              Model.Quote.PAGE_NAME,
-              Default.getSharableContent(quote.getText()),
-            )
-          ],
-          child: Card(
-            shape: Border(
-              left: BorderSide(
-                color: Color(Default.COLOR_GREEN),
-                width: SizeConfig.getSafeBlockHorizontalBy(1),
-              ),
+        child: Card(
+          shape: Border(
+            left: BorderSide(
+              color: Color(Default.COLOR_GREEN),
+              width: SizeConfig.getSafeBlockHorizontalBy(1),
             ),
-            child: Column(
-              children: <Widget>[
-                ListTile(
+          ),
+          child: Column(
+            children: <Widget>[
+              Slidable(
+                actionPane: SlidableDrawerActionPane(),
+                actionExtentRatio: Default.SLIDE_RATIO,
+                actions: <Widget>[
+                  CustomWidget.getSlidableShare(
+                    Model.Quote.PAGE_NAME,
+                    Default.getSharableContent(quote.getText()),
+                  )
+                ],
+                child: ListTile(
                   title: Padding(
                     padding: EdgeInsets.only(
                       top: SizeConfig.getSafeBlockVerticalBy(2),
@@ -108,9 +108,9 @@ class Quote extends StatelessWidget {
                           ),
                         )
                       : Text(''),
-                )
-              ],
-            ),
+                ),
+              ),
+            ],
           ),
         ),
       ),

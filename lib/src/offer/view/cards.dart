@@ -61,32 +61,33 @@ class Cards {
         padding: EdgeInsets.only(
           bottom: SizeConfig.getSafeBlockHorizontalBy(3),
         ),
-        child: Slidable(
-          actionPane: SlidableDrawerActionPane(),
-          actionExtentRatio: 0.25,
-          actions: <Widget>[
-            CustomWidget.getSlidableShare(
-              card.title,
-              Default.getSharableContent(
-                card.title,
-                card.getFormattedOccurrence(),
-                card.getFormattedOrganiser(),
-                card.address,
-              ),
-            )
-          ],
-          child: Card(
-            elevation: 7,
-            shape: Border(
-              left: BorderSide(
-                color: Color(Default.COLOR_GREEN),
-                width: SizeConfig.getSafeBlockHorizontalBy(1),
-              ),
+        child: Card(
+          elevation: 7,
+          shape: Border(
+            left: BorderSide(
+              color: Color(Default.COLOR_GREEN),
+              width: SizeConfig.getSafeBlockHorizontalBy(1),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Flexible(
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Slidable(
+                actionPane: SlidableDrawerActionPane(),
+                actionExtentRatio: Default.SLIDE_RATIO,
+                actions: <Widget>[
+                  CustomWidget.getSlidableShare(
+                    card.title,
+                    Default.getSharableContent(
+                      card.title,
+                      card.getFormattedOccurrence(),
+                      card.getFormattedOrganiser(),
+                      card.address,
+                    ),
+                  )
+                ],
+                child: Container(
+                  width: SizeConfig.screenHeight,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -98,15 +99,15 @@ class Cards {
                           card.getFormattedOrganiser(), this._buildContext),
                       CustomWidget.getCardEmail(
                           card.email, card.title, this._buildContext),
-                      (card.address.street == null || card.address.name == null)
-                          ? CustomWidget.getNoLocation()
-                          : CustomWidget.getAddressWithAction(card.address,
-                              room: card.room),
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+              (card.address.street == null || card.address.name == null)
+                  ? CustomWidget.getNoLocation()
+                  : CustomWidget.getAddressWithAction(card.address,
+                      room: card.room),
+            ],
           ),
         ),
       ),
