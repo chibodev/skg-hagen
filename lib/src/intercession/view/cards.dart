@@ -131,8 +131,12 @@ class Page extends State<Controller.Intercession> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
-                  onPressed: () => _saveIntercession(
-                      context, _intercessionTextFieldcontroller.text),
+                  onPressed: () {
+                    if (_intercessionTextFieldcontroller.text.isNotEmpty) {
+                      _saveIntercession(
+                          context, _intercessionTextFieldcontroller.text);
+                    }
+                  },
                   child: Text(('Senden').toUpperCase()),
                 ),
                 Padding(
