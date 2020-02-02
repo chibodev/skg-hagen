@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
@@ -58,46 +59,72 @@ class ConfirmationAppointment extends StatelessWidget {
     );
   }
 
-  Widget _buildRows(Appointment appointment, BuildContext context) {
+  Widget _buildRows(Appointment card, BuildContext context) {
     return Material(
       child: Padding(
         padding: EdgeInsets.only(
           bottom: SizeConfig.getSafeBlockHorizontalBy(3),
         ),
-        child: Card(
-          elevation: 7,
-          shape: Border(
-            right: BorderSide(
-              color: Color(Default.COLOR_GREEN),
-              width: SizeConfig.getSafeBlockHorizontalBy(1),
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              appointment.endOccurrence != null
-                  ? CustomWidget.getAddToCalender(
-                      appointment.title,
-                      appointment.getFormattedOrganiser(),
-                      appointment.address,
-                      appointment.getFormattedTime(),
-                      appointment.getFormattedClosingTime(),
-                      context,
-                    )
-                  : Text(''),
-              CustomWidget.getCardTitle(appointment.title),
-              CustomWidget.getOccurrence(
-                appointment.getFormattedTimeAsString(),
+        child: Slidable(
+          actionPane: SlidableDrawerActionPane(),
+          actionExtentRatio: 0.25,
+          actions: card.endOccurrence != null
+              ? _getSlidableWithCalendar(card)
+              : <Widget>[
+                  CustomWidget.getSlidableShare(
+                    card.title,
+                    Default.getSharableContent(
+                      card.title,
+                      card.getFormattedTimeAsString(),
+                      card.getFormattedOrganiser(),
+                      card.address,
+                    ),
+                  )
+                ],
+          child: Card(
+            elevation: 7,
+            shape: Border(
+              left: BorderSide(
+                color: Color(Default.COLOR_GREEN),
+                width: SizeConfig.getSafeBlockHorizontalBy(1),
               ),
-              CustomWidget.getCardOrganizer(
-                  appointment.getFormattedOrganiser(), context),
-              CustomWidget.getCardEmail(
-                  appointment.email, appointment.title, context),
-              CustomWidget.getAddressWithAction(appointment.address)
-            ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                CustomWidget.getCardTitle(card.title),
+                CustomWidget.getOccurrence(
+                  card.getFormattedTimeAsString(),
+                ),
+                CustomWidget.getCardOrganizer(
+                    card.getFormattedOrganiser(), context),
+                CustomWidget.getCardEmail(card.email, card.title, context),
+                CustomWidget.getAddressWithAction(card.address)
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  List<Widget> _getSlidableWithCalendar(Appointment card) {
+    return <Widget>[
+      CustomWidget.getSlidableShare(
+        card.title,
+        Default.getSharableContent(
+          card.title,
+          card.getFormattedTimeAsString(),
+          card.getFormattedOrganiser(),
+          card?.address,
+        ),
+      ),
+      CustomWidget.getSlidableCalender(
+          card.title,
+          card.getFormattedOrganiser(),
+          card.address,
+          card.getFormattedTime(),
+          card.getFormattedClosingTime()),
+    ];
   }
 }

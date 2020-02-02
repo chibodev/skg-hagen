@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/clipboard.dart';
@@ -62,59 +63,55 @@ class Quote extends StatelessWidget {
         padding: EdgeInsets.only(
           bottom: SizeConfig.getSafeBlockHorizontalBy(0),
         ),
-        child: Card(
-          shape: Border(
-            right: BorderSide(
-              color: Color(Default.COLOR_GREEN),
-              width: SizeConfig.getSafeBlockHorizontalBy(1),
+        child: Slidable(
+          actionPane: SlidableDrawerActionPane(),
+          actionExtentRatio: 0.25,
+          actions: <Widget>[
+            CustomWidget.getSlidableShare(
+              Model.Quote.PAGE_NAME,
+              Default.getSharableContent(quote.getText()),
+            )
+          ],
+          child: Card(
+            shape: Border(
+              left: BorderSide(
+                color: Color(Default.COLOR_GREEN),
+                width: SizeConfig.getSafeBlockHorizontalBy(1),
+              ),
             ),
-          ),
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(
-                  right: SizeConfig.getSafeBlockHorizontalBy(1),
-                ),
-                child: InkWell(
-                  splashColor: Color(Default.COLOR_GREEN),
-                  onTap: () => ClipboardService.copyAndNotify(
-                    context: context,
-                    text: quote.getText(),
-                  ),
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: Icon(
-                      Icons.content_copy,
-                      color: Color(Default.COLOR_GREEN),
+            child: Column(
+              children: <Widget>[
+                ListTile(
+                  title: Padding(
+                    padding: EdgeInsets.only(
+                      top: SizeConfig.getSafeBlockVerticalBy(2),
+                    ),
+                    child: Text(
+                      quote.text,
+                      style: TextStyle(
+                        fontSize: SizeConfig.getSafeBlockVerticalBy(
+                            Default.STANDARD_FONT_SIZE),
+                      ),
                     ),
                   ),
-                ),
-              ),
-              ListTile(
-                title: Text(
-                  quote.text,
-                  style: TextStyle(
-                    fontSize: SizeConfig.getSafeBlockVerticalBy(
-                        Default.STANDARD_FONT_SIZE),
-                  ),
-                ),
-                subtitle: (quote.getBook().length > 1)
-                    ? Padding(
-                        padding: EdgeInsets.only(
-                          top: SizeConfig.getSafeBlockHorizontalBy(2),
-                          bottom: SizeConfig.getSafeBlockHorizontalBy(2),
-                        ),
-                        child: Text(
-                          quote.getBook(),
-                          style: TextStyle(
-                            fontSize: SizeConfig.getSafeBlockVerticalBy(
-                                Default.SUBSTANDARD_FONT_SIZE),
+                  subtitle: (quote.getBook().length > 1)
+                      ? Padding(
+                          padding: EdgeInsets.only(
+                            top: SizeConfig.getSafeBlockVerticalBy(1),
+                            bottom: SizeConfig.getSafeBlockVerticalBy(2),
                           ),
-                        ),
-                      )
-                    : Text(''),
-              )
-            ],
+                          child: Text(
+                            quote.getBook(),
+                            style: TextStyle(
+                              fontSize: SizeConfig.getSafeBlockVerticalBy(
+                                  Default.SUBSTANDARD_FONT_SIZE),
+                            ),
+                          ),
+                        )
+                      : Text(''),
+                )
+              ],
+            ),
           ),
         ),
       ),

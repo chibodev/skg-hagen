@@ -56,4 +56,12 @@ class Address {
   String getCapitalizedAddressName() {
     return (name == '' || name == null) ? '' : Default.capitalize(name);
   }
+
+  String toString(){
+    String addressName = getCapitalizedAddressName();
+    if (getCapitalizedAddressName().length > 3) {
+      addressName = addressName + "\n";
+    }
+    return "$addressName${getStreetAndNumber()}\n${getZipAndCity()}";
+  }
 }

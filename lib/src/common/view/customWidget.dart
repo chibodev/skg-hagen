@@ -1,5 +1,7 @@
 import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:share/share.dart';
 import 'package:skg_hagen/src/common/model/address.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
@@ -61,30 +63,6 @@ class CustomWidget {
                 ),
               ]
             : <Shadow>[],
-      ),
-    );
-  }
-
-  static Widget getAddToCalender(String title, String info, Address address,
-      DateTime startDateTime, DateTime endDateTime, BuildContext context) {
-    final Event event = Event(
-        title: title,
-        description: info,
-        location: "${address.getStreetAndNumber()}, ${address.getZipAndCity()}",
-        startDate: startDateTime,
-        endDate: endDateTime);
-
-    return InkWell(
-      onTap: () => Add2Calendar.addEvent2Cal(event),
-      child: Padding(
-        padding: EdgeInsets.only(right: SizeConfig.getSafeBlockHorizontalBy(1)),
-        child: Align(
-          alignment: Alignment.topRight,
-          child: Icon(
-            Icons.calendar_today,
-            color: Color(Default.COLOR_GREEN),
-          ),
-        ),
       ),
     );
   }
@@ -363,7 +341,8 @@ class CustomWidget {
       child: InkWell(
         splashColor: Color(Default.COLOR_GREEN),
         onTap: () => TapAction().sendMail(email, title),
-        onLongPress: () => ClipboardService.copyAndNotify(context: context, text: email),
+        onLongPress: () =>
+            ClipboardService.copyAndNotify(context: context, text: email),
         child: Padding(
           padding: EdgeInsets.only(
             left: SizeConfig.getSafeBlockVerticalBy(1),
@@ -402,6 +381,42 @@ class CustomWidget {
     return Center(
       heightFactor: SizeConfig.getSafeBlockHorizontalBy(1),
       child: Text(Default.NO_CONTENT),
+    );
+  }
+
+  static IconSlideAction getSlidableCalender(String title, String info,
+      Address address, DateTime startDateTime, DateTime endDateTime) {
+    final Event event = Event(
+        title: title,
+        description: info,
+        location: "${address.getStreetAndNumber()}, ${address.getZipAndCity()}",
+        startDate: startDateTime,
+        endDate: endDateTime);
+
+    return IconSlideAction(
+      caption: Default.CALENDER,
+      color: Color(Default.COLOR_DARKGREEN),
+      foregroundColor: Colors.white,
+      iconWidget: Icon(
+        Icons.calendar_today,
+        size: SizeConfig.getSafeBlockVerticalBy(7),
+        color: Colors.white,
+      ),
+      onTap: () => Add2Calendar.addEvent2Cal(event),
+    );
+  }
+
+  static Widget getSlidableShare(String subject, String text) {
+    return IconSlideAction(
+      caption: Default.SHARE,
+      color: Colors.black45,
+      foregroundColor: Colors.white,
+      iconWidget: Icon(
+        Icons.share,
+        size: SizeConfig.getSafeBlockVerticalBy(7),
+        color: Colors.white,
+      ),
+      onTap: () => Share.share(text, subject: subject),
     );
   }
 }

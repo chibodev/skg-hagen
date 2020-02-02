@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
@@ -43,33 +44,48 @@ class Cards {
         padding: EdgeInsets.only(
           bottom: SizeConfig.getSafeBlockHorizontalBy(3),
         ),
-        child: Card(
-          elevation: 7,
-          shape: Border(
-            right: BorderSide(
-              color: Color(Default.COLOR_GREEN),
-              width: SizeConfig.getSafeBlockHorizontalBy(1),
-            ),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Flexible(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    CustomWidget.getCardTitle(card.title),
-                    CustomWidget.getOccurrence(
-                      card.getFormattedOccurrence(),
-                    ),
-                    _getComment(card.comment),
-                    (card.address.name == null || card.address.street == null)
-                        ? CustomWidget.getNoLocation()
-                        : CustomWidget.getAddressWithAction(card.address)
-                  ],
-                ),
+        child: Slidable(
+          actionPane: SlidableDrawerActionPane(),
+          actionExtentRatio: 0.25,
+          actions: <Widget>[
+            CustomWidget.getSlidableShare(
+              card.title,
+              Default.getSharableContent(
+                card.title,
+                card.getFormattedOccurrence(),
+                card.comment,
+                card?.address,
               ),
-            ],
+            ),
+          ],
+          child: Card(
+            elevation: 7,
+            shape: Border(
+              left: BorderSide(
+                color: Color(Default.COLOR_GREEN),
+                width: SizeConfig.getSafeBlockHorizontalBy(1),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      CustomWidget.getCardTitle(card.title),
+                      CustomWidget.getOccurrence(
+                        card.getFormattedOccurrence(),
+                      ),
+                      _getComment(card.comment),
+                      (card.address.name == null || card.address.street == null)
+                          ? CustomWidget.getNoLocation()
+                          : CustomWidget.getAddressWithAction(card.address)
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
