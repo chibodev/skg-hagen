@@ -56,7 +56,8 @@ class Cards {
           actionPane: SlidableDrawerActionPane(),
           actionExtentRatio: 0.25,
           actions: <Widget>[
-            CustomWidget.getSlidableShare(card.getCapitalizedAddressName(), card.toString())
+            CustomWidget.getSlidableShare(
+                card.getCapitalizedAddressName(), card.toString())
           ],
           child: Card(
             elevation: 7,
@@ -331,7 +332,8 @@ class Cards {
           email != ""
               ? InkWell(
                   splashColor: Color(Default.COLOR_GREEN),
-                  onTap: () => TapAction().sendMail(email, title),
+                  onTap: () =>
+                      TapAction().sendMail(email, title, this._buildContext),
                   onLongPress: () => ClipboardService.copyAndNotify(
                       context: this._buildContext, text: email),
                   child: Padding(

@@ -1,10 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:map_launcher/map_launcher.dart';
+import 'package:skg_hagen/src/common/service/environment.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TapAction {
-  void sendMail(String email, String title) async {
-    // Android and iOS
-    final String uri = 'mailto:$email?subject=${Uri.encodeComponent(title)}';
+  void sendMail(String email, String title, BuildContext context) async {
+    final String subject =
+        Environment.isiOS(context) ? Uri.encodeComponent(title) : title;
+    final String uri = 'mailto:$email?subject=$subject';
+
     if (await canLaunch(uri)) {
       await launch(uri);
     } else {
