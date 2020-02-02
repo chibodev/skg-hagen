@@ -10,8 +10,8 @@ termine:
 angebote:
   groups:
     - gruppen
-    - kreise
     - musik
+    - konfirmanden
   image: assets/images/gruppen.jpg
   route: offer
   name: Angebote
