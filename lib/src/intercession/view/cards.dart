@@ -152,7 +152,9 @@ class Page extends State<Controller.Intercession> {
                       InkWell(
                         splashColor: Color(Default.COLOR_GREEN),
                         onTap: () => TapAction().sendMail(
-                            Model.Intercession.EMAIL, Model.Intercession.EMAIL_NAME),
+                            Model.Intercession.EMAIL,
+                            Model.Intercession.EMAIL_NAME,
+                            context),
                         onLongPress: () => ClipboardService.copyAndNotify(
                             context: context, text: Model.Intercession.EMAIL),
                         child: Padding(
