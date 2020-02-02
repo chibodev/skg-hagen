@@ -107,12 +107,6 @@ class Cards {
         ),
         child: Card(
           elevation: 7,
-          shape: Border(
-            right: BorderSide(
-              color: Color(Default.COLOR_GREEN),
-              width: SizeConfig.getSafeBlockHorizontalBy(1),
-            ),
-          ),
           child: InkWell(
             splashColor: Color(Default.COLOR_GREEN),
             onTap: () => Navigator.push(

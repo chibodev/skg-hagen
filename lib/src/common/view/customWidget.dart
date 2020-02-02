@@ -406,14 +406,14 @@ class CustomWidget {
     );
   }
 
-  static Widget getSlidableShare(String subject, String text) {
+  static Widget getSlidableShare(String subject, String text, [double size = 7]) {
     return IconSlideAction(
       caption: Default.SHARE,
       color: Colors.black45,
       foregroundColor: Colors.white,
       iconWidget: Icon(
         Icons.share,
-        size: SizeConfig.getSafeBlockVerticalBy(7),
+        size: SizeConfig.getSafeBlockVerticalBy(size),
         color: Colors.white,
       ),
       onTap: () => Share.share(text, subject: subject),

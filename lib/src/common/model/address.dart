@@ -1,7 +1,8 @@
 import 'package:skg_hagen/src/common/model/default.dart';
 
 class Address {
-  static const String MAP_IMAGE_JOHANNISKIRCHE = 'assets/images/johanniskirche.jpg';
+  static const String MAP_IMAGE_JOHANNISKIRCHE =
+      'assets/images/johanniskirche.jpg';
   static const String MAP_IMAGE_MARKUSKIRCHE = 'assets/images/markuskirche.jpg';
   static const String NAME = 'Adresse';
 
@@ -57,7 +58,11 @@ class Address {
     return (name == '' || name == null) ? '' : Default.capitalize(name);
   }
 
-  String toString(){
+  String toString() {
+    if (street == null || street == '') {
+      return '';
+    }
+
     String addressName = getCapitalizedAddressName();
     if (getCapitalizedAddressName().length > 3) {
       addressName = addressName + "\n";

@@ -65,12 +65,6 @@ class Cards {
           bottom: SizeConfig.getSafeBlockHorizontalBy(0),
         ),
         child: Card(
-          shape: Border(
-            right: BorderSide(
-              color: Color(Default.COLOR_GREEN),
-              width: SizeConfig.getSafeBlockHorizontalBy(1),
-            ),
-          ),
           child: Column(
             children: <Widget>[
               ListTile(
