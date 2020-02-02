@@ -2,6 +2,7 @@ class Intercession {
   static const String NAME = 'Fürbitte';
   static const String IMAGE = 'assets/images/gebet.jpg';
   static const String HEADER = 'Lasst uns beten für ...';
+  static const String EMAIL_NAME = 'Gebetswunsch';
   static const String EMAIL = 'gebetswunsch@app.skg-hagen.de';
   static const String PLACEHOLDER = 'Gebetswunsch hier eingeben';
   static const String FOOTER = 'Der Gebetswunsch wird an die Pastoren der Gemeinde weitergeleitet.';
