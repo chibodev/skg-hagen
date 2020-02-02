@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
@@ -45,14 +46,29 @@ class Cards {
                             ),
                           ),
                           content: SingleChildScrollView(
-                              child: _getDevionalAndLesson(
-                            response.data.oldTestamentText,
-                            response.data.newTestamentText,
-                          )),
+                            child: _getDevionalAndLesson(
+                              response.data.oldTestamentText,
+                              response.data.newTestamentText,
+                            ),
+                          ),
                           actions: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.only(
+                                right: SizeConfig.getSafeBlockVerticalBy(2),
+                              ),
+                              child: FlatButton(
+                                onPressed: () => Share.share(
+                                    response.data.getSharableContent(),
+                                    subject: MonthlyScripture.TITLE),
+                                child: Icon(
+                                  Icons.share,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
                             FlatButton(
                               child: Text(
-                                "Schließen",
+                                'Schließen',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -139,7 +155,8 @@ class Cards {
   }
 
   Future<MonthlyScripture> _getText() async {
-    return await MonthlyScriptureClient().getDevotion(DioHTTPClient(), Network());
+    return await MonthlyScriptureClient()
+        .getDevotion(DioHTTPClient(), Network());
   }
 
   Future<List<CardContent>> _getAllCards() async {

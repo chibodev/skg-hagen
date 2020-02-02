@@ -1,6 +1,7 @@
 class MonthlyScripture {
   static const int TEXT_LIMIT = 56;
   static const String TITLE = 'Losung und Lehrtext';
+  static const String SOURCE = 'https://www.losungen.de/die-losungen/';
 
   String oldTestamentText;
   String newTestamentText;
@@ -11,5 +12,12 @@ class MonthlyScripture {
     return oldTestamentText.length > TEXT_LIMIT
         ? "${oldTestamentText.substring(0, TEXT_LIMIT)}..."
         : oldTestamentText.length > 2 ? oldTestamentText : '';
+  }
+
+  String getSharableContent(){
+    return "$TITLE\n"
+        "$oldTestamentText\n"
+        "$newTestamentText\n\n"
+        "Quelle: $SOURCE";
   }
 }
