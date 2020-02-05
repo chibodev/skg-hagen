@@ -28,7 +28,7 @@ void main() {
   test('AppointmentClient successfully retrieves data', () async {
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(
-      httpClient.getResponse(
+      httpClient.getJSONResponse(
         http: httpClient,
         object: Appointments,
         cacheData: anyNamed('cacheData'),
@@ -36,7 +36,7 @@ void main() {
         options: anyNamed('options'),
         queryParameters: anyNamed('queryParameters'),
       ),
-    ).thenAnswer((_) async => HTTPClientMock.getRequest(
+    ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(
         statusCode: HttpStatus.ok, path: 'appointments.json'));
 
     final Appointments appointments = await subject
@@ -46,6 +46,8 @@ void main() {
     expect(appointments.appointments.first.occurrence,
         DateTime.parse('2019-11-02'));
     expect(appointments.appointments.first.time, '12:00:00');
+    expect(appointments.appointments.first.endOccurrence, isNull);
+    expect(appointments.appointments.first.endTime, isNull);
     expect(appointments.appointments.first.placeName, 'johanniskirche');
     expect(appointments.appointments.first.street, 'Johanniskirchplatz');
     expect(appointments.appointments.first.houseNumber, '10');
@@ -55,7 +57,10 @@ void main() {
     expect(appointments.appointments.last.title, 'Kindergartengottesdienst');
     expect(appointments.appointments.last.occurrence,
         DateTime.parse('2019-11-06'));
+    expect(appointments.appointments.last.endOccurrence,
+        DateTime.parse('2019-11-06'));
     expect(appointments.appointments.last.time, '14:15:00');
+    expect(appointments.appointments.last.endTime, '16:15:00');
     expect(appointments.appointments.last.placeName, 'markuskirche');
     expect(appointments.appointments.last.street, 'Rheinstraße');
     expect(appointments.appointments.last.houseNumber, '26');
@@ -69,7 +74,7 @@ void main() {
 
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(
-      httpClient.getResponse(
+      httpClient.getJSONResponse(
         http: httpClient,
         object: Appointments,
         cacheData: anyNamed('cacheData'),
@@ -78,7 +83,7 @@ void main() {
         queryParameters: anyNamed('queryParameters'),
       ),
     ).thenAnswer((_) async =>
-            HTTPClientMock.getRequest(statusCode: HttpStatus.unauthorized));
+            HTTPClientMock.getJSONRequest(statusCode: HttpStatus.unauthorized));
 
     try {
       await subject.getAppointments(httpClient, network,

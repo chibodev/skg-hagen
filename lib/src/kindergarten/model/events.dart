@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 import 'package:skg_hagen/src/common/model/address.dart';
 
 class Events {
+  static const String NAME = 'Events';
+
   final String title;
   final DateTime occurrence;
   final String time;
@@ -42,21 +44,26 @@ class Events {
   }
 
   factory Events.fromJson(Map<String, dynamic> json) => Events(
-        title: json['title'],
-        occurrence: DateTime.parse(json['occurrence']),
-        time: json["time"],
-        comment: json["comment"] == null ? "" : json["comment"],
-        placeName: json["placeName"],
-        name: json["name"] == null ? null : json["name"],
-        street: json["street"] == null ? null : json["street"],
-        houseNumber: json["houseNumber"] == null ? null : json["houseNumber"],
-        zip: json["zip"] == null ? null : json["zip"],
-        city: json["city"] == null ? null : json["city"],
-        country: json["country"] == null ? null : json["country"],
-        latLong: json["latLong"] == null ? null : json['latLong'],
-      );
-
-  String getName() => "Events";
+      title: json['title'],
+      occurrence: DateTime.parse(json['occurrence']),
+      time: json["time"],
+      comment: json["comment"] == null ? "" : json["comment"],
+      placeName: json["placeName"],
+      name: json["name"] == null || json["name"] == "" ? null : json["name"],
+      street: json["street"] == null || json["street"] == ""
+          ? null
+          : json["street"],
+      houseNumber: json["houseNumber"] == null || json["houseNumber"] == ""
+          ? null
+          : json["houseNumber"],
+      zip: json["zip"] == null || json["zip"] == "" ? null : json["zip"],
+      city: json["city"] == null || json["city"] == "" ? null : json["city"],
+      country: json["country"] == null || json["country"] == ""
+          ? null
+          : json["country"],
+      latLong: json["latLong"] == null || json["latLong"] == ""
+          ? null
+          : json['latLong']);
 
   String getFormattedOccurrence() {
     initializeDateFormatting('de_DE', null);

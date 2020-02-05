@@ -1,8 +1,11 @@
+import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:share/share.dart';
 import 'package:skg_hagen/src/common/model/address.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/service/clipboard.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
 
@@ -24,7 +27,7 @@ class CustomWidget {
     );
   }
 
-  static Widget buildSliverSpinner(bool _isPerformingRequest) {
+  static Widget buildSliverSpinner() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Center(
@@ -186,20 +189,18 @@ class CustomWidget {
     );
   }
 
-  static Padding getCardOrganizerWithEmail(
-      String organizer, String email, String title,
-      BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: SizeConfig.getSafeBlockVerticalBy(2),
-        top: SizeConfig.getSafeBlockVerticalBy(1),
-        bottom: SizeConfig.getSafeBlockVerticalBy(2),
-      ),
-      child: Row(
-        children: <Widget>[
-          Flexible(
-            child: (organizer != null)
-                ? Text(
+  static Widget getCardOrganizer(String organizer, BuildContext context) {
+    return (organizer != null)
+        ? Padding(
+            padding: EdgeInsets.only(
+              left: SizeConfig.getSafeBlockVerticalBy(2),
+              top: SizeConfig.getSafeBlockVerticalBy(1),
+              bottom: SizeConfig.getSafeBlockVerticalBy(2),
+            ),
+            child: Row(
+              children: <Widget>[
+                Flexible(
+                  child: Text(
                     organizer,
                     overflow: TextOverflow.visible,
                     style: TextStyle(
@@ -207,39 +208,40 @@ class CustomWidget {
                       fontSize: SizeConfig.getSafeBlockVerticalBy(
                           Default.SUBSTANDARD_FONT_SIZE),
                     ),
-                  )
-                : Text(''),
-          ),
-          (email != null)
-              ? InkWell(
-                  splashColor: Color(Default.COLOR_GREEN),
-                  onTap: () => TapAction().sendMail(email, title),
-                  onLongPress: () => <void>{
-                    Clipboard.setData(ClipboardData(text: email)),
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                              title: Text('E-Mail'),
-                              content: SelectableText(email));
-                        }),
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: SizeConfig.getSafeBlockVerticalBy(1),
-                    ),
-                    child: Icon(
-                      Icons.email,
-                      color: Colors.grey,
-                      size: SizeConfig.getSafeBlockVerticalBy(4),
-                      semanticLabel: 'Email',
-                    ),
                   ),
-                )
-              : Text(''),
-        ],
-      ),
-    );
+                ),
+              ],
+            ),
+          )
+        : Container();
+  }
+
+  static Widget getCardEmail(String email, String title, BuildContext context) {
+    return (email != null)
+        ? Padding(
+            padding: EdgeInsets.only(
+              bottom: SizeConfig.getSafeBlockVerticalBy(2),
+              left: SizeConfig.getSafeBlockVerticalBy(1),
+            ),
+            child: InkWell(
+              splashColor: Color(Default.COLOR_GREEN),
+              onTap: () => TapAction().sendMail(email, title, context),
+              onLongPress: () =>
+                  ClipboardService.copyAndNotify(context: context, text: email),
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: SizeConfig.getSafeBlockVerticalBy(1),
+                ),
+                child: Icon(
+                  Icons.email,
+                  color: Colors.grey,
+                  size: SizeConfig.getSafeBlockVerticalBy(4),
+                  semanticLabel: 'Email',
+                ),
+              ),
+            ),
+          )
+        : Container();
   }
 
   static Widget noInternet() {
@@ -332,22 +334,15 @@ class CustomWidget {
     );
   }
 
-  static Padding getSinglePageEmail(double thirty, String email, String title, BuildContext context) {
+  static Padding getSinglePageEmail(
+      double thirty, String email, String title, BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(left: thirty, bottom: thirty),
       child: InkWell(
         splashColor: Color(Default.COLOR_GREEN),
-        onTap: () => TapAction().sendMail(email, title),
-        onLongPress: () => <void>{
-          Clipboard.setData(ClipboardData(text: email)),
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                    title: Text('E-Mail'),
-                    content: SelectableText(email));
-              }),
-        },
+        onTap: () => TapAction().sendMail(email, title, context),
+        onLongPress: () =>
+            ClipboardService.copyAndNotify(context: context, text: email),
         child: Padding(
           padding: EdgeInsets.only(
             left: SizeConfig.getSafeBlockVerticalBy(1),
@@ -370,6 +365,60 @@ class CustomWidget {
         imageUrl,
         fit: BoxFit.scaleDown,
       ),
+    );
+  }
+
+  static Padding noEntry() {
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: SizeConfig.getSafeBlockHorizontalBy(3),
+      ),
+      child: Text(Default.NO_CONTENT),
+    );
+  }
+
+  static Center centeredNoEntry() {
+    return Center(
+      heightFactor: SizeConfig.getSafeBlockHorizontalBy(1),
+      child: Text(Default.NO_CONTENT),
+    );
+  }
+
+  static IconSlideAction getSlidableCalender(String title, String info,
+      Address address, DateTime startDateTime, DateTime endDateTime,
+      [double size = Default.SLIDE_ICON_SIZE]) {
+    final Event event = Event(
+        title: title,
+        description: info,
+        location: "${address.getStreetAndNumber()}, ${address.getZipAndCity()}",
+        startDate: startDateTime,
+        endDate: endDateTime);
+
+    return IconSlideAction(
+      caption: Default.CALENDER,
+      color: Color(Default.COLOR_DARKGREEN),
+      foregroundColor: Colors.white,
+      iconWidget: Icon(
+        Icons.calendar_today,
+        size: SizeConfig.getSafeBlockVerticalBy(size),
+        color: Colors.white,
+      ),
+      onTap: () => Add2Calendar.addEvent2Cal(event),
+    );
+  }
+
+  static Widget getSlidableShare(String subject, String text,
+      [double size = Default.SLIDE_ICON_SIZE]) {
+    return IconSlideAction(
+      caption: Default.SHARE,
+      color: Colors.black45,
+      foregroundColor: Colors.white,
+      iconWidget: Icon(
+        Icons.share,
+        size: SizeConfig.getSafeBlockVerticalBy(size),
+        color: Colors.white,
+      ),
+      onTap: () => Share.share(text, subject: subject),
     );
   }
 }

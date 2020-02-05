@@ -25,7 +25,7 @@ class News extends StatelessWidget {
               expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
               backgroundColor: Color(Default.COLOR_GREEN),
               flexibleSpace: FlexibleSpaceBar(
-                title: CustomWidget.getTitle(this.news.getName()),
+                title: CustomWidget.getTitle(Model.News.NAME),
                 background: Image.asset(
                   Kindergarten.IMAGE,
                   fit: BoxFit.cover,

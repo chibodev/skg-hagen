@@ -3,6 +3,7 @@ class Presbytery {
   String surname;
   String firstname;
   String description;
+  static const String NAME = 'Das Presbyterium';
 
   Presbytery({
     this.salutation,
@@ -17,8 +18,6 @@ class Presbytery {
     firstname: json["firstname"],
     description: json["description"],
   );
-
-  String getName() => "Das Presbyterium";
 
   String getPresbyter() => "$salutation $firstname $surname";
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:skg_hagen/src/appointment/controller/appointment.dart'
     as Controller;
 import 'package:skg_hagen/src/appointment/model/appointment.dart' as Model;
@@ -159,25 +161,76 @@ class Cards extends State<Controller.Appointment> {
 
   Widget _buildRows(BuildContext context, Model.Appointment card) {
     return Material(
-      child: Card(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  CustomWidget.getCardTitle(card.title),
-                  CustomWidget.getOccurrence(card.getFormattedTime()),
-                  CustomWidget.getCardOrganizerWithEmail(
-                      card.getFormattedOrganiser(), card.email, card.title, context),
-                  CustomWidget.getAddressWithAction(card.address)
-                ],
-              ),
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: SizeConfig.getSafeBlockHorizontalBy(3),
+        ),
+        child: Card(
+          elevation: 7,
+          shape: Border(
+            left: BorderSide(
+              color: Color(Default.COLOR_GREEN),
+              width: SizeConfig.getSafeBlockHorizontalBy(1),
             ),
-          ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Slidable(
+                actionPane: SlidableDrawerActionPane(),
+                actionExtentRatio: Default.SLIDE_RATIO,
+                actions: card.endOccurrence != null
+                    ? _getSlidableWithCalendar(card)
+                    : <Widget>[
+                        CustomWidget.getSlidableShare(
+                          card.title,
+                          Default.getSharableContent(
+                            card.title,
+                            card.getFormattedTimeAsString(),
+                            card.getFormattedOrganiser(),
+                            card.address,
+                          ),
+                        )
+                      ],
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    CustomWidget.getCardTitle(card.title),
+                    CustomWidget.getOccurrence(
+                      card.getFormattedTimeAsString(),
+                    ),
+                    CustomWidget.getCardOrganizer(
+                        card.getFormattedOrganiser(), context),
+                    CustomWidget.getCardEmail(card.email, card.title, context),
+                  ],
+                ),
+              ),
+              CustomWidget.getAddressWithAction(card.address)
+            ],
+          ),
         ),
       ),
     );
+  }
+
+  List<Widget> _getSlidableWithCalendar(Model.Appointment card) {
+    return <Widget>[
+      CustomWidget.getSlidableCalender(
+        card.title,
+        card.getFormattedOrganiser(),
+        card.address,
+        card.getFormattedTime(),
+        card.getFormattedClosingTime(),
+      ),
+      CustomWidget.getSlidableShare(
+        card.title,
+        Default.getSharableContent(
+          card.title,
+          card.getFormattedTimeAsString(),
+          card.getFormattedOrganiser(),
+          card?.address,
+        ),
+      ),
+    ];
   }
 }

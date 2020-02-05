@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:skg_hagen/src/common/model/address.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/service/clipboard.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/contacts/model/contact.dart';
@@ -14,52 +15,80 @@ class Cards {
   Widget buildRows(dynamic card, BuildContext context) {
     this._buildContext = context;
     final List<Widget> list = List<Widget>();
+    String subjectName = "";
 
     if (card is List<Address>) {
+      subjectName = Address.NAME;
       for (int i = 0; i < card.length; i++) {
         list.add(
           _buildTileForAddress(card[i]),
         );
       }
     } else if (card is List<Contact>) {
+      subjectName = Contact.NAME;
       for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForContacts(card[i]));
       }
-    } else {
+    } else if (card is List<Social>) {
+      subjectName = Social.NAME;
       for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForSocial(card[i]));
       }
     }
 
+    if (card.isEmpty) {
+      list.add(CustomWidget.noEntry());
+    }
+
     return ExpansionTile(
-      title: CustomWidget.getAccordionTitle(card.first.getName()),
+      title: CustomWidget.getAccordionTitle(subjectName),
       children: list,
     );
   }
 
   Widget _buildTileForAddress(Address card) {
     return Material(
-      child: Card(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.zero,
-                    height: SizeConfig.getSafeBlockVerticalBy(14),
-                    width: SizeConfig.getSafeBlockHorizontalBy(100),
-                    child: _getImageByName(card.name),
-                  ),
-                  (card.street == null || card.name == null)
-                      ? CustomWidget.getNoLocation()
-                      : CustomWidget.getAddressWithAction(card)
-                ],
-              ),
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: SizeConfig.getSafeBlockHorizontalBy(3),
+        ),
+        child: Card(
+          elevation: 7,
+          shape: Border(
+            left: BorderSide(
+              color: Color(Default.COLOR_GREEN),
+              width: SizeConfig.getSafeBlockHorizontalBy(1),
             ),
-          ],
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Slidable(
+                      actionPane: SlidableDrawerActionPane(),
+                      actionExtentRatio: Default.SLIDE_RATIO,
+                      actions: <Widget>[
+                        CustomWidget.getSlidableShare(
+                            card.getCapitalizedAddressName(), card.toString())
+                      ],
+                      child: Container(
+                        padding: EdgeInsets.zero,
+                        height: SizeConfig.getSafeBlockVerticalBy(14),
+                        width: SizeConfig.getSafeBlockHorizontalBy(100),
+                        child: _getImageByName(card.name),
+                      ),
+                    ),
+                    (card.street == null || card.name == null)
+                        ? CustomWidget.getNoLocation()
+                        : CustomWidget.getAddressWithAction(card)
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -88,10 +117,31 @@ class Cards {
 
   Widget _buildTileForSocial(Social card) {
     return Material(
-      child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[_getSocialMediaIcon(card)],
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: SizeConfig.getSafeBlockHorizontalBy(3),
+        ),
+        child: Card(
+          elevation: 7,
+          shape: Border(
+            left: BorderSide(
+              color: Color(Default.COLOR_GREEN),
+              width: SizeConfig.getSafeBlockHorizontalBy(1),
+            ),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Slidable(
+                  actionPane: SlidableDrawerActionPane(),
+                  actionExtentRatio: Default.SLIDE_RATIO,
+                  actions: <Widget>[
+                    CustomWidget.getSlidableShare(
+                        card.name, Default.getSharableContent(card.url), 3)
+                  ],
+                  child: _getSocialMediaIcon(card)),
+            ],
+          ),
         ),
       ),
     );
@@ -259,16 +309,8 @@ class Cards {
               ? InkWell(
                   splashColor: Color(Default.COLOR_GREEN),
                   onTap: () => TapAction().callMe(phone),
-                  onLongPress: () => <void>{
-                    Clipboard.setData(ClipboardData(text: phone)),
-                    showDialog(
-                        context: this._buildContext,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                              title: Text('Telefon'),
-                              content: SelectableText(phone));
-                        }),
-                  },
+                  onLongPress: () => ClipboardService.copyAndNotify(
+                      context: _buildContext, text: phone),
                   child: Padding(
                     padding: EdgeInsets.only(
                       left: SizeConfig.getSafeBlockVerticalBy(1),
@@ -291,17 +333,10 @@ class Cards {
           email != ""
               ? InkWell(
                   splashColor: Color(Default.COLOR_GREEN),
-                  onTap: () => TapAction().sendMail(email, title),
-                  onLongPress: () => <void>{
-                    Clipboard.setData(ClipboardData(text: email)),
-                    showDialog(
-                        context: this._buildContext,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                              title: Text('E-Mail'),
-                              content: SelectableText(email));
-                        }),
-                  },
+                  onTap: () =>
+                      TapAction().sendMail(email, title, this._buildContext),
+                  onLongPress: () => ClipboardService.copyAndNotify(
+                      context: this._buildContext, text: email),
                   child: Padding(
                     padding: EdgeInsets.only(
                       left: SizeConfig.getSafeBlockVerticalBy(5),

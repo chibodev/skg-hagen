@@ -28,14 +28,14 @@ void main() {
   test('AboutUsClient successfully retrieves data', () async {
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(
-      httpClient.getResponse(
+      httpClient.getJSONResponse(
         http: httpClient,
         object: AboutUs,
         cacheData: anyNamed('cacheData'),
         path: 'app/aboutus',
         options: anyNamed('options'),
       ),
-    ).thenAnswer((_) async => HTTPClientMock.getRequest(
+    ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(
         statusCode: HttpStatus.ok, path: 'aboutus.json'));
 
     final AboutUs aboutus =
@@ -60,7 +60,7 @@ void main() {
 
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(
-      httpClient.getResponse(
+      httpClient.getJSONResponse(
         http: httpClient,
         object: AboutUs,
         cacheData: anyNamed('cacheData'),
@@ -68,7 +68,7 @@ void main() {
         options: anyNamed('options'),
       ),
     ).thenAnswer((_) async =>
-        HTTPClientMock.getRequest(statusCode: HttpStatus.unauthorized));
+        HTTPClientMock.getJSONRequest(statusCode: HttpStatus.unauthorized));
 
     try {
       await subject.getData(httpClient, network, index: 0, refresh: false);

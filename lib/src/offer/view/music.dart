@@ -26,7 +26,7 @@ class Music extends StatelessWidget {
               expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
               backgroundColor: Color(Default.COLOR_GREEN),
               flexibleSpace: FlexibleSpaceBar(
-                title: CustomWidget.getTitle(this.music.getName()),
+                title: CustomWidget.getTitle(Model.Music.NAME),
                 background: Image.asset(
                   Offers.IMAGE,
                   fit: BoxFit.cover,

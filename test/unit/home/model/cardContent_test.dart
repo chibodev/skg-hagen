@@ -19,6 +19,7 @@ void main() {
   });
 
   test('CardContent model creates and gets properties successfully', () {
+
     expect(subject.title, title);
     expect(subject.subtitle, subtitle);
     expect(subject.routeName, routeName);

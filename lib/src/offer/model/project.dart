@@ -3,6 +3,7 @@ class Project {
   final String description;
   final String imageUrl;
   static const int URL_MIN = 7;
+  static const String NAME = 'Projekte';
 
   Project({this.title, this.imageUrl, this.description});
 
@@ -13,6 +14,4 @@ class Project {
             ? json['imageUrl']
             : null,
       );
-
-  String getName() => "Projekte";
 }

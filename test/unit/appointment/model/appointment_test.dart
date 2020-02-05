@@ -6,12 +6,25 @@ void main() {
 
   test('Appointment model successfully gets formatted time', () {
     subject = Appointment(
-        title: 'Formatted time',
+        title: 'Formatted time without end time',
         occurrence: DateTime.parse('2019-11-01'),
         time: "17:00");
 
-    expect(subject.title, 'Formatted time');
-    expect(subject.getFormattedTime(), 'FR. 1.11.19 | 17:00');
+    expect(subject.title, 'Formatted time without end time');
+    expect(subject.getFormattedTimeAsString(), 'FR. 1.11.19 | 17:00');
+  });
+
+  test('Appointment model successfully gets formatted time with end time', () {
+    subject = Appointment(
+        title: 'Formatted time with end time',
+        occurrence: DateTime.parse('2019-11-01'),
+        endOccurrence: DateTime.parse('2019-11-02'),
+        time: "17:00",
+        endTime: "18:30"
+    );
+
+    expect(subject.title, 'Formatted time with end time');
+    expect(subject.getFormattedTimeAsString(), 'FR. 1.11.19 | 17:00 - SA. 2.11.19 | 18:30');
   });
 
   test('Appointment model successfully gets formatted organiser', () {

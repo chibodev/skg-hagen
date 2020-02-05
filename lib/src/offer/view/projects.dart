@@ -27,7 +27,7 @@ class Projects extends StatelessWidget {
               expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
               backgroundColor: Color(Default.COLOR_GREEN),
               flexibleSpace: FlexibleSpaceBar(
-                title: CustomWidget.getTitle(this.projects.getName()),
+                title: CustomWidget.getTitle(Project.NAME),
                 background: Image.asset(
                   Offers.IMAGE,
                   fit: BoxFit.cover,

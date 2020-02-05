@@ -9,18 +9,26 @@ import 'package:skg_hagen/src/common/view/customWidget.dart';
 class Cards {
   Widget buildRows(dynamic card) {
     final List<Widget> list = List<Widget>();
+    String subjectName = "";
 
-    if (card is List<History>)
+    if (card is List<History>) {
+      subjectName = History.NAME;
       for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForHistory(card[i]));
       }
-    else if (card is List<Presbytery>)
+    } else if (card is List<Presbytery>) {
+      subjectName = Presbytery.NAME;
       for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForPresbytery(card[i]));
       }
+    }
+
+    if (card.isEmpty) {
+      list.add(CustomWidget.noEntry());
+    }
 
     return ExpansionTile(
-      title: CustomWidget.getAccordionTitle(card.first.getName()),
+      title: CustomWidget.getAccordionTitle(subjectName),
       children: list,
     );
   }
@@ -52,29 +60,34 @@ class Cards {
 
   Widget _buildTileForPresbytery(Presbytery card) {
     return Material(
-      child: Card(
-        child: Column(
-          children: <Widget>[
-            ListTile(
-              leading: Icon(Icons.person),
-              title: Text(
-                card.getPresbyter(),
-                style: TextStyle(
-                  fontSize: SizeConfig.getSafeBlockVerticalBy(
-                      Default.STANDARD_FONT_SIZE),
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: SizeConfig.getSafeBlockHorizontalBy(0),
+        ),
+        child: Card(
+          child: Column(
+            children: <Widget>[
+              ListTile(
+                leading: Icon(Icons.person),
+                title: Text(
+                  card.getPresbyter(),
+                  style: TextStyle(
+                    fontSize: SizeConfig.getSafeBlockVerticalBy(
+                        Default.STANDARD_FONT_SIZE),
+                  ),
                 ),
-              ),
-              subtitle: (card.description.length > 1)
-                  ? Text(
-                      card.description,
-                      style: TextStyle(
-                        fontSize: SizeConfig.getSafeBlockVerticalBy(
-                            Default.SUBSTANDARD_FONT_SIZE),
-                      ),
-                    )
-                  : null,
-            )
-          ],
+                subtitle: (card.description.length > 1)
+                    ? Text(
+                        card.description,
+                        style: TextStyle(
+                          fontSize: SizeConfig.getSafeBlockVerticalBy(
+                              Default.SUBSTANDARD_FONT_SIZE),
+                        ),
+                      )
+                    : null,
+              )
+            ],
+          ),
         ),
       ),
     );

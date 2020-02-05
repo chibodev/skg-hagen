@@ -1,0 +1,85 @@
+{
+  "appointments": [
+    {
+      "id": "4",
+      "title": "Osternacht (inkl. Passahmahl mit Gottesdienst am Ostersonntag)",
+      "occurrence": "2020-04-11",
+      "time": "17:00:00",
+      "endoccurrence": "2020-04-12",
+      "endtime": "12:00:00",
+      "placeName": "markuskirche",
+      "room": "",
+      "infoTitle": "",
+      "organizer": "",
+      "email": "",
+      "active": "1",
+      "createdAt": "2020-01-25 17:42:40",
+      "name": "markuskirche",
+      "street": "Rheinstra\u00dfe",
+      "houseNumber": "26",
+      "zip": "58097",
+      "city": "Hagen",
+      "country": "DE",
+      "latLong": "51.3691938,7.4715299"
+    },
+    {
+      "id": "5",
+      "title": "Jugendgottesdienst",
+      "occurrence": "2020-02-16",
+      "time": "17:00:00",
+      "endoccurrence": "0000-00-00",
+      "endtime": "00:00:00",
+      "placeName": "markuskirche",
+      "room": "",
+      "infoTitle": "",
+      "organizer": "",
+      "email": "",
+      "active": "1",
+      "createdAt": "2020-01-25 17:54:57",
+      "name": "markuskirche",
+      "street": "Rheinstra\u00dfe",
+      "houseNumber": "26",
+      "zip": "58097",
+      "city": "Hagen",
+      "country": "DE",
+      "latLong": "51.3691938,7.4715299"
+    }
+  ],
+  "concept": [
+    {
+      "id": "2",
+      "description": "Konfirmandenarbeit in unserer Gemeinde\r\n\r\nDie Ev.-luth. Stadtkirchengemeinde Hagen bietet Konfirmanden in unserem Gemeindegebiet ein gut durchdachtes, erprobtes und tolles Konfirmanden-Unterrichtskonzept an.",
+      "active": "1",
+      "createdAt": "2020-01-25 17:00:32"
+    }
+  ],
+  "quote": [
+    {
+      "id": "1",
+      "text": "Jesus Christus spricht:\r\nIch bin die Auferstehung und das Leben.\r\nWer an mich glaubt, der wird leben, auch wenn er stirbt.\r\n",
+      "book": "Johannes",
+      "chapter": "11",
+      "verse": "25",
+      "active": "1",
+      "createdAt": "2020-01-25 17:11:39"
+    },
+    {
+      "id": "2",
+      "text": "Jesus Christus spricht:Ich bin der Weg und die Wahrheit und das Leben;niemand kommt zum Vater denn durch mich.",
+      "book": "Johannes",
+      "chapter": "14",
+      "verse": "6",
+      "active": "1",
+      "createdAt": "2020-01-25 17:11:57"
+    },
+    {
+      "id": "3",
+      "text": "Gott spricht:\r\nWenn ihr mich von ganzem Herzen suchen werdet,\r\nso will ich mich von euch finden lassen.\r\n",
+      "book": "Jeremia",
+      "chapter": "29",
+      "verse": "13+14",
+      "active": "1",
+      "createdAt": "2020-01-25 17:14:23"
+    }
+  ]
+}

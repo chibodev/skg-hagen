@@ -7,6 +7,8 @@ class Appointment {
   final String title;
   final DateTime occurrence;
   final String time;
+  final DateTime endOccurrence;
+  final String endTime;
   final String placeName;
   final String room;
   final String infoTitle;
@@ -20,23 +22,24 @@ class Appointment {
   final String country;
   final String latLong;
 
-  Appointment({
-    this.title,
-    this.occurrence,
-    this.time,
-    this.placeName,
-    this.room,
-    this.infoTitle,
-    this.organizer,
-    this.email,
-    this.name,
-    this.street,
-    this.houseNumber,
-    this.zip,
-    this.city,
-    this.country,
-    this.latLong
-  }) {
+  Appointment(
+      {this.title,
+      this.occurrence,
+      this.time,
+      this.endOccurrence,
+      this.endTime,
+      this.placeName,
+      this.room,
+      this.infoTitle,
+      this.organizer,
+      this.email,
+      this.name,
+      this.street,
+      this.houseNumber,
+      this.zip,
+      this.city,
+      this.country,
+      this.latLong}) {
     this.address = Address(
         name: name,
         street: street,
@@ -50,22 +53,33 @@ class Appointment {
 
   factory Appointment.fromJson(Map<String, dynamic> json) {
     return Appointment(
-      title: json["title"],
-      occurrence: DateTime.parse(json["occurrence"]),
-      time: json["time"],
-      placeName: json["placeName"],
-      room: json["room"],
+        title: json["title"],
+        occurrence: DateTime.parse(json["occurrence"]),
+        time: json["time"],
+        endOccurrence: json["endtime"] == "00:00:00"
+            ? null
+            : DateTime.parse(json["endoccurrence"]),
+        endTime: json["endtime"] == "00:00:00" ? null : json["endtime"],
+        placeName: json["placeName"],
+        room: json["room"],
         infoTitle: json["infoTitle"] == "" ? null : json["infoTitle"],
-      organizer: json["organizer"],
-      email: json["email"] == "" ? null : json["email"],
-      name: json["name"] == null ? null : json["name"],
-      street: json["street"] == null ? null : json["street"],
-      houseNumber: json["houseNumber"] == null ? null : json["houseNumber"],
-      zip: json["zip"] == null ? null : json["zip"],
-      city: json["city"] == null ? null : json["city"],
-      country: json["country"] == null ? null : json["country"],
-      latLong: json["latLong"] == null ? null : json['latLong']
-    );
+        organizer: json["organizer"] == "" ? null : json["organizer"],
+        email: json["email"] == "" ? null : json["email"],
+        name: json["name"] == null || json["name"] == "" ? null : json["name"],
+        street: json["street"] == null || json["street"] == ""
+            ? null
+            : json["street"],
+        houseNumber: json["houseNumber"] == null || json["houseNumber"] == ""
+            ? null
+            : json["houseNumber"],
+        zip: json["zip"] == null || json["zip"] == "" ? null : json["zip"],
+        city: json["city"] == null || json["city"] == "" ? null : json["city"],
+        country: json["country"] == null || json["country"] == ""
+            ? null
+            : json["country"],
+        latLong: json["latLong"] == null || json["latLong"] == ""
+            ? null
+            : json['latLong']);
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
@@ -85,15 +99,27 @@ class Appointment {
         "country": country,
       };
 
-  String getFormattedTime() {
+  DateTime getFormattedTime() {
+    return _convertToDateTime(this.occurrence, this.time);
+  }
+
+  DateTime getFormattedClosingTime() {
+    return _convertToDateTime(this.endOccurrence, this.endTime);
+  }
+
+  String getFormattedTimeAsString() {
     initializeDateFormatting('de_DE', null);
-    final List<String> timeSplit = time.split(':');
-    final DateTime dateTime = DateTime(occurrence.year, occurrence.month,
-        occurrence.day, int.parse(timeSplit[0]), int.parse(timeSplit[1]));
-    return DateFormat("E d.M.yy | HH:mm", "de_DE")
-        .format(dateTime)
-        .toString()
-        .toUpperCase();
+    String formattedTime = '';
+
+    if (this.endOccurrence != null) {
+      formattedTime = this.endOccurrence == this.occurrence
+          ? "${_getDateFormat('E d.M.yy | HH:mm', getFormattedTime())} - ${_getDateFormat('HH:mm', getFormattedClosingTime())}"
+          : "${_getDateFormat("E d.M.yy | HH:mm", getFormattedTime())} - ${_getDateFormat("E d.M.yy | HH:mm", getFormattedClosingTime())}";
+    } else {
+      formattedTime = _getDateFormat("E d.M.yy | HH:mm", getFormattedTime());
+    }
+
+    return formattedTime;
   }
 
   String getFormattedOrganiser() {
@@ -104,5 +130,19 @@ class Appointment {
     }
 
     return text;
+  }
+
+  DateTime _convertToDateTime(DateTime occurrence, String time) {
+    initializeDateFormatting('de_DE', null);
+    final List<String> timeSplit = time.split(':');
+    return DateTime(occurrence.year, occurrence.month, occurrence.day,
+        int.parse(timeSplit[0]), int.parse(timeSplit[1]));
+  }
+
+  String _getDateFormat(String format, DateTime dateTime) {
+    return DateFormat("$format", "de_DE")
+        .format(dateTime)
+        .toString()
+        .toUpperCase();
   }
 }

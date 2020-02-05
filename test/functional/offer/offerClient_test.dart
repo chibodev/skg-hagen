@@ -28,14 +28,14 @@ void main() {
   test('OfferClient successfully retrieves data', () async {
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(
-      httpClient.getResponse(
+      httpClient.getJSONResponse(
         http: httpClient,
         path: 'app/offers',
         object: Offers,
         options: anyNamed('options'),
         cacheData: 'app/offers/data',
       ),
-    ).thenAnswer((_) async => HTTPClientMock.getRequest(
+    ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(
         statusCode: HttpStatus.ok, path: 'offers.json'));
 
     final Offers offers =
@@ -91,7 +91,7 @@ void main() {
 
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(
-      httpClient.getResponse(
+      httpClient.getJSONResponse(
         http: httpClient,
         path: 'app/offers',
         object: Offers,
@@ -99,7 +99,7 @@ void main() {
         cacheData: 'app/offers/data',
       ),
     ).thenAnswer((_) async =>
-        HTTPClientMock.getRequest(statusCode: HttpStatus.unauthorized));
+        HTTPClientMock.getJSONRequest(statusCode: HttpStatus.unauthorized));
 
     try {
       await subject.getOffers(httpClient, network, index: 0, refresh: false);

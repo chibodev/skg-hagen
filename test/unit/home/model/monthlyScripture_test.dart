@@ -3,35 +3,24 @@ import 'package:skg_hagen/src/home/model/monthlyScripture.dart';
 
 void main() {
   MonthlyScripture subject;
-  String text;
-  String book;
-  String chapter;
-  String verse;
+  String oldTestamentText;
+  String newTestamentText;
 
   setUpAll(() {
-    text = 'This is a text';
-    book = 'Psalmen';
-    chapter = '1';
-    verse = '6';
+    oldTestamentText = 'This is a text';
+    newTestamentText = 'Psalmen';
     subject = MonthlyScripture(
-        text: text, book: book, chapter: chapter, verse: verse
+        oldTestamentText: oldTestamentText, newTestamentText: newTestamentText
     );
   });
 
   test('MonthlyScripture model creates and gets properties successfully', (){
-    expect(subject.text, text);
-    expect(subject.book, book);
-    expect(subject.chapter, chapter);
-    expect(subject.verse, verse);
+    expect(subject.oldTestamentText, oldTestamentText);
+    expect(subject.newTestamentText, newTestamentText);
   });
 
-  test('MonthlyScripture gets correct formatted property', (){
-    expect(subject.getFormattedBook(), ' Ps. $chapter, $verse');
-  });
-
-  test('MonthlyScripture throws exception due to unknown book name', (){
-    subject.book = 'Unknown';
-
-    expect(subject.getFormattedBook(), '');
+  test('MonthlyScripture gets correct modified text', (){
+    subject.oldTestamentText = 'Psalmen Psalmen Psalmen Psalmen Psalmen Psalmen Psalmen Psalmen';
+    expect(subject.getModifiedText(), 'Psalmen Psalmen Psalmen Psalmen Psalmen Psalmen Psalmen ...');
   });
 }

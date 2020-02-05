@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/environment.dart';
@@ -21,25 +20,15 @@ class TokenClient {
     buildCacheOptions(Duration(minutes: 30), maxStale: Duration(hours: 1));
     options.contentType = Headers.formUrlEncodedContentType;
     final Credentials credentials = _getCredentials(env);
+    final Map<String, String> data = <String, String>{
+      'username': credentials.username,
+      'password': credentials.password
+    };
 
-    return await http
-        .post(
-        path: _PATH,
-        data: <String, String>{
-          'username': credentials.username,
-          'password': credentials.password
-        },
-        options: options)
-        .then(
-          (Response<dynamic> response) => Token.fromJson(
-        jsonDecode(response.data),
-      ),
-    )
-        .catchError(
-          (dynamic onError) {
-        Crashlytics.instance.log(onError.error.toString());
-      },
-    );
+    final Response<dynamic> response = await http.postJSON(
+        http: http, options: options, path: _PATH, data: data);
+
+    return Token.fromJson(jsonDecode(response.data));
   }
 
   Credentials _getCredentials(DotEnv env) {

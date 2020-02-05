@@ -10,11 +10,18 @@ termine:
 angebote:
   groups:
     - gruppen
-    - kreise
     - musik
+    - konfirmanden
   image: assets/images/gruppen.jpg
   route: offer
   name: Angebote
+
+fürbitte:
+  groups:
+    - gebetswunsch
+  image: assets/images/gebet.jpg
+  route: intercession
+  name: Fürbitte
 
 ev.kindergarten:
   groups:

@@ -2,6 +2,7 @@ import 'package:skg_hagen/src/common/model/address.dart';
 
 class Contact {
   static const int URL_MIN = 7;
+  static const String NAME = 'Kontakte';
 
   String title;
   String surname;
@@ -63,8 +64,6 @@ class Contact {
         city: json["city"],
         country: json["country"],
       );
-
-  String getName() => "Kontakte";
 
   String getContactName(){
     return title == "" ? "$firstname $surname" : "$firstname $surname ($title)";
