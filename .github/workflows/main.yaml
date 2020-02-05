@@ -39,7 +39,7 @@ jobs:
     runs-on: macos-latest
     #Identifies any jobs that must complete successfully before this job will run.
     needs: test
-    name: Build apk
+    name: build apk
     steps:
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
