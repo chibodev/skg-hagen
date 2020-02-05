@@ -1,0 +1,73 @@
+name: skg_hagen
+description: The App for the Evangelisch-lutherische Stadtkirchengemeinde Hagen, Germany
+
+version: 1.0.0+6
+
+environment:
+  sdk: ">=2.2.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^0.1.2
+  intl: ^0.16.0
+  url_launcher: ^5.2.5
+  yaml: ^2.2.0
+  dio: 3.0.3
+  dio_http_cache: ^0.2.0
+  map_launcher: any
+  firebase_crashlytics: ^0.1.0+3
+  shared_preferences: ^0.5.4+3
+  flutter_html: ^0.11.0
+  flutter_dotenv: ^2.0.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^1.0.0
+  mockito: ^4.1.1
+
+# The following section is specific to Flutter.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  assets:
+    #Config
+    - .env
+    - assets/config/cards.yaml
+    #Icons
+    - assets/images/icon/facebook.png
+    - assets/images/icon/instagram.png
+    - assets/images/icon/twitter.png
+    - assets/images/icon/whatsapp.png
+    - assets/images/icon/paypal.png
+    - assets/images/icon/pdf.png
+    #Images
+    - assets/images/termine.jpg
+    - assets/images/angebote.jpg
+    - assets/images/gruppen.jpg
+    - assets/images/andacht.jpg
+    - assets/images/gebet.jpg
+    - assets/images/lesen.jpg
+    - assets/images/spende.jpg
+    - assets/images/kontakte.jpg
+    - assets/images/imprint.jpg
+    - assets/images/privacy.jpg
+    - assets/images/skg-green.png
+    - assets/images/skg-gray.png
+    - assets/images/skg-transparent.png
+    - assets/images/skg.jpg
+    - assets/images/kindergarten.jpg
+    - assets/images/johanniskirche.jpg
+    - assets/images/markuskirche.jpg
+    #Text
+    - assets/text/imprint.html
+    - assets/text/privacy.html
+  fonts:
+    - family: Optima
+      fonts:
+        - asset: assets/fonts/Optima.ttc

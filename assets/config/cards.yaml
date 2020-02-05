@@ -1,0 +1,64 @@
+termine:
+  groups:
+    - gottesdienst
+    - veranstaltung
+    - events
+  image: assets/images/termine.jpg
+  route: appointment
+  name: Termine
+
+angebote:
+  groups:
+    - gruppen
+    - kreise
+    - musik
+  image: assets/images/gruppen.jpg
+  route: offer
+  name: Angebote
+
+ev.kindergarten:
+  groups:
+    - events
+    - aktionen
+  image: assets/images/kindergarten.jpg
+  route: kindergarten
+  name: Ev.Kindergarten
+
+
+kontakte:
+  groups:
+    - adresse
+    - ansprechpartner
+    - social media
+  image: assets/images/kontakte.jpg
+  route: contacts
+  name: Kontakte
+
+über uns:
+  groups:
+    - geschichte
+    - das presbyterium
+  image: assets/images/skg.jpg
+  route: aboutus
+  name: Über uns
+
+#andacht:
+#  groups:
+#    - zuspruch
+#    - predigt
+#  image: assets/images/andacht.jpg
+#
+#lesen:
+#  groups:
+#    - bibel
+#  image: assets/images/lesen.jpg
+#
+#gebet:
+#  groups:
+#    - gebetswunsch
+#  image: assets/images/gebet.jpg
+#
+#spende:
+#  groups:
+#    - spende
+#  image: assets/images/spende.jpg
