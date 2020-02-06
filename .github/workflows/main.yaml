@@ -25,6 +25,7 @@ jobs:
       - name:
         # defining variables
         env:
+          - HOME: ${{ HOME }}
           - GITHUB_WORKSPACE: ${{ GITHUB_WORKSPACE }}
           - CM_KEYSTORE: ${{ secrets.CM_KEYSTORE }}
           - CM_KEYSTORE_PASSWORD: ${{ secrets.CM_KEYSTORE_PASSWORD }}
@@ -33,11 +34,11 @@ jobs:
         run: |
         # set up key.properties
         echo "setting up key.properties"
-        cat $CM_KEYSTORE | base64 --decode > tmp/keystore.keystore
+        echo $CM_KEYSTORE | base64 --decode > $HOME/keystore.keystore
         cat >> "$GITHUB_WORKSPACE/android/key.properties" <<EOF
         storePassword=$CM_KEYSTORE_PASSWORD
         keyPassword=$CM_KEY_ALIAS_PASSWORD
         keyAlias=$CM_KEY_ALIAS_USERNAME
-        storeFile=tmp/keystore.keystore
+        storeFile=$HOME/keystore.keystore
         EOF
         shell: bash
