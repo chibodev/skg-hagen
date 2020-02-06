@@ -12,7 +12,3 @@ jobs:
       - name: Printing work dir
         run: echo pwd
         shell: bash
-
-      - name: Build site assets
-          run: echo ls
-          shell: bash
