@@ -14,5 +14,5 @@ jobs:
         shell: bash
 
       - name: Build site assets
-          run: ls
+          run: echo ls
           shell: bash
