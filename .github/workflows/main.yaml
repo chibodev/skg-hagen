@@ -32,10 +32,10 @@ jobs:
         run: |
         # set up key.properties
         echo "setting up key.properties"
-        cat >> "$GITHUB_WORKSPACE/android/key.properties" <<EOF
+        cat >> "android/key.properties" <<EOF
         storePassword=$CM_KEYSTORE_PASSWORD
         keyPassword=$CM_KEY_ALIAS_PASSWORD
         keyAlias=$CM_KEY_ALIAS_USERNAME
-        storeFile=$HOME/keystore.keystore
+        storeFile=$GITHUB_WORKSPACE/keystore.keystore
         EOF
         shell: bash
