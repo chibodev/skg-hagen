@@ -9,8 +9,8 @@ jobs:
     name: populate variable
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
-        uses: actions/checkout@v2
+      #- name: checkout
+      #  uses: actions/checkout@v2
       - name: populating .env
         # defining variables
         env:
@@ -27,7 +27,7 @@ jobs:
       - name: creating keystore file
         uses: finnp/create-file-action@1.0.0
         env:
-          FILE_NAME: /tmp/kystore.kystore
+          FILE_NAME: /tmp/keystore.keystore
           FILE_DATA: ''
       - name: creating key.properties file
         uses: finnp/create-file-action@1.0.0
@@ -46,3 +46,6 @@ jobs:
           echo "setting up key.properties"
           echo $CM_KEYSTORE | base64 --decode > /tmp/keystore.keystore
         shell: bash
+
+      - name: validate input
+        run: cat android/key.properties
