@@ -24,18 +24,17 @@ jobs:
           API = $APP_API
           EOF
         shell: bash
-      - name: creating kystore file
+      - name: creating keystore file
         uses: finnp/create-file-action@1.0.0
         env:
           FILE_NAME: /tmp/kystore.kystore
           FILE_DATA: ''
-      - name: creating ky properties file
+      - name: creating keystore file
         uses: finnp/create-file-action@1.0.0
         env:
           FILE_NAME: android/key.properties
           FILE_DATA: ''
       - name:
-        # defining variables
         env:
           CM_KEYSTORE: ${{ secrets.CM_KEYSTORE }}
           CM_KEYSTORE_PASSWORD: ${{ secrets.CM_KEYSTORE_PASSWORD }}
@@ -45,5 +44,10 @@ jobs:
           # set up key.properties
           echo "setting up key.properties"
           echo $CM_KEYSTORE | base64 --decode > /tmp/keystore.keystore
-          echo "storePassword=$CM_KEYSTORE_PASSWORD\nkeyPassword=$CM_KEY_ALIAS_PASSWORD\nkeyAlias=$CM_KEY_ALIAS_USERNAME\nstoreFile=/tmp/keystore.keystore" > android/key.properties
+          cat > "android/key.properties" <<EOF
+          storePassword=$CM_KEYSTORE_PASSWORD
+          keyPassword=$CM_KEY_ALIAS_PASSWORD
+          keyAlias=$CM_KEY_ALIAS_USERNAME
+          storeFile=/tmp/keystore.keystore
+          EOF
         shell: bash
