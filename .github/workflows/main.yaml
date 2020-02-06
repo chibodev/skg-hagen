@@ -12,21 +12,19 @@ jobs:
       - name: populating .env
         # defining variables
         env:
-          - API: ${{ secrets.API }}
+          - APP_API: ${{ secrets.API }}
         run: |
           # set up .env
           echo "populating .env"
           cat >> ".env" <<EOF
           USERNAME = user
           PASSWORD = secret
-          API = $API
+          API = $APP_API
           EOF
           shell: bash
       - name:
         # defining variables
         env:
-          - HOME: ${{ HOME }}
-          - GITHUB_WORKSPACE: ${{ GITHUB_WORKSPACE }}
           - CM_KEYSTORE: ${{ secrets.CM_KEYSTORE }}
           - CM_KEYSTORE_PASSWORD: ${{ secrets.CM_KEYSTORE_PASSWORD }}
           - CM_KEY_ALIAS_PASSWORD:  ${{ secrets.CM_KEY_ALIAS_PASSWORD }}
