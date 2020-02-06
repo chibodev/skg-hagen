@@ -10,14 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: setting runner variables
-        - env:
-            - API: ${{ secrets.API }}
-            - ANDROID_FIREBASE_SECRET: ${{ secrets.ANDROID_FIREBASE_SECRET }}
-            - IOS_FIREBASE_SECRET: ${{ secrets.IOS_FIREBASE_SECRET }}
-            - CM_KEYSTORE: ${{ secrets.CM_KEYSTORE }}
-            - CM_KEYSTORE_PASSWORD: ${{ secrets.CM_KEYSTORE_PASSWORD }}
-            - CM_KEY_ALIAS_PASSWORD:  ${{ secrets.CM_KEY_ALIAS_PASSWORD }}
-            - CM_KEY_ALIAS_USERNAME: ${{ secrets.CM_KEY_ALIAS_USERNAME }}
+        env:
+          - API: ${{ secrets.API }}
+          - ANDROID_FIREBASE_SECRET: ${{ secrets.ANDROID_FIREBASE_SECRET }}
+          - IOS_FIREBASE_SECRET: ${{ secrets.IOS_FIREBASE_SECRET }}
+          - CM_KEYSTORE: ${{ secrets.CM_KEYSTORE }}
+          - CM_KEYSTORE_PASSWORD: ${{ secrets.CM_KEYSTORE_PASSWORD }}
+          - CM_KEY_ALIAS_PASSWORD:  ${{ secrets.CM_KEY_ALIAS_PASSWORD }}
+          - CM_KEY_ALIAS_USERNAME: ${{ secrets.CM_KEY_ALIAS_USERNAME }}
 
       - name: populate .env
         run: |
