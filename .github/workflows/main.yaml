@@ -36,7 +36,7 @@ jobs:
           storeFile=/tmp/keystore.keystore"
 
       - name: pre-validate input
-          run: du -sh /tmp/keystore.keystore
+        run: du -sh /tmp/keystore.keystore
 
       - name: populating keys.properties file
         env:
