@@ -1,18 +1,14 @@
-#The name of your workflow.
 name:  Test, build and deploy
-# Trigger the workflow on push or pull request
 on: [push,pull_request]
-#A workflow run is made up of one or more jobs. Jobs run in parallel by default.
 jobs:
-#pwd: /home/runner/work/skg-hagen/skg-hagen
-  build:
-    name: populate variable
+  file_setup:
+    name: file/folder setup
     runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v2
+
       - name: populating .env
-        # defining variables
         env:
           APP_API: ${{ secrets.API }}
         run: |
@@ -24,6 +20,7 @@ jobs:
           API = $APP_API
           EOF
         shell: bash
+
       - name: creating keystore file
         uses: finnp/create-file-action@1.0.0
         env:
@@ -33,20 +30,31 @@ jobs:
         uses: finnp/create-file-action@1.0.0
         env:
           FILE_NAME: android/key.properties
-          FILE_DATA: "storePassword=KEYSTORE_PASSWORD\nkeyPassword=KEY_ALIAS_PASSWORD\nkeyAlias=KEY_ALIAS_USERNAME\nstoreFile=/tmp/keystore.keystore"
+          FILE_DATA: "storePassword=KEYSTORE_PASSWORD
+          keyPassword=KEY_ALIAS_PASSWORD
+          keyAlias=KEY_ALIAS_USERNAME
+          storeFile=/tmp/keystore.keystore"
+
+      - name: pre-validate input
+          run: du -sh /tmp/keystore.keystore
 
       - name: populating keys.properties file
         env:
           CM_KEYSTORE: ${{ secrets.CM_KEYSTORE }}
           CM_KEYSTORE_PASSWORD: ${{ secrets.CM_KEYSTORE_PASSWORD }}
-          CM_KEY_ALIAS_PASSWORD:  ${{ secrets.CM_KEY_ALIAS_PASSWORD }}
+          CM_KEY_ALIAS_PASSWORD:  ${{ secrets.CM_KEYSTORE_PASSWORD }}
           CM_KEY_ALIAS_USERNAME: ${{ secrets.CM_KEY_ALIAS_USERNAME }}
         run: |
           # set up key.properties
           echo "setting up key.properties"
           echo $CM_KEYSTORE | base64 --decode > /tmp/keystore.keystore
           sed -i "s/KEYSTORE_PASSWORD/$CM_KEYSTORE_PASSWORD/g" android/key.properties
+          sed -i "s/KEY_ALIAS_PASSWORD/$CM_KEY_ALIAS_PASSWORD/g" android/key.properties
+          sed -i "s/KEY_ALIAS_USERNAME/$CM_KEY_ALIAS_USERNAME/g" android/key.properties
         shell: bash
 
       - name: validate input
-        run: cat android/key.properties
+        run: |
+          cat android/key.properties
+          du -sh /tmp/keystore.keystore
+        shell: bash
