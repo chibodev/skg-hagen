@@ -32,11 +32,11 @@ jobs:
       - name: creating key.properties file
         uses: finnp/create-file-action@1.0.0
         env:
-          FILE_NAME: android/key.properties
-          FILE_DATA: ''
           CM_KEYSTORE_PASSWORD: ${{ secrets.CM_KEYSTORE_PASSWORD }}
           CM_KEY_ALIAS_PASSWORD:  ${{ secrets.CM_KEY_ALIAS_PASSWORD }}
           CM_KEY_ALIAS_USERNAME: ${{ secrets.CM_KEY_ALIAS_USERNAME }}
+          FILE_NAME: android/key.properties
+          FILE_DATA: "storePassword=$CM_KEYSTORE_PASSWORD\nkeyPassword=$CM_KEY_ALIAS_PASSWORD\nkeyAlias=$CM_KEY_ALIAS_USERNAME\nstoreFile=/tmp/keystore.keystore"
 
       - name: populating keys.properties file
         env:
@@ -45,10 +45,4 @@ jobs:
           # set up key.properties
           echo "setting up key.properties"
           echo $CM_KEYSTORE | base64 --decode > /tmp/keystore.keystore
-          cat > "android/key.properties" <<EOF
-          storePassword=$CM_KEYSTORE_PASSWORD
-          keyPassword=$CM_KEY_ALIAS_PASSWORD
-          keyAlias=$CM_KEY_ALIAS_USERNAME
-          storeFile=/tmp/keystore.keystore
-          EOF
         shell: bash
