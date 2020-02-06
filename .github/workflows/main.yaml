@@ -9,6 +9,8 @@ jobs:
     name: populate variable
     runs-on: macos-latest
     steps:
+      - name: checkout
+        uses: actions/checkout@v2
       - name: populating .env
         # defining variables
         env:
