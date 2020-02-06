@@ -7,7 +7,7 @@ jobs:
 #pwd: /home/runner/work/skg-hagen/skg-hagen
   build:
     name: populate variable
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: populating .env
         # defining variables
