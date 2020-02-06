@@ -30,10 +30,10 @@ jobs:
           FILE_NAME: $HOME/tmp/keystore.keystore
           FILE_DATA: ''
       - name: creating key properties file
-          uses: finnp/create-file-action@1.0.0
-          env:
-            FILE_NAME: $GITHUB_WORKSPACE/android/key.properties
-            FILE_DATA: ''
+        uses: finnp/create-file-action@1.0.0
+        env:
+          FILE_NAME: $GITHUB_WORKSPACE/android/key.properties
+          FILE_DATA: ''
       - name:
         # defining variables
         env:
