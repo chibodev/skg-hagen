@@ -27,12 +27,12 @@ jobs:
       - name: creating keystore file
         uses: finnp/create-file-action@1.0.0
         env:
-          FILE_NAME: $HOME/tmp/keystore.keystore
+          FILE_NAME: /tmp/keystore.keystore
           FILE_DATA: ''
       - name: creating key properties file
         uses: finnp/create-file-action@1.0.0
         env:
-          FILE_NAME: $GITHUB_WORKSPACE/android/key.properties
+          FILE_NAME: android/key.properties
           FILE_DATA: ''
       - name:
         # defining variables
@@ -44,11 +44,11 @@ jobs:
         run: |
           # set up key.properties
           echo "setting up key.properties"
-          echo $CM_KEYSTORE | base64 --decode > $HOME/tmp/keystore.keystore
-          cat >> "$GITHUB_WORKSPACE/android/key.properties" <<EOF
+          echo $CM_KEYSTORE | base64 --decode > /tmp/keystore.keystore
+          cat >> "android/key.properties" <<EOF
           storePassword=$CM_KEYSTORE_PASSWORD
           keyPassword=$CM_KEY_ALIAS_PASSWORD
           keyAlias=$CM_KEY_ALIAS_USERNAME
-          storeFile=$HOME/tmp/keystore.keystore
+          storeFile=/tmp/keystore.keystore
           EOF
         shell: bash
