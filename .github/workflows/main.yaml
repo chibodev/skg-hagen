@@ -45,7 +45,7 @@ jobs:
           # set up key.properties
           echo "setting up key.properties"
           echo $CM_KEYSTORE | base64 --decode > /tmp/keystore.keystore
-          sed -i 's/KEYSTORE_PASSWORD/$CM_KEYSTORE_PASSWORD/g' android.key.properties
+          sed -i 's/KEYSTORE_PASSWORD/$CM_KEYSTORE_PASSWORD/g' android/key.properties
         shell: bash
 
       - name: validate input
