@@ -7,7 +7,7 @@ jobs:
 #pwd: /home/runner/work/skg-hagen/skg-hagen
   build:
     name: populate variable
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v2
