@@ -11,7 +11,8 @@ jobs:
     steps:
       - name: Printing work dir
         run: echo pwd
+        shell: bash
 
       - name: Build site assets
-          working-directory: ${{ github.workspace }}
           run: ls -la
+          shell: bash
