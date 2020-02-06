@@ -5,57 +5,13 @@ on: [push,pull_request]
 #A workflow run is made up of one or more jobs. Jobs run in parallel by default.
 jobs:
 
-  test:
-    name: test packages
-    #The type of machine to run the job on. [windows,macos, ubuntu , self-hosted]
+  build:
+    name: populate variable
     runs-on: ubuntu-latest
-    #sequence of tasks called
     steps:
-      # The branch or tag ref that triggered the workflow will be checked out.
-      # https://github.com/actions/checkout
-      - uses: actions/checkout@v1
-      # Setup a flutter environment.
-      # https://github.com/marketplace/actions/flutter-action
-      - uses: subosito/flutter-action@v1
-        with:
-          flutter-version: '1.12.14'
-          channel: 'dev'
-      - run: flutter pub get
-      # run static analys code
-      - run: flutter  analyze
-      # run  flutter widgets tests  and unit tests
-      - run: flutter test --coverage
-      # Upload coverage reports to Codecov
-      # https://github.com/marketplace/actions/codecov
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: coverage/lcov.info
+      - name: Printing work dir
+        run: echo pwd
 
-  release:
-    #if conditional to prevent a job from running
-    if: github.event_name != 'pull_request'
-    runs-on: macos-latest
-    #Identifies any jobs that must complete successfully before this job will run.
-    needs: test
-    name: build apk
-    steps:
-      - uses: actions/checkout@v1
-      - uses: subosito/flutter-action@v1
-        with:
-          flutter-version: '1.12.14'
-          channel: 'dev'
-      # This action sets up a java environment
-      # https://github.com/actions/setup-java
-      - uses: actions/setup-java@v1
-        with:
-          java-version: '12.x'
-      - run: flutter build apk --debug --split-per-abi
-      # This action will create a github release and optionally upload an artifact to it.
-      # https://github.com/ncipollo/release-action
-      - name: Create a Release APK
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "build/app/outputs/apk/debug/*.apk"
-          token: ${{ secrets.TOKEN }}
+      - name: Build site assets
+          working-directory: ${{ github.workspace }}
+          run: ls -la
