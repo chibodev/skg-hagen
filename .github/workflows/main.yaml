@@ -35,9 +35,6 @@ jobs:
           keyAlias=KEY_ALIAS_USERNAME
           storeFile=/tmp/keystore.keystore"
 
-      - name: pre-validate input
-        run: du -sh /tmp/keystore.keystore
-
       - name: populating keys.properties file
         env:
           CM_KEYSTORE: ${{ secrets.CM_KEYSTORE }}
