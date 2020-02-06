@@ -16,12 +16,12 @@ jobs:
         run: |
           # set up .env
           echo "populating .env"
-          cat >> ".env" <<EOF
+          cat > ".env" <<EOF
           USERNAME = user
           PASSWORD = secret
           API = $APP_API
           EOF
-          shell: bash
+        shell: bash
       - name:
         # defining variables
         env:
