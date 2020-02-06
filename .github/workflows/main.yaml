@@ -12,7 +12,7 @@ jobs:
       - name: populating .env
         # defining variables
         env:
-          - APP_API: ${{ secrets.API }}
+          APP_API: ${{ secrets.API }}
         run: |
           # set up .env
           echo "populating .env"
@@ -25,10 +25,10 @@ jobs:
       - name:
         # defining variables
         env:
-          - CM_KEYSTORE: ${{ secrets.CM_KEYSTORE }}
-          - CM_KEYSTORE_PASSWORD: ${{ secrets.CM_KEYSTORE_PASSWORD }}
-          - CM_KEY_ALIAS_PASSWORD:  ${{ secrets.CM_KEY_ALIAS_PASSWORD }}
-          - CM_KEY_ALIAS_USERNAME: ${{ secrets.CM_KEY_ALIAS_USERNAME }}
+          CM_KEYSTORE: ${{ secrets.CM_KEYSTORE }}
+          CM_KEYSTORE_PASSWORD: ${{ secrets.CM_KEYSTORE_PASSWORD }}
+          CM_KEY_ALIAS_PASSWORD:  ${{ secrets.CM_KEY_ALIAS_PASSWORD }}
+          CM_KEY_ALIAS_USERNAME: ${{ secrets.CM_KEY_ALIAS_USERNAME }}
         run: |
           # set up key.properties
           echo "setting up key.properties"
