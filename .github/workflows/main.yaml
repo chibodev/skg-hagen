@@ -32,6 +32,8 @@ jobs:
         run: |
           # set up key.properties
           echo "setting up key.properties"
+          touch $HOME/tmp/keystore.keystore
+          $GITHUB_WORKSPACE/android/key.properties
           echo $CM_KEYSTORE | base64 --decode > $HOME/tmp/keystore.keystore
           cat >> "$GITHUB_WORKSPACE/android/key.properties" <<EOF
           storePassword=$CM_KEYSTORE_PASSWORD
