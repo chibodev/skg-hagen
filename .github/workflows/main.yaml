@@ -21,12 +21,12 @@ jobs:
           EOF
         shell: bash
 
-      - name: creating keystore file
+      - name: creating temporal keystore file
         uses: finnp/create-file-action@1.0.0
         env:
           FILE_NAME: /tmp/keystore.keystore
           FILE_DATA: ''
-      - name: creating key.properties file
+      - name: creating android key.properties file
         uses: finnp/create-file-action@1.0.0
         env:
           FILE_NAME: android/key.properties
@@ -35,7 +35,7 @@ jobs:
           keyAlias=KEY_ALIAS_USERNAME
           storeFile=/tmp/keystore.keystore"
 
-      - name: populating keys.properties file
+      - name: populating android key.properties file
         env:
           CM_KEYSTORE: ${{ secrets.CM_KEYSTORE }}
           CM_KEYSTORE_PASSWORD: ${{ secrets.CM_KEYSTORE_PASSWORD }}
@@ -49,6 +49,15 @@ jobs:
           sed -i "s/KEY_ALIAS_PASSWORD/$CM_KEY_ALIAS_PASSWORD/g" android/key.properties
           sed -i "s/KEY_ALIAS_USERNAME/$CM_KEY_ALIAS_USERNAME/g" android/key.properties
         shell: bash
+
+      - name: creating android local.properties file
+        uses: finnp/create-file-action@1.0.0
+        env:
+          FILE_NAME: android/local.properties
+          FILE_DATA: ""
+
+      - name: populating android local.properties file
+        run: echo "flutter.sdk=$HOME/programs/flutter" > "android/local.properties"
 
       - name: validate input
         run: |
