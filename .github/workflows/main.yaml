@@ -54,19 +54,19 @@ jobs:
         uses: finnp/create-file-action@1.0.0
         env:
           FILE_NAME: android/app/google-services.json
-          FILE_DATA: ${{ secrets.ANDROID_FIREBASE_SECRET }}
+          FILE_BASE64: ${{ secrets.ANDROID_FIREBASE_SECRET }}
 
       - name: creating ios firebase file
         uses: finnp/create-file-action@1.0.0
         env:
           FILE_NAME: ios/Runner/GoogleService-Info.plist
-          FILE_DATA: ${{ secrets.IOS_FIREBASE_SECRET }}
+          FILE_BASE64: ${{ secrets.IOS_FIREBASE_SECRET }}
 
       - name: test
         uses: finnp/create-file-action@1.0.0
         env:
           FILE_NAME: example.md
-          FILE_DATA: "ZWFzdGVyZWdnLWxvbAo="
+          FILE_BASE64: "ZWFzdGVyZWdnLWxvbAo="
 
       - name: validate input
         run: |
