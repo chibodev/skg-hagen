@@ -57,7 +57,11 @@ jobs:
           FILE_DATA: "flutter.sdk=HOME/programs/flutter"
 
       - name: setting up android local.properties file
-        run: sed -i "s/HOME/$HOME/g" android/local.properties
+        run: |
+          # set up local.properties
+          echo "setting up local.properties"
+          sed -i "s/HOME/$HOME/g" android/local.properties
+        shell: bash
 
       - name: validate input
         run: |
