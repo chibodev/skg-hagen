@@ -65,10 +65,10 @@ jobs:
           FILE_DATA: 'ANDROID_FIREBASE_SECRET'
 
       - name: creating ios firebase file
-          uses: finnp/create-file-action@1.0.0
-          env:
-            FILE_NAME: ios/Runner/GoogleService-Info.plist
-            FILE_DATA: 'IOS_FIREBASE_SECRET'
+        uses: finnp/create-file-action@1.0.0
+        env:
+          FILE_NAME: ios/Runner/GoogleService-Info.plist
+          FILE_DATA: 'IOS_FIREBASE_SECRET'
 
       - name: populating android and ios firebase files
         env:
