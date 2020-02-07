@@ -50,13 +50,12 @@ jobs:
           sed -i "s/KEY_ALIAS_USERNAME/$CM_KEY_ALIAS_USERNAME/g" android/key.properties
         shell: bash
 
-      - name: validate input
-        run: |
-          cat android/key.properties
-          cat android/local.properties
-          du -sh /tmp/keystore.keystore
-          wc /tmp/keystore.keystore
-        shell: bash
+#      - name: validate input
+#        run: |
+#          cat android/key.properties
+#          du -sh /tmp/keystore.keystore
+#          wc /tmp/keystore.keystore
+#        shell: bash
 
       - name: creating android firebase file
         uses: finnp/create-file-action@1.0.0
