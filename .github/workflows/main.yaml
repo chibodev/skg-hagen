@@ -54,14 +54,15 @@ jobs:
         uses: finnp/create-file-action@1.0.0
         env:
           FILE_NAME: android/local.properties
-          FILE_DATA: ""
+          FILE_DATA: "flutter.sdk=HOME/programs/flutter"
 
-      - name: populating android local.properties file
-        run: echo "flutter.sdk=$HOME/programs/flutter" > "android/local.properties"
+      - name: setting up android local.properties file
+        run: sed -i "s/HOME/$HOME/g" android/local.properties
 
       - name: validate input
         run: |
           cat android/key.properties
+          cat android/local.properties
           du -sh /tmp/keystore.keystore
           wc /tmp/keystore.keystore
         shell: bash
