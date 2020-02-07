@@ -70,7 +70,7 @@ jobs:
           echo "replacing ios and android firebase files"
           decodedAndroid=$ANDROID_FIREBASE_SECRET | base64 --decode
           decodediOS=$IOS_FIREBASE_SECRET | base64 --decode
-          echo $IOS_FIREBASE_SECRET | base64 --decode > ios/Runner/GoogleService-Info.plist
+          sudo echo $IOS_FIREBASE_SECRET | base64 --decode > ios/Runner/GoogleService-Info.plist
           #sed -i "s/ANDROID_FIREBASE_SECRET/$decodedAndroid/g" android/app/google-services.json
           #sed -i "s/IOS_FIREBASE_SECRET/$decodediOS/g" ios/Runner/GoogleService-Info.plist
         shell: bash
