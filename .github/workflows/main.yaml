@@ -54,26 +54,13 @@ jobs:
         uses: finnp/create-file-action@1.0.0
         env:
           FILE_NAME: android/app/google-services.json
-          FILE_DATA: 'ANDROID_FIREBASE_SECRET'
+          FILE_DATA: ${{ secrets.ANDROID_FIREBASE_SECRET }}
 
       - name: creating ios firebase file
         uses: finnp/create-file-action@1.0.0
         env:
           FILE_NAME: ios/Runner/GoogleService-Info.plist
-          FILE_DATA: 'IOS_FIREBASE_SECRET'
-
-      - name: populating android and ios firebase files
-        env:
-          ANDROID_FIREBASE_SECRET: ${{ secrets.ANDROID_FIREBASE_SECRET }}
-          IOS_FIREBASE_SECRET: ${{ secrets.IOS_FIREBASE_SECRET }}
-        run: |
-          echo "replacing ios and android firebase files"
-          decodedAndroid=$ANDROID_FIREBASE_SECRET | base64 --decode
-          decodediOS=$IOS_FIREBASE_SECRET | base64 --decode
-          sudo echo $IOS_FIREBASE_SECRET | base64 --decode > ios/Runner/GoogleService-Info.plist
-          #sed -i "s/ANDROID_FIREBASE_SECRET/$decodedAndroid/g" android/app/google-services.json
-          #sed -i "s/IOS_FIREBASE_SECRET/$decodediOS/g" ios/Runner/GoogleService-Info.plist
-        shell: bash
+          FILE_DATA: ${{ secrets.IOS_FIREBASE_SECRET }}
 
       - name: validate input
         run: |
