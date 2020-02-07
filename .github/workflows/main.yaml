@@ -5,6 +5,9 @@ jobs:
     name: file/folder setup
     runs-on: ubuntu-latest
     steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
       - name: populating .env
         env:
           APP_API: ${{ secrets.API }}
@@ -47,23 +50,32 @@ jobs:
           sed -i "s/KEY_ALIAS_USERNAME/$CM_KEY_ALIAS_USERNAME/g" android/key.properties
         shell: bash
 
-      - name: creating android local.properties file
-        uses: finnp/create-file-action@1.0.0
-        env:
-          FILE_NAME: android/local.properties
-          FILE_DATA: "flutter.sdk=HOME/programs/flutter"
-
-      - name: setting up android local.properties file
-        run: |
-          # set up local.properties
-          echo "setting up local.properties"
-          sed -i "s/HOME/$HOME/g" android/local.properties
-        shell: bash
-
       - name: validate input
         run: |
           cat android/key.properties
           cat android/local.properties
           du -sh /tmp/keystore.keystore
           wc /tmp/keystore.keystore
+        shell: bash
+
+      - name: creating android firebase file
+        uses: finnp/create-file-action@1.0.0
+        env:
+          FILE_NAME: android/app/google-services.json
+          FILE_DATA: 'ANDROID_FIREBASE_SECRET'
+
+      - name: creating ios firebase file
+          uses: finnp/create-file-action@1.0.0
+          env:
+            FILE_NAME: ios/Runner/GoogleService-Info.plist
+            FILE_DATA: 'IOS_FIREBASE_SECRET'
+
+      - name: populating android and ios firebase files
+        env:
+          ANDROID_FIREBASE_SECRET: ${{ secrets.ANDROID_FIREBASE_SECRET }}
+          IOS_FIREBASE_SECRET: ${{ secrets.IOS_FIREBASE_SECRET }}
+        run: |
+          echo "replacing ios and android firebase files"
+          sed -i "s/ANDROID_FIREBASE_SECRET/$IOS_FIREBASE_SECRET | base64 --decode/g" android/app/google-services.json
+          sed -i "s/IOS_FIREBASE_SECRET/$IOS_FIREBASE_SECRET | base64 --decode/g" ios/Runner/GoogleService-Info.plist
         shell: bash
