@@ -68,8 +68,10 @@ jobs:
           IOS_FIREBASE_SECRET: ${{ secrets.IOS_FIREBASE_SECRET }}
         run: |
           echo "replacing ios and android firebase files"
-          sed -i "s/ANDROID_FIREBASE_SECRET/$IOS_FIREBASE_SECRET | base64 --decode/g" android/app/google-services.json
-          sed -i "s/IOS_FIREBASE_SECRET/$IOS_FIREBASE_SECRET | base64 --decode/g" ios/Runner/GoogleService-Info.plist
+          decodedAndroid=$ANDROID_FIREBASE_SECRET | base64 --decode
+          decodediOS=$IOS_FIREBASE_SECRET | base64 --decode
+          sed -i "s/ANDROID_FIREBASE_SECRET/$decodedAndroid/g" android/app/google-services.json
+          sed -i "s/IOS_FIREBASE_SECRET/$decodediOS/g" ios/Runner/GoogleService-Info.plist
         shell: bash
 
       - name: validate input
