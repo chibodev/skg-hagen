@@ -50,13 +50,6 @@ jobs:
           sed -i "s/KEY_ALIAS_USERNAME/$CM_KEY_ALIAS_USERNAME/g" android/key.properties
         shell: bash
 
-#      - name: validate input
-#        run: |
-#          cat android/key.properties
-#          du -sh /tmp/keystore.keystore
-#          wc /tmp/keystore.keystore
-#        shell: bash
-
       - name: creating android firebase file
         uses: finnp/create-file-action@1.0.0
         env:
@@ -77,4 +70,13 @@ jobs:
           echo "replacing ios and android firebase files"
           sed -i "s/ANDROID_FIREBASE_SECRET/$IOS_FIREBASE_SECRET | base64 --decode/g" android/app/google-services.json
           sed -i "s/IOS_FIREBASE_SECRET/$IOS_FIREBASE_SECRET | base64 --decode/g" ios/Runner/GoogleService-Info.plist
+        shell: bash
+
+      - name: validate input
+        run: |
+          cat android/key.properties
+          cat android/app/google-services.json
+          cat ios/Runner/GoogleService-Info.plist
+          du -sh /tmp/keystore.keystore
+          wc /tmp/keystore.keystore
         shell: bash
