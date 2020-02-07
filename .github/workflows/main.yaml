@@ -62,11 +62,18 @@ jobs:
           FILE_NAME: ios/Runner/GoogleService-Info.plist
           FILE_DATA: ${{ secrets.IOS_FIREBASE_SECRET }}
 
+      - name: test
+        uses: finnp/create-file-action@1.0.0
+        env:
+          FILE_NAME: example.md
+          FILE_DATA: "ZWFzdGVyZWdnLWxvbAo="
+
       - name: validate input
         run: |
           cat android/key.properties
           cat android/app/google-services.json
           cat ios/Runner/GoogleService-Info.plist
+          cat example.md
           du -sh /tmp/keystore.keystore
           wc /tmp/keystore.keystore
         shell: bash
