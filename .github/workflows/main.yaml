@@ -5,9 +5,6 @@ jobs:
     name: file/folder setup
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
-        uses: actions/checkout@v2
-
       - name: populating .env
         env:
           APP_API: ${{ secrets.API }}
@@ -58,11 +55,10 @@ jobs:
 
       - name: setting up android local.properties file
         env:
-          APP_HOME: $HOME
+          APP_HOME: ${{ HOME }}
         run: |
           # set up local.properties
           echo "setting up local.properties"
-          echo $APP_HOME
           sed -i "s/HOME/$APP_HOME/g" android/local.properties
         shell: bash
 
