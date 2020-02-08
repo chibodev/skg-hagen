@@ -10,14 +10,14 @@ jobs:
 
       - name: populating .env
         env:
-          APP_API: ${{ secrets.API }}
+          API: ${{ secrets.API }}
         run: |
           # set up .env
           echo "populating .env"
           cat > ".env" <<EOF
           USERNAME = user
           PASSWORD = secret
-          API = $APP_API
+          API = $API
           EOF
         shell: bash
 
@@ -48,7 +48,6 @@ jobs:
         run: |
           sudo echo $ANDROID_FIREBASE_SECRET | base64 --decode > android/app/google-services.json
           sudo echo $IOS_FIREBASE_SECRET | base64 --decode > ios/Runner/GoogleService-Info.plist
-          sudo echo "a2V5" | base64 --decode > example.md
         shell: bash
 
       - name: validate input
@@ -56,6 +55,5 @@ jobs:
           cat android/key.properties
           cat android/app/google-services.json
           cat ios/Runner/GoogleService-Info.plist
-          echo -----------------example------------------
-          cat example.md
+          cat .env
         shell: bash
