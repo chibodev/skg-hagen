@@ -73,11 +73,11 @@ jobs:
           ANDROID_FIREBASE_SECRET: ${{ secrets.ANDROID_FIREBASE_SECRET }}
           IOS_FIREBASE_SECRET: ${{ secrets.IOS_FIREBASE_SECRET }}
         run: |
-          chmod +x android/app/google-services.json
+          sudo chmod +x android/app/google-services.json
           echo $ANDROID_FIREBASE_SECRET | base64 --decode > android/app/google-services.json
-          chmod +x ios/Runner/GoogleService-Info.plist
+          sudo chmod +x ios/Runner/GoogleService-Info.plist
           echo $IOS_FIREBASE_SECRET | base64 --decode > ios/Runner/GoogleService-Info.plist
-          chmod +x example.md
+          sudo chmod +x example.md
           echo "a2V5" | base64 --decode > example.md
         shell: bash
 
