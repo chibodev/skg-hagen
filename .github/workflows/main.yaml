@@ -50,35 +50,16 @@ jobs:
           sed -i "s/KEY_ALIAS_USERNAME/$CM_KEY_ALIAS_USERNAME/g" android/key.properties
         shell: bash
 
-      - name: creating android firebase file
-        uses: finnp/create-file-action@1.0.0
-        env:
-          FILE_NAME: android/app/google-services.json
-          FILE_DATA: ''
-
-      - name: creating ios firebase file
-        uses: finnp/create-file-action@1.0.0
-        env:
-          FILE_NAME: ios/Runner/GoogleService-Info.plist
-          FILE_DATA: ''
-
-      - name: test
-        uses: finnp/create-file-action@1.0.0
-        env:
-          FILE_NAME: example.md
-          FILE_DATA: ''
-
       - name: populate files
         env:
           ANDROID_FIREBASE_SECRET: ${{ secrets.ANDROID_FIREBASE_SECRET }}
           IOS_FIREBASE_SECRET: ${{ secrets.IOS_FIREBASE_SECRET }}
         run: |
           #sudo chmod +x android/app/google-services.json
-          #sudo cat $ANDROID_FIREBASE_SECRET | base64 --decode > android/app/google-services.json
+          sudo echo $ANDROID_FIREBASE_SECRET | base64 --decode > android/app/google-services.json
           #sudo sudo chmod +x ios/Runner/GoogleService-Info.plist
           #sudo cat $IOS_FIREBASE_SECRET | base64 --decode > ios/Runner/GoogleService-Info.plist
-          sudo chmod +x example.md
-          echo "a2V5" | base64 --decode > example.md
+          sudo echo "a2V5" | base64 --decode > example.md
         shell: bash
 
       - name: validate input
