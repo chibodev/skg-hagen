@@ -116,8 +116,8 @@ jobs:
       - name: build iOS package
         run: flutter build ios --release --no-codesign
       - name: create a runner.app
-          if: startsWith(github.ref, 'refs/tags/v')
-          uses: ncipollo/release-action@v1
-          with:
-            artifacts: "build/ios/iphoneos/*.app"
-            token: ${{ secrets.TOKEN }}
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/ios/iphoneos/*.app"
+          token: ${{ secrets.TOKEN }}
