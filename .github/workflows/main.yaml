@@ -109,3 +109,15 @@ jobs:
           channel: 'stable'
       - name: build iOS package
         run: flutter build ios --release --no-codesign
+
+  deploy-Android:
+    if: startsWith(github.ref, 'refs/tags/v')
+    name: Generating Release APK
+    needs: [test, build-Android]
+    runs-on: ubuntu-latest
+    steps:
+      - name: create a release APK
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/app/outputs/apk/debug/*.apk"
+          token: ${{ secrets.TOKEN }}
