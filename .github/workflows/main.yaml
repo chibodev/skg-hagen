@@ -3,12 +3,13 @@ on: [push,pull_request]
 jobs:
 
   test:
-    name: test packages
-    runs-on: ubuntu-latest
+    name: Test package
+    runs-on: [ubuntu-latest, windows-latest, macOS-latest]
     steps:
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
         with:
+          flutter-version: '1.12.14'
           channel: 'stable'
       - run: flutter pub get
       - run: flutter  analyze
@@ -23,7 +24,6 @@ jobs:
     name: Build Android apk
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
-    #Identifies any jobs that must complete successfully before this job will run.
     needs: test
     steps:
       - uses: actions/checkout@v2
@@ -67,16 +67,12 @@ jobs:
         shell: bash
       - uses: subosito/flutter-action@v1
         with:
+          flutter-version: '1.12.14'
           channel: 'stable'
       - uses: actions/setup-java@v1
         with:
           java-version: '12.x'
       - run: flutter build apk --debug --split-per-abi
-      - name: create a release APK
-        uses: ncipollo/release-action@v1
-        with:
-          artifacts: "build/app/outputs/apk/debug/*.apk"
-          token: ${{ secrets.TOKEN }}
 
   build-iOS:
     name: Build iOS package
@@ -109,6 +105,7 @@ jobs:
           java-version: '12.x'
       - uses: subosito/flutter-action@v1
         with:
+          flutter-version: '1.12.14'
           channel: 'stable'
       - name: build iOS package
         run: flutter build ios --release --no-codesign
