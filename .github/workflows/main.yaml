@@ -56,5 +56,6 @@ jobs:
           cat android/key.properties
           cat android/app/google-services.json
           cat ios/Runner/GoogleService-Info.plist
+          echo -----------------example------------------
           cat example.md
         shell: bash
