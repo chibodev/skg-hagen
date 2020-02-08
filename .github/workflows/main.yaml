@@ -39,7 +39,7 @@ jobs:
           sudo echo $CM_KEYSTORE | base64 --decode > /tmp/keystore.keystore
           # set up key.properties
           echo "populating key.properties"
-          sudo cat > "android/key.properties" <<EOF
+          sudo echo > "android/key.properties" <<EOF
           storePassword=CM_KEYSTORE_PASSWORD
           keyPassword=CM_KEY_ALIAS_PASSWORD
           keyAlias=CM_KEY_ALIAS_USERNAME
