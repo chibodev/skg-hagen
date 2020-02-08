@@ -3,8 +3,11 @@ on: [push,pull_request]
 jobs:
 
   test:
-    name: Test package
-    runs-on: [ubuntu-latest, windows-latest, macos-latest]
+    name: Test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
     steps:
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
