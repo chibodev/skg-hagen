@@ -78,37 +78,37 @@ jobs:
           artifacts: "build/app/outputs/apk/debug/*.apk"
           token: ${{ secrets.TOKEN }}
 
-    build-iOS:
-      name: Build iOS package
-      if: github.event_name != 'pull_request'
-      needs: test
-      runs-on: macos-latest
-      steps:
-        - uses: actions/checkout@v2
-        - name: populating .env
-          env:
-            API: ${{ secrets.API }}
-          run: |
-            # set up .env
-            echo "populating .env"
-            cat > ".env" <<EOF
-            USERNAME = user
-            PASSWORD = secret
-            API = $API
-            EOF
-          shell: bash
-        - name: populating firebase file
-          env:
-            IOS_FIREBASE_SECRET: ${{ secrets.IOS_FIREBASE_SECRET }}
-            API: ${{ secrets.API }}
-          run: |
-            sudo echo $IOS_FIREBASE_SECRET | base64 --decode > ios/Runner/GoogleService-Info.plist
-          shell: bash
-        - uses: actions/setup-java@v1
-          with:
-            java-version: '12.x'
-        - uses: subosito/flutter-action@v1
-          with:
-            channel: 'stable'
-        - name: build iOS package
-          run: flutter build ios --release --no-codesign
+  build-iOS:
+    name: Build iOS package
+    if: github.event_name != 'pull_request'
+    needs: test
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: populating .env
+        env:
+          API: ${{ secrets.API }}
+        run: |
+          # set up .env
+          echo "populating .env"
+          cat > ".env" <<EOF
+          USERNAME = user
+          PASSWORD = secret
+          API = $API
+          EOF
+        shell: bash
+      - name: populating firebase file
+        env:
+          IOS_FIREBASE_SECRET: ${{ secrets.IOS_FIREBASE_SECRET }}
+          API: ${{ secrets.API }}
+        run: |
+          sudo echo $IOS_FIREBASE_SECRET | base64 --decode > ios/Runner/GoogleService-Info.plist
+        shell: bash
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: 'stable'
+      - name: build iOS package
+        run: flutter build ios --release --no-codesign
