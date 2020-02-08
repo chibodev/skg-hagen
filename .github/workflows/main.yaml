@@ -76,4 +76,12 @@ jobs:
           cat example.md
           du -sh /tmp/keystore.keystore
           wc /tmp/keystore.keystore
+          du -sh android/key.properties
+          wc android/key.properties
+          du -sh android/app/google-services.json
+          wc android/app/google-services.json
+          du -sh ios/Runner/GoogleService-Info.plist
+          wc ios/Runner/GoogleService-Info.plist
+          du -sh example.md
+          wc example.md
         shell: bash
