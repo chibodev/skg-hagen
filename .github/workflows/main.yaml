@@ -21,12 +21,6 @@ jobs:
           EOF
         shell: bash
 
-      - name: creating android key.properties file
-        uses: finnp/create-file-action@1.0.0
-        env:
-          FILE_NAME: android/key.properties
-          FILE_DATA: ""
-
       - name: populating android key.properties file
         env:
           CM_KEYSTORE: ${{ secrets.CM_KEYSTORE }}
@@ -39,7 +33,7 @@ jobs:
           sudo echo $CM_KEYSTORE | base64 --decode > /tmp/keystore.keystore
           # set up key.properties
           echo "populating key.properties"
-          sudo echo > "android/key.properties" <<EOF
+          sudo cat > "android/key.properties" <<EOF
           storePassword=CM_KEYSTORE_PASSWORD
           keyPassword=CM_KEY_ALIAS_PASSWORD
           keyAlias=CM_KEY_ALIAS_USERNAME
