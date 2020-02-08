@@ -78,7 +78,7 @@ jobs:
           #sudo sudo chmod +x ios/Runner/GoogleService-Info.plist
           #sudo cat $IOS_FIREBASE_SECRET | base64 --decode > ios/Runner/GoogleService-Info.plist
           sudo chmod +x example.md
-          sudo cat "a2V5" | base64 --decode > example.md
+          echo "a2V5" | base64 --decode > example.md
         shell: bash
 
       - name: validate input
