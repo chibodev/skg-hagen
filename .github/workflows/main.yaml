@@ -73,10 +73,10 @@ jobs:
           ANDROID_FIREBASE_SECRET: ${{ secrets.ANDROID_FIREBASE_SECRET }}
           IOS_FIREBASE_SECRET: ${{ secrets.IOS_FIREBASE_SECRET }}
         run: |
-          sudo chmod +x android/app/google-services.json
-          sudo cat $ANDROID_FIREBASE_SECRET | base64 --decode > android/app/google-services.json
-          sudo sudo chmod +x ios/Runner/GoogleService-Info.plist
-          sudo cat $IOS_FIREBASE_SECRET | base64 --decode > ios/Runner/GoogleService-Info.plist
+          #sudo chmod +x android/app/google-services.json
+          #sudo cat $ANDROID_FIREBASE_SECRET | base64 --decode > android/app/google-services.json
+          #sudo sudo chmod +x ios/Runner/GoogleService-Info.plist
+          #sudo cat $IOS_FIREBASE_SECRET | base64 --decode > ios/Runner/GoogleService-Info.plist
           sudo chmod +x example.md
           sudo cat "a2V5" | base64 --decode > example.md
         shell: bash
