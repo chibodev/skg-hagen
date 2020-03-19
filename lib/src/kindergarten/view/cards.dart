@@ -5,7 +5,7 @@ import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/kindergarten/model/events.dart';
 import 'package:skg_hagen/src/kindergarten/model/news.dart' as Model;
-import 'package:skg_hagen/src/kindergarten/view/news.dart';
+import 'package:skg_hagen/src/kindergarten/controller/news.dart';
 
 class Cards {
   BuildContext _context;
