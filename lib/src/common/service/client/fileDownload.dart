@@ -11,17 +11,18 @@ class FileDownload {
   static int progress = 0;
 
   Future<bool> hasPermission() async {
-    final PermissionGroup permission1 = PermissionGroup.storage;
+    final PermissionHandler permissionHandler = PermissionHandler();
+    final PermissionGroup permission = PermissionGroup.storage;
     PermissionStatus checkPermission =
-        await PermissionHandler().checkPermissionStatus(permission1);
+        await permissionHandler.checkPermissionStatus(permission);
     if ((PermissionStatus.denied == checkPermission ||
             PermissionStatus.unknown == checkPermission ||
             PermissionStatus.restricted == checkPermission) &&
         checkPermission != PermissionStatus.neverAskAgain) {
-      await PermissionHandler()
-          .requestPermissions(<PermissionGroup>[permission1]);
+      await permissionHandler
+          .requestPermissions(<PermissionGroup>[permission]);
       checkPermission =
-          await PermissionHandler().checkPermissionStatus(permission1);
+          await permissionHandler.checkPermissionStatus(permission);
     }
 
     return checkPermission == PermissionStatus.granted;
