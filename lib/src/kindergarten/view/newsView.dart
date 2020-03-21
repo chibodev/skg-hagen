@@ -3,13 +3,15 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:open_file/open_file.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
-import 'package:skg_hagen/src/common/service/client/fileDownload.dart';
+import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/kindergarten/controller/news.dart';
 import 'package:skg_hagen/src/kindergarten/model/kindergarten.dart';
 import 'package:skg_hagen/src/kindergarten/model/news.dart' as Model;
+import 'package:skg_hagen/src/kindergarten/service/fileDownload.dart';
 
 class NewsView extends State<News> {
   static bool downloading = false;
@@ -108,14 +110,18 @@ class NewsView extends State<News> {
   }
 
   Future<void> _download(String fileUrl, String filename) async {
-    if (await fileDownload.hasPermission()) {
+    final PermissionHandler permissionHandler = PermissionHandler();
+    final DioHTTPClient client = DioHTTPClient();
+
+    if (await fileDownload.hasPermission(permissionHandler)) {
       setState(() {
         downloading = true;
       });
 
       final String saveDir = await fileDownload.getSaveDirectory();
       final String filePath = "$saveDir/$filename";
-      if (await fileDownload.downloadFile(fileUrl, filePath)) {
+      if (await client.downloadFile(
+          http: client, urlPath: fileUrl, savePath: filePath)) {
         OpenFile.open(filePath);
       }
     }
