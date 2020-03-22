@@ -54,6 +54,8 @@ flutter:
     - assets/images/icon/whatsapp.png
     - assets/images/icon/paypal.png
     - assets/images/icon/pdf.png
+    - assets/images/icon/help.png
+    - assets/images/icon/volunteer.png
     #Images
     - assets/images/termine.jpg
     - assets/images/angebote.jpg

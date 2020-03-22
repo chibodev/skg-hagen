@@ -5,14 +5,18 @@ import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
+import 'package:skg_hagen/src/common/service/tapAction.dart';
+import 'package:skg_hagen/src/home/model/aid.dart';
 import 'package:skg_hagen/src/home/model/cardContent.dart';
 import 'package:skg_hagen/src/home/model/monthlyScripture.dart';
+import 'package:skg_hagen/src/home/repository/aidClient.dart';
 import 'package:skg_hagen/src/home/repository/monthlyScriptureClient.dart';
 import 'package:skg_hagen/src/home/service/singleCard.dart';
 import 'package:skg_hagen/src/menu/controller/menu.dart';
 
 class Cards {
   MonthlyScriptureClient monthlyScriptureClient = MonthlyScriptureClient();
+  AidClient aidClient = AidClient();
   BuildContext _context;
 
   Widget getCards(BuildContext context) {
@@ -29,66 +33,7 @@ class Cards {
                 AsyncSnapshot<MonthlyScripture> response) {
               if (response.connectionState == ConnectionState.done &&
                   response.data != null) {
-                return InkWell(
-                  onTap: () {
-                    return showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          backgroundColor: Color(Default.COLOR_GREEN),
-                          title: Row(
-                            children: <Widget>[
-                              Text(
-                                MonthlyScripture.TITLE,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: SizeConfig.getSafeBlockVerticalBy(
-                                      Default.STANDARD_FONT_SIZE),
-                                ),
-                              ),
-                              Spacer(),
-                              FlatButton(
-                                onPressed: () => Share.share(
-                                    response.data.getSharableContent(),
-                                    subject: MonthlyScripture.TITLE),
-                                child: Icon(
-                                  Icons.share,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          ),
-                          content: SingleChildScrollView(
-                            child: _getDevionalAndLesson(
-                              response.data.oldTestamentText,
-                              response.data.newTestamentText,
-                            ),
-                          ),
-                          actions: <Widget>[
-                            FlatButton(
-                              child: Text(
-                                'Schließen',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: SizeConfig.getSafeBlockVerticalBy(
-                                      Default.SUBSTANDARD_FONT_SIZE),
-                                ),
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  child: Center(
-                    child: _getDevotional(response.data.getModifiedText()),
-                  ),
-                );
+                return _devotionalTab(context, response);
               }
               return Text('');
             },
@@ -115,6 +60,214 @@ class Cards {
         ),
       ),
       drawer: Menu(),
+      bottomNavigationBar: _bottomTab(),
+    );
+  }
+
+  Column _bottomTab() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Container(
+          color: Color(Default.COLOR_GREEN),
+          child: FutureBuilder<Aid>(
+            future: _getAidText(),
+            builder: (BuildContext context, AsyncSnapshot<Aid> response) {
+              if (response.connectionState == ConnectionState.done &&
+                  response.data != null) {
+                return InkWell(
+                  onTap: () {
+                    return showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          backgroundColor: Color(Default.COLOR_GREEN),
+                          title: Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: Text(
+                                  response.data.title,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: SizeConfig.getSafeBlockVerticalBy(
+                                        Default.STANDARD_FONT_SIZE),
+                                  ),
+                                ),
+                              ),
+                              FlatButton(
+                                onPressed: () => Share.share(
+                                    response.data.description,
+                                    subject: response.data.title),
+                                child: Icon(
+                                  Icons.share,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                          content: Column(
+                            children: <Widget>[
+                              Expanded(
+                                child: SingleChildScrollView(
+                                  child: SelectableText(
+                                    response.data.description,
+                                    style: TextStyle(
+                                        fontSize:
+                                            SizeConfig.getSafeBlockVerticalBy(
+                                                2.3),
+                                        color: Colors.white,
+                                        fontFamily: Default.FONT),
+                                  ),
+                                ),
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  FlatButton(
+                                    child: Icon(
+                                      Icons.phone,
+                                      color: Colors.white,
+                                      size:
+                                          SizeConfig.getSafeBlockVerticalBy(4),
+                                      semanticLabel: 'Phone',
+                                    ),
+                                    onPressed: () {
+                                      TapAction().callMe(response.data.phone);
+                                    },
+                                  ),
+                                  FlatButton(
+                                    child: Icon(
+                                      Icons.email,
+                                      color: Colors.white,
+                                      size:
+                                          SizeConfig.getSafeBlockVerticalBy(4),
+                                      semanticLabel: 'Email',
+                                    ),
+                                    onPressed: () {
+                                      TapAction().sendMail(response.data.email,
+                                          response.data.title, _context);
+                                    },
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                          actions: <Widget>[
+                            FlatButton.icon(
+                              textColor: Colors.black,
+                              icon: ImageIcon(
+                                AssetImage('assets/images/icon/volunteer.png'),
+                                color: Colors.black,
+                              ),
+                              label: Text('Helfer'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            FlatButton.icon(
+                              textColor: Colors.black,
+                              icon: ImageIcon(
+                                AssetImage('assets/images/icon/help.png'),
+                                color: Colors.black,
+                              ),
+                              label: Text('Hilfe-Suchende'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(1.0),
+                    child: ListTile(
+                      leading: Icon(
+                        Icons.info,
+                        color: Colors.white,
+                      ),
+                      title: Text(
+                        response.data.title,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: SizeConfig.getSafeBlockVerticalBy(
+                              Default.STANDARD_FONT_SIZE),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }
+              return Text('');
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  InkWell _devotionalTab(
+      BuildContext context, AsyncSnapshot<MonthlyScripture> response) {
+    return InkWell(
+      onTap: () {
+        return showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              backgroundColor: Color(Default.COLOR_GREEN),
+              title: Row(
+                children: <Widget>[
+                  Text(
+                    MonthlyScripture.TITLE,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: SizeConfig.getSafeBlockVerticalBy(
+                          Default.STANDARD_FONT_SIZE),
+                    ),
+                  ),
+                  Spacer(),
+                  FlatButton(
+                    onPressed: () => Share.share(
+                        response.data.getSharableContent(),
+                        subject: MonthlyScripture.TITLE),
+                    child: Icon(
+                      Icons.share,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+              content: SingleChildScrollView(
+                child: _getDevionalAndLesson(
+                  response.data.oldTestamentText,
+                  response.data.newTestamentText,
+                ),
+              ),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text(
+                    'Schließen',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: SizeConfig.getSafeBlockVerticalBy(
+                          Default.SUBSTANDARD_FONT_SIZE),
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      },
+      child: Center(
+        child: _getDevotional(response.data.getModifiedText()),
+      ),
     );
   }
 
@@ -157,6 +310,10 @@ class Cards {
   Future<MonthlyScripture> _getText() async {
     return await MonthlyScriptureClient()
         .getDevotion(DioHTTPClient(), Network());
+  }
+
+  Future<Aid> _getAidText() async {
+    return await AidClient().getAid(DioHTTPClient(), Network());
   }
 
   Future<List<CardContent>> _getAllCards() async {
