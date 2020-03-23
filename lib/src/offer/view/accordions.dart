@@ -5,8 +5,10 @@ import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/offer.dart' as Controller;
+import 'package:skg_hagen/src/offer/model/aid.dart';
 import 'package:skg_hagen/src/offer/model/confirmation.dart';
 import 'package:skg_hagen/src/offer/model/offers.dart';
+import 'package:skg_hagen/src/offer/repository/aidOfferClient.dart';
 import 'package:skg_hagen/src/offer/repository/confirmationClient.dart';
 import 'package:skg_hagen/src/offer/repository/offerClient.dart';
 import 'package:skg_hagen/src/offer/view/cards.dart';
@@ -14,6 +16,7 @@ import 'package:skg_hagen/src/offer/view/cards.dart';
 class Accordions extends State<Controller.Offer> {
   Offers _offers;
   Confirmation _confirmation;
+  Aid _aid;
   List<dynamic> _options;
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
@@ -86,25 +89,37 @@ class Accordions extends State<Controller.Offer> {
       _offers = await OfferClient().getOffers(DioHTTPClient(), Network());
       _confirmation = await ConfirmationClient()
           .getConfirmation(DioHTTPClient(), Network());
+      _aid = await AidOfferClient().getAidOffer(DioHTTPClient(), Network());
 
       _options = List<dynamic>();
 
-      //TODO: use somewhat of a tag service to avoid always extending
-      if (_offers != null) {
-        _options.add(_offers.offers);
-        _options.add(_offers.music);
-        _options.add(_offers.projects);
-        _dataAvailable = true;
-      }
-
-      if (_confirmation != null) {
-        _options.add(_confirmation);
-        _dataAvailable = true;
-      }
+      _setOptions();
 
       setState(() {
         _isPerformingRequest = false;
       });
     }
+  }
+
+  void _setOptions() {
+    //TODO: use somewhat of a tag service to avoid always extending
+    if (_offers != null) {
+      _options.add(_offers.offers);
+      _options.add(_offers.music);
+      _options.add(_offers.projects);
+      _dataAvailable = true;
+    }
+
+    if (_aid != null) {
+      _options.add(_aid);
+      _dataAvailable = true;
+    }
+
+    if (_confirmation != null) {
+      _options.add(_confirmation);
+      _dataAvailable = true;
+    }
+
+
   }
 }

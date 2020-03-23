@@ -358,6 +358,30 @@ class CustomWidget {
     );
   }
 
+  static Padding getSinglePagePhone(
+      double thirty, String phone, BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(left: thirty, bottom: thirty),
+      child: InkWell(
+        splashColor: Color(Default.COLOR_GREEN),
+        onTap: () => TapAction().callMe(phone),
+        onLongPress: () =>
+            ClipboardService.copyAndNotify(context: context, text: phone),
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: SizeConfig.getSafeBlockVerticalBy(1),
+          ),
+          child: Icon(
+            Icons.phone,
+            color: Colors.grey,
+            size: SizeConfig.getSafeBlockVerticalBy(4),
+            semanticLabel: 'Phone',
+          ),
+        ),
+      ),
+    );
+  }
+
   static Padding getImageFromNetwork(double thirty, String imageUrl) {
     return Padding(
       padding: EdgeInsets.all(thirty),

@@ -3,6 +3,10 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
+import 'package:skg_hagen/src/offer/controller/aid.dart' as Controller;
+import 'package:skg_hagen/src/offer/model/aid.dart';
+import 'package:skg_hagen/src/offer/model/aidOffer.dart' as ModelAidOffer;
+import 'package:skg_hagen/src/offer/model/aidReceive.dart' as ModelAidReceive;
 import 'package:skg_hagen/src/offer/model/appointment.dart';
 import 'package:skg_hagen/src/offer/model/concept.dart';
 import 'package:skg_hagen/src/offer/model/confirmation.dart';
@@ -10,6 +14,7 @@ import 'package:skg_hagen/src/offer/model/music.dart';
 import 'package:skg_hagen/src/offer/model/offer.dart';
 import 'package:skg_hagen/src/offer/model/project.dart';
 import 'package:skg_hagen/src/offer/model/quote.dart';
+import 'package:skg_hagen/src/offer/view/aidReceive.dart';
 import 'package:skg_hagen/src/offer/view/concept.dart' as View;
 import 'package:skg_hagen/src/offer/view/confirmationAppointment.dart';
 import 'package:skg_hagen/src/offer/view/music.dart' as View;
@@ -45,6 +50,9 @@ class Cards {
     } else if (card is Confirmation) {
       subjectName = Confirmation.NAME;
       list.add(_buildTileForConfirmation(context, card));
+    } else if (card is Aid) {
+      subjectName = Aid.NAME;
+      list.add(_buildTileForAid(context, card));
     }
 
     return card != null
@@ -321,6 +329,78 @@ class Cards {
                 )
               : Container(),
         ],
+      ),
+    );
+  }
+
+  Widget _buildTileForAid(BuildContext context, Aid card) {
+    final Controller.Aid aidOffer = Controller.Aid(
+      aidOffer: card?.offer,
+      context: context,
+      dataAvailable: this._dataAvailable,
+      aidOfferQuestion: card?.offerQuestion,
+    );
+
+    final AidReceive aidReceive = AidReceive(
+      aidReceive: card?.receive,
+      buildContext: context,
+      dataAvailable: this._dataAvailable,
+    );
+
+    return Material(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          card.offer != null
+              ? getAidContent(context, card, aidOffer,
+                  ModelAidOffer.AidOffer.VOLUNTEER, ModelAidOffer.AidOffer.NAME)
+              : Container(),
+          card.receive != null
+              ? getAidContent(
+                  context,
+                  card,
+                  aidReceive,
+                  ModelAidReceive.AidReceive.HELP,
+                  ModelAidReceive.AidReceive.NAME)
+              : Container(),
+        ],
+      ),
+    );
+  }
+
+  Flexible getAidContent(BuildContext context, dynamic card,
+      dynamic offerWidget, String iconImage, String cardTitle) {
+    return Flexible(
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: SizeConfig.getSafeBlockHorizontalBy(3),
+        ),
+        child: Card(
+          elevation: 7,
+          child: InkWell(
+            splashColor: Color(Default.COLOR_GREEN),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute<dynamic>(
+                builder: (BuildContext _context) => offerWidget,
+              ),
+            ),
+            child: Container(
+              child: Padding(
+                padding: const EdgeInsets.all(1.0),
+                child: ListTile(
+                  leading: ImageIcon(
+                    AssetImage(iconImage),
+                    color: Color(Default.COLOR_GREEN),
+                  ),
+                  title: CustomWidget.getCardTitle(cardTitle),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
