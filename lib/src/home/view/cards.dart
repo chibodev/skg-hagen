@@ -13,10 +13,16 @@ import 'package:skg_hagen/src/home/repository/aidClient.dart';
 import 'package:skg_hagen/src/home/repository/monthlyScriptureClient.dart';
 import 'package:skg_hagen/src/home/service/singleCard.dart';
 import 'package:skg_hagen/src/menu/controller/menu.dart';
+import 'package:skg_hagen/src/offer/controller/aid.dart' as Controller;
+import 'package:skg_hagen/src/offer/model/aid.dart' as Model;
+import 'package:skg_hagen/src/offer/repository/aidOfferClient.dart';
+import 'package:skg_hagen/src/offer/view/aidReceive.dart';
 
 class Cards {
   MonthlyScriptureClient monthlyScriptureClient = MonthlyScriptureClient();
   AidClient aidClient = AidClient();
+  Model.Aid _aid;
+  bool _dataAvailable = true;
   BuildContext _context;
 
   Widget getCards(BuildContext context) {
@@ -77,6 +83,7 @@ class Cards {
                   response.data != null) {
                 return InkWell(
                   onTap: () {
+                    _getAidOffers();
                     return showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -161,7 +168,18 @@ class Cards {
                               ),
                               label: Text('Helfer'),
                               onPressed: () {
-                                Navigator.of(context).pop();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute<dynamic>(
+                                    builder: (BuildContext _context) =>
+                                        Controller.Aid(
+                                      aidOffer: null,
+                                      context: _context,
+                                      dataAvailable: _dataAvailable,
+                                      aidOfferQuestion: _aid?.offerQuestion,
+                                    ),
+                                  ),
+                                );
                               },
                             ),
                             FlatButton.icon(
@@ -172,7 +190,17 @@ class Cards {
                               ),
                               label: Text('Hilfe-Suchende'),
                               onPressed: () {
-                                Navigator.of(context).pop();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute<dynamic>(
+                                    builder: (BuildContext _context) =>
+                                        AidReceive(
+                                      aidReceive: _aid?.receive,
+                                      dataAvailable: _dataAvailable,
+                                      buildContext: _context,
+                                    ),
+                                  ),
+                                );
                               },
                             ),
                           ],
@@ -375,5 +403,10 @@ class Cards {
         ),
       ),
     );
+  }
+
+  Future<void> _getAidOffers() async {
+    _dataAvailable = await Network().hasInternet();
+    _aid = await AidOfferClient().getAidOffer(DioHTTPClient(), Network());
   }
 }

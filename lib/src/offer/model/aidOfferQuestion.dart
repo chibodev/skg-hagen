@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class AidOfferQuestion {
   String question;
   String type;

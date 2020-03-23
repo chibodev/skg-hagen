@@ -16,7 +16,6 @@ import 'package:skg_hagen/src/offer/model/offers.dart';
 import 'package:skg_hagen/src/offer/repository/aidOfferClient.dart';
 
 class AidOffer extends State<Aid> {
-  BuildContext _context;
   final List<bool> _checkboxValue = List<bool>();
   final TextEditingController _name = TextEditingController();
   final TextEditingController _age = TextEditingController();
@@ -26,7 +25,6 @@ class AidOffer extends State<Aid> {
 
   @override
   Widget build(BuildContext context) {
-    _context = context;
     SizeConfig().init(context);
     final double thirty = SizeConfig.getSafeBlockVerticalBy(3.5);
     return Scaffold(
@@ -40,7 +38,7 @@ class AidOffer extends State<Aid> {
                 expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
                 backgroundColor: Color(Default.COLOR_GREEN),
                 flexibleSpace: FlexibleSpaceBar(
-                  title: CustomWidget.getTitle(widget.aidOffer.title),
+                  title: CustomWidget.getTitle(Model.AidOffer.NAME),
                   background: Image.asset(
                     Offers.IMAGE,
                     fit: BoxFit.cover,
@@ -54,7 +52,7 @@ class AidOffer extends State<Aid> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Flexible(
-                      child: widget.aidOffer != null
+                      child: widget?.aidOffer != null
                           ? Padding(
                               padding: EdgeInsets.all(thirty),
                               child: SelectableText(
@@ -67,7 +65,7 @@ class AidOffer extends State<Aid> {
                             )
                           : CustomWidget.centeredNoEntry(),
                     ),
-                    widget.aidOfferQuestion != null
+                    widget?.aidOffer != null && widget?.aidOfferQuestion != null
                         ? Flexible(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,7 +95,6 @@ class AidOffer extends State<Aid> {
       BuildContext contextOfBuilder, List<AidOfferQuestion> questions) {
     final List<Widget> list = List<Widget>();
     List<Widget> checkBox = List<Widget>();
-    List<Widget> textField = List<Widget>();
 
     final double thirty = SizeConfig.getSafeBlockVerticalBy(3.5);
     final double top = SizeConfig.getSafeBlockVerticalBy(1.0);
@@ -149,19 +146,21 @@ class AidOffer extends State<Aid> {
           list.add(
             _getLabel(thirty, label, FontWeight.normal, top: top, bottom: top),
           );
-          list.add(Padding(
-            padding: EdgeInsets.only(left: thirty, right: thirty, bottom: top),
-            child: TextField(
-              controller: option['controller'],
-              expands: false,
-              keyboardType: option['type'],
-              maxLines: null,
-              decoration: InputDecoration(icon: option['icon']),
-              maxLength: option['maxLength'],
-              inputFormatters: option['inputFormat'],
+          list.add(
+            Padding(
+              padding:
+                  EdgeInsets.only(left: thirty, right: thirty, bottom: top),
+              child: TextField(
+                controller: option['controller'],
+                expands: false,
+                keyboardType: option['type'],
+                maxLines: null,
+                decoration: InputDecoration(icon: option['icon']),
+                maxLength: option['maxLength'],
+                inputFormatters: option['inputFormat'],
+              ),
             ),
-          ));
-          textField = List<Widget>();
+          );
         }
       }
     }
@@ -194,42 +193,44 @@ class AidOffer extends State<Aid> {
       ),
     );
 
-    list.add(Padding(
-      padding: EdgeInsets.all(thirty),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Flexible(
-            child: Text(
-              Model.AidOffer.EMAIL_TEXT,
-              style: TextStyle(
-                fontSize: SizeConfig.getSafeBlockVerticalBy(
-                    Default.STANDARD_FONT_SIZE),
+    list.add(
+      Padding(
+        padding: EdgeInsets.all(thirty),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Flexible(
+              child: Text(
+                Model.AidOffer.EMAIL_TEXT,
+                style: TextStyle(
+                  fontSize: SizeConfig.getSafeBlockVerticalBy(
+                      Default.STANDARD_FONT_SIZE),
+                ),
               ),
             ),
-          ),
-          InkWell(
-            splashColor: Color(Default.COLOR_GREEN),
-            onTap: () => TapAction().sendMail(
-                widget.aidOffer.email, widget.aidOffer.title, context,
-                body: Model.AidOffer.EMAIL_BODY),
-            onLongPress: () => ClipboardService.copyAndNotify(
-                context: context, text: widget.aidOffer.email),
-            child: Padding(
-              padding: EdgeInsets.only(
-                left: SizeConfig.getSafeBlockVerticalBy(1),
-              ),
-              child: Icon(
-                Icons.email,
-                color: Colors.grey,
-                size: SizeConfig.getSafeBlockVerticalBy(4),
-                semanticLabel: 'E-Mail',
+            InkWell(
+              splashColor: Color(Default.COLOR_GREEN),
+              onTap: () => TapAction().sendMail(widget.aidOffer.email,
+                  widget.aidOffer.title, contextOfBuilder,
+                  body: Model.AidOffer.EMAIL_BODY),
+              onLongPress: () => ClipboardService.copyAndNotify(
+                  context: contextOfBuilder, text: widget.aidOffer.email),
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: SizeConfig.getSafeBlockVerticalBy(1),
+                ),
+                child: Icon(
+                  Icons.email,
+                  color: Colors.grey,
+                  size: SizeConfig.getSafeBlockVerticalBy(4),
+                  semanticLabel: 'E-Mail',
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ));
+    );
 
     return list;
   }

@@ -32,7 +32,7 @@ class AidReceive extends StatelessWidget {
               expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
               backgroundColor: Color(Default.COLOR_GREEN),
               flexibleSpace: FlexibleSpaceBar(
-                title: CustomWidget.getTitle(aidReceive.title),
+                title: CustomWidget.getTitle(Model.AidReceive.NAME),
                 background: Image.asset(
                   Offers.IMAGE,
                   fit: BoxFit.cover,
@@ -61,11 +61,11 @@ class AidReceive extends StatelessWidget {
                   ),
                   Row(
                     children: <Widget>[
-                      aidReceive.email != null
+                      aidReceive?.email != null
                           ? CustomWidget.getSinglePageEmail(thirty,
                           aidReceive.email, aidReceive.title, this.buildContext)
                           : Container(),
-                      aidReceive.phone != null
+                      aidReceive?.phone != null
                           ? CustomWidget.getSinglePagePhone(thirty,
                           aidReceive.phone, this.buildContext)
                           : Container()
