@@ -194,45 +194,42 @@ class AidOffer extends State<Aid> {
       ),
     );
 
-    list.add(
-      Padding(
-        padding: EdgeInsets.all(thirty),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Flexible(
-              child: Text(
-                Model.AidOffer.EMAIL_TEXT,
-                style: TextStyle(
-                  fontSize: SizeConfig.getSafeBlockVerticalBy(
-                      Default.STANDARD_FONT_SIZE),
-                ),
+    list.add(Padding(
+      padding: EdgeInsets.all(thirty),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Flexible(
+            child: Text(
+              Model.AidOffer.EMAIL_TEXT,
+              style: TextStyle(
+                fontSize: SizeConfig.getSafeBlockVerticalBy(
+                    Default.STANDARD_FONT_SIZE),
               ),
             ),
-            InkWell(
-              splashColor: Color(Default.COLOR_GREEN),
-              onTap: () => TapAction().sendMail(
-                  widget.aidOffer.email,
-                  widget.aidOffer.title,
-                  context),
-              onLongPress: () => ClipboardService.copyAndNotify(
-                  context: context, text: widget.aidOffer.email),
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: SizeConfig.getSafeBlockVerticalBy(1),
-                ),
-                child: Icon(
-                  Icons.email,
-                  color: Colors.grey,
-                  size: SizeConfig.getSafeBlockVerticalBy(4),
-                  semanticLabel: 'E-Mail',
-                ),
+          ),
+          InkWell(
+            splashColor: Color(Default.COLOR_GREEN),
+            onTap: () => TapAction().sendMail(
+                widget.aidOffer.email, widget.aidOffer.title, context,
+                body: Model.AidOffer.EMAIL_BODY),
+            onLongPress: () => ClipboardService.copyAndNotify(
+                context: context, text: widget.aidOffer.email),
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: SizeConfig.getSafeBlockVerticalBy(1),
+              ),
+              child: Icon(
+                Icons.email,
+                color: Colors.grey,
+                size: SizeConfig.getSafeBlockVerticalBy(4),
+                semanticLabel: 'E-Mail',
               ),
             ),
-          ],
-        ),
-      )
-    );
+          ),
+        ],
+      ),
+    ));
 
     return list;
   }

@@ -4,10 +4,17 @@ import 'package:skg_hagen/src/common/service/environment.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TapAction {
-  void sendMail(String email, String title, BuildContext context) async {
+  void sendMail(String email, String title, BuildContext context,
+      {String body}) async {
     final String subject =
         Environment.isiOS(context) ? Uri.encodeComponent(title) : title;
-    final String uri = 'mailto:$email?subject=$subject';
+
+    final String bodyContent = body != null && Environment.isiOS(context)
+        ? Uri.encodeComponent(body)
+        : body;
+
+    String uri = 'mailto:$email?subject=$subject';
+    uri = body != null ? "$uri&body=$bodyContent" : uri;
 
     if (await canLaunch(uri)) {
       await launch(uri);
