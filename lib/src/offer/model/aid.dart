@@ -8,8 +8,6 @@ class Aid {
   final List<AidOfferQuestion> offerQuestion;
 
   static const String NAME = 'Corona-Hinweis / Nachbarschafts-Hilfe';
-  static const String FOOTER =
-      'Ob Angebote, Gruppen oder Kreise stattfinden, erfragen Sie bitte per E-Mail.';
 
   Aid({this.offer, this.receive, this.offerQuestion});
 

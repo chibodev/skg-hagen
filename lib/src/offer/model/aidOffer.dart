@@ -6,6 +6,11 @@ class AidOffer {
 
   static const String NAME = 'Helfer';
   static const String VOLUNTEER = 'assets/images/icon/volunteer.png';
+  static const String SUCCESS = 'Die Daten wurden erfolgreich übermittelt.';
+  static const String ERROR =
+      'Die Daten wurden nicht erfolgreich übermittelt. Versende diese bitte per E-Mail.';
+  static const String INCOMPLETE = 'BITTE vollständig aussfüllen';
+  static const String EMAIL_TEXT = 'Alternativ deine Daten per Mail versenden.';
 
   AidOffer({
     this.title,

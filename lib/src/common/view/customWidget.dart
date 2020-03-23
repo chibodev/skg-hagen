@@ -445,4 +445,28 @@ class CustomWidget {
       onTap: () => Share.share(text, subject: subject),
     );
   }
+
+  static ScaffoldFeatureController<SnackBar, SnackBarClosedReason>
+      showNotification(BuildContext context, String text, IconData icon,
+          Color backgroundColor) {
+    return Scaffold.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: backgroundColor,
+        content: ListTile(
+          leading: Icon(
+            icon,
+            color: Colors.white,
+          ),
+          title: Text(
+            text,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize:
+                  SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
