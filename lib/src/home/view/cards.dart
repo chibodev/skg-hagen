@@ -25,6 +25,10 @@ class Cards {
   bool _dataAvailable = true;
   BuildContext _context;
 
+  Cards() {
+    _getAidOffers();
+  }
+
   Widget getCards(BuildContext context) {
     this._context = context;
     SizeConfig().init(_context);
@@ -83,7 +87,6 @@ class Cards {
                   response.data != null) {
                 return InkWell(
                   onTap: () {
-                    _getAidOffers();
                     return showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -173,7 +176,7 @@ class Cards {
                                   MaterialPageRoute<dynamic>(
                                     builder: (BuildContext _context) =>
                                         Controller.Aid(
-                                      aidOffer: null,
+                                      aidOffer: _aid?.offer,
                                       context: _context,
                                       dataAvailable: _dataAvailable,
                                       aidOfferQuestion: _aid?.offerQuestion,

@@ -11,7 +11,7 @@ class AidOffer {
       'Die Daten wurden nicht erfolgreich übermittelt. Versende diese bitte per E-Mail.';
   static const String INCOMPLETE = 'BITTE vollständig aussfüllen';
   static const String EMAIL_TEXT = 'Alternativ deine Daten per Mail versenden.';
-  static const String EMAIL_BODY = 'Liebes Gemeindemanagement, \n\nWas ich übernehmen könnte\n'
+  static const String EMAIL_BODY = 'Liebes Gemeindemanagement! \n\nWas ich übernehmen könnte\n'
       '- Einkäufe im Lebensmittelgeschäft, in der Drogerie oder Apotheke - Ja/Nein\n'
       '- andere kleine Besorgungen - Ja/Nein\n'
       '- mit dem Hund raus gehen - Ja/Nein\n\n'
