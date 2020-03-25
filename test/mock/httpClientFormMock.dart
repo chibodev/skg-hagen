@@ -4,8 +4,8 @@ import 'package:dio/dio.dart';
 
 import 'httpClientErrorMock.dart';
 
-class HTTPClientIntercessionMock {
-  static Future<Response<dynamic>> intercessionPost({int statusCode}) async {
+class HTTPClientFormMock {
+  static Future<Response<dynamic>> formPost({int statusCode}) async {
     Response<dynamic> response;
 
     switch (statusCode) {

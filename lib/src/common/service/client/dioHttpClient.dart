@@ -67,7 +67,7 @@ class DioHTTPClient {
     http.initialiseInterceptors('cache');
 
     final bool refreshState = refresh != null;
-    final bool hasInternet = await Network().hasInternet();
+    final bool hasInternet = await network.hasInternet();
 
     if (hasInternet) {
       options = buildCacheOptions(Duration(days: 2),

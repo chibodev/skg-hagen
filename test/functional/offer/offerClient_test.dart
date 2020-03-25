@@ -26,7 +26,7 @@ void main() {
   });
 
   test('OfferClient successfully retrieves data', () async {
-    when(network.hasInternet()).thenAnswer((_) async => false);
+    when(network.hasInternet()).thenAnswer((_) async => true);
     when(
       httpClient.getJSONResponse(
         http: httpClient,
