@@ -15,9 +15,9 @@ import 'package:skg_hagen/src/home/repository/monthlyScriptureClient.dart';
 import 'package:skg_hagen/src/home/service/singleCard.dart';
 import 'package:skg_hagen/src/menu/controller/menu.dart';
 import 'package:skg_hagen/src/offer/controller/aid.dart' as Controller;
+import 'package:skg_hagen/src/offer/controller/aidReceive.dart';
 import 'package:skg_hagen/src/offer/model/aid.dart' as Model;
 import 'package:skg_hagen/src/offer/repository/aidOfferClient.dart';
-import 'package:skg_hagen/src/offer/view/aidReceive.dart';
 
 class Cards extends State<Home> {
   MonthlyScriptureClient monthlyScriptureClient = MonthlyScriptureClient();
@@ -26,7 +26,9 @@ class Cards extends State<Home> {
   bool _dataAvailable = true;
   BuildContext _context;
 
-  Cards() {
+  @override
+  void initState() {
+    super.initState();
     _getAidOffers();
   }
 

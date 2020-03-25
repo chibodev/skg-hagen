@@ -3,21 +3,11 @@ import 'package:flutter/rendering.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
+import 'package:skg_hagen/src/offer/controller/aidReceive.dart' as Controller;
 import 'package:skg_hagen/src/offer/model/aidReceive.dart' as Model;
 import 'package:skg_hagen/src/offer/model/offers.dart';
 
-class AidReceive extends StatelessWidget {
-  final Model.AidReceive aidReceive;
-  final BuildContext buildContext;
-  final bool dataAvailable;
-
-  const AidReceive(
-      {Key key,
-      this.buildContext,
-      @required this.aidReceive,
-      this.dataAvailable = true})
-      : super(key: key);
-
+class AidReceive extends State<Controller.AidReceive> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -46,11 +36,11 @@ class AidReceive extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Flexible(
-                    child: aidReceive != null
+                    child: widget?.aidReceive != null
                         ? Padding(
                             padding: EdgeInsets.all(thirty),
                             child: SelectableText(
-                              aidReceive.description,
+                              widget?.aidReceive?.description,
                               style: TextStyle(
                                 fontSize: SizeConfig.getSafeBlockVerticalBy(
                                     Default.STANDARD_FONT_SIZE),
@@ -61,13 +51,16 @@ class AidReceive extends StatelessWidget {
                   ),
                   Row(
                     children: <Widget>[
-                      aidReceive?.email != null
-                          ? CustomWidget.getSinglePageEmail(thirty,
-                          aidReceive.email, aidReceive.title, this.buildContext)
+                      widget?.aidReceive?.email != null
+                          ? CustomWidget.getSinglePageEmail(
+                              thirty,
+                              widget?.aidReceive?.email,
+                              widget?.aidReceive?.title,
+                              widget?.buildContext)
                           : Container(),
-                      aidReceive?.phone != null
+                      widget?.aidReceive?.phone != null
                           ? CustomWidget.getSinglePagePhone(thirty,
-                          aidReceive.phone, this.buildContext)
+                              widget?.aidReceive?.phone, widget?.buildContext)
                           : Container()
                     ],
                   ),
@@ -80,7 +73,7 @@ class AidReceive extends StatelessWidget {
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          !dataAvailable ? CustomWidget.noInternet() : Container(),
+          !widget.dataAvailable ? CustomWidget.noInternet() : Container(),
         ],
       ),
     );
