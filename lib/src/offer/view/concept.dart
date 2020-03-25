@@ -3,21 +3,11 @@ import 'package:flutter/rendering.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
+import 'package:skg_hagen/src/offer/controller/conceptController.dart';
 import 'package:skg_hagen/src/offer/model/concept.dart' as Model;
 import 'package:skg_hagen/src/offer/model/offers.dart';
 
-class Concept extends StatelessWidget {
-  final List<Model.Concept> concept;
-  final BuildContext context;
-  final bool dataAvailable;
-
-  const Concept(
-      {Key key,
-      this.context,
-      @required this.concept,
-      this.dataAvailable = true})
-      : super(key: key);
-
+class Concept extends State<ConceptController> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -44,16 +34,18 @@ class Concept extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Flexible(
-                    child: concept.isNotEmpty ? Padding(
-                      padding: EdgeInsets.all(thirty),
-                      child: SelectableText(
-                        concept?.first?.description,
-                        style: TextStyle(
-                          fontSize: SizeConfig.getSafeBlockVerticalBy(
-                              Default.STANDARD_FONT_SIZE),
-                        ),
-                      ),
-                    ) : CustomWidget.centeredNoEntry(),
+                    child: widget.concept.isNotEmpty
+                        ? Padding(
+                            padding: EdgeInsets.all(thirty),
+                            child: SelectableText(
+                              widget?.concept?.first?.description,
+                              style: TextStyle(
+                                fontSize: SizeConfig.getSafeBlockVerticalBy(
+                                    Default.STANDARD_FONT_SIZE),
+                              ),
+                            ),
+                          )
+                        : CustomWidget.centeredNoEntry(),
                   ),
                 ],
               ),
@@ -64,7 +56,7 @@ class Concept extends StatelessWidget {
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          !dataAvailable ? CustomWidget.noInternet() : Container(),
+          !widget.dataAvailable ? CustomWidget.noInternet() : Container(),
         ],
       ),
     );

@@ -4,21 +4,11 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
+import 'package:skg_hagen/src/offer/controller/confirmationAppointmentController.dart';
 import 'package:skg_hagen/src/offer/model/appointment.dart';
 import 'package:skg_hagen/src/offer/model/offers.dart';
 
-class ConfirmationAppointment extends StatelessWidget {
-  final List<Appointment> appointment;
-  final BuildContext context;
-  final bool dataAvailable;
-
-  const ConfirmationAppointment(
-      {Key key,
-      this.context,
-      @required this.appointment,
-      this.dataAvailable = true})
-      : super(key: key);
-
+class ConfirmationAppointment extends State<ConfirmationAppointmentController> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -41,10 +31,10 @@ class ConfirmationAppointment extends StatelessWidget {
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) => dataAvailable
-                    ? _buildRows(this.appointment[index], context)
+                (BuildContext context, int index) => widget.dataAvailable
+                    ? _buildRows(widget.appointment[index], context)
                     : CustomWidget.buildSliverSpinner(),
-                childCount: appointment?.length ?? 0,
+                childCount: widget?.appointment?.length ?? 0,
               ),
             ),
           ],
@@ -53,7 +43,7 @@ class ConfirmationAppointment extends StatelessWidget {
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          !dataAvailable ? CustomWidget.noInternet() : Container(),
+          !widget.dataAvailable ? CustomWidget.noInternet() : Container(),
         ],
       ),
     );

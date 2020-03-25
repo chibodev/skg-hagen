@@ -3,15 +3,11 @@ import 'package:flutter/rendering.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
+import 'package:skg_hagen/src/offer/controller/musicController.dart';
 import 'package:skg_hagen/src/offer/model/music.dart' as Model;
 import 'package:skg_hagen/src/offer/model/offers.dart';
 
-class Music extends StatelessWidget {
-  final Model.Music music;
-  final BuildContext context;
-
-  const Music({Key key, this.context, @required this.music}) : super(key: key);
-
+class Music extends State<MusicController> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -39,23 +35,29 @@ class Music extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  CustomWidget.getSinglePageTitle(thirty, music.title),
-                  music.imageUrl != null
-                      ? CustomWidget.getImageFromNetwork(thirty, music.imageUrl)
+                  CustomWidget.getSinglePageTitle(thirty, widget?.music?.title),
+                  widget?.music?.imageUrl != null
+                      ? CustomWidget.getImageFromNetwork(
+                          thirty, widget?.music?.imageUrl)
                       : Container(),
                   CustomWidget.getSinglePageDescription(
-                      thirty, music.description),
-                  music.occurrence.length > 2
-                      ? CustomWidget.getSinglePageOccurrence(thirty,
-                          Default.capitalize(music.getFormattedOccurrence()))
+                      thirty, widget?.music?.description),
+                  widget.music.occurrence.length > 2
+                      ? CustomWidget.getSinglePageOccurrence(
+                          thirty,
+                          Default.capitalize(
+                              widget?.music?.getFormattedOccurrence()))
                       : Container(),
-                  music.email.length > 2
-                      ? CustomWidget.getSinglePageEmail(
-                          thirty, music.email, music.title, context)
+                  widget.music.email.length > 2
+                      ? CustomWidget.getSinglePageEmail(thirty,
+                          widget?.music?.email, widget?.music?.title, context)
                       : Container(),
                   Padding(
-                    padding: EdgeInsets.only(bottom: SizeConfig.getSafeBlockVerticalBy(1)),
-                    child: CustomWidget.getAddressWithAction(music.address, room: music.room),
+                    padding: EdgeInsets.only(
+                        bottom: SizeConfig.getSafeBlockVerticalBy(1)),
+                    child: CustomWidget.getAddressWithAction(
+                        widget?.music?.address,
+                        room: widget?.music?.room),
                   ),
                 ],
               ),

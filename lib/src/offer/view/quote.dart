@@ -4,18 +4,11 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
+import 'package:skg_hagen/src/offer/controller/quoteController.dart';
 import 'package:skg_hagen/src/offer/model/offers.dart';
 import 'package:skg_hagen/src/offer/model/quote.dart' as Model;
 
-class Quote extends StatelessWidget {
-  final List<Model.Quote> quote;
-  final BuildContext context;
-  final bool dataAvailable;
-
-  const Quote(
-      {Key key, this.context, @required this.quote, this.dataAvailable = true})
-      : super(key: key);
-
+class Quote extends State<QuoteController> {
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -38,10 +31,10 @@ class Quote extends StatelessWidget {
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) => dataAvailable
-                    ? _buildRows(this.quote[index], context)
+                (BuildContext context, int index) => widget.dataAvailable
+                    ? _buildRows(widget?.quotes[index], context)
                     : CustomWidget.buildSliverSpinner(),
-                childCount: quote?.length ?? 0,
+                childCount: widget?.quotes?.length ?? 0,
               ),
             ),
           ],
@@ -50,7 +43,7 @@ class Quote extends StatelessWidget {
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          !dataAvailable ? CustomWidget.noInternet() : Container(),
+          !widget.dataAvailable ? CustomWidget.noInternet() : Container(),
         ],
       ),
     );

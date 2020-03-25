@@ -8,7 +8,6 @@ class Confirmation {
   final List<Quote> quote;
   static const String NAME = 'Konfirmanden';
 
-
   Confirmation({this.appointment, this.concept, this.quote});
 
   factory Confirmation.fromJson(Map<String, dynamic> json) {

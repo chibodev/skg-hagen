@@ -5,6 +5,11 @@ import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/aid.dart' as Controller;
 import 'package:skg_hagen/src/offer/controller/aidReceive.dart';
+import 'package:skg_hagen/src/offer/controller/conceptController.dart';
+import 'package:skg_hagen/src/offer/controller/confirmationAppointmentController.dart';
+import 'package:skg_hagen/src/offer/controller/musicController.dart';
+import 'package:skg_hagen/src/offer/controller/projectsController.dart';
+import 'package:skg_hagen/src/offer/controller/quoteController.dart';
 import 'package:skg_hagen/src/offer/model/aid.dart';
 import 'package:skg_hagen/src/offer/model/aidOffer.dart' as ModelAidOffer;
 import 'package:skg_hagen/src/offer/model/aidReceive.dart' as ModelAidReceive;
@@ -15,11 +20,6 @@ import 'package:skg_hagen/src/offer/model/music.dart';
 import 'package:skg_hagen/src/offer/model/offer.dart';
 import 'package:skg_hagen/src/offer/model/project.dart';
 import 'package:skg_hagen/src/offer/model/quote.dart';
-import 'package:skg_hagen/src/offer/view/concept.dart' as View;
-import 'package:skg_hagen/src/offer/view/confirmationAppointment.dart';
-import 'package:skg_hagen/src/offer/view/music.dart' as View;
-import 'package:skg_hagen/src/offer/view/projects.dart';
-import 'package:skg_hagen/src/offer/view/quote.dart' as View;
 
 class Cards {
   BuildContext _buildContext;
@@ -135,8 +135,8 @@ class Cards {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute<dynamic>(
-                builder: (BuildContext _context) => Projects(
-                  projects: card,
+                builder: (BuildContext _context) => ProjectsController(
+                  project: card,
                   context: context,
                 ),
               ),
@@ -178,7 +178,7 @@ class Cards {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute<dynamic>(
-                builder: (BuildContext _context) => View.Music(
+                builder: (BuildContext _context) => MusicController(
                   music: card,
                   context: context,
                 ),
@@ -228,7 +228,8 @@ class Cards {
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute<dynamic>(
-                            builder: (BuildContext _context) => View.Concept(
+                            builder: (BuildContext _context) =>
+                                ConceptController(
                               concept: card.concept,
                               context: context,
                               dataAvailable: this._dataAvailable,
@@ -265,8 +266,8 @@ class Cards {
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute<dynamic>(
-                            builder: (BuildContext _context) => View.Quote(
-                              quote: card.quote,
+                            builder: (BuildContext _context) => QuoteController(
+                              quotes: card.quote,
                               context: context,
                               dataAvailable: this._dataAvailable,
                             ),
@@ -303,7 +304,7 @@ class Cards {
                           context,
                           MaterialPageRoute<dynamic>(
                             builder: (BuildContext _context) =>
-                                ConfirmationAppointment(
+                                ConfirmationAppointmentController(
                               appointment: card.appointment,
                               context: context,
                               dataAvailable: this._dataAvailable,
