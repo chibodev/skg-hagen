@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
@@ -59,7 +60,7 @@ class AidOffer extends State<Aid> {
                                 widget.aidOffer.description,
                                 style: TextStyle(
                                   fontSize: SizeConfig.getSafeBlockVerticalBy(
-                                      Default.STANDARD_FONT_SIZE),
+                                      appFont.primarySize),
                                 ),
                               ),
                             )
@@ -203,8 +204,8 @@ class AidOffer extends State<Aid> {
               child: Text(
                 Model.AidOffer.EMAIL_TEXT,
                 style: TextStyle(
-                  fontSize: SizeConfig.getSafeBlockVerticalBy(
-                      Default.STANDARD_FONT_SIZE),
+                  fontSize:
+                      SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                 ),
               ),
             ),
@@ -283,8 +284,7 @@ class AidOffer extends State<Aid> {
         text,
         style: TextStyle(
           fontWeight: weight,
-          fontSize:
-              SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
         ),
       ),
     );

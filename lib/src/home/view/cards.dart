@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
+import 'package:skg_hagen/src/common/model/font.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
@@ -105,7 +107,7 @@ class Cards extends State<Home> {
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
                                     fontSize: SizeConfig.getSafeBlockVerticalBy(
-                                        Default.STANDARD_FONT_SIZE),
+                                        appFont.primarySize),
                                   ),
                                 ),
                               ),
@@ -129,9 +131,9 @@ class Cards extends State<Home> {
                                     style: TextStyle(
                                         fontSize:
                                             SizeConfig.getSafeBlockVerticalBy(
-                                                2.3),
+                                                appFont.primarySize),
                                         color: Colors.white,
-                                        fontFamily: Default.FONT),
+                                        fontFamily: Font.NAME),
                                   ),
                                 ),
                               ),
@@ -227,7 +229,7 @@ class Cards extends State<Home> {
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: SizeConfig.getSafeBlockVerticalBy(
-                              Default.STANDARD_FONT_SIZE),
+                              appFont.primarySize),
                         ),
                       ),
                     ),
@@ -259,7 +261,7 @@ class Cards extends State<Home> {
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          Default.STANDARD_FONT_SIZE),
+                          appFont.primarySize),
                     ),
                   ),
                   Spacer(),
@@ -288,7 +290,7 @@ class Cards extends State<Home> {
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          Default.SUBSTANDARD_FONT_SIZE),
+                          appFont.primarySize),
                     ),
                   ),
                   onPressed: () {
@@ -308,9 +310,9 @@ class Cards extends State<Home> {
 
   Widget _getDevotional(String oldTestamentText) {
     final TextStyle style = TextStyle(
-        fontSize: SizeConfig.getSafeBlockVerticalBy(2.3),
+        fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
         color: Colors.white,
-        fontFamily: Default.FONT);
+        fontFamily: Font.NAME);
 
     return Text(
       oldTestamentText,
@@ -321,9 +323,9 @@ class Cards extends State<Home> {
   Widget _getDevionalAndLesson(
       String oldTestamentText, String newTestamentText) {
     final TextStyle style = TextStyle(
-        fontSize: SizeConfig.getSafeBlockVerticalBy(2.3),
+        fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
         color: Colors.white,
-        fontFamily: Default.FONT);
+        fontFamily: Font.NAME);
 
     return RichText(
       text: TextSpan(
@@ -365,10 +367,8 @@ class Cards extends State<Home> {
   }
 
   Widget _buildRows(CardContent card) {
-    final double thirtyPercent =
-        SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE);
-    final double tenPercent =
-        SizeConfig.getSafeBlockHorizontalBy(Default.SUBSTANDARD_FONT_SIZE);
+    final double verticalSize = SizeConfig.getSafeBlockVerticalBy(2.0);
+    final double horizontalSize = SizeConfig.getSafeBlockHorizontalBy(1.7);
 
     return Material(
       child: InkWell(
@@ -385,25 +385,31 @@ class Cards extends State<Home> {
               ),
               Container(
                 padding: EdgeInsets.only(
-                    left: thirtyPercent,
-                    top: thirtyPercent,
-                    bottom: tenPercent),
+                    left: verticalSize,
+                    top: verticalSize,
+                    bottom: horizontalSize),
                 alignment: AlignmentDirectional.centerStart,
                 child: Text(
                   card.title.toLowerCase(),
                   style: TextStyle(
-                      fontFamily: Default.FONT, fontSize: thirtyPercent),
+                      fontFamily: Font.NAME,
+                      fontSize: SizeConfig.getSafeBlockVerticalBy(
+                          appFont.primarySize)),
                 ),
               ),
               Container(
                 padding:
-                    EdgeInsets.only(left: thirtyPercent, bottom: thirtyPercent),
+                    EdgeInsets.only(left: verticalSize, bottom: verticalSize),
                 alignment: AlignmentDirectional.centerStart,
-                child: Text(card.joinedSubtitle.toUpperCase(),
-                    style: TextStyle(
-                        color: Colors.black45,
-                        fontFamily: Default.FONT,
-                        fontSize: thirtyPercent)),
+                child: Text(
+                  card.joinedSubtitle.toUpperCase(),
+                  style: TextStyle(
+                    color: Colors.black45,
+                    fontFamily: Font.NAME,
+                    fontSize:
+                        SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
+                  ),
+                ),
               ),
             ],
           ),

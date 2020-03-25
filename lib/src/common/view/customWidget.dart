@@ -2,6 +2,7 @@ import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:share/share.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/address.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
@@ -46,7 +47,7 @@ class CustomWidget {
       name,
       style: TextStyle(
         color: (color != null) ? color : Colors.white,
-        fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+        fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
         shadows: noShadow == null
             ? <Shadow>[
                 Shadow(
@@ -76,8 +77,7 @@ class CustomWidget {
       child: Text(
         title,
         style: TextStyle(
-          fontSize:
-              SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
           color: textColor == true ? Colors.white : Colors.black,
         ),
       ),
@@ -96,8 +96,7 @@ class CustomWidget {
         style: TextStyle(
           color: Colors.grey,
           fontWeight: FontWeight.bold,
-          fontSize:
-              SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
         ),
       ),
     );
@@ -121,7 +120,7 @@ class CustomWidget {
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          Default.SUBSTANDARD_FONT_SIZE),
+                          appFont.primarySize),
                     ),
                   )
                 : Container(),
@@ -132,7 +131,7 @@ class CustomWidget {
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          Default.SUBSTANDARD_FONT_SIZE),
+                          appFont.primarySize),
                     ),
                   )
                 : Container(),
@@ -142,7 +141,7 @@ class CustomWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          Default.SUBSTANDARD_FONT_SIZE),
+                          appFont.primarySize),
                     ),
                   )
                 : Container(),
@@ -152,7 +151,7 @@ class CustomWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          Default.SUBSTANDARD_FONT_SIZE),
+                          appFont.primarySize),
                     ),
                   )
                 : Container(),
@@ -182,8 +181,7 @@ class CustomWidget {
         text,
         style: TextStyle(
           color: textColor == true ? Colors.white : Colors.grey,
-          fontSize:
-              SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
+          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
         ),
       ),
     );
@@ -206,7 +204,7 @@ class CustomWidget {
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          Default.SUBSTANDARD_FONT_SIZE),
+                          appFont.primarySize),
                     ),
                   ),
                 ),
@@ -258,8 +256,7 @@ class CustomWidget {
             Network.NO_INTERNET,
             style: TextStyle(
               color: Colors.white,
-              fontSize:
-                  SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+              fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
             ),
           ),
         ),
@@ -274,8 +271,7 @@ class CustomWidget {
         text,
         style: TextStyle(
           color: Colors.grey,
-          fontSize:
-              SizeConfig.getSafeBlockVerticalBy(Default.SUBSTANDARD_FONT_SIZE),
+          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
         ),
         textAlign: TextAlign.center,
       ),
@@ -286,7 +282,7 @@ class CustomWidget {
     return Text(
       name,
       style: TextStyle(
-        fontSize: SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+        fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
       ),
     );
   }
@@ -298,8 +294,7 @@ class CustomWidget {
         title,
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize:
-              SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
         ),
       ),
     );
@@ -311,8 +306,7 @@ class CustomWidget {
       child: SelectableText(
         description,
         style: TextStyle(
-          fontSize:
-              SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
         ),
       ),
     );
@@ -327,8 +321,7 @@ class CustomWidget {
         style: TextStyle(
           color: Colors.grey,
           fontWeight: FontWeight.bold,
-          fontSize:
-              SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
         ),
       ),
     );
@@ -461,8 +454,7 @@ class CustomWidget {
             text,
             style: TextStyle(
               color: Colors.white,
-              fontSize:
-                  SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+              fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
             ),
           ),
         ),

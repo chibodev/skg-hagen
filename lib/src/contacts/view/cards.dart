@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/address.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
@@ -163,8 +164,8 @@ class Cards {
               title: Text(
                 card.location,
                 style: TextStyle(
-                  fontSize: SizeConfig.getSafeBlockVerticalBy(
-                      Default.SUBSTANDARD_FONT_SIZE),
+                  fontSize:
+                      SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                 ),
               ),
             ),
@@ -202,7 +203,7 @@ class Cards {
                           ? Color(Default.COLOR_GREEN)
                           : Colors.white,
                       fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          Default.SUBSTANDARD_FONT_SIZE),
+                          appFont.primarySize),
                     ),
                   )
                 : Text(''),
@@ -214,7 +215,7 @@ class Cards {
                           ? Color(Default.COLOR_GREEN)
                           : Colors.white,
                       fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          Default.SUBSTANDARD_FONT_SIZE),
+                          appFont.primarySize),
                     ),
                   )
                 : Text(''),
@@ -239,8 +240,8 @@ class Cards {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
-                  fontSize: SizeConfig.getSafeBlockVerticalBy(
-                      Default.SUBSTANDARD_FONT_SIZE),
+                  fontSize:
+                      SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                 ),
               ),
             ),
@@ -251,8 +252,8 @@ class Cards {
                 opening,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: SizeConfig.getSafeBlockVerticalBy(
-                      Default.SUBSTANDARD_FONT_SIZE),
+                  fontSize:
+                      SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                 ),
               ),
             ),

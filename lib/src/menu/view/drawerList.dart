@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
+import 'package:skg_hagen/src/common/model/font.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
@@ -18,33 +20,27 @@ class DrawerList {
     SizeConfig().init(context);
 
     return Drawer(
-      child: Container(
-        decoration: BoxDecoration(
+        child: Container(
+      decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: <Color>[
-              Color(Default.COLOR_GREEN),
-              Colors.white
-            ]
-          )
-        ),
-        child: FutureBuilder<List<CardContent>>(
-          future: cards,
-          builder:
-              (BuildContext context, AsyncSnapshot<List<CardContent>> response) {
-            if (response.connectionState == ConnectionState.done &&
-                response.data != null) {
-              return _buildListView(context, response.data);
-            }
-            return CircularProgressIndicator(
-              valueColor:
-              AlwaysStoppedAnimation<Color>(Color(Default.COLOR_GREEN)),
-            );
-          },
-        ),
-      )
-    );
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: <Color>[Color(Default.COLOR_GREEN), Colors.white])),
+      child: FutureBuilder<List<CardContent>>(
+        future: cards,
+        builder:
+            (BuildContext context, AsyncSnapshot<List<CardContent>> response) {
+          if (response.connectionState == ConnectionState.done &&
+              response.data != null) {
+            return _buildListView(context, response.data);
+          }
+          return CircularProgressIndicator(
+            valueColor:
+                AlwaysStoppedAnimation<Color>(Color(Default.COLOR_GREEN)),
+          );
+        },
+      ),
+    ));
   }
 
   static Widget _buildListView(BuildContext context, List<CardContent> cards) {
@@ -126,9 +122,9 @@ class DrawerList {
             child: Text(
               text,
               style: TextStyle(
-                fontFamily: Default.FONT,
-                fontSize: SizeConfig.getSafeBlockVerticalBy(
-                    Default.STANDARD_FONT_SIZE),
+                fontFamily: Font.NAME,
+                fontSize:
+                    SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
               ),
             ),
           ),
@@ -150,8 +146,9 @@ class DrawerList {
             child: Text(
               text,
               style: TextStyle(
-                fontFamily: Default.FONT,
-                fontSize: SizeConfig.getSafeBlockVerticalBy(1.5),
+                fontFamily: Font.NAME,
+                fontSize:
+                    SizeConfig.getSafeBlockVerticalBy(appFont.secondarySize),
               ),
             ),
           ),

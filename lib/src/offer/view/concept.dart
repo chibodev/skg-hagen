@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
@@ -41,7 +42,7 @@ class Concept extends State<ConceptController> {
                               widget?.concept?.first?.description,
                               style: TextStyle(
                                 fontSize: SizeConfig.getSafeBlockVerticalBy(
-                                    Default.STANDARD_FONT_SIZE),
+                                    appFont.primarySize),
                               ),
                             ),
                           )

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
@@ -83,7 +84,7 @@ class Page extends State<Controller.Intercession> {
                     Model.Intercession.HEADER,
                     style: TextStyle(
                       fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          Default.STANDARD_FONT_SIZE),
+                          appFont.primarySize),
                     ),
                   ),
                 ),
@@ -149,7 +150,7 @@ class Page extends State<Controller.Intercession> {
                           Model.Intercession.EMAIL_TEXT,
                           style: TextStyle(
                             fontSize: SizeConfig.getSafeBlockVerticalBy(
-                                Default.SUBSTANDARD_FONT_SIZE),
+                                appFont.primarySize),
                           ),
                         ),
                       ),
@@ -228,8 +229,7 @@ class Page extends State<Controller.Intercession> {
         text,
         style: TextStyle(
           color: Colors.white,
-          fontSize:
-              SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
         ),
       ),
     );
