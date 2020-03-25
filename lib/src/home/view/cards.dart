@@ -6,6 +6,7 @@ import 'package:skg_hagen/src/common/service/client/assetClient.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
+import 'package:skg_hagen/src/home/controller/home.dart';
 import 'package:skg_hagen/src/home/model/aid.dart';
 import 'package:skg_hagen/src/home/model/cardContent.dart';
 import 'package:skg_hagen/src/home/model/monthlyScripture.dart';
@@ -18,7 +19,7 @@ import 'package:skg_hagen/src/offer/model/aid.dart' as Model;
 import 'package:skg_hagen/src/offer/repository/aidOfferClient.dart';
 import 'package:skg_hagen/src/offer/view/aidReceive.dart';
 
-class Cards {
+class Cards extends State<Home> {
   MonthlyScriptureClient monthlyScriptureClient = MonthlyScriptureClient();
   AidClient aidClient = AidClient();
   Model.Aid _aid;
@@ -29,7 +30,8 @@ class Cards {
     _getAidOffers();
   }
 
-  Widget getCards(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     this._context = context;
     SizeConfig().init(_context);
     return Scaffold(
