@@ -14,7 +14,7 @@ class AidOfferClient {
       {int index, bool refresh}) async {
     final Options options = await http.setOptions(http, network, refresh);
 
-    final Map<String, dynamic> jsonResponse = await http.getJSONResponse(
+    final dynamic jsonResponse = await http.getJSONResponse(
       http: http,
       options: options,
       path: PATH,
@@ -22,7 +22,7 @@ class AidOfferClient {
       cacheData: CACHE_DATA,
     );
 
-    if (jsonResponse != null) {
+    if (jsonResponse != null && jsonResponse.isNotEmpty) {
       return Aid.fromJson(jsonResponse);
     }
 
