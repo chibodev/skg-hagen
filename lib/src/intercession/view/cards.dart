@@ -71,6 +71,7 @@ class Page extends State<Controller.Intercession> {
               fit: BoxFit.cover,
             ),
           ),
+          actions: <Widget>[settingsMenu()],
         ),
         SliverToBoxAdapter(
           child: Container(

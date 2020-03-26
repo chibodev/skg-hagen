@@ -6,6 +6,7 @@ import 'package:skg_hagen/src/appointment/controller/appointment.dart'
 import 'package:skg_hagen/src/appointment/model/appointment.dart' as Model;
 import 'package:skg_hagen/src/appointment/model/appointments.dart';
 import 'package:skg_hagen/src/appointment/repository/appointmentClient.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
@@ -139,6 +140,7 @@ class Cards extends State<Controller.Appointment> {
               fit: BoxFit.cover,
             ),
           ),
+          actions: <Widget>[settingsMenu()],
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(

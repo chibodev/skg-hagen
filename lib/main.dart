@@ -18,6 +18,7 @@ import 'package:skg_hagen/src/kindergarten/controller/kindergarten.dart';
 import 'package:skg_hagen/src/legal/controller/imprint.dart';
 import 'package:skg_hagen/src/legal/controller/privacy.dart';
 import 'package:skg_hagen/src/offer/controller/offer.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,6 +35,7 @@ void main() async {
       (SharedPreferences sp) {
         sharedPreferences = sp;
         appFont = Font();
+        menu = SettingsMenu();
         SystemChrome.setPreferredOrientations(
             <DeviceOrientation>[DeviceOrientation.portraitUp]).then(
           (_) {

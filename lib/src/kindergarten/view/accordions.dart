@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
@@ -58,6 +59,7 @@ class Accordions extends State<Controller.Kindergarten> {
               fit: BoxFit.cover,
             ),
           ),
+          actions: <Widget>[settingsMenu()],
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(

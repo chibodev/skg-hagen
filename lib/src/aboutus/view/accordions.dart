@@ -3,6 +3,7 @@ import 'package:skg_hagen/src/aboutus/controller/aboutus.dart' as Controller;
 import 'package:skg_hagen/src/aboutus/model/aboutus.dart';
 import 'package:skg_hagen/src/aboutus/repository/aboutusClient.dart';
 import 'package:skg_hagen/src/aboutus/view/cards.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
@@ -56,6 +57,7 @@ class Accordions extends State<Controller.AboutUs> {
               fit: BoxFit.scaleDown,
             ),
           ),
+          actions: <Widget>[settingsMenu()],
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(

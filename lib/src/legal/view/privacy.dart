@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
@@ -46,6 +47,7 @@ class PrivacyView extends State<Controller.Privacy> {
               fit: BoxFit.cover,
             ),
           ),
+          actions: <Widget>[settingsMenu()],
         ),
         SliverToBoxAdapter(
           child: _privacy != null

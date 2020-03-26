@@ -20,6 +20,7 @@ import 'package:skg_hagen/src/offer/controller/aid.dart' as Controller;
 import 'package:skg_hagen/src/offer/controller/aidReceive.dart';
 import 'package:skg_hagen/src/offer/model/aid.dart' as Model;
 import 'package:skg_hagen/src/offer/repository/aidOfferClient.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Cards extends State<Home> {
   MonthlyScriptureClient monthlyScriptureClient = MonthlyScriptureClient();
@@ -44,7 +45,7 @@ class Cards extends State<Home> {
         title: Container(
           width: SizeConfig.getSafeBlockHorizontalBy(100),
           child: FutureBuilder<MonthlyScripture>(
-            future: _getText(),
+            future: _getDevotionalText(),
             builder: (BuildContext context,
                 AsyncSnapshot<MonthlyScripture> response) {
               if (response.connectionState == ConnectionState.done &&
@@ -55,6 +56,7 @@ class Cards extends State<Home> {
             },
           ),
         ),
+        actions: <Widget>[settingsMenu()],
         backgroundColor: Color(Default.COLOR_GREEN),
       ),
       body: Container(
@@ -344,7 +346,7 @@ class Cards extends State<Home> {
     );
   }
 
-  Future<MonthlyScripture> _getText() async {
+  Future<MonthlyScripture> _getDevotionalText() async {
     return await MonthlyScriptureClient()
         .getDevotion(DioHTTPClient(), Network());
   }
