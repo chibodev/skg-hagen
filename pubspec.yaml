@@ -47,6 +47,7 @@ flutter:
     #Config
     - .env
     - assets/config/cards.yaml
+    - assets/config/settings.yaml
     #Icons
     - assets/images/icon/facebook.png
     - assets/images/icon/instagram.png
