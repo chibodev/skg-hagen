@@ -7,8 +7,17 @@ import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/confirmationAppointmentController.dart';
 import 'package:skg_hagen/src/offer/model/appointment.dart';
 import 'package:skg_hagen/src/offer/model/offers.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class ConfirmationAppointment extends State<ConfirmationAppointmentController> {
+  SettingsMenu settingsMenu;
+
+  @override
+  void initState() {
+    super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -28,6 +37,7 @@ class ConfirmationAppointment extends State<ConfirmationAppointmentController> {
                   fit: BoxFit.cover,
                 ),
               ),
+              actions: <Widget>[settingsMenu.getMenu()],
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(

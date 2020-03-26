@@ -8,8 +8,17 @@ import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/quoteController.dart';
 import 'package:skg_hagen/src/offer/model/offers.dart';
 import 'package:skg_hagen/src/offer/model/quote.dart' as Model;
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Quote extends State<QuoteController> {
+  SettingsMenu settingsMenu;
+
+  @override
+  void initState() {
+    super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -29,6 +38,7 @@ class Quote extends State<QuoteController> {
                   fit: BoxFit.cover,
                 ),
               ),
+              actions: <Widget>[settingsMenu.getMenu()],
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(

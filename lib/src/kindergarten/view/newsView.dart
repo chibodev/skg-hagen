@@ -12,19 +12,17 @@ import 'package:skg_hagen/src/kindergarten/controller/news.dart';
 import 'package:skg_hagen/src/kindergarten/model/kindergarten.dart';
 import 'package:skg_hagen/src/kindergarten/model/news.dart' as Model;
 import 'package:skg_hagen/src/kindergarten/service/fileDownload.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class NewsView extends State<News> {
   static bool downloading = false;
   FileDownload fileDownload = FileDownload();
+  SettingsMenu settingsMenu;
 
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+    settingsMenu = SettingsMenu(pageView: this);
   }
 
   @override
@@ -47,6 +45,7 @@ class NewsView extends State<News> {
                   fit: BoxFit.cover,
                 ),
               ),
+              actions: <Widget>[settingsMenu.getMenu()],
             ),
             SliverToBoxAdapter(
               child: Column(

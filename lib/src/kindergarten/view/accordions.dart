@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
@@ -10,6 +9,7 @@ import 'package:skg_hagen/src/kindergarten/controller/kindergarten.dart'
 import 'package:skg_hagen/src/kindergarten/model/kindergarten.dart';
 import 'package:skg_hagen/src/kindergarten/repository/kindergartenClient.dart';
 import 'package:skg_hagen/src/kindergarten/view/cards.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Accordions extends State<Controller.Kindergarten> {
   Kindergarten _kindergarten;
@@ -17,10 +17,12 @@ class Accordions extends State<Controller.Kindergarten> {
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
   bool _dataAvailable = false;
+  SettingsMenu settingsMenu;
 
   @override
   void initState() {
     super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
     _getInfos();
   }
 
@@ -59,7 +61,7 @@ class Accordions extends State<Controller.Kindergarten> {
               fit: BoxFit.cover,
             ),
           ),
-          actions: <Widget>[settingsMenu()],
+          actions: <Widget>[settingsMenu.getMenu()],
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(

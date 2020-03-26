@@ -6,8 +6,17 @@ import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/projectsController.dart';
 import 'package:skg_hagen/src/offer/model/offers.dart';
 import 'package:skg_hagen/src/offer/model/project.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Projects extends State<ProjectsController> {
+  SettingsMenu settingsMenu;
+
+  @override
+  void initState() {
+    super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -28,6 +37,7 @@ class Projects extends State<ProjectsController> {
                   fit: BoxFit.cover,
                 ),
               ),
+              actions: <Widget>[settingsMenu.getMenu()],
             ),
             SliverToBoxAdapter(
               child: Column(

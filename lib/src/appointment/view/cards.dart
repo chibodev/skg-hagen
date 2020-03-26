@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:skg_hagen/src/appointment/controller/appointment.dart'
-    as Controller;
+import 'package:skg_hagen/src/appointment/controller/appointmentController.dart';
 import 'package:skg_hagen/src/appointment/model/appointment.dart' as Model;
 import 'package:skg_hagen/src/appointment/model/appointments.dart';
 import 'package:skg_hagen/src/appointment/repository/appointmentClient.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
-class Cards extends State<Controller.Appointment> {
+class Cards extends State<AppointmentController> {
   int _indexCounter = 0;
   Appointments appointments;
   final ScrollController _scrollController = ScrollController();
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
+  SettingsMenu settingsMenu;
 
   @override
   void initState() {
     super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
     _getInitialAppointments();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -140,7 +141,7 @@ class Cards extends State<Controller.Appointment> {
               fit: BoxFit.cover,
             ),
           ),
-          actions: <Widget>[settingsMenu()],
+          actions: <Widget>[settingsMenu.getMenu()],
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(

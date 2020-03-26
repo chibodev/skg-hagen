@@ -7,8 +7,17 @@ import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/aidReceive.dart' as Controller;
 import 'package:skg_hagen/src/offer/model/aidReceive.dart' as Model;
 import 'package:skg_hagen/src/offer/model/offers.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class AidReceive extends State<Controller.AidReceive> {
+  SettingsMenu settingsMenu;
+
+  @override
+  void initState() {
+    super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -29,6 +38,7 @@ class AidReceive extends State<Controller.AidReceive> {
                   fit: BoxFit.cover,
                 ),
               ),
+              actions: <Widget>[settingsMenu.getMenu()],
             ),
             SliverToBoxAdapter(
               child: Column(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
@@ -8,14 +7,17 @@ import 'package:skg_hagen/src/legal/controller/imprint.dart' as Controller;
 import 'package:skg_hagen/src/legal/model/imprint.dart';
 import 'package:skg_hagen/src/legal/repository/legalClient.dart';
 import 'package:skg_hagen/src/legal/view/page.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class ImprintView extends State<Controller.Imprint> {
   Imprint _imprint;
   bool _isPerformingRequest = false;
+  SettingsMenu settingsMenu;
 
   @override
   void initState() {
     super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
     _getImprint();
   }
 
@@ -47,7 +49,7 @@ class ImprintView extends State<Controller.Imprint> {
               fit: BoxFit.cover,
             ),
           ),
-          actions: <Widget>[settingsMenu()],
+          actions: <Widget>[settingsMenu.getMenu()],
         ),
         SliverToBoxAdapter(
           child: _imprint != null

@@ -5,7 +5,7 @@ class Font {
   double secondarySize;
   static const String PRIMARY_SIZE_NAME = 'standardFontSize';
   static const String SECONDARY_SIZE_NAME = 'secondaryFontSize';
-  static const double MAX = 10.0;
+  static const double MAX = 6.0;
   static const double PRIMARY_SIZE = 2.5;
   static const double SECONDARY_SIZE = 2.0;
   static const String NAME = 'Optima';
@@ -28,7 +28,7 @@ class Font {
   }
 
   void decreaseSize() {
-    if (primarySize < primarySize - 1) {
+    if (SECONDARY_SIZE < primarySize - 1) {
       primarySize = --primarySize;
       secondarySize = --secondarySize;
       _updateSharedPreferences();

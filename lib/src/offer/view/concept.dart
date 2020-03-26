@@ -7,8 +7,17 @@ import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/conceptController.dart';
 import 'package:skg_hagen/src/offer/model/concept.dart' as Model;
 import 'package:skg_hagen/src/offer/model/offers.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Concept extends State<ConceptController> {
+  SettingsMenu settingsMenu;
+
+  @override
+  void initState() {
+    super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -29,6 +38,7 @@ class Concept extends State<ConceptController> {
                   fit: BoxFit.cover,
                 ),
               ),
+              actions: <Widget>[settingsMenu.getMenu()],
             ),
             SliverToBoxAdapter(
               child: Row(

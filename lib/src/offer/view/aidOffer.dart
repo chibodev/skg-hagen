@@ -15,6 +15,7 @@ import 'package:skg_hagen/src/offer/model/aidOfferQuestion.dart';
 import 'package:skg_hagen/src/offer/model/helper.dart';
 import 'package:skg_hagen/src/offer/model/offers.dart';
 import 'package:skg_hagen/src/offer/repository/aidOfferClient.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class AidOffer extends State<Aid> {
   final List<bool> _checkboxValue = List<bool>();
@@ -23,6 +24,13 @@ class AidOffer extends State<Aid> {
   final TextEditingController _city = TextEditingController();
   final TextEditingController _contact = TextEditingController();
   final TextEditingController _reason = TextEditingController();
+  SettingsMenu settingsMenu;
+
+  @override
+  void initState() {
+    super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +53,7 @@ class AidOffer extends State<Aid> {
                     fit: BoxFit.cover,
                   ),
                 ),
+                actions: <Widget>[settingsMenu.getMenu()],
               ),
               SliverToBoxAdapter(
                 child: Column(

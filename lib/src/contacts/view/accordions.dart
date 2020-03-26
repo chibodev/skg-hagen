@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
@@ -9,6 +8,7 @@ import 'package:skg_hagen/src/contacts/controller/contacts.dart' as Controller;
 import 'package:skg_hagen/src/contacts/model/contacts.dart';
 import 'package:skg_hagen/src/contacts/repository/contactsClient.dart';
 import 'package:skg_hagen/src/contacts/view/cards.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Accordions extends State<Controller.Contacts> {
   Contacts _contacts;
@@ -16,10 +16,12 @@ class Accordions extends State<Controller.Contacts> {
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
   bool _dataAvailable = false;
+  SettingsMenu settingsMenu;
 
   @override
   void initState() {
     super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
     _getContacts();
   }
 
@@ -57,7 +59,7 @@ class Accordions extends State<Controller.Contacts> {
               fit: BoxFit.cover,
             ),
           ),
-          actions: <Widget>[settingsMenu()],
+          actions: <Widget>[settingsMenu.getMenu()],
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(

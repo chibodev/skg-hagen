@@ -3,12 +3,12 @@ import 'package:skg_hagen/src/aboutus/controller/aboutus.dart' as Controller;
 import 'package:skg_hagen/src/aboutus/model/aboutus.dart';
 import 'package:skg_hagen/src/aboutus/repository/aboutusClient.dart';
 import 'package:skg_hagen/src/aboutus/view/cards.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Accordions extends State<Controller.AboutUs> {
   AboutUs _aboutUs;
@@ -16,10 +16,12 @@ class Accordions extends State<Controller.AboutUs> {
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
   bool _dataAvailable = false;
+  SettingsMenu settingsMenu;
 
   @override
   void initState() {
     super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
     _getAboutUs();
   }
 
@@ -57,7 +59,7 @@ class Accordions extends State<Controller.AboutUs> {
               fit: BoxFit.scaleDown,
             ),
           ),
-          actions: <Widget>[settingsMenu()],
+          actions: <Widget>[settingsMenu.getMenu()],
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(

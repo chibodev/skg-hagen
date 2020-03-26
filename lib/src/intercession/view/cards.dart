@@ -14,10 +14,18 @@ import 'package:skg_hagen/src/intercession/controller/intercession.dart'
     as Controller;
 import 'package:skg_hagen/src/intercession/model/intercession.dart' as Model;
 import 'package:skg_hagen/src/intercession/repository/intercessionClient.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Page extends State<Controller.Intercession> {
   final TextEditingController _intercessionTextFieldcontroller =
       TextEditingController();
+  SettingsMenu settingsMenu;
+
+  @override
+  void initState() {
+    super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +79,7 @@ class Page extends State<Controller.Intercession> {
               fit: BoxFit.cover,
             ),
           ),
-          actions: <Widget>[settingsMenu()],
+          actions: <Widget>[settingsMenu.getMenu()],
         ),
         SliverToBoxAdapter(
           child: Container(
@@ -80,7 +88,8 @@ class Page extends State<Controller.Intercession> {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(
-                      top: SizeConfig.getSafeBlockVerticalBy(7)),
+                    top: SizeConfig.getSafeBlockVerticalBy(7),
+                  ),
                   child: Text(
                     Model.Intercession.HEADER,
                     style: TextStyle(
@@ -103,12 +112,15 @@ class Page extends State<Controller.Intercession> {
                           width: 0.5,
                           style: BorderStyle.solid),
                       borderRadius: BorderRadius.all(
-                        Radius.circular(SizeConfig.getSafeBlockVerticalBy(1)),
+                        Radius.circular(
+                          SizeConfig.getSafeBlockVerticalBy(1),
+                        ),
                       ),
                     ),
                     child: Padding(
-                      padding:
-                          EdgeInsets.all(SizeConfig.getSafeBlockVerticalBy(1)),
+                      padding: EdgeInsets.all(
+                        SizeConfig.getSafeBlockVerticalBy(1),
+                      ),
                       child: TextField(
                         controller: _intercessionTextFieldcontroller,
                         autofocus: true,

@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
 import 'package:skg_hagen/src/settings/model/settingsList.dart';
 import 'package:yaml/yaml.dart';
@@ -17,10 +19,20 @@ class Settings {
 
     listConfig.forEach((dynamic key, dynamic value) {
       value.forEach((dynamic item) {
-        settingsList.add(SettingsList(title: item));
+        if (SettingsList.VALID_SETTINGS.contains(item)) {
+          settingsList.add(SettingsList(title: item));
+        }
       });
     });
 
     return settingsList;
+  }
+
+  void increaseFontSize({@required dynamic page}) {
+    page?.setState(() => appFont.increaseSize());
+  }
+
+  void decreaseFontSize({@required dynamic page}) {
+    page?.setState(() => appFont.decreaseSize());
   }
 }

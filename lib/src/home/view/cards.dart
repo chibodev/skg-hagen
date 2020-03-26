@@ -28,10 +28,12 @@ class Cards extends State<Home> {
   Model.Aid _aid;
   bool _dataAvailable = true;
   BuildContext _context;
+  SettingsMenu settingsMenu;
 
   @override
   void initState() {
     super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
     _getAidOffers();
   }
 
@@ -56,7 +58,7 @@ class Cards extends State<Home> {
             },
           ),
         ),
-        actions: <Widget>[settingsMenu()],
+        actions: <Widget>[settingsMenu.getMenu()],
         backgroundColor: Color(Default.COLOR_GREEN),
       ),
       body: Container(
@@ -279,7 +281,7 @@ class Cards extends State<Home> {
                 ],
               ),
               content: SingleChildScrollView(
-                child: _getDevionalAndLesson(
+                child: _getDevotionalAndLesson(
                   response.data.oldTestamentText,
                   response.data.newTestamentText,
                 ),
@@ -322,7 +324,7 @@ class Cards extends State<Home> {
     );
   }
 
-  Widget _getDevionalAndLesson(
+  Widget _getDevotionalAndLesson(
       String oldTestamentText, String newTestamentText) {
     final TextStyle style = TextStyle(
         fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),

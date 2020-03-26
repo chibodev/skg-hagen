@@ -6,8 +6,17 @@ import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/musicController.dart';
 import 'package:skg_hagen/src/offer/model/music.dart' as Model;
 import 'package:skg_hagen/src/offer/model/offers.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Music extends State<MusicController> {
+  SettingsMenu settingsMenu;
+
+  @override
+  void initState() {
+    super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
@@ -28,6 +37,7 @@ class Music extends State<MusicController> {
                   fit: BoxFit.cover,
                 ),
               ),
+              actions: <Widget>[settingsMenu.getMenu()],
             ),
             SliverToBoxAdapter(
               child: Column(

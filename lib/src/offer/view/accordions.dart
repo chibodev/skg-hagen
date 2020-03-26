@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
@@ -13,6 +12,7 @@ import 'package:skg_hagen/src/offer/repository/aidOfferClient.dart';
 import 'package:skg_hagen/src/offer/repository/confirmationClient.dart';
 import 'package:skg_hagen/src/offer/repository/offerClient.dart';
 import 'package:skg_hagen/src/offer/view/cards.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Accordions extends State<Controller.Offer> {
   Offers _offers;
@@ -22,10 +22,12 @@ class Accordions extends State<Controller.Offer> {
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
   bool _dataAvailable = false;
+  SettingsMenu settingsMenu;
 
   @override
   void initState() {
     super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
     _getOffers();
   }
 
@@ -64,7 +66,7 @@ class Accordions extends State<Controller.Offer> {
               fit: BoxFit.cover,
             ),
           ),
-          actions: <Widget>[settingsMenu()],
+          actions: <Widget>[settingsMenu.getMenu()],
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
@@ -121,7 +123,5 @@ class Accordions extends State<Controller.Offer> {
       _options.add(_confirmation);
       _dataAvailable = true;
     }
-
-
   }
 }
