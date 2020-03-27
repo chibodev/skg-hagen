@@ -336,7 +336,7 @@ class Cards {
               ? InkWell(
                   splashColor: Color(Default.COLOR_GREEN),
                   onTap: () =>
-                      TapAction().sendMail(email, title, this._buildContext),
+                      TapAction().sendMail(email, title),
                   onLongPress: () => ClipboardService.copyAndNotify(
                       context: this._buildContext, text: email),
                   child: Padding(

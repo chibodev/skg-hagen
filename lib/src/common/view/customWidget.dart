@@ -231,7 +231,7 @@ class CustomWidget {
             ),
             child: InkWell(
               splashColor: Color(Default.COLOR_GREEN),
-              onTap: () => TapAction().sendMail(email, title, context),
+              onTap: () => TapAction().sendMail(email, title),
               onLongPress: () =>
                   ClipboardService.copyAndNotify(context: context, text: email),
               child: Padding(
@@ -342,7 +342,7 @@ class CustomWidget {
       padding: EdgeInsets.only(left: thirty, bottom: thirty),
       child: InkWell(
         splashColor: Color(Default.COLOR_GREEN),
-        onTap: () => TapAction().sendMail(email, title, context),
+        onTap: () => TapAction().sendMail(email, title),
         onLongPress: () =>
             ClipboardService.copyAndNotify(context: context, text: email),
         child: Padding(

@@ -177,8 +177,7 @@ class Cards extends State<Home> {
                                       onPressed: () {
                                         TapAction().sendMail(
                                             response.data.email,
-                                            response.data.title,
-                                            _context);
+                                            response.data.title);
                                       },
                                     ),
                                   ),

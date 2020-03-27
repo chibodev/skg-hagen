@@ -204,7 +204,7 @@ class AidOffer extends State<Aid> {
             InkWell(
               splashColor: Color(Default.COLOR_GREEN),
               onTap: () => TapAction().sendMail(widget.aidOffer.email,
-                  widget.aidOffer.title, contextOfBuilder,
+                  widget.aidOffer.title,
                   body: Model.AidOffer.EMAIL_BODY),
               onLongPress: () => ClipboardService.copyAndNotify(
                   context: contextOfBuilder, text: widget.aidOffer.email),

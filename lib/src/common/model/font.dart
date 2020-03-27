@@ -9,7 +9,7 @@ class Font {
 
   static const String PRIMARY_SIZE_NAME = 'standardFontSize';
   static const String SECONDARY_SIZE_NAME = 'secondaryFontSize';
-  static const String ICON_SIZE_NAME = 'secondaryFontSize';
+  static const String ICON_SIZE_NAME = 'iconSize';
   static const String BOX_SIZE_NAME = 'boxSize';
   static const String IMAGE_ICON_SIZE_NAME = 'imageIconSize';
   static const double MAX = 6.0;
