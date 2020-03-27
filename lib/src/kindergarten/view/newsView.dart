@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:open_file/open_file.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
@@ -90,8 +91,8 @@ class NewsView extends State<News> {
                     ? 'assets/images/icon/pdf.png'
                     : 'assets/images/icon/file.png',
                 fit: BoxFit.scaleDown,
-                width: SizeConfig.getSafeBlockVerticalBy(15),
-                height: SizeConfig.getSafeBlockHorizontalBy(15),
+                width: SizeConfig.getSafeBlockVerticalBy(appFont.boxSize),
+                height: SizeConfig.getSafeBlockHorizontalBy(appFont.boxSize),
               ),
             ),
           ),

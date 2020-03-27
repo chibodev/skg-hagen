@@ -138,7 +138,7 @@ class Cards {
                   actionExtentRatio: Default.SLIDE_RATIO,
                   actions: <Widget>[
                     CustomWidget.getSlidableShare(
-                        card.name, Default.getSharableContent(card.url), 3)
+                        card.name, Default.getSharableContent(card.url))
                   ],
                   child: _getSocialMediaIcon(card)),
             ],
@@ -159,7 +159,8 @@ class Cards {
                 card.getSocialImage(name),
                 fit: BoxFit.scaleDown,
                 width: SizeConfig.getSafeBlockVerticalBy(7),
-                height: SizeConfig.getSafeBlockHorizontalBy(7),
+                height:
+                    SizeConfig.getSafeBlockHorizontalBy(appFont.imageIconSize),
               ),
               title: Text(
                 card.location,
@@ -320,7 +321,7 @@ class Cards {
                     child: Icon(
                       Icons.phone,
                       color: Colors.black,
-                      size: SizeConfig.getSafeBlockVerticalBy(3),
+                      size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
                       semanticLabel: 'Phone',
                     ),
                   ),
@@ -346,7 +347,7 @@ class Cards {
                     child: Icon(
                       Icons.email,
                       color: Colors.black,
-                      size: SizeConfig.getSafeBlockVerticalBy(3),
+                      size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
                       semanticLabel: 'E-Mail',
                     ),
                   ),

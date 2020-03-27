@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
+import 'package:skg_hagen/src/common/model/font.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/clipboard.dart';
@@ -123,36 +124,26 @@ class Page extends State<Controller.Intercession> {
                       ),
                       child: TextField(
                         controller: _intercessionTextFieldcontroller,
+                        style: TextStyle(
+                          fontSize: SizeConfig.getSafeBlockVerticalBy(
+                              appFont.secondarySize),
+                        ),
                         autofocus: true,
                         expands: false,
                         keyboardType: TextInputType.multiline,
                         maxLines: null,
                         decoration: InputDecoration.collapsed(
-                            hintText: Model.Intercession.PLACEHOLDER),
+                          hintText: Model.Intercession.PLACEHOLDER,
+                          hintStyle: TextStyle(
+                            fontSize: SizeConfig.getSafeBlockVerticalBy(
+                                appFont.secondarySize - Font.SECONDARY_SIZE),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-                FlatButton(
-                  color: Color(Default.COLOR_GREEN),
-                  textColor: Colors.white,
-                  padding: EdgeInsets.only(
-                    left: SizeConfig.getSafeBlockVerticalBy(7),
-                    right: SizeConfig.getSafeBlockVerticalBy(7),
-                    top: SizeConfig.getSafeBlockVerticalBy(2),
-                    bottom: SizeConfig.getSafeBlockVerticalBy(2),
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  onPressed: () {
-                    if (_intercessionTextFieldcontroller.text.isNotEmpty) {
-                      _saveIntercession(
-                          context, _intercessionTextFieldcontroller.text);
-                    }
-                  },
-                  child: Text(('Senden').toUpperCase()),
-                ),
+                CustomWidget.getSendButton(context, _onSendPressed),
                 Padding(
                   padding: EdgeInsets.all(20),
                   child: Row(
@@ -182,7 +173,8 @@ class Page extends State<Controller.Intercession> {
                           child: Icon(
                             Icons.email,
                             color: Colors.grey,
-                            size: SizeConfig.getSafeBlockVerticalBy(4),
+                            size: SizeConfig.getSafeBlockVerticalBy(
+                                appFont.iconSize),
                             semanticLabel: 'E-Mail',
                           ),
                         ),
@@ -196,6 +188,12 @@ class Page extends State<Controller.Intercession> {
         )
       ],
     );
+  }
+
+  void _onSendPressed(BuildContext context) {
+    if (_intercessionTextFieldcontroller.text.isNotEmpty) {
+      _saveIntercession(context, _intercessionTextFieldcontroller.text);
+    }
   }
 
   Future<void> _saveIntercession(
@@ -237,6 +235,7 @@ class Page extends State<Controller.Intercession> {
       leading: Icon(
         icon,
         color: Colors.white,
+        size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
       ),
       title: Text(
         text,

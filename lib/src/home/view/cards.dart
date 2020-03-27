@@ -19,6 +19,8 @@ import 'package:skg_hagen/src/menu/controller/menu.dart';
 import 'package:skg_hagen/src/offer/controller/aid.dart' as Controller;
 import 'package:skg_hagen/src/offer/controller/aidReceive.dart';
 import 'package:skg_hagen/src/offer/model/aid.dart' as Model;
+import 'package:skg_hagen/src/offer/model/aidOffer.dart';
+import 'package:skg_hagen/src/offer/model/aidReceive.dart' as Model;
 import 'package:skg_hagen/src/offer/repository/aidOfferClient.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
@@ -85,6 +87,7 @@ class Cards extends State<Home> {
   }
 
   Column _bottomTab() {
+    final double twenty = SizeConfig.getSafeBlockVerticalBy(2);
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -103,6 +106,7 @@ class Cards extends State<Home> {
                         return AlertDialog(
                           backgroundColor: Color(Default.COLOR_GREEN),
                           title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
                               Expanded(
                                 child: Text(
@@ -122,6 +126,8 @@ class Cards extends State<Home> {
                                 child: Icon(
                                   Icons.share,
                                   color: Colors.white,
+                                  size: SizeConfig.getSafeBlockVerticalBy(
+                                      appFont.iconSize),
                                 ),
                               ),
                             ],
@@ -143,43 +149,63 @@ class Cards extends State<Home> {
                               ),
                               Row(
                                 children: <Widget>[
-                                  FlatButton(
-                                    child: Icon(
-                                      Icons.phone,
-                                      color: Colors.white,
-                                      size:
-                                          SizeConfig.getSafeBlockVerticalBy(4),
-                                      semanticLabel: 'Phone',
+                                  Padding(
+                                    padding: EdgeInsets.only(top: twenty),
+                                    child: FlatButton(
+                                      child: Icon(
+                                        Icons.phone,
+                                        color: Colors.white,
+                                        size: SizeConfig.getSafeBlockVerticalBy(
+                                            appFont.iconSize),
+                                        semanticLabel: 'Phone',
+                                      ),
+                                      onPressed: () {
+                                        TapAction().callMe(response.data.phone);
+                                      },
                                     ),
-                                    onPressed: () {
-                                      TapAction().callMe(response.data.phone);
-                                    },
                                   ),
-                                  FlatButton(
-                                    child: Icon(
-                                      Icons.email,
-                                      color: Colors.white,
-                                      size:
-                                          SizeConfig.getSafeBlockVerticalBy(4),
-                                      semanticLabel: 'Email',
+                                  Padding(
+                                    padding: EdgeInsets.only(top: twenty),
+                                    child: FlatButton(
+                                      child: Icon(
+                                        Icons.email,
+                                        color: Colors.white,
+                                        size: SizeConfig.getSafeBlockVerticalBy(
+                                            appFont.iconSize),
+                                        semanticLabel: 'Email',
+                                      ),
+                                      onPressed: () {
+                                        TapAction().sendMail(
+                                            response.data.email,
+                                            response.data.title,
+                                            _context);
+                                      },
                                     ),
-                                    onPressed: () {
-                                      TapAction().sendMail(response.data.email,
-                                          response.data.title, _context);
-                                    },
                                   ),
                                 ],
-                              )
+                              ),
                             ],
                           ),
                           actions: <Widget>[
+                            Divider(),
                             FlatButton.icon(
                               textColor: Colors.black,
                               icon: ImageIcon(
-                                AssetImage('assets/images/icon/volunteer.png'),
+                                AssetImage(AidOffer.VOLUNTEER),
                                 color: Colors.black,
+                                size: SizeConfig.getSafeBlockVerticalBy(
+                                    appFont.iconSize),
                               ),
-                              label: Text('Helfer'),
+                              label: Flexible(
+                                child: Text(
+                                  AidOffer.NAME,
+                                  style: TextStyle(
+                                      fontSize:
+                                          SizeConfig.getSafeBlockVerticalBy(
+                                              appFont.primarySize),
+                                      fontFamily: Font.NAME),
+                                ),
+                              ),
                               onPressed: () {
                                 Navigator.push(
                                   context,
@@ -195,13 +221,25 @@ class Cards extends State<Home> {
                                 );
                               },
                             ),
+                            Divider(),
                             FlatButton.icon(
                               textColor: Colors.black,
                               icon: ImageIcon(
-                                AssetImage('assets/images/icon/help.png'),
+                                AssetImage(Model.AidReceive.HELP),
                                 color: Colors.black,
+                                size: SizeConfig.getSafeBlockVerticalBy(
+                                    appFont.iconSize),
                               ),
-                              label: Text('Hilfe-Suchende'),
+                              label: Flexible(
+                                child: Text(
+                                  Model.AidReceive.NAME,
+                                  style: TextStyle(
+                                      fontSize:
+                                          SizeConfig.getSafeBlockVerticalBy(
+                                              appFont.primarySize),
+                                      fontFamily: Font.NAME),
+                                ),
+                              ),
                               onPressed: () {
                                 Navigator.push(
                                   context,
@@ -227,6 +265,8 @@ class Cards extends State<Home> {
                       leading: Icon(
                         Icons.info,
                         color: Colors.white,
+                        size:
+                            SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
                       ),
                       title: Text(
                         response.data.title,
@@ -258,25 +298,27 @@ class Cards extends State<Home> {
             return AlertDialog(
               backgroundColor: Color(Default.COLOR_GREEN),
               title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Text(
-                    MonthlyScripture.TITLE,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          appFont.primarySize),
+                  Flexible(
+                    child: Text(
+                      MonthlyScripture.TITLE,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: SizeConfig.getSafeBlockVerticalBy(
+                            appFont.primarySize),
+                      ),
                     ),
                   ),
-                  Spacer(),
                   FlatButton(
                     onPressed: () => Share.share(
                         response.data.getSharableContent(),
                         subject: MonthlyScripture.TITLE),
-                    child: Icon(
-                      Icons.share,
-                      color: Colors.white,
-                    ),
+                    child: Icon(Icons.share,
+                        color: Colors.white,
+                        size: SizeConfig.getSafeBlockVerticalBy(
+                            appFont.iconSize)),
                   ),
                 ],
               ),

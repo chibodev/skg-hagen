@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
+import 'package:skg_hagen/src/kindergarten/controller/news.dart';
 import 'package:skg_hagen/src/kindergarten/model/events.dart';
 import 'package:skg_hagen/src/kindergarten/model/news.dart' as Model;
-import 'package:skg_hagen/src/kindergarten/controller/news.dart';
 
 class Cards {
   BuildContext _context;
@@ -125,6 +126,8 @@ class Cards {
                       leading: Icon(
                         Icons.info,
                         color: Color(Default.COLOR_GREEN),
+                        size:
+                            SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
                       ),
                       title: CustomWidget.getCardTitle(card.title),
                     ),

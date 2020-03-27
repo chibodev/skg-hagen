@@ -9,6 +9,7 @@ class Default {
   static const String SHARE = 'Teilen';
   static const double SLIDE_ICON_SIZE = 4.0;
   static const double SLIDE_RATIO = 0.25;
+  static const String SEND = 'Senden';
 
   static String capitalize(String value) =>
       value[0].toUpperCase() + value.substring(1);

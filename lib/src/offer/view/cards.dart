@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
@@ -145,18 +146,21 @@ class Cards {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Flexible(
-                    child: Container(
-                  child: Padding(
-                    padding: const EdgeInsets.all(1.0),
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.info,
-                        color: Color(Default.COLOR_GREEN),
+                  child: Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.info,
+                          color: Color(Default.COLOR_GREEN),
+                          size: SizeConfig.getSafeBlockVerticalBy(
+                              appFont.iconSize),
+                        ),
+                        title: CustomWidget.getCardTitle(card.title),
                       ),
-                      title: CustomWidget.getCardTitle(card.title),
                     ),
                   ),
-                )),
+                ),
               ],
             ),
           ),
@@ -192,10 +196,10 @@ class Cards {
                   child: Padding(
                     padding: const EdgeInsets.all(1.0),
                     child: ListTile(
-                      leading: Icon(
-                        Icons.info,
-                        color: Color(Default.COLOR_GREEN),
-                      ),
+                      leading: Icon(Icons.info,
+                          color: Color(Default.COLOR_GREEN),
+                          size: SizeConfig.getSafeBlockVerticalBy(
+                              appFont.iconSize)),
                       title: CustomWidget.getCardTitle(card.title),
                     ),
                   ),
@@ -243,6 +247,8 @@ class Cards {
                               leading: Icon(
                                 Icons.lightbulb_outline,
                                 color: Color(Default.COLOR_GREEN),
+                                size: SizeConfig.getSafeBlockVerticalBy(
+                                    appFont.iconSize),
                               ),
                               title: CustomWidget.getCardTitle(Concept.NAME),
                             ),
@@ -277,10 +283,10 @@ class Cards {
                           child: Padding(
                             padding: const EdgeInsets.all(1.0),
                             child: ListTile(
-                              leading: Icon(
-                                Icons.message,
-                                color: Color(Default.COLOR_GREEN),
-                              ),
+                              leading: Icon(Icons.message,
+                                  color: Color(Default.COLOR_GREEN),
+                                  size: SizeConfig.getSafeBlockVerticalBy(
+                                      appFont.iconSize)),
                               title: CustomWidget.getCardTitle(Quote.NAME),
                             ),
                           ),
@@ -395,6 +401,7 @@ class Cards {
                   leading: ImageIcon(
                     AssetImage(iconImage),
                     color: Color(Default.COLOR_GREEN),
+                    size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
                   ),
                   title: CustomWidget.getCardTitle(cardTitle),
                 ),

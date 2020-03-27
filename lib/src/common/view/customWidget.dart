@@ -105,7 +105,7 @@ class CustomWidget {
   static Container getAddressWithAction(Address address, {String room}) {
     return Container(
       width: SizeConfig.screenHeight,
-      height: SizeConfig.getSafeBlockHorizontalBy(22.5),
+      height: SizeConfig.getSafeBlockHorizontalBy(appFont.boxSize),
       decoration: BoxDecoration(color: Color(Default.COLOR_GREEN)),
       child: InkWell(
         splashColor: Color(Default.COLOR_GREEN),
@@ -114,44 +114,52 @@ class CustomWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             room != null
-                ? Text(
-                    Default.capitalize(room),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          appFont.primarySize),
+                ? Flexible(
+                    child: Text(
+                      Default.capitalize(room),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: SizeConfig.getSafeBlockVerticalBy(
+                            appFont.primarySize),
+                      ),
                     ),
                   )
                 : Container(),
             address.name != null
-                ? Text(
-                    Default.capitalize(address.name),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          appFont.primarySize),
+                ? Flexible(
+                    child: Text(
+                      Default.capitalize(address.name),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: SizeConfig.getSafeBlockVerticalBy(
+                            appFont.primarySize),
+                      ),
                     ),
                   )
                 : Container(),
             address.street != null
-                ? Text(
-                    address.getStreetAndNumber(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          appFont.primarySize),
+                ? Flexible(
+                    child: Text(
+                      address.getStreetAndNumber(),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: SizeConfig.getSafeBlockVerticalBy(
+                            appFont.primarySize),
+                      ),
                     ),
                   )
                 : Container(),
             address.zip != null
-                ? Text(
-                    address.getZipAndCity(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          appFont.primarySize),
+                ? Flexible(
+                    child: Text(
+                      address.getZipAndCity(),
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: SizeConfig.getSafeBlockVerticalBy(
+                            appFont.primarySize),
+                      ),
                     ),
                   )
                 : Container(),
@@ -233,7 +241,7 @@ class CustomWidget {
                 child: Icon(
                   Icons.email,
                   color: Colors.grey,
-                  size: SizeConfig.getSafeBlockVerticalBy(4),
+                  size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
                   semanticLabel: 'Email',
                 ),
               ),
@@ -251,6 +259,7 @@ class CustomWidget {
           leading: Icon(
             Icons.info,
             color: Colors.white,
+            size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
           ),
           title: Text(
             Network.NO_INTERNET,
@@ -343,7 +352,7 @@ class CustomWidget {
           child: Icon(
             Icons.email,
             color: Colors.grey,
-            size: SizeConfig.getSafeBlockVerticalBy(4),
+            size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
             semanticLabel: 'Email',
           ),
         ),
@@ -367,7 +376,7 @@ class CustomWidget {
           child: Icon(
             Icons.phone,
             color: Colors.grey,
-            size: SizeConfig.getSafeBlockVerticalBy(4),
+            size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
             semanticLabel: 'Phone',
           ),
         ),
@@ -390,20 +399,29 @@ class CustomWidget {
       padding: EdgeInsets.only(
         bottom: SizeConfig.getSafeBlockHorizontalBy(3),
       ),
-      child: Text(Default.NO_CONTENT),
+      child: Text(
+        Default.NO_CONTENT,
+        style: TextStyle(
+          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.imageIconSize),
+        ),
+      ),
     );
   }
 
   static Center centeredNoEntry() {
     return Center(
       heightFactor: SizeConfig.getSafeBlockHorizontalBy(1),
-      child: Text(Default.NO_CONTENT),
+      child: Text(
+        Default.NO_CONTENT,
+        style: TextStyle(
+          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.imageIconSize),
+        ),
+      ),
     );
   }
 
   static IconSlideAction getSlidableCalender(String title, String info,
-      Address address, DateTime startDateTime, DateTime endDateTime,
-      [double size = Default.SLIDE_ICON_SIZE]) {
+      Address address, DateTime startDateTime, DateTime endDateTime) {
     final Event event = Event(
         title: title,
         description: info,
@@ -417,22 +435,21 @@ class CustomWidget {
       foregroundColor: Colors.white,
       iconWidget: Icon(
         Icons.calendar_today,
-        size: SizeConfig.getSafeBlockVerticalBy(size),
+        size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
         color: Colors.white,
       ),
       onTap: () => Add2Calendar.addEvent2Cal(event),
     );
   }
 
-  static Widget getSlidableShare(String subject, String text,
-      [double size = Default.SLIDE_ICON_SIZE]) {
+  static Widget getSlidableShare(String subject, String text) {
     return IconSlideAction(
       caption: Default.SHARE,
       color: Colors.black45,
       foregroundColor: Colors.white,
       iconWidget: Icon(
         Icons.share,
-        size: SizeConfig.getSafeBlockVerticalBy(size),
+        size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
         color: Colors.white,
       ),
       onTap: () => Share.share(text, subject: subject),
@@ -449,6 +466,7 @@ class CustomWidget {
           leading: Icon(
             icon,
             color: Colors.white,
+            size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
           ),
           title: Text(
             text,
@@ -457,6 +475,30 @@ class CustomWidget {
               fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  static FlatButton getSendButton(
+      BuildContext context, Function onSendPressed) {
+    return FlatButton(
+      color: Color(Default.COLOR_GREEN),
+      textColor: Colors.white,
+      padding: EdgeInsets.only(
+        left: SizeConfig.getSafeBlockVerticalBy(7),
+        right: SizeConfig.getSafeBlockVerticalBy(7),
+        top: SizeConfig.getSafeBlockVerticalBy(2),
+        bottom: SizeConfig.getSafeBlockVerticalBy(2),
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30.0),
+      ),
+      onPressed: () => onSendPressed(context),
+      child: Text(
+        (Default.SEND).toUpperCase(),
+        style: TextStyle(
+          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.secondarySize),
         ),
       ),
     );

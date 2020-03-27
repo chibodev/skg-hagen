@@ -162,6 +162,10 @@ class AidOffer extends State<Aid> {
                   EdgeInsets.only(left: thirty, right: thirty, bottom: top),
               child: TextField(
                 controller: option['controller'],
+                style: TextStyle(
+                  fontSize:
+                      SizeConfig.getSafeBlockVerticalBy(appFont.secondarySize),
+                ),
                 expands: false,
                 keyboardType: option['type'],
                 maxLines: null,
@@ -178,28 +182,7 @@ class AidOffer extends State<Aid> {
     list.add(
       Padding(
         padding: EdgeInsets.all(thirty),
-        child: FlatButton(
-          color: Color(Default.COLOR_GREEN),
-          textColor: Colors.white,
-          padding: EdgeInsets.only(
-            left: thirty,
-            right: SizeConfig.getSafeBlockVerticalBy(7),
-            top: SizeConfig.getSafeBlockVerticalBy(2),
-            bottom: SizeConfig.getSafeBlockVerticalBy(2),
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
-          ),
-          onPressed: () {
-            if (_isFormValid()) {
-              _saveHelper(contextOfBuilder);
-            } else {
-              CustomWidget.showNotification(contextOfBuilder,
-                  Model.AidOffer.INCOMPLETE, Icons.warning, Colors.redAccent);
-            }
-          },
-          child: Text(('Senden').toUpperCase()),
-        ),
+        child: CustomWidget.getSendButton(contextOfBuilder, _onSendPressed),
       ),
     );
 
@@ -232,7 +215,7 @@ class AidOffer extends State<Aid> {
                 child: Icon(
                   Icons.email,
                   color: Colors.grey,
-                  size: SizeConfig.getSafeBlockVerticalBy(4),
+                  size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
                   semanticLabel: 'E-Mail',
                 ),
               ),
@@ -243,6 +226,15 @@ class AidOffer extends State<Aid> {
     );
 
     return list;
+  }
+
+  void _onSendPressed(BuildContext contextOfBuilder) {
+    if (_isFormValid()) {
+      _saveHelper(contextOfBuilder);
+    } else {
+      CustomWidget.showNotification(contextOfBuilder, Model.AidOffer.INCOMPLETE,
+          Icons.warning, Colors.redAccent);
+    }
   }
 
   Map<String, dynamic> _getTextFieldOptionController(String name) {

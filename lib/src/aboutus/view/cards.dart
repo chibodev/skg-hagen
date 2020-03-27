@@ -68,7 +68,10 @@ class Cards {
           child: Column(
             children: <Widget>[
               ListTile(
-                leading: Icon(Icons.person),
+                leading: Icon(
+                  Icons.person,
+                  size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
+                ),
                 title: Text(
                   card.getPresbyter(),
                   style: TextStyle(
