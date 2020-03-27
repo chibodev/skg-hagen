@@ -21,14 +21,14 @@ class MonthlyScriptureClient {
         "${_getFormattedValue(today.day)}"
         ".html";
 
-    final Document document = await http.getHTMLResponse(
+    final dynamic document = await http.getHTMLResponse(
       http: http,
       options: options,
       path: path,
       cacheData: CACHE_DATA,
     );
 
-    document.querySelectorAll('td > p > font').forEach((Element e) {
+    document?.querySelectorAll('td > p > font')?.forEach((Element e) {
       if (counter == OLD_TESTAMENT) {
         dailyDevotion.oldTestamentText = e.text.trim();
       }

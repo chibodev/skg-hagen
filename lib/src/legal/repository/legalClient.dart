@@ -8,7 +8,6 @@ class LegalClient {
 
   Future<Imprint> getImprint(AssetClient assetClient) async {
     final String imprint = await assetClient.loadAsset(IMPRINT);
-
     return Imprint(imprint: imprint);
   }
 
