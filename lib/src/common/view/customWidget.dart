@@ -280,7 +280,7 @@ class CustomWidget {
         text,
         style: TextStyle(
           color: Colors.grey,
-          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
+          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.secondarySize),
         ),
         textAlign: TextAlign.center,
       ),

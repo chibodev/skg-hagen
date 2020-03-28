@@ -11,6 +11,7 @@ import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
+import 'package:skg_hagen/src/common/service/pushNotificationManager.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
 import 'package:skg_hagen/src/home/controller/home.dart';
 import 'package:skg_hagen/src/home/model/aid.dart';
@@ -49,6 +50,7 @@ class Cards extends State<Home> {
   Widget build(BuildContext context) {
     this._context = context;
     SizeConfig().init(_context);
+    PushNotificationsManager().init(context);
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),

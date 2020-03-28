@@ -18,4 +18,20 @@ class Routes {
   static const String aboutUs = AboutUs.route;
   static const String imprint = Imprint.route;
   static const String privacy = Privacy.route;
+
+  static const List<String> VALID_ROUTES = <String>[
+    home,
+    appointment,
+    offer,
+    intercession,
+    kindergarten,
+    contacts,
+    aboutUs,
+    imprint,
+    privacy,
+  ];
+
+  static bool isValid(String route) {
+    return VALID_ROUTES.contains(route);
+  }
 }

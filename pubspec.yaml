@@ -31,6 +31,7 @@ dependencies:
   package_info: ^0.4.0+16
   firebase_remote_config: ^0.3.0+3
   launch_review: ^2.0.0
+  firebase_messaging: ^6.0.13
 
 dev_dependencies:
   flutter_test:
