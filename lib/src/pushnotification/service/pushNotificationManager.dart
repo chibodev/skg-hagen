@@ -4,11 +4,11 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:skg_hagen/src/common/model/data.dart';
-import 'package:skg_hagen/src/common/model/messaging.dart';
+import 'package:skg_hagen/src/pushnotification/model/data.dart';
+import 'package:skg_hagen/src/pushnotification/model/messaging.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 
-import 'environment.dart';
+import '../../common/service/environment.dart';
 
 class PushNotificationsManager {
   PushNotificationsManager._();
