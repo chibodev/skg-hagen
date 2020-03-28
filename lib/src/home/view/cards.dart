@@ -475,7 +475,7 @@ class Cards extends State<Home> {
   }
 
   Future<void> _checkVersion() async {
-    if (await VersionCheck().isVersionOld()) {
+    if (await VersionCheck().isVersionOld() && !VersionCheck().updateLater) {
       const String APP_STORE_ID = '1491227545';
       const String PLAY_STORE_ID = 'de.skg_hagen';
       const String UPDATE_TITLE = 'Neue Updates sind verfügbar';
@@ -504,7 +504,10 @@ class Cards extends State<Home> {
                       child: Text(
                         UPDATE_LATER,
                       ),
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () {
+                        VersionCheck().updateLater = true;
+                        Navigator.pop(context);
+                      },
                     ),
                   ],
                 )
@@ -531,7 +534,10 @@ class Cards extends State<Home> {
                               appFont.primarySize),
                         ),
                       ),
-                      onPressed: () => Navigator.pop(context),
+                      onPressed: () {
+                        VersionCheck().updateLater = true;
+                        Navigator.pop(context);
+                      },
                     ),
                   ],
                 );

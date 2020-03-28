@@ -4,6 +4,13 @@ import 'package:package_info/package_info.dart';
 
 class VersionCheck {
   static const String REMOTE_PARAM = 'force_update_current_version';
+  bool updateLater = false;
+
+  VersionCheck._();
+
+  factory VersionCheck() => _instance;
+
+  static final VersionCheck _instance = VersionCheck._();
 
   Future<bool> isVersionOld() async {
     bool isVersionOld = false;
