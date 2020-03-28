@@ -402,7 +402,7 @@ class CustomWidget {
       child: Text(
         Default.NO_CONTENT,
         style: TextStyle(
-          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.imageIconSize),
+          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.secondarySize),
         ),
       ),
     );
@@ -414,7 +414,7 @@ class CustomWidget {
       child: Text(
         Default.NO_CONTENT,
         style: TextStyle(
-          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.imageIconSize),
+          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.secondarySize),
         ),
       ),
     );

@@ -28,6 +28,9 @@ dependencies:
   file_utils: ^0.1.4
   path_provider: ^1.6.5
   open_file: ^3.0.1
+  package_info: ^0.4.0+16
+  firebase_remote_config: ^0.3.0+3
+  launch_review: ^2.0.0
 
 dev_dependencies:
   flutter_test:

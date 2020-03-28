@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:launch_review/launch_review.dart';
 import 'package:share/share.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
@@ -15,6 +19,7 @@ import 'package:skg_hagen/src/home/model/monthlyScripture.dart';
 import 'package:skg_hagen/src/home/repository/aidClient.dart';
 import 'package:skg_hagen/src/home/repository/monthlyScriptureClient.dart';
 import 'package:skg_hagen/src/home/service/singleCard.dart';
+import 'package:skg_hagen/src/home/service/versionCheck.dart';
 import 'package:skg_hagen/src/menu/controller/menu.dart';
 import 'package:skg_hagen/src/offer/controller/aid.dart' as Controller;
 import 'package:skg_hagen/src/offer/controller/aidReceive.dart';
@@ -37,6 +42,7 @@ class Cards extends State<Home> {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
     _getAidOffers();
+    _checkVersion();
   }
 
   @override
@@ -142,7 +148,7 @@ class Cards extends State<Home> {
                                         fontSize:
                                             SizeConfig.getSafeBlockVerticalBy(
                                                 appFont.primarySize),
-                                        color: Colors.white,
+                                        color: Colors.black,
                                         fontFamily: Font.NAME),
                                   ),
                                 ),
@@ -268,7 +274,7 @@ class Cards extends State<Home> {
                             SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
                       ),
                       title: Text(
-                        response.data.title,
+                        Model.Aid.NAME,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: SizeConfig.getSafeBlockVerticalBy(
@@ -466,5 +472,71 @@ class Cards extends State<Home> {
   Future<void> _getAidOffers() async {
     _dataAvailable = await Network().hasInternet();
     _aid = await AidOfferClient().getAidOffer(DioHTTPClient(), Network());
+  }
+
+  Future<void> _checkVersion() async {
+    if (await VersionCheck().isVersionOld()) {
+      const String APP_STORE_ID = '1491227545';
+      const String PLAY_STORE_ID = 'de.skg_hagen';
+      const String UPDATE_TITLE = 'Neue Updates sind verfügbar';
+      const String UPDATE_MESSAGE =
+          'Es ist eine neuere Version der App verfügbar. Bitte aktualisieren Sie sie jetzt!';
+      const String UPDATE_NOW = 'Jetzt aktualisieren';
+      const String UPDATE_LATER = 'Später';
+
+      showDialog<String>(
+        context: _context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return Platform.isIOS
+              ? CupertinoAlertDialog(
+                  title: Text(UPDATE_TITLE),
+                  content: Text(UPDATE_MESSAGE),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text(
+                        UPDATE_NOW,
+                      ),
+                      onPressed: () => LaunchReview.launch(
+                          writeReview: false, iOSAppId: APP_STORE_ID),
+                    ),
+                    FlatButton(
+                      child: Text(
+                        UPDATE_LATER,
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ],
+                )
+              : AlertDialog(
+                  title: Text(UPDATE_TITLE),
+                  content: Text(UPDATE_MESSAGE),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text(
+                        UPDATE_NOW,
+                        style: TextStyle(
+                          fontSize: SizeConfig.getSafeBlockVerticalBy(
+                              appFont.primarySize),
+                        ),
+                      ),
+                      onPressed: () => LaunchReview.launch(
+                          writeReview: false, androidAppId: PLAY_STORE_ID),
+                    ),
+                    FlatButton(
+                      child: Text(
+                        UPDATE_LATER,
+                        style: TextStyle(
+                          fontSize: SizeConfig.getSafeBlockVerticalBy(
+                              appFont.primarySize),
+                        ),
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ],
+                );
+        },
+      );
+    }
   }
 }
