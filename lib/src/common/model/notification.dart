@@ -11,4 +11,9 @@ class Notification {
         body: json["body"],
         title: json["title"],
       );
+
+  Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
+        "title": title,
+        "body": body,
+      };
 }

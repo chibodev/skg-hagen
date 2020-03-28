@@ -16,4 +16,10 @@ class Data {
             ? null
             : json["screen"],
       );
+
+  Map<dynamic, dynamic> toJson() => <dynamic, dynamic>{
+        "screen": screen,
+        "status": status,
+        "click_action": clickAction,
+      };
 }
