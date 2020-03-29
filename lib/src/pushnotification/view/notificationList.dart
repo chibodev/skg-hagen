@@ -102,9 +102,9 @@ class NotificationList extends State<PushNotificationController> {
                 index: _indexCounter, refresh: true);
 
         final List<PushNotification> newEntries =
-            newNotifications.pushNotification;
-        final bool isResponseEmpty = newEntries.isEmpty;
-        if (isResponseEmpty) {
+            newNotifications?.pushNotification;
+        final bool isResponseEmpty = newEntries?.isEmpty;
+        if (isResponseEmpty != null && isResponseEmpty) {
           final double edge = 50.0;
           final double offsetFromBottom =
               _scrollController.position.maxScrollExtent -
@@ -118,8 +118,8 @@ class NotificationList extends State<PushNotificationController> {
         }
         setState(() {
           _isPerformingRequest = false;
-          if (!isResponseEmpty) {
-            pushNotifications.pushNotification.addAll(newEntries);
+          if (isResponseEmpty != null && !isResponseEmpty) {
+            pushNotifications?.pushNotification?.addAll(newEntries);
             _indexCounter++;
           }
         });
@@ -137,6 +137,8 @@ class NotificationList extends State<PushNotificationController> {
           expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
           backgroundColor: Color(Default.COLOR_GREEN),
           flexibleSpace: FlexibleSpaceBar(
+            titlePadding: const EdgeInsetsDirectional.only(
+                start: 72, bottom: 16, end: 102),
             title: CustomWidget.getTitle(PushNotifications.NAME),
             background: Image.asset(
               PushNotifications.IMAGE,

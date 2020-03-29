@@ -45,6 +45,8 @@ class CustomWidget {
       {bool noShadow, Color color, Color shadowInner, Color shadowOuter}) {
     return Text(
       name,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
         color: (color != null) ? color : Colors.white,
         fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),

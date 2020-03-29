@@ -78,7 +78,7 @@ class DrawerList {
     list.add(Divider());
 
     list.add(
-      _createLegalDrawerItem(
+      _createOtherDrawerItem(
         text: PushNotifications.NAME,
         onTap: () =>
             Navigator.of(context).popAndPushNamed(Routes.pushNotification),
@@ -88,14 +88,14 @@ class DrawerList {
     list.add(Divider());
 
     list.add(
-      _createLegalDrawerItem(
+      _createOtherDrawerItem(
         text: Imprint.NAME,
         onTap: () => Navigator.of(context).popAndPushNamed(Routes.imprint),
       ),
     );
 
     list.add(
-      _createLegalDrawerItem(
+      _createOtherDrawerItem(
         text: Privacy.NAME,
         onTap: () => Navigator.of(context).popAndPushNamed(Routes.privacy),
       ),
@@ -124,17 +124,19 @@ class DrawerList {
     return ListTile(
       title: Row(
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(
-              left: SizeConfig.getSafeBlockVerticalBy(1.5),
-              bottom: SizeConfig.getSafeBlockVerticalBy(0.5),
-            ),
-            child: Text(
-              text,
-              style: TextStyle(
-                fontFamily: Font.NAME,
-                fontSize:
-                    SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: SizeConfig.getSafeBlockVerticalBy(1.5),
+                bottom: SizeConfig.getSafeBlockVerticalBy(0.5),
+              ),
+              child: Text(
+                text,
+                style: TextStyle(
+                  fontFamily: Font.NAME,
+                  fontSize:
+                      SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
+                ),
               ),
             ),
           ),
@@ -144,21 +146,23 @@ class DrawerList {
     );
   }
 
-  static Widget _createLegalDrawerItem(
+  static Widget _createOtherDrawerItem(
       {String text, GestureTapCallback onTap, bool smallFontSize}) {
     return ListTile(
       title: Row(
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(
-              left: SizeConfig.getSafeBlockVerticalBy(1.5),
-            ),
-            child: Text(
-              text,
-              style: TextStyle(
-                fontFamily: Font.NAME,
-                fontSize:
-                    SizeConfig.getSafeBlockVerticalBy(appFont.secondarySize),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: SizeConfig.getSafeBlockVerticalBy(1.5),
+              ),
+              child: Text(
+                text,
+                style: TextStyle(
+                  fontFamily: Font.NAME,
+                  fontSize:
+                      SizeConfig.getSafeBlockVerticalBy(appFont.secondarySize),
+                ),
               ),
             ),
           ),

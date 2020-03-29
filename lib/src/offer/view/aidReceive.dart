@@ -32,6 +32,8 @@ class AidReceive extends State<Controller.AidReceive> {
               expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
               backgroundColor: Color(Default.COLOR_GREEN),
               flexibleSpace: FlexibleSpaceBar(
+                titlePadding: const EdgeInsetsDirectional.only(
+                    start: 72, bottom: 16, end: 102),
                 title: CustomWidget.getTitle(Model.AidReceive.NAME),
                 background: Image.asset(
                   Offers.IMAGE,

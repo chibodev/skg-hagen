@@ -54,6 +54,8 @@ class Accordions extends State<Controller.Kindergarten> {
           expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
           backgroundColor: Color(Default.COLOR_GREEN),
           flexibleSpace: FlexibleSpaceBar(
+            titlePadding: const EdgeInsetsDirectional.only(
+                start: 72, bottom: 16, end: 102),
             title: CustomWidget.getTitle(Kindergarten.NAME,
                 color: Colors.black, noShadow: true),
             background: Image.asset(
