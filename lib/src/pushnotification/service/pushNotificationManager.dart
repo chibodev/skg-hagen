@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
@@ -94,5 +95,27 @@ class PushNotificationsManager {
     await flutterLocalNotificationsPlugin.show(0, message.notification.title,
         message.notification.body, platformChannelSpecifics,
         payload: json.encode(message.data.toJson()));
+  }
+
+  Future<void> onDidReceiveLocalNotification(
+      int id, String title, String body, String payload) async {
+    // display a dialog with the notification details, tap ok to go to another page
+    showDialog(
+      context: _buildContext,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: Text(title),
+        content: Text(body),
+        actions: [
+          CupertinoDialogAction(
+            isDefaultAction: true,
+            child: Text('Ok'),
+            onPressed: () async {
+              Navigator.of(context, rootNavigator: true).pop();
+              await onSelectNotification(payload);
+            },
+          )
+        ],
+      ),
+    );
   }
 }
