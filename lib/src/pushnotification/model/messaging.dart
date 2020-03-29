@@ -11,7 +11,8 @@ class Messaging {
   });
 
   factory Messaging.fromJson(Map<String, dynamic> json) => Messaging(
-        notification: Notification.fromJson(json['notification']),
+        notification:
+            Notification.fromJson(json['notification'] ?? json['aps']['alert']),
         data: Data.fromJson(json["data"] ?? json),
       );
 
