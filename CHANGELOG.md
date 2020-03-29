@@ -7,9 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - filter appointments based on name
-- add *andachten* (devotion)
-- add notification
+- add update note
 - enabling cache
+- add *andachten* (devotion)
+
+
+## [1.2.0] - 2020-04-03
+
+### Fixed
+- infinite loop in view when http client returns empty list
+
+### Added
+- add info tab in *home*
+- add aid tab + form
+  - helper
+  - help seeker
+- add setting to change font size
+- add update informer
+- add notification
+
 
 ## [1.1.0] - 2020-02-01
 
