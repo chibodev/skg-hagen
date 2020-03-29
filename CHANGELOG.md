@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - infinite loop in view when http client returns empty list
+- page title text trimming
 
 ### Added
 - add info tab in *home*
