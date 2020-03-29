@@ -150,8 +150,9 @@ class AidOffer extends State<Aid> {
         );
         for (int x = 0; x < questions[i]?.option?.length; x++) {
           final String label = questions[i].option[x];
+          final String fieldName = label.replaceAll(RegExp(r"\s\b|\b\s|\(|\)"), "").toLowerCase();
           final Map<String, dynamic> option =
-              _getTextFieldOptionController(label);
+              _getTextFieldOptionController(fieldName);
 
           list.add(
             _getLabel(thirty, label, FontWeight.normal, top: top, bottom: top),
@@ -161,6 +162,7 @@ class AidOffer extends State<Aid> {
               padding:
                   EdgeInsets.only(left: thirty, right: thirty, bottom: top),
               child: TextField(
+                key: Key(fieldName),
                 controller: option['controller'],
                 style: TextStyle(
                   fontSize:
@@ -203,8 +205,8 @@ class AidOffer extends State<Aid> {
             ),
             InkWell(
               splashColor: Color(Default.COLOR_GREEN),
-              onTap: () => TapAction().sendMail(widget.aidOffer.email,
-                  widget.aidOffer.title,
+              onTap: () => TapAction().sendMail(
+                  widget.aidOffer.email, widget.aidOffer.title,
                   body: Model.AidOffer.EMAIL_BODY),
               onLongPress: () => ClipboardService.copyAndNotify(
                   context: contextOfBuilder, text: widget.aidOffer.email),
@@ -237,14 +239,14 @@ class AidOffer extends State<Aid> {
     }
   }
 
-  Map<String, dynamic> _getTextFieldOptionController(String name) {
+  Map<String, dynamic> _getTextFieldOptionController(String fieldName) {
     final Map<String, dynamic> option = Map<String, dynamic>();
 
     option.putIfAbsent('type', () => TextInputType.multiline);
     option.putIfAbsent('maxLength', () => null);
     option.putIfAbsent('inputFormat', () => null);
 
-    switch (name.replaceAll(RegExp(r"\s\b|\b\s|\(|\)"), "").toLowerCase()) {
+    switch (fieldName) {
       case 'name':
         option.putIfAbsent('controller', () => _name);
         option.putIfAbsent('icon', () => Icon(Icons.person));
