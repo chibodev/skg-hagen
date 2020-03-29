@@ -24,17 +24,19 @@ class AidOffer extends State<Aid> {
   final TextEditingController _city = TextEditingController();
   final TextEditingController _contact = TextEditingController();
   final TextEditingController _reason = TextEditingController();
-  SettingsMenu settingsMenu;
+  SettingsMenu _settingsMenu;
+  BuildContext _pageContext;
 
   @override
   void initState() {
     super.initState();
-    settingsMenu = SettingsMenu(pageView: this);
+    _settingsMenu = SettingsMenu(pageView: this);
   }
 
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
+    _pageContext = context;
     final double thirty = SizeConfig.getSafeBlockVerticalBy(3.5);
     return Scaffold(
       body: Builder(
@@ -47,13 +49,15 @@ class AidOffer extends State<Aid> {
                 expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
                 backgroundColor: Color(Default.COLOR_GREEN),
                 flexibleSpace: FlexibleSpaceBar(
+                  titlePadding: const EdgeInsetsDirectional.only(
+                      start: 72, bottom: 16, end: 102),
                   title: CustomWidget.getTitle(Model.AidOffer.NAME),
                   background: Image.asset(
                     Offers.IMAGE,
                     fit: BoxFit.cover,
                   ),
                 ),
-                actions: <Widget>[settingsMenu.getMenu()],
+                actions: <Widget>[_settingsMenu.getMenu()],
               ),
               SliverToBoxAdapter(
                 child: Column(
@@ -150,7 +154,8 @@ class AidOffer extends State<Aid> {
         );
         for (int x = 0; x < questions[i]?.option?.length; x++) {
           final String label = questions[i].option[x];
-          final String fieldName = label.replaceAll(RegExp(r"\s\b|\b\s|\(|\)"), "").toLowerCase();
+          final String fieldName =
+              label.replaceAll(RegExp(r"\s\b|\b\s|\(|\)"), "").toLowerCase();
           final Map<String, dynamic> option =
               _getTextFieldOptionController(fieldName);
 
@@ -335,6 +340,11 @@ class AidOffer extends State<Aid> {
       if (!currentFocus.hasPrimaryFocus) {
         currentFocus.unfocus();
       }
+
+      CustomWidget.showNotification(context, text, icon, backgroundColor);
+
+      await Future<dynamic>.delayed(const Duration(milliseconds: 4000));
+      Navigator.of(_pageContext).pop();
     }
 
     CustomWidget.showNotification(context, text, icon, backgroundColor);
