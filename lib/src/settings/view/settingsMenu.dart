@@ -54,33 +54,55 @@ class SettingsMenu {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: Color(Default.COLOR_GREEN),
-          content: Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                InkWell(
-                  onTap: () => Settings().increaseFontSize(page: pageView),
-                  child: Icon(
-                    Icons.add_circle,
-                    color: Colors.white,
-                    size: SizeConfig.getSafeBlockVerticalBy(7),
-                    semanticLabel: 'Increase',
-                  ),
+          content: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              Color increaseIconColor = _getIncreaseIconColor();
+              Color decreaseIconColor = _getDecreaseIconColor();
+              return Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    InkWell(
+                      onTap: () {
+                        if (!appFont.isIncreaseMaximumReached())
+                          Settings().increaseFontSize(page: pageView);
+                        setState(
+                            () => increaseIconColor = _getIncreaseIconColor());
+                      },
+                      child: Icon(
+                        Icons.add_circle,
+                        color: increaseIconColor,
+                        size: SizeConfig.getSafeBlockVerticalBy(7),
+                        semanticLabel: 'Increase',
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        if (!appFont.isDecreaseMinimumReached())
+                          Settings().decreaseFontSize(page: pageView);
+                        setState(
+                            () => decreaseIconColor = _getDecreaseIconColor());
+                      },
+                      child: Icon(
+                        Icons.remove_circle,
+                        color: decreaseIconColor,
+                        size: SizeConfig.getSafeBlockVerticalBy(7),
+                        semanticLabel: 'Decrease',
+                      ),
+                    )
+                  ],
                 ),
-                InkWell(
-                  onTap: () => Settings().decreaseFontSize(page: pageView),
-                  child: Icon(
-                    Icons.remove_circle,
-                    color: Colors.white,
-                    size: SizeConfig.getSafeBlockVerticalBy(7),
-                    semanticLabel: 'Decrease',
-                  ),
-                )
-              ],
-            ),
+              );
+            },
           ),
         );
       },
     );
   }
+
+  Color _getIncreaseIconColor() =>
+      appFont.isIncreaseMaximumReached() ? Colors.white38 : Colors.white;
+
+  Color _getDecreaseIconColor() =>
+      appFont.isDecreaseMinimumReached() ? Colors.white38 : Colors.white;
 }
