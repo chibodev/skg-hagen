@@ -9,6 +9,7 @@ import 'package:skg_hagen/src/home/model/cardContent.dart';
 import 'package:skg_hagen/src/home/service/singleCard.dart';
 import 'package:skg_hagen/src/legal/model/imprint.dart';
 import 'package:skg_hagen/src/legal/model/privacy.dart';
+import 'package:skg_hagen/src/pushnotification/model/pushNotifications.dart';
 
 class DrawerList {
   static const String LOGO = 'assets/images/skg-transparent.png';
@@ -76,7 +77,16 @@ class DrawerList {
 
     list.add(Divider());
 
-    //Legal
+    list.add(
+      _createLegalDrawerItem(
+        text: PushNotifications.NAME,
+        onTap: () =>
+            Navigator.of(context).popAndPushNamed(Routes.pushNotification),
+      ),
+    );
+
+    list.add(Divider());
+
     list.add(
       _createLegalDrawerItem(
         text: Imprint.NAME,

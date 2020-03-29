@@ -18,6 +18,7 @@ import 'package:skg_hagen/src/kindergarten/controller/kindergarten.dart';
 import 'package:skg_hagen/src/legal/controller/imprint.dart';
 import 'package:skg_hagen/src/legal/controller/privacy.dart';
 import 'package:skg_hagen/src/offer/controller/offer.dart';
+import 'package:skg_hagen/src/pushnotification/controller/appointmentController.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,6 +61,8 @@ class MyApp extends StatelessWidget {
         Routes.aboutUs: (BuildContext context) => AboutUs(),
         Routes.imprint: (BuildContext context) => Imprint(),
         Routes.privacy: (BuildContext context) => Privacy(),
+        Routes.pushNotification: (BuildContext context) =>
+            PushNotificationController(),
       },
       theme: ThemeData(primaryColor: Colors.white, fontFamily: Font.NAME),
       home: Home(),
