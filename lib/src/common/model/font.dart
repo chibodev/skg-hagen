@@ -39,7 +39,7 @@ class Font {
   }
 
   void increaseSize() {
-    if (MAX > primarySize + 1) {
+    if (_canIncrease()) {
       primarySize = ++primarySize;
       secondarySize = ++secondarySize;
       iconSize = ++iconSize;
@@ -49,8 +49,10 @@ class Font {
     }
   }
 
+  bool _canIncrease() => MAX > primarySize + 1;
+
   void decreaseSize() {
-    if (SECONDARY_SIZE < primarySize - 1) {
+    if (_canDecrease()) {
       primarySize = --primarySize;
       secondarySize = --secondarySize;
       iconSize = --iconSize;
@@ -60,10 +62,16 @@ class Font {
     }
   }
 
+  bool _canDecrease() => SECONDARY_SIZE < primarySize - 1;
+
   void _updateSharedPreferences() {
     sharedPreferences.setDouble(PRIMARY_SIZE_NAME, primarySize);
     sharedPreferences.setDouble(SECONDARY_SIZE_NAME, secondarySize);
     sharedPreferences.setDouble(ICON_SIZE_NAME, iconSize);
     sharedPreferences.setDouble(BOX_SIZE_NAME, boxSize);
   }
+
+  bool isIncreaseMaximumReached() => !_canIncrease();
+
+  bool isDecreaseMinimumReached() => !_canDecrease();
 }
