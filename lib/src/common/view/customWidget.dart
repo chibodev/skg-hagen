@@ -410,11 +410,11 @@ class CustomWidget {
     );
   }
 
-  static Center centeredNoEntry() {
+  static Center centeredNoEntry({String message}) {
     return Center(
       heightFactor: SizeConfig.getSafeBlockHorizontalBy(1),
       child: Text(
-        Default.NO_CONTENT,
+        message ?? Default.NO_CONTENT,
         style: TextStyle(
           fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.secondarySize),
         ),
