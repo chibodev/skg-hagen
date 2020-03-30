@@ -18,6 +18,12 @@ class PushNotificationsManager {
   static final PushNotificationsManager _instance =
       PushNotificationsManager._();
 
+  /* check if token exists in list (endpoint that return list or empty)
+   1. If empty - subscribe to list 
+   2. if not empty and deactivated, subscribe to topic
+   3. if not empty and not deactivated ignore
+   */
+
   BuildContext _buildContext;
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   bool _initialized = false;

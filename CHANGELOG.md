@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - filter appointments based on name
 - add update note
 - enabling cache
+- add app setting: activate/deactivate notification
 - add *andachten* (devotion)
-
 
 ## [1.2.0] - 2020-04-03
 
