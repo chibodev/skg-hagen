@@ -11,8 +11,8 @@ import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
-import 'package:skg_hagen/src/pushnotification/service/pushNotificationManager.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
+import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/home/controller/home.dart';
 import 'package:skg_hagen/src/home/model/aid.dart';
 import 'package:skg_hagen/src/home/model/cardContent.dart';
@@ -28,12 +28,14 @@ import 'package:skg_hagen/src/offer/model/aid.dart' as Model;
 import 'package:skg_hagen/src/offer/model/aidOffer.dart';
 import 'package:skg_hagen/src/offer/model/aidReceive.dart' as Model;
 import 'package:skg_hagen/src/offer/repository/aidOfferClient.dart';
+import 'package:skg_hagen/src/pushnotification/service/pushNotificationManager.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Cards extends State<Home> {
   MonthlyScriptureClient monthlyScriptureClient = MonthlyScriptureClient();
   AidClient aidClient = AidClient();
   Model.Aid _aid;
+  bool _hasInternet = true;
   bool _dataAvailable = true;
   BuildContext _context;
   SettingsMenu settingsMenu;
@@ -50,6 +52,7 @@ class Cards extends State<Home> {
   Widget build(BuildContext context) {
     this._context = context;
     SizeConfig().init(_context);
+    _checkConnectivity();
     PushNotificationsManager().init(context);
     return Scaffold(
       appBar: AppBar(
@@ -99,6 +102,7 @@ class Cards extends State<Home> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
+        !_hasInternet ? CustomWidget.noInternet() : Container(),
         Container(
           color: Color(Default.COLOR_GREEN),
           child: FutureBuilder<Aid>(
@@ -546,5 +550,9 @@ class Cards extends State<Home> {
         },
       );
     }
+  }
+
+  Future<void> _checkConnectivity() async {
+    _hasInternet = await Network().hasInternet();
   }
 }
