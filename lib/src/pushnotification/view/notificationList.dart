@@ -159,10 +159,14 @@ class NotificationList extends State<PushNotificationController> {
           ),
         ),
         SliverToBoxAdapter(
-          child: (!_hasInternet)
-              ? Container()
-              : CustomWidget.buildProgressIndicator(_isPerformingRequest),
-        )
+            child: Column(
+          children: <Widget>[
+            CustomWidget.centeredNoEntry(message: 'Keine Nachrichten'),
+            (!_hasInternet)
+                ? Container()
+                : CustomWidget.buildProgressIndicator(_isPerformingRequest),
+          ],
+        ))
       ],
     );
   }
