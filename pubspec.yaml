@@ -62,6 +62,8 @@ flutter:
     - assets/images/icon/pdf.png
     - assets/images/icon/help.png
     - assets/images/icon/volunteer.png
+    - assets/images/icon/video.png
+    - assets/images/icon/paragraph.png
     #Images
     - assets/images/termine.jpg
     - assets/images/angebote.jpg
@@ -71,8 +73,6 @@ flutter:
     - assets/images/lesen.jpg
     - assets/images/spende.jpg
     - assets/images/kontakte.jpg
-    - assets/images/imprint.jpg
-    - assets/images/privacy.jpg
     - assets/images/push.jpg
     - assets/images/skg-green.png
     - assets/images/skg-gray.png
