@@ -212,7 +212,7 @@ class CustomWidget {
                     organizer,
                     overflow: TextOverflow.visible,
                     style: TextStyle(
-                      color: Colors.grey,
+                      color: Colors.black87,
                       fontSize: SizeConfig.getSafeBlockVerticalBy(
                           appFont.primarySize),
                     ),
