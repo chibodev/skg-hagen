@@ -18,6 +18,7 @@ class NotificationList extends State<PushNotificationController> {
   final ScrollController _scrollController = ScrollController();
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
+  bool _dataAvailable = true;
   SettingsMenu settingsMenu;
 
   @override
@@ -69,7 +70,7 @@ class NotificationList extends State<PushNotificationController> {
       final bool status = pushNotifications?.pushNotification != null;
       _hasInternet = await Network().hasInternet();
 
-      if (status && pushNotifications.pushNotification.isEmpty) {
+      if (status) {
         final double edge = 50.0;
         final double offsetFromBottom =
             _scrollController.position.maxScrollExtent -
@@ -84,6 +85,8 @@ class NotificationList extends State<PushNotificationController> {
       setState(() {
         _isPerformingRequest = false;
         _indexCounter = 1;
+        _dataAvailable =
+            status && pushNotifications.pushNotification.isNotEmpty;
       });
     }
   }
@@ -161,7 +164,9 @@ class NotificationList extends State<PushNotificationController> {
         SliverToBoxAdapter(
             child: Column(
           children: <Widget>[
-            CustomWidget.centeredNoEntry(message: 'Keine Nachrichten'),
+            !_dataAvailable
+                ? CustomWidget.centeredNoEntry(message: 'Keine Nachrichten')
+                : Container(),
             (!_hasInternet)
                 ? Container()
                 : CustomWidget.buildProgressIndicator(_isPerformingRequest),
