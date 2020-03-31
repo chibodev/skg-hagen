@@ -8,7 +8,6 @@ import 'package:skg_hagen/src/common/service/client/assetClient.dart';
 import 'package:skg_hagen/src/home/model/cardContent.dart';
 import 'package:skg_hagen/src/home/service/singleCard.dart';
 import 'package:skg_hagen/src/legal/model/imprint.dart';
-import 'package:skg_hagen/src/legal/model/privacy.dart';
 import 'package:skg_hagen/src/pushnotification/model/pushNotifications.dart';
 
 class DrawerList {
@@ -91,13 +90,6 @@ class DrawerList {
       _createOtherDrawerItem(
         text: Imprint.NAME,
         onTap: () => Navigator.of(context).popAndPushNamed(Routes.imprint),
-      ),
-    );
-
-    list.add(
-      _createOtherDrawerItem(
-        text: Privacy.NAME,
-        onTap: () => Navigator.of(context).popAndPushNamed(Routes.privacy),
       ),
     );
 
