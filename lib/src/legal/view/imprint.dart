@@ -49,8 +49,8 @@ class ImprintView extends State<Controller.Imprint> {
                 indicatorColor: Colors.black,
                 tabs: <Tab>[
                   Tab(
-                    icon: Icon(
-                      Icons.insert_drive_file,
+                    icon: ImageIcon(
+                      AssetImage(Imprint.IMAGE),
                       color: Colors.white,
                     ),
                     child: Text(
