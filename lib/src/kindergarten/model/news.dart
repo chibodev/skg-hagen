@@ -1,6 +1,8 @@
 class News {
   final String title;
   final String description;
+  final String url;
+  final String urlFormat;
   final String imageUrl;
   final String fileUrl;
   final String filename;
@@ -12,6 +14,8 @@ class News {
       {this.title,
       this.imageUrl,
       this.description,
+      this.url,
+      this.urlFormat,
       this.fileUrl,
       this.format,
       this.filename});
@@ -19,6 +23,8 @@ class News {
   factory News.fromJson(Map<String, dynamic> json) => News(
         title: json['title'],
         description: json['description'],
+        url: json["url"] == "" ? null : json["url"],
+        urlFormat: json["urlFormat"] == "" ? null : json["urlFormat"],
         imageUrl: json['imageUrl'].toString().length > URL_MIN
             ? json['imageUrl']
             : null,

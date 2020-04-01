@@ -11,6 +11,8 @@ import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
 
 class CustomWidget {
+  static const String VIDEO = 'assets/images/icon/video.png';
+
   static Padding buildProgressIndicator(bool _isPerformingRequest) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -239,6 +241,7 @@ class CustomWidget {
               child: Padding(
                 padding: EdgeInsets.only(
                   left: SizeConfig.getSafeBlockVerticalBy(1),
+                  right: SizeConfig.getSafeBlockVerticalBy(1),
                 ),
                 child: Icon(
                   Icons.email,
@@ -246,6 +249,30 @@ class CustomWidget {
                   size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
                   semanticLabel: 'Email',
                 ),
+              ),
+            ),
+          )
+        : Container();
+  }
+
+  static Widget getCardURL(String url, BuildContext context, {String format}) {
+    return (url != null)
+        ? Padding(
+            padding: EdgeInsets.only(
+              bottom: SizeConfig.getSafeBlockVerticalBy(2),
+              left: SizeConfig.getSafeBlockVerticalBy(1),
+            ),
+            child: InkWell(
+              splashColor: Color(Default.COLOR_GREEN),
+              onTap: () => TapAction().launchURL(url),
+              onLongPress: () =>
+                  ClipboardService.copyAndNotify(context: context, text: url),
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: SizeConfig.getSafeBlockVerticalBy(1),
+                  right: SizeConfig.getSafeBlockVerticalBy(1),
+                ),
+                child: _getURLIcon(format),
               ),
             ),
           )
@@ -504,5 +531,38 @@ class CustomWidget {
         ),
       ),
     );
+  }
+
+  static Widget _getURLIcon(String format) {
+    final Color grey = Colors.grey;
+    final double size = SizeConfig.getSafeBlockVerticalBy(appFont.iconSize);
+    final String alt = 'URL';
+    Widget icon = Icon(
+      Icons.language,
+      color: grey,
+      size: size,
+      semanticLabel: alt,
+    );
+
+    switch (format) {
+      case 'video':
+        icon = ImageIcon(
+          AssetImage(VIDEO),
+          color: grey,
+          size: size,
+          semanticLabel: alt,
+        );
+        break;
+      case 'audio':
+        icon = Icon(
+          Icons.play_circle_filled,
+          color: grey,
+          size: size,
+          semanticLabel: alt,
+        );
+        break;
+    }
+
+    return icon;
   }
 }

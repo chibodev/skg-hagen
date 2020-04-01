@@ -9,6 +9,8 @@ class Offer {
   final String placeName;
   final String room;
   final String organizer;
+  final String url;
+  final String urlFormat;
   final String email;
   final String infoTitle;
   AgeRange ageRange;
@@ -34,6 +36,8 @@ class Offer {
       this.room,
       this.infoTitle,
       this.organizer,
+      this.url,
+      this.urlFormat,
       this.email,
       this.ageStart,
       this.ageEnd,
@@ -67,6 +71,8 @@ class Offer {
         room: json["room"] == "" ? null : json["room"],
         infoTitle: json["infoTitle"] == "" ? null : json["infoTitle"],
         organizer: json["organizer"] == "" ? null : json["organizer"],
+        url: json["url"] == "" ? null : json["url"],
+        urlFormat: json["format"] == "" ? null : json["format"],
         email: json["email"] == "" ? null : json["email"],
         ageStart: json['ageStart'] == "" ? null : int.parse(json['ageStart']),
         ageEnd: json['ageEnd'] == "" ? null : int.parse(json['ageEnd']),
@@ -90,7 +96,9 @@ class Offer {
             ? ''
             : "- ${timeUntil.substring(0, 5)}";
 
-    return occurrence == '' ? occurrence : "$occurrence | $occurrenceTime $occurrenceTimeUntil";
+    return occurrence == ''
+        ? occurrence
+        : "$occurrence | $occurrenceTime $occurrenceTimeUntil";
   }
 
   String getFormattedOrganiser() {

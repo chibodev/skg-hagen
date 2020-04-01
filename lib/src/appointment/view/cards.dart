@@ -206,7 +206,13 @@ class Cards extends State<AppointmentController> {
                     ),
                     CustomWidget.getCardOrganizer(
                         card.getFormattedOrganiser(), context),
-                    CustomWidget.getCardEmail(card.email, card.title, context),
+                    Row(
+                      children: <Widget>[
+                        CustomWidget.getCardEmail(
+                            card.email, card.title, context),
+                        CustomWidget.getCardURL(card.url, context, format: card.urlFormat),
+                      ],
+                    )
                   ],
                 ),
               ),

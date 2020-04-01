@@ -64,6 +64,11 @@ void main() {
         kindergarten.news.first.description
             .contains('Jedes Jahr findet zu Weihnachten'),
         true);
+    expect(kindergarten.news.first.url, 'https://someUrl');
+    expect(kindergarten.news.first.fileUrl, 'https://Formular.pdf');
+    expect(kindergarten.news.first.urlFormat, null);
+    expect(kindergarten.news.first.format, 'pdf');
+    expect(kindergarten.news.first.filename, 'Formular.pdf');
     expect(kindergarten.news.length, 1);
   });
 

@@ -46,6 +46,8 @@ void main() {
         aboutus.history.first.description
             .contains('Die Ev.-Luth. Stadtkirchengemeinde Hagen'),
         true);
+    expect(aboutus.history.first.url, 'https://www.youtube.com');
+    expect(aboutus.history.first.urlFormat, 'video');
 
     expect(aboutus.presbytery, isNotEmpty);
     expect(aboutus.presbytery.first.salutation, 'Frau');

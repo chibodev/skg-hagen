@@ -106,8 +106,13 @@ class Cards {
                       ),
                       CustomWidget.getCardOrganizer(
                           card.getFormattedOrganiser(), this._buildContext),
-                      CustomWidget.getCardEmail(
-                          card.email, card.title, this._buildContext),
+                      Row(
+                        children: <Widget>[
+                          CustomWidget.getCardEmail(
+                              card.email, card.title, this._buildContext),
+                          CustomWidget.getCardURL(card.url, this._buildContext),
+                        ],
+                      )
                     ],
                   ),
                 ),
