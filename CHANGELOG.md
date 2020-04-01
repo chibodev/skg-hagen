@@ -18,6 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - infinite loop in view when http client returns empty list
 - page title text trimming
 
+### Changed
+- compressed legal info from 2 page to one with tab functionality
+
 ### Added
 - add info tab in *home*
 - add aid tab + form

@@ -28,10 +28,20 @@
 	<true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Musik abspielen</string>
 	<key>NSCalendarsUsageDescription</key>
-	<string>Create events</string>
+	<string>Termin im Kalender hinzufügen</string>
 	<key>NSContactsUsageDescription</key>
-	<string>Add people to event</string>
+	<string>Kontakt dem Event hinzufügen</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Orterkennung während App im Hintergrund läuft</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Orterkennung</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Beschleunigungsmesser</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Spracherkennung</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>
