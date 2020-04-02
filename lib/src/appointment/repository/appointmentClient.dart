@@ -14,7 +14,7 @@ class AppointmentClient {
     final Map<String, dynamic> queryParameters =
         http.getQueryParameters(index: index);
 
-    final Map<String, dynamic> jsonResponse = await http.getJSONResponse(
+    final dynamic jsonResponse = await http.getJSONResponse(
         http: http,
         options: options,
         path: PATH,
@@ -22,7 +22,7 @@ class AppointmentClient {
         cacheData: CACHE_DATA,
         queryParameters: queryParameters);
 
-    if (jsonResponse != null) {
+    if (jsonResponse != null && jsonResponse.isNotEmpty) {
       return Appointments.fromJson(jsonResponse);
     }
 

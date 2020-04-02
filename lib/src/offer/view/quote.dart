@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
+import 'package:skg_hagen/src/offer/controller/quoteController.dart';
 import 'package:skg_hagen/src/offer/model/offers.dart';
 import 'package:skg_hagen/src/offer/model/quote.dart' as Model;
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
-class Quote extends StatelessWidget {
-  final List<Model.Quote> quote;
-  final BuildContext context;
-  final bool dataAvailable;
+class Quote extends State<QuoteController> {
+  SettingsMenu settingsMenu;
 
-  const Quote(
-      {Key key, this.context, @required this.quote, this.dataAvailable = true})
-      : super(key: key);
+  @override
+  void initState() {
+    super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,19 +32,22 @@ class Quote extends StatelessWidget {
               expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
               backgroundColor: Color(Default.COLOR_GREEN),
               flexibleSpace: FlexibleSpaceBar(
+                titlePadding: const EdgeInsetsDirectional.only(
+                    start: 72, bottom: 16, end: 102),
                 title: CustomWidget.getTitle(Model.Quote.PAGE_NAME),
                 background: Image.asset(
                   Offers.IMAGE,
                   fit: BoxFit.cover,
                 ),
               ),
+              actions: <Widget>[settingsMenu.getMenu()],
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) => dataAvailable
-                    ? _buildRows(this.quote[index], context)
+                (BuildContext context, int index) => widget.dataAvailable
+                    ? _buildRows(widget?.quotes[index], context)
                     : CustomWidget.buildSliverSpinner(),
-                childCount: quote?.length ?? 0,
+                childCount: widget?.quotes?.length ?? 0,
               ),
             ),
           ],
@@ -50,7 +56,7 @@ class Quote extends StatelessWidget {
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          !dataAvailable ? CustomWidget.noInternet() : Container(),
+          !widget.dataAvailable ? CustomWidget.noInternet() : Container(),
         ],
       ),
     );
@@ -89,7 +95,7 @@ class Quote extends StatelessWidget {
                       quote.text,
                       style: TextStyle(
                         fontSize: SizeConfig.getSafeBlockVerticalBy(
-                            Default.STANDARD_FONT_SIZE),
+                            appFont.primarySize),
                       ),
                     ),
                   ),
@@ -103,7 +109,7 @@ class Quote extends StatelessWidget {
                             quote.getBook(),
                             style: TextStyle(
                               fontSize: SizeConfig.getSafeBlockVerticalBy(
-                                  Default.SUBSTANDARD_FONT_SIZE),
+                                  appFont.primarySize),
                             ),
                           ),
                         )

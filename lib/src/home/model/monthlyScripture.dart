@@ -9,12 +9,14 @@ class MonthlyScripture {
   MonthlyScripture({this.oldTestamentText, this.newTestamentText});
 
   String getModifiedText() {
-    return oldTestamentText.length > TEXT_LIMIT
+    return oldTestamentText != null && oldTestamentText.length > TEXT_LIMIT
         ? "${oldTestamentText.substring(0, TEXT_LIMIT)}..."
-        : oldTestamentText.length > 2 ? oldTestamentText : '';
+        : oldTestamentText != null && oldTestamentText.length > 2
+            ? oldTestamentText
+            : '';
   }
 
-  String getSharableContent(){
+  String getSharableContent() {
     return "$TITLE\n"
         "$oldTestamentText\n"
         "$newTestamentText\n\n"

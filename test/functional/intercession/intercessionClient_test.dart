@@ -7,7 +7,7 @@ import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/intercession/repository/intercessionClient.dart';
 
-import '../../mock/httpClientIntercessionMock.dart';
+import '../../mock/httpClientFormMock.dart';
 
 class MockDioHTTPClient extends Mock implements DioHTTPClient {}
 
@@ -30,7 +30,7 @@ void main() {
             data: anyNamed('data'),
             options: anyNamed('options')))
         .thenAnswer((_) async =>
-            HTTPClientIntercessionMock.intercessionPost(statusCode: HttpStatus.ok));
+            HTTPClientFormMock.formPost(statusCode: HttpStatus.ok));
 
     final bool response = await subject.saveIntercession(httpClient, Network(), 'gebetswunsch');
 
@@ -46,7 +46,7 @@ void main() {
         data: anyNamed('data'),
         options: anyNamed('options')))
         .thenAnswer((_) async =>
-        HTTPClientIntercessionMock.intercessionPost(statusCode: HttpStatus.badRequest));
+        HTTPClientFormMock.formPost(statusCode: HttpStatus.badRequest));
 
     final bool response = await subject.saveIntercession(httpClient, Network(), 'gebetswunsch');
 

@@ -1,7 +1,7 @@
 name: skg_hagen
 description: The App for the Evangelisch-lutherische Stadtkirchengemeinde Hagen, Germany
 
-version: 1.1.0+10
+version: 1.2.0+12
 
 environment:
   sdk: ">=2.2.0 <3.0.0"
@@ -24,6 +24,15 @@ dependencies:
   add_2_calendar: ^1.3.1
   flutter_slidable: ^0.5.4
   share: ^0.6.3+5
+  permission_handler: ^4.4.0+hotfix.2
+  file_utils: ^0.1.4
+  path_provider: ^1.6.5
+  open_file: ^3.0.1
+  package_info: ^0.4.0+16
+  firebase_remote_config: ^0.3.0+3
+  launch_review: ^2.0.0
+  firebase_messaging: ^6.0.13
+  flutter_local_notifications: ^1.3.0
 
 dev_dependencies:
   flutter_test:
@@ -43,6 +52,7 @@ flutter:
     #Config
     - .env
     - assets/config/cards.yaml
+    - assets/config/settings.yaml
     #Icons
     - assets/images/icon/facebook.png
     - assets/images/icon/instagram.png
@@ -50,6 +60,10 @@ flutter:
     - assets/images/icon/whatsapp.png
     - assets/images/icon/paypal.png
     - assets/images/icon/pdf.png
+    - assets/images/icon/help.png
+    - assets/images/icon/volunteer.png
+    - assets/images/icon/video.png
+    - assets/images/icon/paragraph.png
     #Images
     - assets/images/termine.jpg
     - assets/images/angebote.jpg
@@ -59,8 +73,7 @@ flutter:
     - assets/images/lesen.jpg
     - assets/images/spende.jpg
     - assets/images/kontakte.jpg
-    - assets/images/imprint.jpg
-    - assets/images/privacy.jpg
+    - assets/images/push.jpg
     - assets/images/skg-green.png
     - assets/images/skg-gray.png
     - assets/images/skg-transparent.png

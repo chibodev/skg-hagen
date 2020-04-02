@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:skg_hagen/src/appointment/controller/appointment.dart'
-    as Controller;
+import 'package:skg_hagen/src/appointment/controller/appointmentController.dart';
 import 'package:skg_hagen/src/appointment/model/appointment.dart' as Model;
 import 'package:skg_hagen/src/appointment/model/appointments.dart';
 import 'package:skg_hagen/src/appointment/repository/appointmentClient.dart';
@@ -11,17 +10,20 @@ import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
-class Cards extends State<Controller.Appointment> {
+class Cards extends State<AppointmentController> {
   int _indexCounter = 0;
   Appointments appointments;
   final ScrollController _scrollController = ScrollController();
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
+  SettingsMenu settingsMenu;
 
   @override
   void initState() {
     super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
     _getInitialAppointments();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -133,12 +135,15 @@ class Cards extends State<Controller.Appointment> {
           expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
           backgroundColor: Color(Default.COLOR_GREEN),
           flexibleSpace: FlexibleSpaceBar(
+            titlePadding: const EdgeInsetsDirectional.only(
+                start: 72, bottom: 16, end: 102),
             title: CustomWidget.getTitle(Appointments.NAME),
             background: Image.asset(
               Appointments.IMAGE,
               fit: BoxFit.cover,
             ),
           ),
+          actions: <Widget>[settingsMenu.getMenu()],
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
@@ -201,7 +206,13 @@ class Cards extends State<Controller.Appointment> {
                     ),
                     CustomWidget.getCardOrganizer(
                         card.getFormattedOrganiser(), context),
-                    CustomWidget.getCardEmail(card.email, card.title, context),
+                    Row(
+                      children: <Widget>[
+                        CustomWidget.getCardEmail(
+                            card.email, card.title, context),
+                        CustomWidget.getCardURL(card.url, context, format: card.urlFormat),
+                      ],
+                    )
                   ],
                 ),
               ),

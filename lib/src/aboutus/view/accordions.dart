@@ -8,6 +8,7 @@ import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Accordions extends State<Controller.AboutUs> {
   AboutUs _aboutUs;
@@ -15,10 +16,12 @@ class Accordions extends State<Controller.AboutUs> {
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
   bool _dataAvailable = false;
+  SettingsMenu settingsMenu;
 
   @override
   void initState() {
     super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
     _getAboutUs();
   }
 
@@ -50,18 +53,21 @@ class Accordions extends State<Controller.AboutUs> {
           expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
           backgroundColor: Color(Default.COLOR_GREEN),
           flexibleSpace: FlexibleSpaceBar(
+            titlePadding: const EdgeInsetsDirectional.only(
+                start: 72, bottom: 16, end: 102),
             title: CustomWidget.getTitle(AboutUs.NAME),
             background: Image.asset(
               AboutUs.IMAGE,
               fit: BoxFit.scaleDown,
             ),
           ),
+          actions: <Widget>[settingsMenu.getMenu()],
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) => !_dataAvailable
                 ? CustomWidget.buildSliverSpinner()
-                : Cards().buildRows(_options[index]),
+                : Cards().buildRows(_options[index], context: context),
             childCount: _options?.length ?? 0,
           ),
         ),

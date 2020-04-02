@@ -13,6 +13,8 @@ class Appointment {
   final String room;
   final String infoTitle;
   final String organizer;
+  final String url;
+  final String urlFormat;
   final String email;
   final String name;
   final String street;
@@ -32,6 +34,8 @@ class Appointment {
       this.room,
       this.infoTitle,
       this.organizer,
+      this.url,
+      this.urlFormat,
       this.email,
       this.name,
       this.street,
@@ -64,6 +68,8 @@ class Appointment {
         room: json["room"],
         infoTitle: json["infoTitle"] == "" ? null : json["infoTitle"],
         organizer: json["organizer"] == "" ? null : json["organizer"],
+        url: json["url"] == "" ? null : json["url"],
+        urlFormat: json["format"] == "" ? null : json["format"],
         email: json["email"] == "" ? null : json["email"],
         name: json["name"] == null || json["name"] == "" ? null : json["name"],
         street: json["street"] == null || json["street"] == ""
@@ -90,6 +96,8 @@ class Appointment {
         "placeName": placeName,
         "room": room,
         "organizer": organizer,
+        "url": url,
+        "format": urlFormat,
         "email": email,
         "name": name,
         "street": street,

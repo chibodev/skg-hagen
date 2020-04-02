@@ -9,6 +9,7 @@ import 'package:skg_hagen/src/kindergarten/controller/kindergarten.dart'
 import 'package:skg_hagen/src/kindergarten/model/kindergarten.dart';
 import 'package:skg_hagen/src/kindergarten/repository/kindergartenClient.dart';
 import 'package:skg_hagen/src/kindergarten/view/cards.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Accordions extends State<Controller.Kindergarten> {
   Kindergarten _kindergarten;
@@ -16,10 +17,12 @@ class Accordions extends State<Controller.Kindergarten> {
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
   bool _dataAvailable = false;
+  SettingsMenu settingsMenu;
 
   @override
   void initState() {
     super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
     _getInfos();
   }
 
@@ -51,6 +54,8 @@ class Accordions extends State<Controller.Kindergarten> {
           expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
           backgroundColor: Color(Default.COLOR_GREEN),
           flexibleSpace: FlexibleSpaceBar(
+            titlePadding: const EdgeInsetsDirectional.only(
+                start: 72, bottom: 16, end: 102),
             title: CustomWidget.getTitle(Kindergarten.NAME,
                 color: Colors.black, noShadow: true),
             background: Image.asset(
@@ -58,6 +63,7 @@ class Accordions extends State<Controller.Kindergarten> {
               fit: BoxFit.cover,
             ),
           ),
+          actions: <Widget>[settingsMenu.getMenu()],
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(

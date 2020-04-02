@@ -18,6 +18,7 @@ class DioHTTPClient {
   static const int TIMEOUT = 5000;
   static const int START_INDEX = 0;
   static const int MAX_PAGE_RANGE = 10;
+  static const int COMPLETED = 100;
 
   Dio _client;
 
@@ -66,7 +67,7 @@ class DioHTTPClient {
     http.initialiseInterceptors('cache');
 
     final bool refreshState = refresh != null;
-    final bool hasInternet = await Network().hasInternet();
+    final bool hasInternet = await network.hasInternet();
 
     if (hasInternet) {
       options = buildCacheOptions(Duration(days: 2),
@@ -148,14 +149,27 @@ class DioHTTPClient {
     return await http
         ._post(path: path, options: options, data: data)
         .then(
-          (Response<dynamic> response) =>
-              response,
+          (Response<dynamic> response) => response,
         )
         .catchError((dynamic onError) {
       Crashlytics.instance.log(
         onError.error.toString(),
       );
     });
+  }
+
+  Future<bool> downloadFile(
+      {@required DioHTTPClient http,
+      @required String urlPath,
+      @required String savePath}) async {
+    return await http
+            ._download(urlPath: urlPath, savePath: savePath)
+            .catchError((dynamic onError) {
+          Crashlytics.instance.log(
+            onError.error.toString(),
+          );
+        }) ==
+        COMPLETED;
   }
 
   Future<Response<dynamic>> _post(
@@ -170,5 +184,16 @@ class DioHTTPClient {
     return await this
         ._client
         .get(path, options: options, queryParameters: queryParameters);
+  }
+
+  Future<int> _download({String urlPath, String savePath}) async {
+    int progress = 0;
+
+    return await this._client.download(urlPath, savePath,
+        onReceiveProgress: (int receivedBytes, int totalBytes) {
+      progress = ((receivedBytes / totalBytes) * 100).toInt();
+    }).then(
+      (Response<dynamic> response) => progress,
+    );
   }
 }

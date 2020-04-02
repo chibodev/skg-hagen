@@ -31,7 +31,12 @@
   "news": [
     {
       "title": "Aktion der Nächstenliebe",
-      "description": "Jedes Jahr findet zu Weihnachten eine besondere Aktion der Nächstenliebe statt:\r\nJedes Kind erhält leihweise eine kleine Spardose und sammelt Geld für bedürftige Kinder in Hagen. Das von allen Kindern gesammelte Geld wird zu Beginn des nächsten Jahres dem Hagener Kinderschutzbund gespendet. Dieser verwendet es für das Mittagsangebot \\\"Der Suppenkasper\\\": frisch gekochtes Mittagessen für bedürftige Kinder und ihre Familien.\r\nWelch eine schöne Aktion, besonders in der Weihnachtszeit an andere Kinder, die Hilfe brauchen, zu denken!"
+      "description": "Jedes Jahr findet zu Weihnachten eine besondere Aktion der Nächstenliebe statt:\r\nJedes Kind erhält leihweise eine kleine Spardose und sammelt Geld für bedürftige Kinder in Hagen. Das von allen Kindern gesammelte Geld wird zu Beginn des nächsten Jahres dem Hagener Kinderschutzbund gespendet. Dieser verwendet es für das Mittagsangebot \\\"Der Suppenkasper\\\": frisch gekochtes Mittagessen für bedürftige Kinder und ihre Familien.\r\nWelch eine schöne Aktion, besonders in der Weihnachtszeit an andere Kinder, die Hilfe brauchen, zu denken!",
+      "url": "https://someUrl",
+      "urlFormat": null,
+      "fileUrl": "https://Formular.pdf",
+      "format": "pdf",
+      "filename": "Formular.pdf"
     }
   ]
 }

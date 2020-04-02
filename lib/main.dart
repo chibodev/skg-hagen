@@ -6,18 +6,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skg_hagen/src/aboutus/controller/aboutus.dart';
+import 'package:skg_hagen/src/appointment/controller/appointmentController.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
+import 'package:skg_hagen/src/common/model/font.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/environment.dart';
 import 'package:skg_hagen/src/contacts/controller/contacts.dart';
 import 'package:skg_hagen/src/home/controller/home.dart';
-import 'package:skg_hagen/src/appointment/controller/appointment.dart';
 import 'package:skg_hagen/src/intercession/controller/intercession.dart';
-import 'package:skg_hagen/src/legal/controller/imprint.dart';
-import 'package:skg_hagen/src/legal/controller/privacy.dart';
-import 'package:skg_hagen/src/offer/controller/offer.dart';
 import 'package:skg_hagen/src/kindergarten/controller/kindergarten.dart';
+import 'package:skg_hagen/src/legal/controller/imprint.dart';
+import 'package:skg_hagen/src/offer/controller/offer.dart';
+import 'package:skg_hagen/src/pushnotification/controller/appointmentController.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,6 +33,7 @@ void main() async {
     SharedPreferences.getInstance().then(
       (SharedPreferences sp) {
         sharedPreferences = sp;
+        appFont = Font();
         SystemChrome.setPreferredOrientations(
             <DeviceOrientation>[DeviceOrientation.portraitUp]).then(
           (_) {
@@ -51,16 +52,17 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: <String, Widget Function(BuildContext)>{
         Routes.home: (BuildContext context) => Home(),
-        Routes.appointment: (BuildContext context) => Appointment(),
+        Routes.appointment: (BuildContext context) => AppointmentController(),
         Routes.offer: (BuildContext context) => Offer(),
         Routes.intercession: (BuildContext context) => Intercession(),
         Routes.kindergarten: (BuildContext context) => Kindergarten(),
         Routes.contacts: (BuildContext context) => Contacts(),
         Routes.aboutUs: (BuildContext context) => AboutUs(),
         Routes.imprint: (BuildContext context) => Imprint(),
-        Routes.privacy: (BuildContext context) => Privacy(),
+        Routes.pushNotification: (BuildContext context) =>
+            PushNotificationController(),
       },
-      theme: ThemeData(primaryColor: Colors.white, fontFamily: Default.FONT),
+      theme: ThemeData(primaryColor: Colors.white, fontFamily: Font.NAME),
       home: Home(),
     );
   }

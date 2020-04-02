@@ -1,0 +1,41 @@
+{
+  "offer": {
+    "id": "1",
+    "title": "Helfer",
+    "description": "Ja, DICH suchen wir",
+    "phone": "02795 80989",
+    "email": "emaile@email.de",
+    "active": "1",
+    "createdAt": "2020-03-22 11:21:41"
+  },
+  "receive": {
+    "id": "1",
+    "title": "Hilfe-Suchende",
+    "description": "Liebe Gemeindemitglieder",
+    "phone": " 02795 80989 ",
+    "email": "email@email.de",
+    "active": "1",
+    "createdAt": "2020-03-22 11:27:23"
+  },
+  "offer_question": [
+    {
+      "question": "Was ich machen kann",
+      "type": "checkbox",
+      "option": [
+        "Einkäufe",
+        "Besorgungen"
+      ]
+    },
+    {
+      "question": "\u00dcber mich",
+      "type": "text",
+      "option": [
+        "Name",
+        "Alter",
+        "Wohnort (Ortteil)",
+        "Sie erreichen mich",
+        "Ich m\u00f6chte gern helfen weil"
+      ]
+    }
+  ]
+}

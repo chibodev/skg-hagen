@@ -4,20 +4,19 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
+import 'package:skg_hagen/src/offer/controller/confirmationAppointmentController.dart';
 import 'package:skg_hagen/src/offer/model/appointment.dart';
 import 'package:skg_hagen/src/offer/model/offers.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
-class ConfirmationAppointment extends StatelessWidget {
-  final List<Appointment> appointment;
-  final BuildContext context;
-  final bool dataAvailable;
+class ConfirmationAppointment extends State<ConfirmationAppointmentController> {
+  SettingsMenu settingsMenu;
 
-  const ConfirmationAppointment(
-      {Key key,
-      this.context,
-      @required this.appointment,
-      this.dataAvailable = true})
-      : super(key: key);
+  @override
+  void initState() {
+    super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,19 +31,22 @@ class ConfirmationAppointment extends StatelessWidget {
               expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
               backgroundColor: Color(Default.COLOR_GREEN),
               flexibleSpace: FlexibleSpaceBar(
+                titlePadding: const EdgeInsetsDirectional.only(
+                    start: 72, bottom: 16, end: 102),
                 title: CustomWidget.getTitle(Appointment.PAGE_NAME),
                 background: Image.asset(
                   Offers.IMAGE,
                   fit: BoxFit.cover,
                 ),
               ),
+              actions: <Widget>[settingsMenu.getMenu()],
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) => dataAvailable
-                    ? _buildRows(this.appointment[index], context)
+                (BuildContext context, int index) => widget.dataAvailable
+                    ? _buildRows(widget.appointment[index], context)
                     : CustomWidget.buildSliverSpinner(),
-                childCount: appointment?.length ?? 0,
+                childCount: widget?.appointment?.length ?? 0,
               ),
             ),
           ],
@@ -53,7 +55,7 @@ class ConfirmationAppointment extends StatelessWidget {
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          !dataAvailable ? CustomWidget.noInternet() : Container(),
+          !widget.dataAvailable ? CustomWidget.noInternet() : Container(),
         ],
       ),
     );

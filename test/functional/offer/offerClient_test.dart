@@ -26,7 +26,7 @@ void main() {
   });
 
   test('OfferClient successfully retrieves data', () async {
-    when(network.hasInternet()).thenAnswer((_) async => false);
+    when(network.hasInternet()).thenAnswer((_) async => true);
     when(
       httpClient.getJSONResponse(
         http: httpClient,
@@ -58,13 +58,13 @@ void main() {
     expect(offers.offers.first.zip, '58097');
     expect(offers.offers.first.city, 'Hagen');
     expect(offers.offers.first.country, 'DE');
+    expect(offers.offers.first.url, 'https://someUrl');
+    expect(offers.offers.first.urlFormat, 'audio');
     expect(offers.offers.length, 2);
 
     expect(offers.projects, isNotEmpty);
     expect(offers.projects.first.title, 'New');
-    expect(
-        offers.projects.first.description
-            .contains('Project description'),
+    expect(offers.projects.first.description.contains('Project description'),
         true);
     expect(offers.projects.length, 1);
 

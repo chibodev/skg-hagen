@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
+import 'package:skg_hagen/src/common/model/font.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
 import 'package:skg_hagen/src/home/model/cardContent.dart';
 import 'package:skg_hagen/src/home/service/singleCard.dart';
 import 'package:skg_hagen/src/legal/model/imprint.dart';
-import 'package:skg_hagen/src/legal/model/privacy.dart';
+import 'package:skg_hagen/src/pushnotification/model/pushNotifications.dart';
 
 class DrawerList {
   static const String LOGO = 'assets/images/skg-transparent.png';
@@ -18,33 +20,27 @@ class DrawerList {
     SizeConfig().init(context);
 
     return Drawer(
-      child: Container(
-        decoration: BoxDecoration(
+        child: Container(
+      decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: <Color>[
-              Color(Default.COLOR_GREEN),
-              Colors.white
-            ]
-          )
-        ),
-        child: FutureBuilder<List<CardContent>>(
-          future: cards,
-          builder:
-              (BuildContext context, AsyncSnapshot<List<CardContent>> response) {
-            if (response.connectionState == ConnectionState.done &&
-                response.data != null) {
-              return _buildListView(context, response.data);
-            }
-            return CircularProgressIndicator(
-              valueColor:
-              AlwaysStoppedAnimation<Color>(Color(Default.COLOR_GREEN)),
-            );
-          },
-        ),
-      )
-    );
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: <Color>[Color(Default.COLOR_GREEN), Colors.white])),
+      child: FutureBuilder<List<CardContent>>(
+        future: cards,
+        builder:
+            (BuildContext context, AsyncSnapshot<List<CardContent>> response) {
+          if (response.connectionState == ConnectionState.done &&
+              response.data != null) {
+            return _buildListView(context, response.data);
+          }
+          return CircularProgressIndicator(
+            valueColor:
+                AlwaysStoppedAnimation<Color>(Color(Default.COLOR_GREEN)),
+          );
+        },
+      ),
+    ));
   }
 
   static Widget _buildListView(BuildContext context, List<CardContent> cards) {
@@ -80,18 +76,20 @@ class DrawerList {
 
     list.add(Divider());
 
-    //Legal
     list.add(
-      _createLegalDrawerItem(
-        text: Imprint.NAME,
-        onTap: () => Navigator.of(context).popAndPushNamed(Routes.imprint),
+      _createOtherDrawerItem(
+        text: PushNotifications.NAME,
+        onTap: () =>
+            Navigator.of(context).popAndPushNamed(Routes.pushNotification),
       ),
     );
 
+    list.add(Divider());
+
     list.add(
-      _createLegalDrawerItem(
-        text: Privacy.NAME,
-        onTap: () => Navigator.of(context).popAndPushNamed(Routes.privacy),
+      _createOtherDrawerItem(
+        text: Imprint.NAME,
+        onTap: () => Navigator.of(context).popAndPushNamed(Routes.imprint),
       ),
     );
 
@@ -118,17 +116,19 @@ class DrawerList {
     return ListTile(
       title: Row(
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(
-              left: SizeConfig.getSafeBlockVerticalBy(1.5),
-              bottom: SizeConfig.getSafeBlockVerticalBy(0.5),
-            ),
-            child: Text(
-              text,
-              style: TextStyle(
-                fontFamily: Default.FONT,
-                fontSize: SizeConfig.getSafeBlockVerticalBy(
-                    Default.STANDARD_FONT_SIZE),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: SizeConfig.getSafeBlockVerticalBy(1.5),
+                bottom: SizeConfig.getSafeBlockVerticalBy(0.5),
+              ),
+              child: Text(
+                text,
+                style: TextStyle(
+                  fontFamily: Font.NAME,
+                  fontSize:
+                      SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
+                ),
               ),
             ),
           ),
@@ -138,20 +138,23 @@ class DrawerList {
     );
   }
 
-  static Widget _createLegalDrawerItem(
+  static Widget _createOtherDrawerItem(
       {String text, GestureTapCallback onTap, bool smallFontSize}) {
     return ListTile(
       title: Row(
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(
-              left: SizeConfig.getSafeBlockVerticalBy(1.5),
-            ),
-            child: Text(
-              text,
-              style: TextStyle(
-                fontFamily: Default.FONT,
-                fontSize: SizeConfig.getSafeBlockVerticalBy(1.5),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: SizeConfig.getSafeBlockVerticalBy(1.5),
+              ),
+              child: Text(
+                text,
+                style: TextStyle(
+                  fontFamily: Font.NAME,
+                  fontSize:
+                      SizeConfig.getSafeBlockVerticalBy(appFont.secondarySize),
+                ),
               ),
             ),
           ),

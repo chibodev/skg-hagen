@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/address.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
@@ -137,7 +138,7 @@ class Cards {
                   actionExtentRatio: Default.SLIDE_RATIO,
                   actions: <Widget>[
                     CustomWidget.getSlidableShare(
-                        card.name, Default.getSharableContent(card.url), 3)
+                        card.name, Default.getSharableContent(card.url))
                   ],
                   child: _getSocialMediaIcon(card)),
             ],
@@ -158,13 +159,14 @@ class Cards {
                 card.getSocialImage(name),
                 fit: BoxFit.scaleDown,
                 width: SizeConfig.getSafeBlockVerticalBy(7),
-                height: SizeConfig.getSafeBlockHorizontalBy(7),
+                height:
+                    SizeConfig.getSafeBlockHorizontalBy(appFont.imageIconSize),
               ),
               title: Text(
                 card.location,
                 style: TextStyle(
-                  fontSize: SizeConfig.getSafeBlockVerticalBy(
-                      Default.SUBSTANDARD_FONT_SIZE),
+                  fontSize:
+                      SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                 ),
               ),
             ),
@@ -202,7 +204,7 @@ class Cards {
                           ? Color(Default.COLOR_GREEN)
                           : Colors.white,
                       fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          Default.SUBSTANDARD_FONT_SIZE),
+                          appFont.primarySize),
                     ),
                   )
                 : Text(''),
@@ -214,7 +216,7 @@ class Cards {
                           ? Color(Default.COLOR_GREEN)
                           : Colors.white,
                       fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          Default.SUBSTANDARD_FONT_SIZE),
+                          appFont.primarySize),
                     ),
                   )
                 : Text(''),
@@ -239,8 +241,8 @@ class Cards {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
-                  fontSize: SizeConfig.getSafeBlockVerticalBy(
-                      Default.SUBSTANDARD_FONT_SIZE),
+                  fontSize:
+                      SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                 ),
               ),
             ),
@@ -251,8 +253,8 @@ class Cards {
                 opening,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: SizeConfig.getSafeBlockVerticalBy(
-                      Default.SUBSTANDARD_FONT_SIZE),
+                  fontSize:
+                      SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                 ),
               ),
             ),
@@ -319,7 +321,7 @@ class Cards {
                     child: Icon(
                       Icons.phone,
                       color: Colors.black,
-                      size: SizeConfig.getSafeBlockVerticalBy(3),
+                      size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
                       semanticLabel: 'Phone',
                     ),
                   ),
@@ -334,7 +336,7 @@ class Cards {
               ? InkWell(
                   splashColor: Color(Default.COLOR_GREEN),
                   onTap: () =>
-                      TapAction().sendMail(email, title, this._buildContext),
+                      TapAction().sendMail(email, title),
                   onLongPress: () => ClipboardService.copyAndNotify(
                       context: this._buildContext, text: email),
                   child: Padding(
@@ -345,7 +347,7 @@ class Cards {
                     child: Icon(
                       Icons.email,
                       color: Colors.black,
-                      size: SizeConfig.getSafeBlockVerticalBy(3),
+                      size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
                       semanticLabel: 'E-Mail',
                     ),
                   ),

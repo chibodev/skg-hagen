@@ -3,15 +3,19 @@ import 'package:flutter/rendering.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
+import 'package:skg_hagen/src/offer/controller/projectsController.dart';
 import 'package:skg_hagen/src/offer/model/offers.dart';
 import 'package:skg_hagen/src/offer/model/project.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
-class Projects extends StatelessWidget {
-  final Project projects;
-  final BuildContext context;
+class Projects extends State<ProjectsController> {
+  SettingsMenu settingsMenu;
 
-  const Projects({Key key, this.context, @required this.projects})
-      : super(key: key);
+  @override
+  void initState() {
+    super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +31,15 @@ class Projects extends StatelessWidget {
               expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
               backgroundColor: Color(Default.COLOR_GREEN),
               flexibleSpace: FlexibleSpaceBar(
+                titlePadding: const EdgeInsetsDirectional.only(
+                    start: 72, bottom: 16, end: 102),
                 title: CustomWidget.getTitle(Project.NAME),
                 background: Image.asset(
                   Offers.IMAGE,
                   fit: BoxFit.cover,
                 ),
               ),
+              actions: <Widget>[settingsMenu.getMenu()],
             ),
             SliverToBoxAdapter(
               child: Column(
@@ -40,12 +47,13 @@ class Projects extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  CustomWidget.getSinglePageTitle(thirty, projects.title),
+                  CustomWidget.getSinglePageTitle(
+                      thirty, widget?.project?.title),
                   CustomWidget.getSinglePageDescription(
-                      thirty, projects.description),
-                  projects.imageUrl != null
+                      thirty, widget?.project?.description),
+                  widget?.project?.imageUrl != null
                       ? CustomWidget.getImageFromNetwork(
-                          thirty, projects.imageUrl)
+                          thirty, widget?.project?.imageUrl)
                       : Container(),
                 ],
               ),

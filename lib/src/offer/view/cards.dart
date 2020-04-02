@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
+import 'package:skg_hagen/src/offer/controller/aid.dart' as Controller;
+import 'package:skg_hagen/src/offer/controller/aidReceive.dart';
+import 'package:skg_hagen/src/offer/controller/conceptController.dart';
+import 'package:skg_hagen/src/offer/controller/confirmationAppointmentController.dart';
+import 'package:skg_hagen/src/offer/controller/musicController.dart';
+import 'package:skg_hagen/src/offer/controller/projectsController.dart';
+import 'package:skg_hagen/src/offer/controller/quoteController.dart';
+import 'package:skg_hagen/src/offer/model/aid.dart';
+import 'package:skg_hagen/src/offer/model/aidOffer.dart' as ModelAidOffer;
+import 'package:skg_hagen/src/offer/model/aidReceive.dart' as ModelAidReceive;
 import 'package:skg_hagen/src/offer/model/appointment.dart';
 import 'package:skg_hagen/src/offer/model/concept.dart';
 import 'package:skg_hagen/src/offer/model/confirmation.dart';
@@ -10,11 +21,6 @@ import 'package:skg_hagen/src/offer/model/music.dart';
 import 'package:skg_hagen/src/offer/model/offer.dart';
 import 'package:skg_hagen/src/offer/model/project.dart';
 import 'package:skg_hagen/src/offer/model/quote.dart';
-import 'package:skg_hagen/src/offer/view/concept.dart' as View;
-import 'package:skg_hagen/src/offer/view/confirmationAppointment.dart';
-import 'package:skg_hagen/src/offer/view/music.dart' as View;
-import 'package:skg_hagen/src/offer/view/projects.dart';
-import 'package:skg_hagen/src/offer/view/quote.dart' as View;
 
 class Cards {
   BuildContext _buildContext;
@@ -45,6 +51,9 @@ class Cards {
     } else if (card is Confirmation) {
       subjectName = Confirmation.NAME;
       list.add(_buildTileForConfirmation(context, card));
+    } else if (card is Aid) {
+      subjectName = Aid.NAME;
+      list.add(_buildTileForAid(context, card));
     }
 
     return card != null
@@ -97,8 +106,13 @@ class Cards {
                       ),
                       CustomWidget.getCardOrganizer(
                           card.getFormattedOrganiser(), this._buildContext),
-                      CustomWidget.getCardEmail(
-                          card.email, card.title, this._buildContext),
+                      Row(
+                        children: <Widget>[
+                          CustomWidget.getCardEmail(
+                              card.email, card.title, this._buildContext),
+                          CustomWidget.getCardURL(card.url, this._buildContext),
+                        ],
+                      )
                     ],
                   ),
                 ),
@@ -127,8 +141,8 @@ class Cards {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute<dynamic>(
-                builder: (BuildContext _context) => Projects(
-                  projects: card,
+                builder: (BuildContext _context) => ProjectsController(
+                  project: card,
                   context: context,
                 ),
               ),
@@ -137,18 +151,21 @@ class Cards {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Flexible(
-                    child: Container(
-                  child: Padding(
-                    padding: const EdgeInsets.all(1.0),
-                    child: ListTile(
-                      leading: Icon(
-                        Icons.info,
-                        color: Color(Default.COLOR_GREEN),
+                  child: Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: ListTile(
+                        leading: Icon(
+                          Icons.info,
+                          color: Color(Default.COLOR_GREEN),
+                          size: SizeConfig.getSafeBlockVerticalBy(
+                              appFont.iconSize),
+                        ),
+                        title: CustomWidget.getCardTitle(card.title),
                       ),
-                      title: CustomWidget.getCardTitle(card.title),
                     ),
                   ),
-                )),
+                ),
               ],
             ),
           ),
@@ -170,7 +187,7 @@ class Cards {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute<dynamic>(
-                builder: (BuildContext _context) => View.Music(
+                builder: (BuildContext _context) => MusicController(
                   music: card,
                   context: context,
                 ),
@@ -184,10 +201,10 @@ class Cards {
                   child: Padding(
                     padding: const EdgeInsets.all(1.0),
                     child: ListTile(
-                      leading: Icon(
-                        Icons.info,
-                        color: Color(Default.COLOR_GREEN),
-                      ),
+                      leading: Icon(Icons.info,
+                          color: Color(Default.COLOR_GREEN),
+                          size: SizeConfig.getSafeBlockVerticalBy(
+                              appFont.iconSize)),
                       title: CustomWidget.getCardTitle(card.title),
                     ),
                   ),
@@ -220,7 +237,8 @@ class Cards {
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute<dynamic>(
-                            builder: (BuildContext _context) => View.Concept(
+                            builder: (BuildContext _context) =>
+                                ConceptController(
                               concept: card.concept,
                               context: context,
                               dataAvailable: this._dataAvailable,
@@ -234,6 +252,8 @@ class Cards {
                               leading: Icon(
                                 Icons.lightbulb_outline,
                                 color: Color(Default.COLOR_GREEN),
+                                size: SizeConfig.getSafeBlockVerticalBy(
+                                    appFont.iconSize),
                               ),
                               title: CustomWidget.getCardTitle(Concept.NAME),
                             ),
@@ -257,8 +277,8 @@ class Cards {
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute<dynamic>(
-                            builder: (BuildContext _context) => View.Quote(
-                              quote: card.quote,
+                            builder: (BuildContext _context) => QuoteController(
+                              quotes: card.quote,
                               context: context,
                               dataAvailable: this._dataAvailable,
                             ),
@@ -268,10 +288,10 @@ class Cards {
                           child: Padding(
                             padding: const EdgeInsets.all(1.0),
                             child: ListTile(
-                              leading: Icon(
-                                Icons.message,
-                                color: Color(Default.COLOR_GREEN),
-                              ),
+                              leading: Icon(Icons.message,
+                                  color: Color(Default.COLOR_GREEN),
+                                  size: SizeConfig.getSafeBlockVerticalBy(
+                                      appFont.iconSize)),
                               title: CustomWidget.getCardTitle(Quote.NAME),
                             ),
                           ),
@@ -295,7 +315,7 @@ class Cards {
                           context,
                           MaterialPageRoute<dynamic>(
                             builder: (BuildContext _context) =>
-                                ConfirmationAppointment(
+                                ConfirmationAppointmentController(
                               appointment: card.appointment,
                               context: context,
                               dataAvailable: this._dataAvailable,
@@ -321,6 +341,79 @@ class Cards {
                 )
               : Container(),
         ],
+      ),
+    );
+  }
+
+  Widget _buildTileForAid(BuildContext context, Aid card) {
+    final Controller.Aid aidOffer = Controller.Aid(
+      aidOffer: card?.offer,
+      context: context,
+      dataAvailable: this._dataAvailable,
+      aidOfferQuestion: card?.offerQuestion,
+    );
+
+    final AidReceive aidReceive = AidReceive(
+      aidReceive: card?.receive,
+      buildContext: context,
+      dataAvailable: this._dataAvailable,
+    );
+
+    return Material(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          card.offer != null
+              ? getAidContent(context, card, aidOffer,
+                  ModelAidOffer.AidOffer.VOLUNTEER, ModelAidOffer.AidOffer.NAME)
+              : Container(),
+          card.receive != null
+              ? getAidContent(
+                  context,
+                  card,
+                  aidReceive,
+                  ModelAidReceive.AidReceive.HELP,
+                  ModelAidReceive.AidReceive.NAME)
+              : Container(),
+        ],
+      ),
+    );
+  }
+
+  Flexible getAidContent(BuildContext context, dynamic card,
+      dynamic offerWidget, String iconImage, String cardTitle) {
+    return Flexible(
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: SizeConfig.getSafeBlockHorizontalBy(3),
+        ),
+        child: Card(
+          elevation: 7,
+          child: InkWell(
+            splashColor: Color(Default.COLOR_GREEN),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute<dynamic>(
+                builder: (BuildContext _context) => offerWidget,
+              ),
+            ),
+            child: Container(
+              child: Padding(
+                padding: const EdgeInsets.all(1.0),
+                child: ListTile(
+                  leading: ImageIcon(
+                    AssetImage(iconImage),
+                    color: Color(Default.COLOR_GREEN),
+                    size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
+                  ),
+                  title: CustomWidget.getCardTitle(cardTitle),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

@@ -1,9 +1,7 @@
 class Imprint {
   static const String NAME = 'Impressum';
-  static const String IMAGE = 'assets/images/imprint.jpg';
+  static const String IMAGE = 'assets/images/icon/paragraph.png';
   String imprint;
 
-  Imprint({
-    this.imprint
-  });
+  Imprint({this.imprint});
 }

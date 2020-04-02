@@ -8,6 +8,7 @@ import 'package:skg_hagen/src/contacts/controller/contacts.dart' as Controller;
 import 'package:skg_hagen/src/contacts/model/contacts.dart';
 import 'package:skg_hagen/src/contacts/repository/contactsClient.dart';
 import 'package:skg_hagen/src/contacts/view/cards.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Accordions extends State<Controller.Contacts> {
   Contacts _contacts;
@@ -15,10 +16,12 @@ class Accordions extends State<Controller.Contacts> {
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
   bool _dataAvailable = false;
+  SettingsMenu settingsMenu;
 
   @override
   void initState() {
     super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
     _getContacts();
   }
 
@@ -50,12 +53,15 @@ class Accordions extends State<Controller.Contacts> {
           expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
           backgroundColor: Color(Default.COLOR_GREEN),
           flexibleSpace: FlexibleSpaceBar(
+            titlePadding: const EdgeInsetsDirectional.only(
+                start: 72, bottom: 16, end: 102),
             title: CustomWidget.getTitle(Contacts.NAME),
             background: Image.asset(
               Contacts.IMAGE,
               fit: BoxFit.cover,
             ),
           ),
+          actions: <Widget>[settingsMenu.getMenu()],
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(

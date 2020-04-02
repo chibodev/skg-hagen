@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
+import 'package:skg_hagen/src/common/model/font.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/clipboard.dart';
@@ -13,10 +15,18 @@ import 'package:skg_hagen/src/intercession/controller/intercession.dart'
     as Controller;
 import 'package:skg_hagen/src/intercession/model/intercession.dart' as Model;
 import 'package:skg_hagen/src/intercession/repository/intercessionClient.dart';
+import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Page extends State<Controller.Intercession> {
   final TextEditingController _intercessionTextFieldcontroller =
       TextEditingController();
+  SettingsMenu settingsMenu;
+
+  @override
+  void initState() {
+    super.initState();
+    settingsMenu = SettingsMenu(pageView: this);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +73,8 @@ class Page extends State<Controller.Intercession> {
           expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
           backgroundColor: Color(Default.COLOR_GREEN),
           flexibleSpace: FlexibleSpaceBar(
+            titlePadding: const EdgeInsetsDirectional.only(
+                start: 72, bottom: 16, end: 102),
             title: CustomWidget.getTitle(Model.Intercession.NAME,
                 color: Colors.black, noShadow: true),
             background: Image.asset(
@@ -70,6 +82,7 @@ class Page extends State<Controller.Intercession> {
               fit: BoxFit.cover,
             ),
           ),
+          actions: <Widget>[settingsMenu.getMenu()],
         ),
         SliverToBoxAdapter(
           child: Container(
@@ -78,12 +91,13 @@ class Page extends State<Controller.Intercession> {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.only(
-                      top: SizeConfig.getSafeBlockVerticalBy(7)),
+                    top: SizeConfig.getSafeBlockVerticalBy(7),
+                  ),
                   child: Text(
                     Model.Intercession.HEADER,
                     style: TextStyle(
                       fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          Default.STANDARD_FONT_SIZE),
+                          appFont.primarySize),
                     ),
                   ),
                 ),
@@ -101,44 +115,37 @@ class Page extends State<Controller.Intercession> {
                           width: 0.5,
                           style: BorderStyle.solid),
                       borderRadius: BorderRadius.all(
-                        Radius.circular(SizeConfig.getSafeBlockVerticalBy(1)),
+                        Radius.circular(
+                          SizeConfig.getSafeBlockVerticalBy(1),
+                        ),
                       ),
                     ),
                     child: Padding(
-                      padding:
-                          EdgeInsets.all(SizeConfig.getSafeBlockVerticalBy(1)),
+                      padding: EdgeInsets.all(
+                        SizeConfig.getSafeBlockVerticalBy(1),
+                      ),
                       child: TextField(
                         controller: _intercessionTextFieldcontroller,
+                        style: TextStyle(
+                          fontSize: SizeConfig.getSafeBlockVerticalBy(
+                              appFont.secondarySize),
+                        ),
                         autofocus: true,
                         expands: false,
                         keyboardType: TextInputType.multiline,
                         maxLines: null,
                         decoration: InputDecoration.collapsed(
-                            hintText: Model.Intercession.PLACEHOLDER),
+                          hintText: Model.Intercession.PLACEHOLDER,
+                          hintStyle: TextStyle(
+                            fontSize: SizeConfig.getSafeBlockVerticalBy(
+                                appFont.secondarySize - Font.SECONDARY_SIZE),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-                FlatButton(
-                  color: Color(Default.COLOR_GREEN),
-                  textColor: Colors.white,
-                  padding: EdgeInsets.only(
-                    left: SizeConfig.getSafeBlockVerticalBy(7),
-                    right: SizeConfig.getSafeBlockVerticalBy(7),
-                    top: SizeConfig.getSafeBlockVerticalBy(2),
-                    bottom: SizeConfig.getSafeBlockVerticalBy(2),
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  onPressed: () {
-                    if (_intercessionTextFieldcontroller.text.isNotEmpty) {
-                      _saveIntercession(
-                          context, _intercessionTextFieldcontroller.text);
-                    }
-                  },
-                  child: Text(('Senden').toUpperCase()),
-                ),
+                CustomWidget.getSendButton(context, _onSendPressed),
                 Padding(
                   padding: EdgeInsets.all(20),
                   child: Row(
@@ -149,7 +156,7 @@ class Page extends State<Controller.Intercession> {
                           Model.Intercession.EMAIL_TEXT,
                           style: TextStyle(
                             fontSize: SizeConfig.getSafeBlockVerticalBy(
-                                Default.SUBSTANDARD_FONT_SIZE),
+                                appFont.primarySize),
                           ),
                         ),
                       ),
@@ -157,8 +164,7 @@ class Page extends State<Controller.Intercession> {
                         splashColor: Color(Default.COLOR_GREEN),
                         onTap: () => TapAction().sendMail(
                             Model.Intercession.EMAIL,
-                            Model.Intercession.EMAIL_NAME,
-                            context),
+                            Model.Intercession.EMAIL_NAME),
                         onLongPress: () => ClipboardService.copyAndNotify(
                             context: context, text: Model.Intercession.EMAIL),
                         child: Padding(
@@ -168,7 +174,8 @@ class Page extends State<Controller.Intercession> {
                           child: Icon(
                             Icons.email,
                             color: Colors.grey,
-                            size: SizeConfig.getSafeBlockVerticalBy(4),
+                            size: SizeConfig.getSafeBlockVerticalBy(
+                                appFont.iconSize),
                             semanticLabel: 'E-Mail',
                           ),
                         ),
@@ -182,6 +189,12 @@ class Page extends State<Controller.Intercession> {
         )
       ],
     );
+  }
+
+  void _onSendPressed(BuildContext context) {
+    if (_intercessionTextFieldcontroller.text.isNotEmpty) {
+      _saveIntercession(context, _intercessionTextFieldcontroller.text);
+    }
   }
 
   Future<void> _saveIntercession(
@@ -223,13 +236,13 @@ class Page extends State<Controller.Intercession> {
       leading: Icon(
         icon,
         color: Colors.white,
+        size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
       ),
       title: Text(
         text,
         style: TextStyle(
           color: Colors.white,
-          fontSize:
-              SizeConfig.getSafeBlockVerticalBy(Default.STANDARD_FONT_SIZE),
+          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
         ),
       ),
     );

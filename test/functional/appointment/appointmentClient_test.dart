@@ -54,6 +54,8 @@ void main() {
     expect(appointments.appointments.first.zip, '58095');
     expect(appointments.appointments.first.city, 'Hagen');
     expect(appointments.appointments.first.country, 'DE');
+    expect(appointments.appointments.first.urlFormat, null);
+    expect(appointments.appointments.first.url, null);
     expect(appointments.appointments.last.title, 'Kindergartengottesdienst');
     expect(appointments.appointments.last.occurrence,
         DateTime.parse('2019-11-06'));
@@ -67,6 +69,8 @@ void main() {
     expect(appointments.appointments.last.zip, '58097');
     expect(appointments.appointments.last.city, 'Hagen');
     expect(appointments.appointments.last.country, 'DE');
+    expect(appointments.appointments.last.url, 'https://somelink');
+    expect(appointments.appointments.last.urlFormat, 'audio');
   });
 
   test('AppointmentClient fails and throws Exception', () async {
