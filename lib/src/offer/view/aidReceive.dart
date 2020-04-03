@@ -3,6 +3,8 @@ import 'package:flutter/rendering.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/routes/routes.dart';
+import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/aidReceive.dart' as Controller;
 import 'package:skg_hagen/src/offer/model/aidReceive.dart' as Model;
@@ -16,6 +18,8 @@ class AidReceive extends State<Controller.AidReceive> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
+    AnalyticsManager().setScreen(
+        Model.AidReceive.NAME, Default.classNameFromRoute(Routes.offer));
   }
 
   @override

@@ -3,6 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/routes/routes.dart';
+import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
@@ -25,6 +27,8 @@ class NotificationList extends State<PushNotificationController> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
+    AnalyticsManager().setScreen(PushNotifications.NAME,
+        Default.classNameFromRoute(Routes.pushNotification));
     _getInitialNotifications();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==

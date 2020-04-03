@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/routes/routes.dart';
+import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
@@ -22,6 +24,9 @@ class Accordions extends State<Controller.Contacts> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
+    AnalyticsManager().setScreen('Kontakte', 'Contacts');
+    AnalyticsManager()
+        .setScreen(Contacts.NAME, Default.classNameFromRoute(Routes.contacts));
     _getContacts();
   }
 

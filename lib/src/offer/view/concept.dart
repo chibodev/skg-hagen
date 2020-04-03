@@ -3,6 +3,8 @@ import 'package:flutter/rendering.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/routes/routes.dart';
+import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/conceptController.dart';
 import 'package:skg_hagen/src/offer/model/concept.dart' as Model;
@@ -16,6 +18,8 @@ class Concept extends State<ConceptController> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
+    AnalyticsManager().setScreen(
+        Model.Concept.PAGE_NAME, Default.classNameFromRoute(Routes.offer));
   }
 
   @override

@@ -4,6 +4,7 @@ import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/font.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
+import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
 import 'package:skg_hagen/src/home/model/cardContent.dart';
 import 'package:skg_hagen/src/home/service/singleCard.dart';
@@ -18,6 +19,7 @@ class DrawerList {
     final SingleCard card = SingleCard();
     final Future<List<CardContent>> cards = card.getAllCards(AssetClient());
     SizeConfig().init(context);
+    AnalyticsManager().setScreen('Drawer', Default.capitalize('menu'));
 
     return Drawer(
         child: Container(

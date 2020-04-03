@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/routes/routes.dart';
+import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/musicController.dart';
 import 'package:skg_hagen/src/offer/model/music.dart' as Model;
@@ -15,6 +17,8 @@ class Music extends State<MusicController> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
+    AnalyticsManager()
+        .setScreen(Model.Music.NAME, Default.classNameFromRoute(Routes.offer));
   }
 
   @override

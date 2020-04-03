@@ -7,6 +7,8 @@ import 'package:skg_hagen/src/appointment/model/appointments.dart';
 import 'package:skg_hagen/src/appointment/repository/appointmentClient.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/routes/routes.dart';
+import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
@@ -24,6 +26,9 @@ class Cards extends State<AppointmentController> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
+    AnalyticsManager().setScreen('Termine', 'Appointment');
+    AnalyticsManager().setScreen(
+        Appointments.NAME, Default.classNameFromRoute(Routes.appointment));
     _getInitialAppointments();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
@@ -210,7 +215,8 @@ class Cards extends State<AppointmentController> {
                       children: <Widget>[
                         CustomWidget.getCardEmail(
                             card.email, card.title, context),
-                        CustomWidget.getCardURL(card.url, context, format: card.urlFormat),
+                        CustomWidget.getCardURL(card.url, context,
+                            format: card.urlFormat),
                       ],
                     )
                   ],

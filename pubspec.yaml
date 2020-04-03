@@ -33,6 +33,7 @@ dependencies:
   launch_review: ^2.0.0
   firebase_messaging: ^6.0.13
   flutter_local_notifications: ^1.3.0
+  firebase_analytics: ^5.0.11
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +71,7 @@ flutter:
     - assets/images/gruppen.jpg
     - assets/images/andacht.jpg
     - assets/images/gebet.jpg
+    - assets/images/mediathek.jpg
     - assets/images/lesen.jpg
     - assets/images/spende.jpg
     - assets/images/kontakte.jpg

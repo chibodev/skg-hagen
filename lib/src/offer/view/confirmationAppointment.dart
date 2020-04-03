@@ -3,6 +3,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:skg_hagen/src/common/model/default.dart';
 import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/routes/routes.dart';
+import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/confirmationAppointmentController.dart';
 import 'package:skg_hagen/src/offer/model/appointment.dart';
@@ -16,6 +18,8 @@ class ConfirmationAppointment extends State<ConfirmationAppointmentController> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
+    AnalyticsManager().setScreen(
+        Appointment.PAGE_NAME, Default.classNameFromRoute(Routes.offer));
   }
 
   @override

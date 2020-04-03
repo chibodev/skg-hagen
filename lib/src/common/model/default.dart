@@ -14,6 +14,9 @@ class Default {
   static String capitalize(String value) =>
       value[0].toUpperCase() + value.substring(1);
 
+  static String classNameFromRoute(String routeName) =>
+      capitalize(routeName.substring(1));
+
   static String getSharableContent(String title,
       [String time, String comment, Address address]) {
     return "$title\n"
