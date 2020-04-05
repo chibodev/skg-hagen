@@ -31,6 +31,14 @@ ev.kindergarten:
   route: kindergarten
   name: Ev.Kindergarten
 
+mediathek:
+  groups:
+    - bilder
+    - audios
+    - videos
+  image: assets/images/mediathek.jpg
+  route: mediathek
+  name: Mediathek
 
 kontakte:
   groups:
