@@ -5,8 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
-import 'package:skg_hagen/src/offer/model/aid.dart';
-import 'package:skg_hagen/src/offer/model/helper.dart';
+import 'package:skg_hagen/src/offer/dto/aid.dart';
+import 'package:skg_hagen/src/offer/dto/helper.dart';
 import 'package:skg_hagen/src/offer/repository/aidOfferClient.dart';
 
 import '../../mock/httpClientFormMock.dart';

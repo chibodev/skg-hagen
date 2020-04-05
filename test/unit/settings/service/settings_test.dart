@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
-import 'package:skg_hagen/src/settings/model/settingsList.dart';
+import 'package:skg_hagen/src/settings/dto/settingsList.dart';
 import 'package:skg_hagen/src/settings/service/settings.dart';
 
 import '../../../mock/fileClientMock.dart';

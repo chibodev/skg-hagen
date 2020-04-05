@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
+import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/conceptController.dart';
-import 'package:skg_hagen/src/offer/model/concept.dart' as Model;
-import 'package:skg_hagen/src/offer/model/offers.dart';
+import 'package:skg_hagen/src/offer/dto/concept.dart' as DTO;
+import 'package:skg_hagen/src/offer/dto/offers.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Concept extends State<ConceptController> {
@@ -19,7 +19,7 @@ class Concept extends State<ConceptController> {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
     AnalyticsManager().setScreen(
-        Model.Concept.PAGE_NAME, Default.classNameFromRoute(Routes.offer));
+        DTO.Concept.PAGE_NAME, Default.classNameFromRoute(Routes.offer));
   }
 
   @override
@@ -38,7 +38,7 @@ class Concept extends State<ConceptController> {
               flexibleSpace: FlexibleSpaceBar(
                 titlePadding: const EdgeInsetsDirectional.only(
                     start: 72, bottom: 16, end: 102),
-                title: CustomWidget.getTitle(Model.Concept.PAGE_NAME),
+                title: CustomWidget.getTitle(DTO.Concept.PAGE_NAME),
                 background: Image.asset(
                   Offers.IMAGE,
                   fit: BoxFit.cover,

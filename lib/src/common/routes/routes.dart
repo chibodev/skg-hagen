@@ -1,19 +1,19 @@
 import 'package:skg_hagen/src/aboutus/controller/aboutus.dart';
-import 'package:skg_hagen/src/aboutus/model/aboutus.dart' as Model;
+import 'package:skg_hagen/src/aboutus/dto/aboutus.dart' as DTO;
 import 'package:skg_hagen/src/appointment/controller/appointmentController.dart';
-import 'package:skg_hagen/src/appointment/model/appointments.dart';
+import 'package:skg_hagen/src/appointment/dto/appointments.dart';
 import 'package:skg_hagen/src/contacts/controller/contacts.dart';
-import 'package:skg_hagen/src/contacts/model/contact.dart';
+import 'package:skg_hagen/src/contacts/dto/contact.dart';
 import 'package:skg_hagen/src/home/controller/home.dart';
 import 'package:skg_hagen/src/intercession/controller/intercession.dart';
-import 'package:skg_hagen/src/intercession/model/intercession.dart' as Model;
+import 'package:skg_hagen/src/intercession/dto/intercession.dart' as DTO;
 import 'package:skg_hagen/src/kindergarten/controller/kindergarten.dart';
-import 'package:skg_hagen/src/kindergarten/model/kindergarten.dart' as Model;
+import 'package:skg_hagen/src/kindergarten/dto/kindergarten.dart' as DTO;
 import 'package:skg_hagen/src/legal/controller/imprint.dart';
-import 'package:skg_hagen/src/legal/model/imprint.dart' as Model;
-import 'package:skg_hagen/src/legal/model/privacy.dart' as Model;
+import 'package:skg_hagen/src/legal/dto/imprint.dart' as DTO;
+import 'package:skg_hagen/src/legal/dto/privacy.dart' as DTO;
 import 'package:skg_hagen/src/offer/controller/offer.dart';
-import 'package:skg_hagen/src/offer/model/offers.dart';
+import 'package:skg_hagen/src/offer/dto/offers.dart';
 import 'package:skg_hagen/src/pushnotification/controller/appointmentController.dart';
 
 class Routes {
@@ -41,11 +41,11 @@ class Routes {
   static const Map<String, String> MAPPING = <String, String>{
     appointment: Appointments.NAME,
     offer: Offers.NAME,
-    intercession: Model.Intercession.NAME,
-    kindergarten: Model.Kindergarten.NAME,
+    intercession: DTO.Intercession.NAME,
+    kindergarten: DTO.Kindergarten.NAME,
     contacts: Contact.NAME,
-    aboutUs: Model.AboutUs.NAME,
-    imprint: Model.Imprint.NAME,
+    aboutUs: DTO.AboutUs.NAME,
+    imprint: DTO.Imprint.NAME,
   };
 
   static bool isValid(String route) {

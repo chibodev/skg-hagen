@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
+import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
@@ -12,10 +12,10 @@ import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/aid.dart';
-import 'package:skg_hagen/src/offer/model/aidOffer.dart' as Model;
-import 'package:skg_hagen/src/offer/model/aidOfferQuestion.dart';
-import 'package:skg_hagen/src/offer/model/helper.dart';
-import 'package:skg_hagen/src/offer/model/offers.dart';
+import 'package:skg_hagen/src/offer/dto/aidOffer.dart' as DTO;
+import 'package:skg_hagen/src/offer/dto/aidOfferQuestion.dart';
+import 'package:skg_hagen/src/offer/dto/helper.dart';
+import 'package:skg_hagen/src/offer/dto/offers.dart';
 import 'package:skg_hagen/src/offer/repository/aidOfferClient.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
@@ -34,7 +34,7 @@ class AidOffer extends State<Aid> {
     super.initState();
     _settingsMenu = SettingsMenu(pageView: this);
     AnalyticsManager().setScreen(
-        Model.AidOffer.NAME, Default.classNameFromRoute(Routes.offer));
+        DTO.AidOffer.NAME, Default.classNameFromRoute(Routes.offer));
   }
 
   @override
@@ -55,7 +55,7 @@ class AidOffer extends State<Aid> {
                 flexibleSpace: FlexibleSpaceBar(
                   titlePadding: const EdgeInsetsDirectional.only(
                       start: 72, bottom: 16, end: 102),
-                  title: CustomWidget.getTitle(Model.AidOffer.NAME),
+                  title: CustomWidget.getTitle(DTO.AidOffer.NAME),
                   background: Image.asset(
                     Offers.IMAGE,
                     fit: BoxFit.cover,
@@ -205,7 +205,7 @@ class AidOffer extends State<Aid> {
           children: <Widget>[
             Flexible(
               child: Text(
-                Model.AidOffer.EMAIL_TEXT,
+                DTO.AidOffer.EMAIL_TEXT,
                 style: TextStyle(
                   fontSize:
                       SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
@@ -216,7 +216,7 @@ class AidOffer extends State<Aid> {
               splashColor: Color(Default.COLOR_GREEN),
               onTap: () => TapAction().sendMail(
                   widget.aidOffer.email, widget.aidOffer.title,
-                  body: Model.AidOffer.EMAIL_BODY),
+                  body: DTO.AidOffer.EMAIL_BODY),
               onLongPress: () => ClipboardService.copyAndNotify(
                   context: contextOfBuilder, text: widget.aidOffer.email),
               child: Padding(
@@ -243,7 +243,7 @@ class AidOffer extends State<Aid> {
     if (_isFormValid()) {
       _saveHelper(contextOfBuilder);
     } else {
-      CustomWidget.showNotification(contextOfBuilder, Model.AidOffer.INCOMPLETE,
+      CustomWidget.showNotification(contextOfBuilder, DTO.AidOffer.INCOMPLETE,
           Icons.warning, Colors.redAccent);
     }
   }
@@ -323,7 +323,7 @@ class AidOffer extends State<Aid> {
         city: _city.text,
         contact: _contact.text);
 
-    String text = Model.AidOffer.ERROR;
+    String text = DTO.AidOffer.ERROR;
     Color backgroundColor = Colors.red;
     IconData icon = Icons.error;
 
@@ -331,7 +331,7 @@ class AidOffer extends State<Aid> {
         await AidOfferClient().saveHelper(DioHTTPClient(), Network(), helper);
 
     if (sentSuccess) {
-      text = Model.AidOffer.SUCCESS;
+      text = DTO.AidOffer.SUCCESS;
       icon = Icons.check_circle;
       backgroundColor = Color(Default.COLOR_GREEN);
       _name.clear();

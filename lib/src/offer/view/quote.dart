@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
+import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/quoteController.dart';
-import 'package:skg_hagen/src/offer/model/offers.dart';
-import 'package:skg_hagen/src/offer/model/quote.dart' as Model;
+import 'package:skg_hagen/src/offer/dto/offers.dart';
+import 'package:skg_hagen/src/offer/dto/quote.dart' as DTO;
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Quote extends State<QuoteController> {
@@ -20,7 +20,7 @@ class Quote extends State<QuoteController> {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
     AnalyticsManager()
-        .setScreen(Model.Quote.NAME, Default.classNameFromRoute(Routes.offer));
+        .setScreen(DTO.Quote.NAME, Default.classNameFromRoute(Routes.offer));
   }
 
   @override
@@ -38,7 +38,7 @@ class Quote extends State<QuoteController> {
               flexibleSpace: FlexibleSpaceBar(
                 titlePadding: const EdgeInsetsDirectional.only(
                     start: 72, bottom: 16, end: 102),
-                title: CustomWidget.getTitle(Model.Quote.PAGE_NAME),
+                title: CustomWidget.getTitle(DTO.Quote.PAGE_NAME),
                 background: Image.asset(
                   Offers.IMAGE,
                   fit: BoxFit.cover,
@@ -66,7 +66,7 @@ class Quote extends State<QuoteController> {
     );
   }
 
-  Widget _buildRows(Model.Quote quote, BuildContext context) {
+  Widget _buildRows(DTO.Quote quote, BuildContext context) {
     return Material(
       child: Padding(
         padding: EdgeInsets.only(
@@ -86,7 +86,7 @@ class Quote extends State<QuoteController> {
                 actionExtentRatio: Default.SLIDE_RATIO,
                 actions: <Widget>[
                   CustomWidget.getSlidableShare(
-                    Model.Quote.PAGE_NAME,
+                    DTO.Quote.PAGE_NAME,
                     Default.getSharableContent(quote.getText()),
                   )
                 ],

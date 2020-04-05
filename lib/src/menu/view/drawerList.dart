@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/model/font.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
+import 'package:skg_hagen/src/common/dto/font.dart';
+import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
-import 'package:skg_hagen/src/home/model/cardContent.dart';
+import 'package:skg_hagen/src/home/dto/cardContent.dart';
 import 'package:skg_hagen/src/home/service/singleCard.dart';
-import 'package:skg_hagen/src/legal/model/imprint.dart';
-import 'package:skg_hagen/src/pushnotification/model/pushNotifications.dart';
+import 'package:skg_hagen/src/legal/dto/imprint.dart';
+import 'package:skg_hagen/src/pushnotification/dto/pushNotifications.dart';
 
 class DrawerList {
   static const String LOGO = 'assets/images/skg-transparent.png';

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:skg_hagen/src/appointment/model/appointments.dart';
+import 'package:skg_hagen/src/appointment/dto/appointments.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 

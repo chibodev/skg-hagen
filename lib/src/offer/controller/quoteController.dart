@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/offer/model/quote.dart' as Model;
+import 'package:skg_hagen/src/offer/dto/quote.dart' as DTO;
 import 'package:skg_hagen/src/offer/view/quote.dart' as View;
 
 class QuoteController extends StatefulWidget {
-  final List<Model.Quote> quotes;
+  final List<DTO.Quote> quotes;
   final bool dataAvailable;
   final BuildContext context;
 

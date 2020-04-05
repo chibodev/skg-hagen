@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:skg_hagen/src/appointment/controller/appointmentController.dart';
-import 'package:skg_hagen/src/appointment/model/appointment.dart' as Model;
-import 'package:skg_hagen/src/appointment/model/appointments.dart';
+import 'package:skg_hagen/src/appointment/dto/appointment.dart' as DTO;
+import 'package:skg_hagen/src/appointment/dto/appointments.dart';
 import 'package:skg_hagen/src/appointment/repository/appointmentClient.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
+import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
@@ -105,7 +105,7 @@ class Cards extends State<AppointmentController> {
             .getAppointments(DioHTTPClient(), Network(),
                 index: _indexCounter, refresh: true);
 
-        final List<Model.Appointment> newEntries = newAppointments.appointments;
+        final List<DTO.Appointment> newEntries = newAppointments.appointments;
         final bool isResponseEmpty = newEntries.isEmpty;
         if (isResponseEmpty) {
           final double edge = 50.0;
@@ -169,7 +169,7 @@ class Cards extends State<AppointmentController> {
     );
   }
 
-  Widget _buildRows(BuildContext context, Model.Appointment card) {
+  Widget _buildRows(BuildContext context, DTO.Appointment card) {
     return Material(
       child: Padding(
         padding: EdgeInsets.only(
@@ -230,7 +230,7 @@ class Cards extends State<AppointmentController> {
     );
   }
 
-  List<Widget> _getSlidableWithCalendar(Model.Appointment card) {
+  List<Widget> _getSlidableWithCalendar(DTO.Appointment card) {
     return <Widget>[
       CustomWidget.getSlidableCalender(
         card.title,

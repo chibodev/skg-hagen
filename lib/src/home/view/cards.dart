@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:launch_review/launch_review.dart';
 import 'package:share/share.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/model/font.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
+import 'package:skg_hagen/src/common/dto/font.dart';
+import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
@@ -16,9 +16,9 @@ import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/home/controller/home.dart';
-import 'package:skg_hagen/src/home/model/aid.dart';
-import 'package:skg_hagen/src/home/model/cardContent.dart';
-import 'package:skg_hagen/src/home/model/monthlyScripture.dart';
+import 'package:skg_hagen/src/home/dto/aid.dart';
+import 'package:skg_hagen/src/home/dto/cardContent.dart';
+import 'package:skg_hagen/src/home/dto/monthlyScripture.dart';
 import 'package:skg_hagen/src/home/repository/aidClient.dart';
 import 'package:skg_hagen/src/home/repository/monthlyScriptureClient.dart';
 import 'package:skg_hagen/src/home/service/singleCard.dart';
@@ -26,9 +26,9 @@ import 'package:skg_hagen/src/home/service/versionCheck.dart';
 import 'package:skg_hagen/src/menu/controller/menu.dart';
 import 'package:skg_hagen/src/offer/controller/aid.dart' as Controller;
 import 'package:skg_hagen/src/offer/controller/aidReceive.dart';
-import 'package:skg_hagen/src/offer/model/aid.dart' as Model;
-import 'package:skg_hagen/src/offer/model/aidOffer.dart';
-import 'package:skg_hagen/src/offer/model/aidReceive.dart' as Model;
+import 'package:skg_hagen/src/offer/dto/aid.dart' as DTO;
+import 'package:skg_hagen/src/offer/dto/aidOffer.dart';
+import 'package:skg_hagen/src/offer/dto/aidReceive.dart' as DTO;
 import 'package:skg_hagen/src/offer/repository/aidOfferClient.dart';
 import 'package:skg_hagen/src/pushnotification/service/pushNotificationManager.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
@@ -36,7 +36,7 @@ import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 class Cards extends State<Home> {
   MonthlyScriptureClient monthlyScriptureClient = MonthlyScriptureClient();
   AidClient aidClient = AidClient();
-  Model.Aid _aid;
+  DTO.Aid _aid;
   bool _hasInternet = true;
   bool _dataAvailable = true;
   BuildContext _context;
@@ -240,14 +240,14 @@ class Cards extends State<Home> {
                             FlatButton.icon(
                               textColor: Colors.black,
                               icon: ImageIcon(
-                                AssetImage(Model.AidReceive.HELP),
+                                AssetImage(DTO.AidReceive.HELP),
                                 color: Colors.black,
                                 size: SizeConfig.getSafeBlockVerticalBy(
                                     appFont.iconSize),
                               ),
                               label: Flexible(
                                 child: Text(
-                                  Model.AidReceive.NAME,
+                                  DTO.AidReceive.NAME,
                                   style: TextStyle(
                                       fontSize:
                                           SizeConfig.getSafeBlockVerticalBy(
@@ -284,7 +284,7 @@ class Cards extends State<Home> {
                             SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
                       ),
                       title: Text(
-                        Model.Aid.NAME,
+                        DTO.Aid.NAME,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: SizeConfig.getSafeBlockVerticalBy(

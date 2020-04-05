@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
-import 'package:skg_hagen/src/legal/model/imprint.dart';
-import 'package:skg_hagen/src/legal/model/privacy.dart';
+import 'package:skg_hagen/src/legal/dto/imprint.dart';
+import 'package:skg_hagen/src/legal/dto/privacy.dart';
 import 'package:skg_hagen/src/legal/repository/legalClient.dart';
 
 import '../../mock/fileClientMock.dart';

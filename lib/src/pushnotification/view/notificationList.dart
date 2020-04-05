@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
+import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/pushnotification/controller/appointmentController.dart';
-import 'package:skg_hagen/src/pushnotification/model/pushNotification.dart';
-import 'package:skg_hagen/src/pushnotification/model/pushNotifications.dart';
+import 'package:skg_hagen/src/pushnotification/dto/pushNotification.dart';
+import 'package:skg_hagen/src/pushnotification/dto/pushNotifications.dart';
 import 'package:skg_hagen/src/pushnotification/repository/pushNotificationClient.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
+import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/projectsController.dart';
-import 'package:skg_hagen/src/offer/model/offers.dart';
-import 'package:skg_hagen/src/offer/model/project.dart';
+import 'package:skg_hagen/src/offer/dto/offers.dart';
+import 'package:skg_hagen/src/offer/dto/project.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Projects extends State<ProjectsController> {
