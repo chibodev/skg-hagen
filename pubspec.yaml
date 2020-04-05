@@ -52,40 +52,13 @@ flutter:
   assets:
     #Config
     - .env
-    - assets/config/cards.yaml
-    - assets/config/settings.yaml
+    - assets/config/
     #Icons
-    - assets/images/icon/facebook.png
-    - assets/images/icon/instagram.png
-    - assets/images/icon/twitter.png
-    - assets/images/icon/whatsapp.png
-    - assets/images/icon/paypal.png
-    - assets/images/icon/pdf.png
-    - assets/images/icon/help.png
-    - assets/images/icon/volunteer.png
-    - assets/images/icon/video.png
-    - assets/images/icon/paragraph.png
+    - assets/images/icon/
     #Images
-    - assets/images/termine.jpg
-    - assets/images/angebote.jpg
-    - assets/images/gruppen.jpg
-    - assets/images/andacht.jpg
-    - assets/images/gebet.jpg
-    - assets/images/mediathek.jpg
-    - assets/images/lesen.jpg
-    - assets/images/spende.jpg
-    - assets/images/kontakte.jpg
-    - assets/images/push.jpg
-    - assets/images/skg-green.png
-    - assets/images/skg-gray.png
-    - assets/images/skg-transparent.png
-    - assets/images/skg.jpg
-    - assets/images/kindergarten.jpg
-    - assets/images/johanniskirche.jpg
-    - assets/images/markuskirche.jpg
+    - assets/images/
     #Text
-    - assets/text/imprint.html
-    - assets/text/privacy.html
+    - assets/text/
   fonts:
     - family: Optima
       fonts:
