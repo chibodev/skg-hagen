@@ -52,7 +52,6 @@ class Cards extends State<Home> {
         .setScreen('Startseite', Default.classNameFromRoute(Routes.home));
     _getAidOffers();
     _checkVersion();
-    _isFeatureEnabled(FeatureFlag.KIRCHENJAHR);
   }
 
   @override
@@ -60,7 +59,6 @@ class Cards extends State<Home> {
     this._context = context;
     SizeConfig().init(_context);
     _checkConnectivity();
-    _isFeatureEnabled(FeatureFlag.KIRCHENJAHR);
     PushNotificationsManager().init(context);
     return Scaffold(
       appBar: AppBar(
@@ -86,17 +84,14 @@ class Cards extends State<Home> {
         height: SizeConfig.getSafeBlockVerticalBy(100),
         width: SizeConfig.getSafeBlockHorizontalBy(100),
         child: FutureBuilder<List<CardContent>>(
-          future: _getAllCards(),
+          future: _getAllCards(FeatureFlag.KIRCHENJAHR),
           builder: (BuildContext context,
               AsyncSnapshot<List<CardContent>> response) {
             if (response.connectionState == ConnectionState.done &&
                 response.data != null) {
               return _buildCards(response.data);
             }
-            return CircularProgressIndicator(
-              valueColor:
-                  AlwaysStoppedAnimation<Color>(Color(Default.COLOR_GREEN)),
-            );
+            return CustomWidget.buildProgressIndicator(false);
           },
         ),
       ),
@@ -418,7 +413,8 @@ class Cards extends State<Home> {
     return await AidClient().getAid(DioHTTPClient(), Network());
   }
 
-  Future<List<CardContent>> _getAllCards() async {
+  Future<List<CardContent>> _getAllCards(String featureName) async {
+    _isChurchYearEnabled = await FeatureFlag().isEnabled(featureName);
     return await SingleCard().getAllCards(AssetClient());
   }
 
@@ -566,9 +562,5 @@ class Cards extends State<Home> {
 
   Future<void> _checkConnectivity() async {
     _hasInternet = await Network().hasInternet();
-  }
-
-  Future<void> _isFeatureEnabled(String featureName) async {
-    _isChurchYearEnabled = await FeatureFlag().isEnabled(featureName);
   }
 }
