@@ -31,6 +31,12 @@ ev.kindergarten:
   route: kindergarten
   name: Ev.Kindergarten
 
+kirchenjahr:
+  groups:
+    - ostern
+  image: assets/images/kirchenjahr.jpg
+  route: churchyear
+  name: Feste im Kirchenjahr
 
 kontakte:
   groups:
