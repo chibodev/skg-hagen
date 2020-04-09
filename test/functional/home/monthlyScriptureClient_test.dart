@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
-import 'package:skg_hagen/src/home/model/monthlyScripture.dart';
+import 'package:skg_hagen/src/home/dto/monthlyScripture.dart';
 import 'package:skg_hagen/src/home/repository/monthlyScriptureClient.dart';
 
 import '../../mock/httpClientMock.dart';

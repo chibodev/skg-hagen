@@ -4,7 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
-import 'package:skg_hagen/src/token/model/token.dart';
+import 'package:skg_hagen/src/token/dto/token.dart';
 import 'package:skg_hagen/src/token/repository/tokenClient.dart';
 
 import '../../mock/httpClientTokenMock.dart';

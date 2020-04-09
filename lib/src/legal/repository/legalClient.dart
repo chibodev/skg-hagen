@@ -1,6 +1,6 @@
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
-import 'package:skg_hagen/src/legal/model/imprint.dart';
-import 'package:skg_hagen/src/legal/model/privacy.dart';
+import 'package:skg_hagen/src/legal/dto/imprint.dart';
+import 'package:skg_hagen/src/legal/dto/privacy.dart';
 
 class LegalClient {
   static const String IMPRINT = 'assets/text/imprint.html';

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
+import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/routes/routes.dart';
+import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/offer.dart' as Controller;
-import 'package:skg_hagen/src/offer/model/aid.dart';
-import 'package:skg_hagen/src/offer/model/confirmation.dart';
-import 'package:skg_hagen/src/offer/model/offers.dart';
+import 'package:skg_hagen/src/offer/dto/aid.dart';
+import 'package:skg_hagen/src/offer/dto/confirmation.dart';
+import 'package:skg_hagen/src/offer/dto/offers.dart';
 import 'package:skg_hagen/src/offer/repository/aidOfferClient.dart';
 import 'package:skg_hagen/src/offer/repository/confirmationClient.dart';
 import 'package:skg_hagen/src/offer/repository/offerClient.dart';
@@ -28,6 +30,8 @@ class Accordions extends State<Controller.Offer> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
+    AnalyticsManager()
+        .setScreen(Offers.NAME, Default.classNameFromRoute(Routes.offer));
     _getOffers();
   }
 

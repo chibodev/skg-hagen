@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
 
 class ClipboardService {
   static void copyAndNotify({@required BuildContext context, @required String text}) {

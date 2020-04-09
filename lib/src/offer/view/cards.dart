@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
+import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/aid.dart' as Controller;
 import 'package:skg_hagen/src/offer/controller/aidReceive.dart';
@@ -11,16 +11,16 @@ import 'package:skg_hagen/src/offer/controller/confirmationAppointmentController
 import 'package:skg_hagen/src/offer/controller/musicController.dart';
 import 'package:skg_hagen/src/offer/controller/projectsController.dart';
 import 'package:skg_hagen/src/offer/controller/quoteController.dart';
-import 'package:skg_hagen/src/offer/model/aid.dart';
-import 'package:skg_hagen/src/offer/model/aidOffer.dart' as ModelAidOffer;
-import 'package:skg_hagen/src/offer/model/aidReceive.dart' as ModelAidReceive;
-import 'package:skg_hagen/src/offer/model/appointment.dart';
-import 'package:skg_hagen/src/offer/model/concept.dart';
-import 'package:skg_hagen/src/offer/model/confirmation.dart';
-import 'package:skg_hagen/src/offer/model/music.dart';
-import 'package:skg_hagen/src/offer/model/offer.dart';
-import 'package:skg_hagen/src/offer/model/project.dart';
-import 'package:skg_hagen/src/offer/model/quote.dart';
+import 'package:skg_hagen/src/offer/dto/aid.dart';
+import 'package:skg_hagen/src/offer/dto/aidOffer.dart' as DTOAidOffer;
+import 'package:skg_hagen/src/offer/dto/aidReceive.dart' as DTOAidReceive;
+import 'package:skg_hagen/src/offer/dto/appointment.dart';
+import 'package:skg_hagen/src/offer/dto/concept.dart';
+import 'package:skg_hagen/src/offer/dto/confirmation.dart';
+import 'package:skg_hagen/src/offer/dto/music.dart';
+import 'package:skg_hagen/src/offer/dto/offer.dart';
+import 'package:skg_hagen/src/offer/dto/project.dart';
+import 'package:skg_hagen/src/offer/dto/quote.dart';
 
 class Cards {
   BuildContext _buildContext;
@@ -367,15 +367,15 @@ class Cards {
         children: <Widget>[
           card.offer != null
               ? getAidContent(context, card, aidOffer,
-                  ModelAidOffer.AidOffer.VOLUNTEER, ModelAidOffer.AidOffer.NAME)
+                  DTOAidOffer.AidOffer.VOLUNTEER, DTOAidOffer.AidOffer.NAME)
               : Container(),
           card.receive != null
               ? getAidContent(
                   context,
                   card,
                   aidReceive,
-                  ModelAidReceive.AidReceive.HELP,
-                  ModelAidReceive.AidReceive.NAME)
+                  DTOAidReceive.AidReceive.HELP,
+                  DTOAidReceive.AidReceive.NAME)
               : Container(),
         ],
       ),
