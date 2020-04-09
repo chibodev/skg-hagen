@@ -36,7 +36,7 @@ void main() {
         cacheData: 'app/churchyear/easter/data',
       ),
     ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(
-        statusCode: HttpStatus.ok, path: 'easterOffer.json'));
+        statusCode: HttpStatus.ok, path: 'easteroffer.json'));
 
     final EasterOffer easterOffer =
         await subject.getOffers(httpClient, network, refresh: true);
