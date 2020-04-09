@@ -2,10 +2,10 @@ import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:share/share.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/dto/address.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/service/clipboard.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
@@ -408,6 +408,27 @@ class CustomWidget {
             size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
             semanticLabel: 'Phone',
           ),
+        ),
+      ),
+    );
+  }
+
+  static Padding getSinglePageCardURL(
+      double thirty, String url, BuildContext context,
+      {String format}) {
+    return Padding(
+      padding: EdgeInsets.only(left: thirty, bottom: thirty),
+      child: InkWell(
+        splashColor: Color(Default.COLOR_GREEN),
+        onTap: () => TapAction().launchURL(url),
+        onLongPress: () =>
+            ClipboardService.copyAndNotify(context: context, text: url),
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: SizeConfig.getSafeBlockVerticalBy(1),
+            right: SizeConfig.getSafeBlockVerticalBy(1),
+          ),
+          child: _getURLIcon(format),
         ),
       ),
     );

@@ -7,8 +7,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skg_hagen/src/aboutus/controller/aboutus.dart';
 import 'package:skg_hagen/src/appointment/controller/appointmentController.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
+import 'package:skg_hagen/src/churchyear/controller/churchyearController.dart';
 import 'package:skg_hagen/src/common/dto/font.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/environment.dart';
 import 'package:skg_hagen/src/contacts/controller/contacts.dart';
@@ -61,6 +62,7 @@ class MyApp extends StatelessWidget {
         Routes.imprint: (BuildContext context) => Imprint(),
         Routes.pushNotification: (BuildContext context) =>
             PushNotificationController(),
+        Routes.churchYear: (BuildContext context) => ChurchYearController(),
       },
       theme: ThemeData(primaryColor: Colors.white, fontFamily: Font.NAME),
       home: Home(),

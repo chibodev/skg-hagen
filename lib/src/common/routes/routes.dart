@@ -2,6 +2,8 @@ import 'package:skg_hagen/src/aboutus/controller/aboutus.dart';
 import 'package:skg_hagen/src/aboutus/dto/aboutus.dart' as DTO;
 import 'package:skg_hagen/src/appointment/controller/appointmentController.dart';
 import 'package:skg_hagen/src/appointment/dto/appointments.dart';
+import 'package:skg_hagen/src/churchyear/controller/churchyearController.dart';
+import 'package:skg_hagen/src/churchyear/model/churchyear.dart' as Model;
 import 'package:skg_hagen/src/contacts/controller/contacts.dart';
 import 'package:skg_hagen/src/contacts/dto/contact.dart';
 import 'package:skg_hagen/src/home/controller/home.dart';
@@ -26,6 +28,7 @@ class Routes {
   static const String aboutUs = AboutUs.route;
   static const String imprint = Imprint.route;
   static const String pushNotification = PushNotificationController.route;
+  static const String churchYear = ChurchYearController.route;
 
   static const List<String> VALID_ROUTES = <String>[
     home,
@@ -33,6 +36,7 @@ class Routes {
     offer,
     intercession,
     kindergarten,
+    churchYear,
     contacts,
     aboutUs,
     imprint,
@@ -43,6 +47,7 @@ class Routes {
     offer: Offers.NAME,
     intercession: DTO.Intercession.NAME,
     kindergarten: DTO.Kindergarten.NAME,
+    churchYear: Model.ChurchYear.NAME,
     contacts: Contact.NAME,
     aboutUs: DTO.AboutUs.NAME,
     imprint: DTO.Imprint.NAME,

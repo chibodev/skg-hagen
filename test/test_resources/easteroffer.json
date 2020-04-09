@@ -1,0 +1,32 @@
+{
+  "resurrection_station": {
+    "info": {
+      "title": "Title",
+      "description": "Sie sind herzlich eingeladen"
+    },
+    "station": [
+      {
+        "id": "1",
+        "categoryId": "1",
+        "title": "1. Station - Botschaft des Engels",
+        "description": "Test",
+        "url": "https://google.com",
+        "format": null,
+        "occurrence": "2020-04-09",
+        "active": "1",
+        "createdAt": "2020-04-09 11:20:37"
+      },
+      {
+        "id": "2",
+        "categoryId": "1",
+        "title": "2. Station - Die Jünger finden das leere Grab",
+        "description": "Test",
+        "url": null,
+        "format": null,
+        "occurrence": "2020-04-09",
+        "active": "1",
+        "createdAt": "2020-04-09 11:20:37"
+      }
+    ]
+  }
+}
