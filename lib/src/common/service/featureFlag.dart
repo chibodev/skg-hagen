@@ -1,5 +1,6 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 
 class FeatureFlag {
   static const String KIRCHENJAHR = 'kirchenjahr';
@@ -11,7 +12,6 @@ class FeatureFlag {
   static final FeatureFlag _instance = FeatureFlag._();
 
   Future<bool> isEnabled(String featureName) async {
-    final RemoteConfig remoteConfig = await RemoteConfig.instance;
     bool isEnabled = false;
     try {
       await remoteConfig.fetch(expiration: const Duration(seconds: 0));

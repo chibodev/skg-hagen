@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -31,10 +32,12 @@ void main() async {
   };
 
   runZoned<Future<void>>(() async {
+    final RemoteConfig firebaseRemoteConfig = await RemoteConfig.instance;
     SharedPreferences.getInstance().then(
       (SharedPreferences sp) {
         sharedPreferences = sp;
         appFont = Font();
+        remoteConfig = firebaseRemoteConfig;
         SystemChrome.setPreferredOrientations(
             <DeviceOrientation>[DeviceOrientation.portraitUp]).then(
           (_) {
