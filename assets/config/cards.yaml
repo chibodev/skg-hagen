@@ -75,3 +75,12 @@ kontakte:
 #  groups:
 #    - spende
 #  image: assets/images/spende.jpg
+#
+#mediathek:
+#  groups:
+#    - bilder
+#    - audios
+#    - videos
+#  image: assets/images/mediathek.jpg
+#  route: mediathek
+#  name: Mediathek

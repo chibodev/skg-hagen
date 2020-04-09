@@ -26,7 +26,6 @@ class Cards extends State<AppointmentController> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
-    AnalyticsManager().setScreen('Termine', 'Appointment');
     AnalyticsManager().setScreen(
         Appointments.NAME, Default.classNameFromRoute(Routes.appointment));
     _getInitialAppointments();

@@ -4,14 +4,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:launch_review/launch_review.dart';
 import 'package:share/share.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/font.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
+import 'package:skg_hagen/src/common/service/featureFlag.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
@@ -39,6 +40,7 @@ class Cards extends State<Home> {
   DTO.Aid _aid;
   bool _hasInternet = true;
   bool _dataAvailable = true;
+  bool _isChurchYearEnabled = false;
   BuildContext _context;
   SettingsMenu settingsMenu;
 
@@ -50,6 +52,7 @@ class Cards extends State<Home> {
         .setScreen('Startseite', Default.classNameFromRoute(Routes.home));
     _getAidOffers();
     _checkVersion();
+    _isFeatureEnabled(FeatureFlag.KIRCHENJAHR);
   }
 
   @override
@@ -57,6 +60,7 @@ class Cards extends State<Home> {
     this._context = context;
     SizeConfig().init(_context);
     _checkConnectivity();
+    _isFeatureEnabled(FeatureFlag.KIRCHENJAHR);
     PushNotificationsManager().init(context);
     return Scaffold(
       appBar: AppBar(
@@ -428,6 +432,10 @@ class Cards extends State<Home> {
   }
 
   Widget _buildRows(CardContent card) {
+    if (card.title == FeatureFlag.KIRCHENJAHR && !_isChurchYearEnabled) {
+      return Container();
+    }
+
     final double verticalSize = SizeConfig.getSafeBlockVerticalBy(2.0);
     final double horizontalSize = SizeConfig.getSafeBlockHorizontalBy(1.7);
 
@@ -558,5 +566,9 @@ class Cards extends State<Home> {
 
   Future<void> _checkConnectivity() async {
     _hasInternet = await Network().hasInternet();
+  }
+
+  Future<void> _isFeatureEnabled(String featureName) async {
+    _isChurchYearEnabled = await FeatureFlag().isEnabled(featureName);
   }
 }
