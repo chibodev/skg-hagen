@@ -1,7 +1,7 @@
 name: skg_hagen
 description: The App for the Evangelisch-lutherische Stadtkirchengemeinde Hagen, Germany
 
-version: 1.2.0+12
+version: 1.3.0+13
 
 environment:
   sdk: ">=2.2.0 <3.0.0"

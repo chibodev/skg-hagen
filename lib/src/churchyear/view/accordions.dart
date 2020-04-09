@@ -77,11 +77,15 @@ class Accordions extends State<Controller.ChurchYearController> {
             childCount: _options?.length ?? 0,
           ),
         ),
-        !_dataAvailable
+        _isPerformingRequest
             ? SliverToBoxAdapter(
                 child: CustomWidget.buildSliverSpinner(),
               )
-            : SliverToBoxAdapter(),
+            : !_dataAvailable
+                ? SliverToBoxAdapter(
+                    child: CustomWidget.centeredNoEntry(),
+                  )
+                : SliverToBoxAdapter(),
       ],
     );
   }
@@ -106,6 +110,7 @@ class Accordions extends State<Controller.ChurchYearController> {
 
   void _setOptions() {
     //TODO: use somewhat of a tag service to avoid always extending
+    print("--->cardState ${_easterOffer == null}");
     if (_easterOffer != null) {
       _options.add(_easterOffer.resurrectionStation);
       _dataAvailable = true;
