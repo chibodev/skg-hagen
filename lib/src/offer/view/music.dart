@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
+import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/routes/routes.dart';
+import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/musicController.dart';
-import 'package:skg_hagen/src/offer/model/music.dart' as Model;
-import 'package:skg_hagen/src/offer/model/offers.dart';
+import 'package:skg_hagen/src/offer/dto/music.dart' as DTO;
+import 'package:skg_hagen/src/offer/dto/offers.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Music extends State<MusicController> {
@@ -15,6 +17,8 @@ class Music extends State<MusicController> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
+    AnalyticsManager()
+        .setScreen(DTO.Music.NAME, Default.classNameFromRoute(Routes.offer));
   }
 
   @override
@@ -33,7 +37,7 @@ class Music extends State<MusicController> {
               flexibleSpace: FlexibleSpaceBar(
                 titlePadding: const EdgeInsetsDirectional.only(
                     start: 72, bottom: 16, end: 102),
-                title: CustomWidget.getTitle(Model.Music.NAME),
+                title: CustomWidget.getTitle(DTO.Music.NAME),
                 background: Image.asset(
                   Offers.IMAGE,
                   fit: BoxFit.cover,

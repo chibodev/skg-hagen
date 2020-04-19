@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
+import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
 import 'package:skg_hagen/src/legal/controller/imprint.dart' as Controller;
-import 'package:skg_hagen/src/legal/model/imprint.dart';
-import 'package:skg_hagen/src/legal/model/privacy.dart';
+import 'package:skg_hagen/src/legal/dto/imprint.dart';
+import 'package:skg_hagen/src/legal/dto/privacy.dart';
 import 'package:skg_hagen/src/legal/repository/legalClient.dart';
 import 'package:skg_hagen/src/legal/view/page.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
@@ -22,6 +23,7 @@ class ImprintView extends State<Controller.Imprint> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
+    AnalyticsManager().setScreen(Imprint.NAME, Default.capitalize('legal'));
     _getImprint();
     _getPrivacy();
   }

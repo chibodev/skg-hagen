@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
-import 'package:skg_hagen/src/settings/model/settingsList.dart';
+import 'package:skg_hagen/src/settings/dto/settingsList.dart';
 import 'package:yaml/yaml.dart';
 
 class Settings {

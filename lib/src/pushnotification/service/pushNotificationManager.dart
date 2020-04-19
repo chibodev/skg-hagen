@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/environment.dart';
-import 'package:skg_hagen/src/pushnotification/model/data.dart';
-import 'package:skg_hagen/src/pushnotification/model/messaging.dart';
+import 'package:skg_hagen/src/pushnotification/dto/data.dart';
+import 'package:skg_hagen/src/pushnotification/dto/messaging.dart';
 
 class PushNotificationsManager {
   PushNotificationsManager._();

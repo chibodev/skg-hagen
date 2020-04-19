@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
-import 'package:skg_hagen/src/pushnotification/model/pushNotifications.dart';
+import 'package:skg_hagen/src/pushnotification/dto/pushNotifications.dart';
 
 class PushNotificationClient {
   static const String PATH = 'app/push/notification';

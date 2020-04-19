@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
-import 'package:skg_hagen/src/home/model/monthlyScripture.dart';
+import 'package:skg_hagen/src/home/dto/monthlyScripture.dart';
 
 class MonthlyScriptureClient {
   static const String CACHE_DATA = 'app/monthly-devotion/data';

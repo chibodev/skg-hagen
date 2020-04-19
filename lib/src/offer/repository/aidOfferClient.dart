@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
-import 'package:skg_hagen/src/offer/model/aid.dart';
-import 'package:skg_hagen/src/offer/model/helper.dart';
+import 'package:skg_hagen/src/offer/dto/aid.dart';
+import 'package:skg_hagen/src/offer/dto/helper.dart';
 
 class AidOfferClient {
   static const String PATH = 'app/aid_offer';

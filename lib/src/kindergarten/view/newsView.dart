@@ -5,13 +5,15 @@ import 'package:flutter/rendering.dart';
 import 'package:open_file/open_file.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
+import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/routes/routes.dart';
+import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/kindergarten/controller/news.dart';
-import 'package:skg_hagen/src/kindergarten/model/kindergarten.dart';
-import 'package:skg_hagen/src/kindergarten/model/news.dart' as Model;
+import 'package:skg_hagen/src/kindergarten/dto/kindergarten.dart';
+import 'package:skg_hagen/src/kindergarten/dto/news.dart' as DTO;
 import 'package:skg_hagen/src/kindergarten/service/fileDownload.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
@@ -24,6 +26,8 @@ class NewsView extends State<News> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
+    AnalyticsManager().setScreen(
+        DTO.News.NAME, Default.classNameFromRoute(Routes.kindergarten));
   }
 
   @override
@@ -42,7 +46,7 @@ class NewsView extends State<News> {
               flexibleSpace: FlexibleSpaceBar(
                 titlePadding: const EdgeInsetsDirectional.only(
                     start: 72, bottom: 16, end: 102),
-                title: CustomWidget.getTitle(Model.News.NAME),
+                title: CustomWidget.getTitle(DTO.News.NAME),
                 background: Image.asset(
                   Kindergarten.IMAGE,
                   fit: BoxFit.cover,

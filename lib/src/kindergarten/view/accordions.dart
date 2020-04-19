@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
+import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/routes/routes.dart';
+import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/kindergarten/controller/kindergarten.dart'
     as Controller;
-import 'package:skg_hagen/src/kindergarten/model/kindergarten.dart';
+import 'package:skg_hagen/src/kindergarten/dto/kindergarten.dart';
 import 'package:skg_hagen/src/kindergarten/repository/kindergartenClient.dart';
 import 'package:skg_hagen/src/kindergarten/view/cards.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
@@ -23,6 +25,8 @@ class Accordions extends State<Controller.Kindergarten> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
+    AnalyticsManager().setScreen(
+        Kindergarten.NAME, Default.classNameFromRoute(Routes.kindergarten));
     _getInfos();
   }
 

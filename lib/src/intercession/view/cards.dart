@@ -3,9 +3,11 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/model/font.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
+import 'package:skg_hagen/src/common/dto/font.dart';
+import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/routes/routes.dart';
+import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/clipboard.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
@@ -13,7 +15,7 @@ import 'package:skg_hagen/src/common/service/tapAction.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/intercession/controller/intercession.dart'
     as Controller;
-import 'package:skg_hagen/src/intercession/model/intercession.dart' as Model;
+import 'package:skg_hagen/src/intercession/dto/intercession.dart' as DTO;
 import 'package:skg_hagen/src/intercession/repository/intercessionClient.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
@@ -26,6 +28,8 @@ class Page extends State<Controller.Intercession> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
+    AnalyticsManager().setScreen(DTO.Intercession.NAME,
+        Default.classNameFromRoute(Routes.intercession));
   }
 
   @override
@@ -46,7 +50,7 @@ class Page extends State<Controller.Intercession> {
         bottomNavigationBar: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            CustomWidget.getFooter(Model.Intercession.FOOTER),
+            CustomWidget.getFooter(DTO.Intercession.FOOTER),
             FutureBuilder<bool>(
               future: Network().hasInternet(),
               builder: (BuildContext context, AsyncSnapshot<bool> response) {
@@ -75,10 +79,10 @@ class Page extends State<Controller.Intercession> {
           flexibleSpace: FlexibleSpaceBar(
             titlePadding: const EdgeInsetsDirectional.only(
                 start: 72, bottom: 16, end: 102),
-            title: CustomWidget.getTitle(Model.Intercession.NAME,
+            title: CustomWidget.getTitle(DTO.Intercession.NAME,
                 color: Colors.black, noShadow: true),
             background: Image.asset(
-              Model.Intercession.IMAGE,
+              DTO.Intercession.IMAGE,
               fit: BoxFit.cover,
             ),
           ),
@@ -94,7 +98,7 @@ class Page extends State<Controller.Intercession> {
                     top: SizeConfig.getSafeBlockVerticalBy(7),
                   ),
                   child: Text(
-                    Model.Intercession.HEADER,
+                    DTO.Intercession.HEADER,
                     style: TextStyle(
                       fontSize: SizeConfig.getSafeBlockVerticalBy(
                           appFont.primarySize),
@@ -135,7 +139,7 @@ class Page extends State<Controller.Intercession> {
                         keyboardType: TextInputType.multiline,
                         maxLines: null,
                         decoration: InputDecoration.collapsed(
-                          hintText: Model.Intercession.PLACEHOLDER,
+                          hintText: DTO.Intercession.PLACEHOLDER,
                           hintStyle: TextStyle(
                             fontSize: SizeConfig.getSafeBlockVerticalBy(
                                 appFont.secondarySize - Font.SECONDARY_SIZE),
@@ -153,7 +157,7 @@ class Page extends State<Controller.Intercession> {
                     children: <Widget>[
                       Flexible(
                         child: Text(
-                          Model.Intercession.EMAIL_TEXT,
+                          DTO.Intercession.EMAIL_TEXT,
                           style: TextStyle(
                             fontSize: SizeConfig.getSafeBlockVerticalBy(
                                 appFont.primarySize),
@@ -163,10 +167,10 @@ class Page extends State<Controller.Intercession> {
                       InkWell(
                         splashColor: Color(Default.COLOR_GREEN),
                         onTap: () => TapAction().sendMail(
-                            Model.Intercession.EMAIL,
-                            Model.Intercession.EMAIL_NAME),
+                            DTO.Intercession.EMAIL,
+                            DTO.Intercession.EMAIL_NAME),
                         onLongPress: () => ClipboardService.copyAndNotify(
-                            context: context, text: Model.Intercession.EMAIL),
+                            context: context, text: DTO.Intercession.EMAIL),
                         child: Padding(
                           padding: EdgeInsets.only(
                             left: SizeConfig.getSafeBlockVerticalBy(1),
@@ -217,7 +221,7 @@ class Page extends State<Controller.Intercession> {
     return Scaffold.of(context).showSnackBar(
       SnackBar(
         backgroundColor: Color(Default.COLOR_GREEN),
-        content: _notification(Model.Intercession.SUCCESS, Icons.check_circle),
+        content: _notification(DTO.Intercession.SUCCESS, Icons.check_circle),
       ),
     );
   }
@@ -227,7 +231,7 @@ class Page extends State<Controller.Intercession> {
     return Scaffold.of(context).showSnackBar(
       SnackBar(
           backgroundColor: Colors.red,
-          content: _notification(Model.Intercession.ERROR, Icons.error)),
+          content: _notification(DTO.Intercession.ERROR, Icons.error)),
     );
   }
 

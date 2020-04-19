@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
-import 'package:skg_hagen/src/common/model/address.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/dto/address.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
+import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/clipboard.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
-import 'package:skg_hagen/src/contacts/model/contact.dart';
-import 'package:skg_hagen/src/contacts/model/social.dart';
+import 'package:skg_hagen/src/contacts/dto/contact.dart';
+import 'package:skg_hagen/src/contacts/dto/social.dart';
 
 class Cards {
   BuildContext _buildContext;

@@ -1,23 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
+import 'package:skg_hagen/src/common/dto/font.dart';
+import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/model/font.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
+import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
-import 'package:skg_hagen/src/home/model/cardContent.dart';
+import 'package:skg_hagen/src/common/service/featureFlag.dart';
+import 'package:skg_hagen/src/home/dto/cardContent.dart';
 import 'package:skg_hagen/src/home/service/singleCard.dart';
-import 'package:skg_hagen/src/legal/model/imprint.dart';
-import 'package:skg_hagen/src/pushnotification/model/pushNotifications.dart';
+import 'package:skg_hagen/src/legal/dto/imprint.dart';
+import 'package:skg_hagen/src/pushnotification/dto/pushNotifications.dart';
 
 class DrawerList {
   static const String LOGO = 'assets/images/skg-transparent.png';
   static const String HOME_NAME = 'Home';
+  static bool featureEnabled;
 
-  static Widget getList(BuildContext context) {
+  static Widget getList(BuildContext context, bool isEnabled) {
     final SingleCard card = SingleCard();
+    featureEnabled = isEnabled;
     final Future<List<CardContent>> cards = card.getAllCards(AssetClient());
     SizeConfig().init(context);
+    AnalyticsManager().setScreen('Drawer', Default.capitalize('menu'));
 
     return Drawer(
         child: Container(
@@ -65,6 +70,10 @@ class DrawerList {
     );
 
     for (int i = 0; i < cards.length; i++) {
+      if (cards[i].title == FeatureFlag.KIRCHENJAHR && !featureEnabled) {
+        continue;
+      }
+
       list.add(
         _createDrawerItem(
           text: Default.capitalize(cards[i].name),

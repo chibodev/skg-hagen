@@ -40,7 +40,7 @@ class TapAction {
   void launchURL(String url) async {
     if (url.length > 0) {
       if (await canLaunch(url)) {
-        await launch(url, forceWebView: true);
+        await launch(url);
       } else {
         throw 'Could not launch $url';
       }

@@ -1,14 +1,16 @@
 import 'dart:async';
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skg_hagen/src/aboutus/controller/aboutus.dart';
 import 'package:skg_hagen/src/appointment/controller/appointmentController.dart';
+import 'package:skg_hagen/src/churchyear/controller/churchyearController.dart';
+import 'package:skg_hagen/src/common/dto/font.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
-import 'package:skg_hagen/src/common/model/font.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/environment.dart';
 import 'package:skg_hagen/src/contacts/controller/contacts.dart';
@@ -30,10 +32,12 @@ void main() async {
   };
 
   runZoned<Future<void>>(() async {
+    final RemoteConfig firebaseRemoteConfig = await RemoteConfig.instance;
     SharedPreferences.getInstance().then(
       (SharedPreferences sp) {
         sharedPreferences = sp;
         appFont = Font();
+        remoteConfig = firebaseRemoteConfig;
         SystemChrome.setPreferredOrientations(
             <DeviceOrientation>[DeviceOrientation.portraitUp]).then(
           (_) {
@@ -61,6 +65,7 @@ class MyApp extends StatelessWidget {
         Routes.imprint: (BuildContext context) => Imprint(),
         Routes.pushNotification: (BuildContext context) =>
             PushNotificationController(),
+        Routes.churchYear: (BuildContext context) => ChurchYearController(),
       },
       theme: ThemeData(primaryColor: Colors.white, fontFamily: Font.NAME),
       home: Home(),

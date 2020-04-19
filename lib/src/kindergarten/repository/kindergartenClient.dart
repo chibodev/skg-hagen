@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
-import 'package:skg_hagen/src/kindergarten/model/kindergarten.dart';
+import 'package:skg_hagen/src/kindergarten/dto/kindergarten.dart';
 
 class KindergartenClient {
   static const String PATH = 'app/kindergarten';

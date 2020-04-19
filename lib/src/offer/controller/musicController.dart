@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/offer/model/music.dart' as Model;
+import 'package:skg_hagen/src/offer/dto/music.dart' as DTO;
 import 'package:skg_hagen/src/offer/view/music.dart' as View;
 
 class MusicController extends StatefulWidget {
-  final Model.Music music;
+  final DTO.Music music;
   final bool dataAvailable;
   final BuildContext context;
 

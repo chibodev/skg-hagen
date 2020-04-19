@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
-import 'package:skg_hagen/src/pushnotification/model/pushNotifications.dart';
+import 'package:skg_hagen/src/pushnotification/dto/pushNotifications.dart';
 import 'package:skg_hagen/src/pushnotification/repository/pushNotificationClient.dart';
 
 import '../../mock/httpClientMock.dart';
