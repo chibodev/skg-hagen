@@ -1,7 +1,7 @@
 name: skg_hagen
 description: The App for the Evangelisch-lutherische Stadtkirchengemeinde Hagen, Germany
 
-version: 1.2.0+12
+version: 1.3.0+14
 
 environment:
   sdk: ">=2.2.0 <3.0.0"
@@ -33,6 +33,7 @@ dependencies:
   launch_review: ^2.0.0
   firebase_messaging: ^6.0.13
   flutter_local_notifications: ^1.3.0
+  firebase_analytics: ^5.0.11
 
 dev_dependencies:
   flutter_test:
@@ -51,39 +52,13 @@ flutter:
   assets:
     #Config
     - .env
-    - assets/config/cards.yaml
-    - assets/config/settings.yaml
+    - assets/config/
     #Icons
-    - assets/images/icon/facebook.png
-    - assets/images/icon/instagram.png
-    - assets/images/icon/twitter.png
-    - assets/images/icon/whatsapp.png
-    - assets/images/icon/paypal.png
-    - assets/images/icon/pdf.png
-    - assets/images/icon/help.png
-    - assets/images/icon/volunteer.png
-    - assets/images/icon/video.png
-    - assets/images/icon/paragraph.png
+    - assets/images/icon/
     #Images
-    - assets/images/termine.jpg
-    - assets/images/angebote.jpg
-    - assets/images/gruppen.jpg
-    - assets/images/andacht.jpg
-    - assets/images/gebet.jpg
-    - assets/images/lesen.jpg
-    - assets/images/spende.jpg
-    - assets/images/kontakte.jpg
-    - assets/images/push.jpg
-    - assets/images/skg-green.png
-    - assets/images/skg-gray.png
-    - assets/images/skg-transparent.png
-    - assets/images/skg.jpg
-    - assets/images/kindergarten.jpg
-    - assets/images/johanniskirche.jpg
-    - assets/images/markuskirche.jpg
+    - assets/images/
     #Text
-    - assets/text/imprint.html
-    - assets/text/privacy.html
+    - assets/text/
   fonts:
     - family: Optima
       fonts:

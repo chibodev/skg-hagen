@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
-import 'package:skg_hagen/src/home/model/aid.dart';
+import 'package:skg_hagen/src/home/dto/aid.dart';
 
 class AidClient {
   static const String PATH = 'app/aid';

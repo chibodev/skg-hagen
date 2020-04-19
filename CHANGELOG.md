@@ -12,6 +12,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add app setting: activate/deactivate notification
 - add *andachten* (devotion)
 
+## [1.3.0] - 2020-04-13
+
+### Changed
+- forceview on url launch
+- updating text in imprint
+
+### Added
+- add church year - easter *home*
+- add analytics manager
+- add feature flag using firebase
+
 ## [1.2.0] - 2020-04-03
 
 ### Fixed

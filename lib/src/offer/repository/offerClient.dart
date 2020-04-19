@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
-import 'package:skg_hagen/src/offer/model/offers.dart';
+import 'package:skg_hagen/src/offer/dto/offers.dart';
 
 class OfferClient {
   static const String PATH = 'app/offers';

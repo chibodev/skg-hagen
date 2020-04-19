@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
+import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/routes/routes.dart';
+import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/contacts/controller/contacts.dart' as Controller;
-import 'package:skg_hagen/src/contacts/model/contacts.dart';
+import 'package:skg_hagen/src/contacts/dto/contacts.dart';
 import 'package:skg_hagen/src/contacts/repository/contactsClient.dart';
 import 'package:skg_hagen/src/contacts/view/cards.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
@@ -22,6 +24,9 @@ class Accordions extends State<Controller.Contacts> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
+    AnalyticsManager().setScreen('Kontakte', 'Contacts');
+    AnalyticsManager()
+        .setScreen(Contacts.NAME, Default.classNameFromRoute(Routes.contacts));
     _getContacts();
   }
 

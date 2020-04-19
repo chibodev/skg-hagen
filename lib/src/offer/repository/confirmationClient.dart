@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
-import 'package:skg_hagen/src/offer/model/confirmation.dart';
+import 'package:skg_hagen/src/offer/dto/confirmation.dart';
 
 class ConfirmationClient {
   static const String PATH = 'app/confirmation';

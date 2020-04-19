@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/aboutus/model/history.dart';
-import 'package:skg_hagen/src/aboutus/model/presbytery.dart';
+import 'package:skg_hagen/src/aboutus/dto/history.dart';
+import 'package:skg_hagen/src/aboutus/dto/presbytery.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 
 class Cards {

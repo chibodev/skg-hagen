@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/offer/model/aidReceive.dart' as Model;
+import 'package:skg_hagen/src/offer/dto/aidReceive.dart' as DTO;
 import 'package:skg_hagen/src/offer/view/aidReceive.dart' as View;
 
 class AidReceive extends StatefulWidget {
-  final Model.AidReceive aidReceive;
+  final DTO.AidReceive aidReceive;
   final bool dataAvailable;
   final BuildContext buildContext;
 

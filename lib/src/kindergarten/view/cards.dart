@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
+import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/kindergarten/controller/news.dart';
-import 'package:skg_hagen/src/kindergarten/model/events.dart';
-import 'package:skg_hagen/src/kindergarten/model/news.dart' as Model;
+import 'package:skg_hagen/src/kindergarten/dto/events.dart';
+import 'package:skg_hagen/src/kindergarten/dto/news.dart' as DTO;
 
 class Cards {
   BuildContext _context;
@@ -22,8 +22,8 @@ class Cards {
       for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForEvents(card[i]));
       }
-    } else if (card is List<Model.News>) {
-      subjectName = Model.News.NAME;
+    } else if (card is List<DTO.News>) {
+      subjectName = DTO.News.NAME;
       for (int i = 0; i < card.length; i++) {
         list.add(_buildTileForNews(card[i]));
       }
@@ -96,7 +96,7 @@ class Cards {
     );
   }
 
-  Widget _buildTileForNews(Model.News card) {
+  Widget _buildTileForNews(DTO.News card) {
     return Material(
       child: Padding(
         padding: EdgeInsets.only(

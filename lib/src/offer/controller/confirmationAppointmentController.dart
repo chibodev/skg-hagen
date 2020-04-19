@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/offer/model/appointment.dart';
+import 'package:skg_hagen/src/offer/dto/appointment.dart';
 import 'package:skg_hagen/src/offer/view/confirmationAppointment.dart';
 
 class ConfirmationAppointmentController extends StatefulWidget {

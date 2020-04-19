@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
-import 'package:skg_hagen/src/contacts/model/contacts.dart';
+import 'package:skg_hagen/src/contacts/dto/contacts.dart';
 
 class ContactsClient {
   static const String PATH = 'app/contact';

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
-import 'package:skg_hagen/src/common/model/default.dart';
-import 'package:skg_hagen/src/common/model/sizeConfig.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
+import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
-import 'package:skg_hagen/src/settings/model/settingsList.dart';
+import 'package:skg_hagen/src/settings/dto/settingsList.dart';
 import 'package:skg_hagen/src/settings/service/settings.dart';
 
 class SettingsMenu {
