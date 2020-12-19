@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
@@ -23,11 +24,12 @@ import 'package:skg_hagen/src/pushnotification/controller/appointmentController.
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   FlutterError.onError = (FlutterErrorDetails details) {
     if (!Environment.isProduction()) {
       FlutterError.dumpErrorToConsole(details);
     } else {
-      FlutterError.onError = Crashlytics.instance.recordFlutterError;
+      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
     }
   };
 
@@ -46,7 +48,7 @@ void main() async {
         );
       },
     );
-  }, onError: Crashlytics.instance.recordError);
+  }, onError: FirebaseCrashlytics.instance.recordError);
 }
 
 class MyApp extends StatelessWidget {

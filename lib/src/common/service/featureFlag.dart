@@ -18,11 +18,11 @@ class FeatureFlag {
       await remoteConfig.activateFetched();
       isEnabled = remoteConfig.getString(featureName) == '1' ? true : false;
     } on FetchThrottledException catch (exception) {
-      Crashlytics.instance.log(
+      FirebaseCrashlytics.instance.log(
         exception.toString(),
       );
     } catch (exception) {
-      Crashlytics.instance.log(
+      FirebaseCrashlytics.instance.log(
         exception.toString(),
       );
     }

@@ -28,11 +28,13 @@ if (keystorePropertiesFile.exists()) {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -45,10 +47,11 @@ android {
     defaultConfig {
         applicationId "de.skg_hagen"
         minSdkVersion 16
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     signingConfigs {
@@ -66,6 +69,11 @@ android {
             minifyEnabled true
             useProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            firebaseCrashlytics {
+                nativeSymbolUploadEnabled true
+                unstrippedNativeLibsDir "build/intermediates/merged_native_libs/release/out/lib/"
+                strippedNativeLibsDir "build/intermediates/stripped_native_libs/release/out/lib/"
+            }
         }
     }
 }
@@ -74,23 +82,14 @@ flutter {
     source '../..'
 }
 
-apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
-
 dependencies {
-    implementation 'com.google.firebase:firebase-analytics:17.2.1'
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
-    implementation 'com.crashlytics.sdk.android:crashlytics-ndk:2.1.1'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    implementation 'com.google.firebase:firebase-analytics:18.0.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.3.0'
+    implementation 'com.google.firebase:firebase-crashlytics-ndk:17.3.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.10"
+    testImplementation 'junit:junit:4.13.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'com.android.support:multidex:1.0.3'
 }
-
-// Enable Crashlytics NDK reporting
-crashlytics {
-    enableNdk true
-}
-
-apply plugin: 'com.google.gms.google-services'
 

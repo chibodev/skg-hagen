@@ -19,5 +19,5 @@ class SinglePageController extends StatefulWidget {
       : super(key: key);
 
   @override
-  Page createState() => Page();
+  ChurchYearPage createState() => ChurchYearPage();
 }

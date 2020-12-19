@@ -5,7 +5,7 @@ import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
 
-class Page {
+class LegalPage {
   Widget buildHtml(String content) {
     final double thirty = SizeConfig.getSafeBlockVerticalBy(3.5);
     return SingleChildScrollView(
