@@ -11,6 +11,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - enabling cache
 - add app setting: activate/deactivate notification
 - add *andachten* (devotion)
+- add *mediatheke* 
+
+## [1.3.1] - 2020-04-21
+
+### Changed
+- replaced old skg logo (splash screen/dashboard/menu)
+- changed kindergarten logo
+- stock picture consistent with that of homepage
+- changed notification icon + color to green
+
+### Fixed
+- deprecations
 
 ## [1.3.0] - 2020-04-13
 
@@ -40,7 +52,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add setting to change font size
 - add update informer
 - add notification
-
 
 ## [1.1.0] - 2020-02-01
 
