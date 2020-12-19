@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/environment.dart';
 import 'package:skg_hagen/src/pushnotification/dto/data.dart';
@@ -19,7 +20,7 @@ class PushNotificationsManager {
       PushNotificationsManager._();
 
   /* check if token exists in list (endpoint that return list or empty)
-   1. If empty - subscribe to list 
+   1. If empty - subscribe to list
    2. if not empty and deactivated, subscribe to topic
    3. if not empty and not deactivated ignore
    */
@@ -37,7 +38,8 @@ class PushNotificationsManager {
         IOSInitializationSettings();
     final InitializationSettings initializationSettings =
         InitializationSettings(
-            initializationSettingsAndroid, initializationSettingsIOS);
+            android: initializationSettingsAndroid,
+            iOS: initializationSettingsIOS);
     flutterLocalNotificationsPlugin.initialize(initializationSettings,
         onSelectNotification: onSelectNotification);
   }
@@ -86,18 +88,20 @@ class PushNotificationsManager {
   void _showNotification(Messaging message) async {
     final AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
-      Platform.isAndroid ? 'de.skg_hagen' : 'de.skghagen.app',
-      'skg Hagen',
-      'notification',
-      playSound: true,
-      enableVibration: true,
-      importance: Importance.Max,
-      priority: Priority.High,
-    );
+            Platform.isAndroid ? 'de.skg_hagen' : 'de.skghagen.app',
+            'skg Hagen',
+            'notification',
+            playSound: true,
+            enableVibration: true,
+            importance: Importance.max,
+            priority: Priority.high,
+            color: Color(Default.COLOR_GREEN)
+        );
     final IOSNotificationDetails iOSPlatformChannelSpecifics =
         IOSNotificationDetails();
     final NotificationDetails platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(0, message.notification.title,
         message.notification.body, platformChannelSpecifics,
         payload: json.encode(message.data.toJson()));

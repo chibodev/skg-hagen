@@ -5,6 +5,7 @@ class AidReceive {
   String email;
 
   static const String NAME = 'Hilfe-Suchende';
+  static const String IMAGE = 'assets/images/angebote.jpg';
   static const String HELP = 'assets/images/icon/help.png';
 
   AidReceive({
