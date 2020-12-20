@@ -12,13 +12,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add app setting: activate/deactivate notification
 - add *andachten* (devotion)
 - add *mediatheke* 
+- change endpoint for daily devotion
 
 ## [1.3.1] - 2020-04-21
 
 ### Changed
 - replaced old skg logo (splash screen/dashboard/menu)
 - changed kindergarten logo
-- stock picture consistent with that of homepage
+- changing card pictures to be consistent with that of homepage
 - changed notification icon + color to green
 
 ### Fixed
