@@ -55,14 +55,8 @@ class PushNotificationsManager {
           final Messaging messaging = Messaging.fromJson(message);
           _showNotification(messaging);
         },
-        onLaunch: (Map<String, dynamic> message) async {
-          final Messaging messaging = Messaging.fromJson(message);
-          _openScreenByRoute(messaging.data.screen);
-        },
-        onResume: (Map<String, dynamic> message) async {
-          final Messaging messaging = Messaging.fromJson(message);
-          _openScreenByRoute(messaging.data.screen);
-        },
+        onLaunch: _openScreen,
+        onResume: _openScreen,
       );
 
       if (!Environment.isProduction()) {
@@ -72,6 +66,11 @@ class PushNotificationsManager {
 
       _initialized = true;
     }
+  }
+
+  Future<void> _openScreen(Map<String, dynamic> message) async {
+    final Messaging messaging = Messaging.fromJson(message);
+    _openScreenByRoute(messaging.data.screen);
   }
 
   void _openScreenByRoute(String routeName) {
@@ -95,8 +94,7 @@ class PushNotificationsManager {
             enableVibration: true,
             importance: Importance.max,
             priority: Priority.high,
-            color: Color(Default.COLOR_GREEN)
-        );
+            color: Color(Default.COLOR_GREEN));
     final IOSNotificationDetails iOSPlatformChannelSpecifics =
         IOSNotificationDetails();
     final NotificationDetails platformChannelSpecifics = NotificationDetails(
