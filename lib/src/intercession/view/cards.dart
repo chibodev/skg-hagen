@@ -19,7 +19,7 @@ import 'package:skg_hagen/src/intercession/dto/intercession.dart' as DTO;
 import 'package:skg_hagen/src/intercession/repository/intercessionClient.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
-class Page extends State<Controller.Intercession> {
+class IntercessionPage extends State<Controller.Intercession> {
   final TextEditingController _intercessionTextFieldcontroller =
       TextEditingController();
   SettingsMenu settingsMenu;

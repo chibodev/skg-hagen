@@ -7,7 +7,7 @@ class Offers {
   final List<Project> projects;
   final List<Music> music;
   static const String NAME = 'Angebote';
-  static const String IMAGE = 'assets/images/angebote.jpg';
+  static const String IMAGE = 'assets/images/gruppen.jpg';
   static const String FOOTER =
       'Ob Angebote, Gruppen oder Kreise stattfinden, erfragen Sie bitte per E-Mail.';
 

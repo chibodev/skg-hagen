@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/aidReceive.dart' as Controller;
 import 'package:skg_hagen/src/offer/dto/aidReceive.dart' as DTO;
-import 'package:skg_hagen/src/offer/dto/offers.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class AidReceive extends State<Controller.AidReceive> {
@@ -40,7 +39,7 @@ class AidReceive extends State<Controller.AidReceive> {
                     start: 72, bottom: 16, end: 102),
                 title: CustomWidget.getTitle(DTO.AidReceive.NAME),
                 background: Image.asset(
-                  Offers.IMAGE,
+                  DTO.AidReceive.IMAGE,
                   fit: BoxFit.cover,
                 ),
               ),

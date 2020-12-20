@@ -28,11 +28,11 @@ class VersionCheck {
         isVersionOld = true;
       }
     } on FetchThrottledException catch (exception) {
-      Crashlytics.instance.log(
+      FirebaseCrashlytics.instance.log(
         exception.toString(),
       );
     } catch (exception) {
-      Crashlytics.instance.log(
+      FirebaseCrashlytics.instance.log(
         exception.toString(),
       );
     }

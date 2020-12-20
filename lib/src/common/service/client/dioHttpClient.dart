@@ -107,7 +107,7 @@ class DioHTTPClient {
           sharedPreferences.get(cacheData),
         );
       } else {
-        Crashlytics.instance.log(
+        FirebaseCrashlytics.instance.log(
           onError.error.toString(),
         );
         return null;
@@ -132,7 +132,7 @@ class DioHTTPClient {
           sharedPreferences.get(cacheData),
         );
       } else {
-        Crashlytics.instance.log(
+        FirebaseCrashlytics.instance.log(
           onError.error.toString(),
         );
         return null;
@@ -152,7 +152,7 @@ class DioHTTPClient {
           (Response<dynamic> response) => response,
         )
         .catchError((dynamic onError) {
-      Crashlytics.instance.log(
+      FirebaseCrashlytics.instance.log(
         onError.error.toString(),
       );
     });
@@ -165,7 +165,7 @@ class DioHTTPClient {
     return await http
             ._download(urlPath: urlPath, savePath: savePath)
             .catchError((dynamic onError) {
-          Crashlytics.instance.log(
+          FirebaseCrashlytics.instance.log(
             onError.error.toString(),
           );
         }) ==

@@ -143,7 +143,6 @@ pubspec.lock
 xcuserdata
 **/.symlinks/
 profile
-/DEPLOYMENT.md
-/NOTIFICATION.md
 /android/app/google-services.json
 /android/skg_hagen_android.iml
+/info/

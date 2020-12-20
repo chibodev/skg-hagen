@@ -495,7 +495,7 @@ class CustomWidget {
   static Widget getSlidableShare(String subject, String text) {
     return IconSlideAction(
       caption: Default.SHARE,
-      color: Colors.black45,
+      color: Color(Default.COLOR_GRAY),
       foregroundColor: Colors.white,
       iconWidget: Icon(
         Icons.share,
@@ -555,7 +555,7 @@ class CustomWidget {
   }
 
   static Widget _getURLIcon(String format) {
-    final Color grey = Colors.grey;
+    final Color grey = Color(Default.COLOR_GRAY);
     final double size = SizeConfig.getSafeBlockVerticalBy(appFont.iconSize);
     final String alt = 'URL';
     Widget icon = Icon(

@@ -3,10 +3,11 @@ class Social {
   static const String INSTAGRAM = 'assets/images/icon/instagram.png';
   static const String TWITTER = 'assets/images/icon/twitter.png';
   static const String WHATSAPP = 'assets/images/icon/whatsapp.png';
+  static const String YOUTUBE = 'assets/images/icon/youtube.png';
   static const String NAME = 'Social Media';
 
   static const List<String> VALID_SOCIAL = <String>[
-    'facebook', 'instagram', 'twitter', 'whatsapp'
+    'facebook', 'instagram', 'twitter', 'whatsapp', 'youtube'
   ];
 
   String name;
@@ -30,6 +31,7 @@ class Social {
   String getSocialImage(String name) {
     String imagePath;
 
+    //TODO: change logic: loop through folder and set based on name of png | return null if not found
     switch (name) {
       case 'facebook':
         imagePath = FACEBOOK;
@@ -42,6 +44,9 @@ class Social {
         break;
       case 'whatsapp':
         imagePath = WHATSAPP;
+        break;
+      case 'youtube':
+        imagePath = YOUTUBE;
         break;
     }
 

@@ -3,6 +3,7 @@ import 'package:skg_hagen/src/common/dto/address.dart';
 class Default {
   static const int COLOR_GREEN = 0xFF8EBC6B;
   static const int COLOR_DARKGREEN = 0xFF00976C;
+  static const int COLOR_GRAY = 0xFF606060;
   static const String NO_CONTENT = 'Aktuelles in Kürze';
   static const String COPIED = 'In die Zwischenablage kopiert!';
   static const String CALENDER = 'Kalender';

@@ -56,12 +56,11 @@ class Accordions extends State<Controller.Kindergarten> {
         SliverAppBar(
           pinned: true,
           expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
-          backgroundColor: Color(Default.COLOR_GREEN),
+          backgroundColor: Colors.white,
           flexibleSpace: FlexibleSpaceBar(
             titlePadding: const EdgeInsetsDirectional.only(
                 start: 72, bottom: 16, end: 102),
-            title: CustomWidget.getTitle(Kindergarten.NAME,
-                color: Colors.black, noShadow: true),
+            title: CustomWidget.getTitle(Kindergarten.NAME),
             background: Image.asset(
               Kindergarten.IMAGE,
               fit: BoxFit.cover,

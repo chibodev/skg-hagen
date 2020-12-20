@@ -42,7 +42,7 @@ class NewsView extends State<News> {
             SliverAppBar(
               pinned: true,
               expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
-              backgroundColor: Color(Default.COLOR_GREEN),
+              backgroundColor: Colors.white,
               flexibleSpace: FlexibleSpaceBar(
                 titlePadding: const EdgeInsetsDirectional.only(
                     start: 72, bottom: 16, end: 102),
