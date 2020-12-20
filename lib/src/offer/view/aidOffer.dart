@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
@@ -15,7 +15,6 @@ import 'package:skg_hagen/src/offer/controller/aid.dart';
 import 'package:skg_hagen/src/offer/dto/aidOffer.dart' as DTO;
 import 'package:skg_hagen/src/offer/dto/aidOfferQuestion.dart';
 import 'package:skg_hagen/src/offer/dto/helper.dart';
-import 'package:skg_hagen/src/offer/dto/offers.dart';
 import 'package:skg_hagen/src/offer/repository/aidOfferClient.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
@@ -33,8 +32,8 @@ class AidOffer extends State<Aid> {
   void initState() {
     super.initState();
     _settingsMenu = SettingsMenu(pageView: this);
-    AnalyticsManager().setScreen(
-        DTO.AidOffer.NAME, Default.classNameFromRoute(Routes.offer));
+    AnalyticsManager()
+        .setScreen(DTO.AidOffer.NAME, Default.classNameFromRoute(Routes.offer));
   }
 
   @override
@@ -57,7 +56,7 @@ class AidOffer extends State<Aid> {
                       start: 72, bottom: 16, end: 102),
                   title: CustomWidget.getTitle(DTO.AidOffer.NAME),
                   background: Image.asset(
-                    Offers.IMAGE,
+                    DTO.AidOffer.IMAGE,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -266,7 +265,7 @@ class AidOffer extends State<Aid> {
         option['type'] = TextInputType.number;
         option['maxLength'] = 2;
         option['inputFormat'] = <TextInputFormatter>[
-          WhitelistingTextInputFormatter.digitsOnly
+          FilteringTextInputFormatter.allow(RegExp(r'[0-9]'))
         ];
         break;
       case 'wohnortortteil':

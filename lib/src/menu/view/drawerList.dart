@@ -148,7 +148,7 @@ class DrawerList {
   }
 
   static Widget _createOtherDrawerItem(
-      {String text, GestureTapCallback onTap, bool smallFontSize}) {
+      {String text, GestureTapCallback onTap}) {
     return ListTile(
       title: Row(
         children: <Widget>[

@@ -1,6 +1,5 @@
-/**
- * @source: https://medium.com/flutter-community/flutter-effectively-scale-ui-according-to-different-screen-sizes-2cb7c115ea0a
- */
+/// @source: https://medium.com/flutter-community/flutter-effectively-scale-ui-according-to-different-screen-sizes-2cb7c115ea0a
+
 import 'package:flutter/widgets.dart';
 
 class SizeConfig {

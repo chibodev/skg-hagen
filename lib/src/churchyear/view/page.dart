@@ -9,7 +9,7 @@ import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
-class Page extends State<SinglePageController> {
+class ChurchYearPage extends State<SinglePageController> {
   SettingsMenu settingsMenu;
 
   @override

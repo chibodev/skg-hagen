@@ -78,10 +78,10 @@ class ImprintView extends State<Controller.Imprint> {
         body: TabBarView(
           children: <Widget>[
             _dataAvailableImprint
-                ? Page().buildHtml(_imprint.imprint)
+                ? LegalPage().buildHtml(_imprint.imprint)
                 : Container(),
             _dataAvailablePrivacy
-                ? Page().buildHtml(_privacy.privacy)
+                ? LegalPage().buildHtml(_privacy.privacy)
                 : Container()
           ],
         ),

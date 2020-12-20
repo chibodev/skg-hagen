@@ -5,5 +5,5 @@ class Intercession extends StatefulWidget {
   static const String route = '/intercession';
 
   @override
-  Page createState() => Page();
+  IntercessionPage createState() => IntercessionPage();
 }
