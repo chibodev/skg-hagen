@@ -14,6 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - add *mediatheke* 
 - change endpoint for daily devotion
 
+## [1.3.2] - 2023-05-05
+
+### Removed
+- Dependency to REQUEST_INSTALL_PACKAGES
+
 ## [1.3.1] - 2020-04-21
 
 ### Changed
