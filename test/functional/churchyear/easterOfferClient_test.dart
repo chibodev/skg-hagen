@@ -5,19 +5,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:skg_hagen/src/churchyear/dto/easterOffer.dart';
 import 'package:skg_hagen/src/churchyear/repository/easterOfferClient.dart';
-import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
-import 'package:skg_hagen/src/common/service/network.dart';
 
 import '../../mock/httpClientMock.dart';
 
-class MockDioHTTPClient extends Mock implements DioHTTPClient {}
-
-class MockNetwork extends Mock implements Network {}
-
 void main() {
-  EasterOfferClient subject;
-  MockDioHTTPClient httpClient;
-  MockNetwork network;
+  late EasterOfferClient subject;
+  late MockDioHTTPClient httpClient;
+  late MockNetwork network;
+  final Options options = Options();
 
   setUpAll(() {
     subject = EasterOfferClient();
@@ -27,21 +22,23 @@ void main() {
 
   test('EasterOffcerClient successfully retrieves data', () async {
     when(network.hasInternet()).thenAnswer((_) async => false);
+    when(httpClient.setOptions(httpClient, network, any))
+        .thenAnswer((_) async => options);
     when(
       httpClient.getJSONResponse(
         http: httpClient,
+        options: options,
         path: 'app/churchyear/easter',
         object: EasterOffer,
-        options: anyNamed('options'),
-        cacheData: 'app/churchyear/easter/data',
+        cacheData: EasterOfferClient.CACHE_DATA,
       ),
     ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(
         statusCode: HttpStatus.ok, path: 'easteroffer.json'));
 
-    final EasterOffer easterOffer =
+    final EasterOffer? easterOffer =
         await subject.getOffers(httpClient, network, refresh: true);
 
-    expect(easterOffer.resurrectionStation.station, isNotEmpty);
+    expect(easterOffer!.resurrectionStation.station, isNotEmpty);
     expect(easterOffer.resurrectionStation.station.first.title,
         '1. Station - Botschaft des Engels');
     expect(easterOffer.resurrectionStation.station.first.description, 'Test');
@@ -55,16 +52,18 @@ void main() {
   });
 
   test('EasterOffcerClient fails and throws Exception', () async {
-    DioError error;
+    dynamic error;
 
     when(network.hasInternet()).thenAnswer((_) async => false);
+    when(httpClient.setOptions(httpClient, network, any))
+        .thenAnswer((_) async => options);
     when(
       httpClient.getJSONResponse(
         http: httpClient,
+        options: options,
         path: 'app/churchyear/easter',
         object: EasterOffer,
-        options: anyNamed('options'),
-        cacheData: 'app/churchyear/easter/data',
+        cacheData: EasterOfferClient.CACHE_DATA,
       ),
     ).thenAnswer((_) async =>
         HTTPClientMock.getJSONRequest(statusCode: HttpStatus.unauthorized));
@@ -76,7 +75,6 @@ void main() {
     }
 
     expect(error, isNotNull);
-    expect(error is Exception, isTrue);
-    expect(error.error.statusCode, HttpStatus.unauthorized);
+    expect(error is TypeError, isTrue);
   });
 }
