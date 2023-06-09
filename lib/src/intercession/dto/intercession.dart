@@ -12,7 +12,7 @@ class Intercession {
 
   final String intercession;
 
-  Intercession({this.intercession});
+  Intercession({required this.intercession});
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         "intercession": intercession,

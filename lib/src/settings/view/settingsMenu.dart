@@ -7,9 +7,9 @@ import 'package:skg_hagen/src/settings/dto/settingsList.dart';
 import 'package:skg_hagen/src/settings/service/settings.dart';
 
 class SettingsMenu {
-  List<SettingsList> choices;
+  late List<SettingsList> choices;
   dynamic pageView;
-  BuildContext _context;
+  late BuildContext _context;
 
   SettingsMenu({@required this.pageView}) {
     _populateSettingsList();

@@ -10,9 +10,9 @@ class Contacts {
   static const String IMAGE = 'assets/images/kontakte.jpg';
 
   Contacts({
-    this.address,
-    this.contact,
-    this.social,
+    required this.address,
+    required this.contact,
+    required this.social,
   });
 
   factory Contacts.fromJson(Map<String, dynamic> json) => Contacts(

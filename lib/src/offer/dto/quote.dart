@@ -6,7 +6,11 @@ class Quote {
   static const String NAME = 'Auswahl an Konfirmationssprüchen';
   static const String PAGE_NAME = 'Konfi-Sprüche';
 
-  Quote({this.text, this.book, this.chapter, this.verse});
+  Quote(
+      {required this.text,
+      required this.book,
+      required this.chapter,
+      required this.verse});
 
   factory Quote.fromJson(Map<String, dynamic> json) => Quote(
         text: json['text'],

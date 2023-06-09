@@ -3,7 +3,5 @@ class Privacy {
 
   String privacy;
 
-  Privacy({
-    this.privacy
-  });
+  Privacy({required this.privacy});
 }

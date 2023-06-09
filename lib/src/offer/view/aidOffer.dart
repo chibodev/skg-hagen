@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
@@ -19,14 +18,14 @@ import 'package:skg_hagen/src/offer/repository/aidOfferClient.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class AidOffer extends State<Aid> {
-  final List<bool> _checkboxValue = List<bool>();
+  final List<bool> _checkboxValue = <bool>[];
   final TextEditingController _name = TextEditingController();
   final TextEditingController _age = TextEditingController();
   final TextEditingController _city = TextEditingController();
   final TextEditingController _contact = TextEditingController();
   final TextEditingController _reason = TextEditingController();
-  SettingsMenu _settingsMenu;
-  BuildContext _pageContext;
+  late SettingsMenu _settingsMenu;
+  late BuildContext _pageContext;
 
   @override
   void initState() {
@@ -69,11 +68,11 @@ class AidOffer extends State<Aid> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Flexible(
-                      child: widget?.aidOffer != null
+                      child: widget.dataAvailable
                           ? Padding(
                               padding: EdgeInsets.all(thirty),
                               child: SelectableText(
-                                widget.aidOffer.description,
+                                widget.aidOffer?.description ?? "",
                                 style: TextStyle(
                                   fontSize: SizeConfig.getSafeBlockVerticalBy(
                                       appFont.primarySize),
@@ -82,7 +81,7 @@ class AidOffer extends State<Aid> {
                             )
                           : CustomWidget.centeredNoEntry(),
                     ),
-                    widget?.aidOffer != null && widget?.aidOfferQuestion != null
+                    widget.dataAvailable
                         ? Flexible(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,19 +108,26 @@ class AidOffer extends State<Aid> {
   }
 
   List<Widget> _buildQuestions(
-      BuildContext contextOfBuilder, List<AidOfferQuestion> questions) {
-    final List<Widget> list = List<Widget>();
-    List<Widget> checkBox = List<Widget>();
+      BuildContext contextOfBuilder, List<AidOfferQuestion>? questions) {
+    final List<Widget> list = <Widget>[];
+    List<Widget> checkBox = <Widget>[];
 
     final double thirty = SizeConfig.getSafeBlockVerticalBy(3.5);
     final double top = SizeConfig.getSafeBlockVerticalBy(1.0);
 
+    if (questions == null) {
+      return list;
+    }
+
     for (int i = 0; i < questions.length; i++) {
-      if (questions[i]?.type == 'checkbox') {
+      if (questions[i].type == 'checkbox') {
         list.add(
-          _getLabel(thirty, questions[i].question, FontWeight.bold),
+          _getLabel(thirty, questions[i].question ?? "", FontWeight.bold),
         );
-        for (int x = 0; x < questions[i]?.option?.length; x++) {
+
+        final List<String> questionOption = questions[i].option ?? <String>[];
+
+        for (int x = 0; x < questionOption.length; x++) {
           _checkboxValue.add(false);
           checkBox.add(
             Padding(
@@ -129,9 +135,9 @@ class AidOffer extends State<Aid> {
               child: Checkbox(
                 activeColor: Color(Default.COLOR_GREEN),
                 value: _checkboxValue[x],
-                onChanged: (bool value) {
+                onChanged: (bool? value) {
                   setState(() {
-                    _checkboxValue[x] = value;
+                    _checkboxValue[x] = value ?? false;
                   });
                 },
               ),
@@ -139,24 +145,26 @@ class AidOffer extends State<Aid> {
           );
           checkBox.add(
             Flexible(
-                child: _getLabel(
-                    thirty, questions[i].option[x], FontWeight.normal)),
+                child: _getLabel(thirty, questionOption[x], FontWeight.normal)),
           );
           list.add(
             Row(
               children: checkBox,
             ),
           );
-          checkBox = List<Widget>();
+          checkBox = <Widget>[];
         }
       }
 
-      if (questions[i]?.type == 'text') {
+      if (questions[i].type == 'text') {
         list.add(
-          _getLabel(thirty, questions[i].question, FontWeight.bold),
+          _getLabel(thirty, questions[i].question ?? "", FontWeight.bold),
         );
-        for (int x = 0; x < questions[i]?.option?.length; x++) {
-          final String label = questions[i].option[x];
+
+        final List<String> questionOption = questions[i].option ?? <String>[];
+
+        for (int x = 0; x < questionOption.length; x++) {
+          final String label = questionOption[x];
           final String fieldName =
               label.replaceAll(RegExp(r"\s\b|\b\s|\(|\)"), "").toLowerCase();
           final Map<String, dynamic> option =
@@ -214,10 +222,11 @@ class AidOffer extends State<Aid> {
             InkWell(
               splashColor: Color(Default.COLOR_GREEN),
               onTap: () => TapAction().sendMail(
-                  widget.aidOffer.email, widget.aidOffer.title,
+                  widget.aidOffer?.email ?? "", widget.aidOffer?.title ?? "",
                   body: DTO.AidOffer.EMAIL_BODY),
               onLongPress: () => ClipboardService.copyAndNotify(
-                  context: contextOfBuilder, text: widget.aidOffer.email),
+                  context: contextOfBuilder,
+                  text: widget.aidOffer?.email ?? ""),
               child: Padding(
                 padding: EdgeInsets.only(
                   left: SizeConfig.getSafeBlockVerticalBy(1),

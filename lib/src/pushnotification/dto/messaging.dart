@@ -6,8 +6,8 @@ class Messaging {
   Data data;
 
   Messaging({
-    this.notification,
-    this.data,
+    required this.notification,
+    required this.data,
   });
 
   factory Messaging.fromJson(Map<String, dynamic> json) => Messaging(

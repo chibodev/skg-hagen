@@ -1,7 +1,7 @@
 class AidOfferQuestion {
-  String question;
-  String type;
-  List<String> option;
+  String? question;
+  String? type;
+  List<String>? option;
 
   AidOfferQuestion({
     this.question,

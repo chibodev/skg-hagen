@@ -9,14 +9,14 @@ class Helper {
   final String reason;
 
   Helper(
-      {this.shopping,
-      this.errands,
-      this.animalWalk,
-      this.name,
-      this.age,
-      this.city,
-      this.contact,
-      this.reason});
+      {required this.shopping,
+      required this.errands,
+      required this.animalWalk,
+      required this.name,
+      required this.age,
+      required this.city,
+      required this.contact,
+      required this.reason});
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         "shopping": shopping == true ? 1 : 0,

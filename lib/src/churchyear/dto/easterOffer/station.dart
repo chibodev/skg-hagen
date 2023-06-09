@@ -6,11 +6,11 @@ class Station {
   dynamic format;
 
   Station({
-    this.id,
-    this.title,
-    this.description,
-    this.url,
-    this.format,
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.url,
+    required this.format,
   });
 
   factory Station.fromJson(Map<String, dynamic> json) => Station(

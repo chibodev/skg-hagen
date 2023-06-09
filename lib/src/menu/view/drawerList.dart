@@ -15,7 +15,7 @@ import 'package:skg_hagen/src/pushnotification/dto/pushNotifications.dart';
 class DrawerList {
   static const String LOGO = 'assets/images/skg-transparent.png';
   static const String HOME_NAME = 'Home';
-  static bool featureEnabled;
+  static late bool featureEnabled;
 
   static Widget getList(BuildContext context, bool isEnabled) {
     final SingleCard card = SingleCard();
@@ -35,9 +35,10 @@ class DrawerList {
         future: cards,
         builder:
             (BuildContext context, AsyncSnapshot<List<CardContent>> response) {
+          final List<CardContent>? data = response.data;
           if (response.connectionState == ConnectionState.done &&
-              response.data != null) {
-            return _buildListView(context, response.data);
+              data != null) {
+            return _buildListView(context, data);
           }
           return CircularProgressIndicator(
             valueColor:
@@ -54,7 +55,7 @@ class DrawerList {
   }
 
   static List<Widget> _cardList(BuildContext context, List<CardContent> cards) {
-    final List<Widget> list = List<Widget>();
+    final List<Widget> list = <Widget>[];
 
     list.add(
       _createHeader(
@@ -121,7 +122,8 @@ class DrawerList {
     );
   }
 
-  static Widget _createDrawerItem({String text, GestureTapCallback onTap}) {
+  static Widget _createDrawerItem(
+      {required String text, required GestureTapCallback onTap}) {
     return ListTile(
       title: Row(
         children: <Widget>[
@@ -148,7 +150,7 @@ class DrawerList {
   }
 
   static Widget _createOtherDrawerItem(
-      {String text, GestureTapCallback onTap}) {
+      {required String text, required GestureTapCallback onTap}) {
     return ListTile(
       title: Row(
         children: <Widget>[

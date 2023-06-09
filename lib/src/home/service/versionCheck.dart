@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:package_info/package_info.dart';
@@ -20,14 +21,18 @@ class VersionCheck {
         double.parse(info.version.trim().replaceAll(".", ""));
 
     try {
-      await remoteConfig.fetch(expiration: const Duration(seconds: 0));
-      await remoteConfig.activateFetched();
+      await remoteConfig.setConfigSettings(RemoteConfigSettings(
+        fetchTimeout: const Duration(seconds: 10),
+        minimumFetchInterval: Duration.zero,
+      ));
+      await remoteConfig.fetch();
+      await remoteConfig.fetchAndActivate();
       final double newVersion = double.parse(
           remoteConfig.getString(REMOTE_PARAM).trim().replaceAll(".", ""));
       if (newVersion > currentVersion) {
         isVersionOld = true;
       }
-    } on FetchThrottledException catch (exception) {
+    } on FirebaseException catch (exception) {
       FirebaseCrashlytics.instance.log(
         exception.toString(),
       );

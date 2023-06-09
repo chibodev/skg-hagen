@@ -1,7 +1,7 @@
 class History {
-  String description;
-  final String url;
-  final String urlFormat;
+  String? description;
+  final String? url;
+  final String? urlFormat;
   static const String NAME = 'Geschichte';
 
   History({this.description, this.url, this.urlFormat});

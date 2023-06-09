@@ -20,7 +20,7 @@ import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 class NewsView extends State<News> {
   static bool downloading = false;
   FileDownload fileDownload = FileDownload();
-  SettingsMenu settingsMenu;
+  late SettingsMenu settingsMenu;
 
   @override
   void initState() {
@@ -65,7 +65,7 @@ class NewsView extends State<News> {
                       thirty, widget.news.description),
                   widget.news.imageUrl != null
                       ? CustomWidget.getImageFromNetwork(
-                          thirty, widget.news.imageUrl)
+                          thirty, widget.news.imageUrl ?? "")
                       : Container(),
                   widget.news.fileUrl != null
                       ? _downloadFile(contextOfBuilder)
@@ -87,7 +87,7 @@ class NewsView extends State<News> {
           padding: EdgeInsets.zero,
           child: InkWell(
             splashColor: Color(Default.COLOR_GREEN),
-            onTap: () => _download(widget.news.fileUrl, widget.news.filename),
+            onTap: () => _download(widget.news.fileUrl ?? "", widget.news.filename ?? ""),
             child: Padding(
               padding: EdgeInsets.only(
                 left: SizeConfig.getSafeBlockVerticalBy(1),
@@ -116,7 +116,7 @@ class NewsView extends State<News> {
   }
 
   Future<void> _download(String fileUrl, String filename) async {
-    final PermissionHandler permissionHandler = PermissionHandler();
+    final Permission permissionHandler = Permission.storage;
     final DioHTTPClient client = DioHTTPClient();
 
     if (await fileDownload.hasPermission(permissionHandler)) {

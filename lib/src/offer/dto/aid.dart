@@ -3,9 +3,9 @@ import 'package:skg_hagen/src/offer/dto/aidOfferQuestion.dart';
 import 'package:skg_hagen/src/offer/dto/aidReceive.dart';
 
 class Aid {
-  final AidOffer offer;
-  final AidReceive receive;
-  final List<AidOfferQuestion> offerQuestion;
+  final AidOffer? offer;
+  final AidReceive? receive;
+  final List<AidOfferQuestion>? offerQuestion;
 
   static const String NAME = 'Corona-Hinweis / Nachbarschafts-Hilfe';
 

@@ -4,7 +4,7 @@ class Concept {
   static const String PAGE_NAME = 'Konfi-Konzept';
 
   Concept({
-    this.description,
+    required this.description,
   });
 
   factory Concept.fromJson(Map<String, dynamic> json) => Concept(

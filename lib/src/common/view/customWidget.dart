@@ -44,7 +44,7 @@ class CustomWidget {
   }
 
   static Text getTitle(String name,
-      {bool noShadow, Color color, Color shadowInner, Color shadowOuter}) {
+      {bool? noShadow, Color? color, Color? shadowInner, Color? shadowOuter}) {
     return Text(
       name,
       maxLines: 1,
@@ -72,7 +72,7 @@ class CustomWidget {
     );
   }
 
-  static Padding getCardTitle(String title, {bool textColor}) {
+  static Padding getCardTitle(String title, {bool? textColor}) {
     return Padding(
       padding: EdgeInsets.only(
         left: SizeConfig.getSafeBlockVerticalBy(2),
@@ -106,7 +106,7 @@ class CustomWidget {
     );
   }
 
-  static Container getAddressWithAction(Address address, {String room}) {
+  static Container getAddressWithAction(Address address, {String? room}) {
     return Container(
       width: SizeConfig.screenHeight,
       height: SizeConfig.getSafeBlockHorizontalBy(appFont.boxSize),
@@ -181,7 +181,7 @@ class CustomWidget {
     );
   }
 
-  static Padding getCardSubtitle(String text, {bool textColor}) {
+  static Padding getCardSubtitle(String text, {bool? textColor}) {
     return Padding(
       padding: EdgeInsets.only(
         left: SizeConfig.getSafeBlockVerticalBy(2),
@@ -226,7 +226,8 @@ class CustomWidget {
         : Container();
   }
 
-  static Widget getCardEmail(String email, String title, BuildContext context) {
+  static Widget getCardEmail(
+      String? email, String title, BuildContext context) {
     return (email != null)
         ? Padding(
             padding: EdgeInsets.only(
@@ -255,7 +256,8 @@ class CustomWidget {
         : Container();
   }
 
-  static Widget getCardURL(String url, BuildContext context, {String format}) {
+  static Widget getCardURL(String? url, BuildContext context,
+      {String? format}) {
     return (url != null)
         ? Padding(
             padding: EdgeInsets.only(
@@ -415,7 +417,7 @@ class CustomWidget {
 
   static Padding getSinglePageCardURL(
       double thirty, String url, BuildContext context,
-      {String format}) {
+      {String? format}) {
     return Padding(
       padding: EdgeInsets.only(left: thirty, bottom: thirty),
       child: InkWell(
@@ -458,7 +460,7 @@ class CustomWidget {
     );
   }
 
-  static Center centeredNoEntry({String message}) {
+  static Center centeredNoEntry({String? message}) {
     return Center(
       heightFactor: SizeConfig.getSafeBlockHorizontalBy(1),
       child: Text(
@@ -470,7 +472,7 @@ class CustomWidget {
     );
   }
 
-  static IconSlideAction getSlidableCalender(String title, String info,
+  static SlidableAction getSlidableCalender(String title, String info,
       Address address, DateTime startDateTime, DateTime endDateTime) {
     final Event event = Event(
         title: title,
@@ -479,37 +481,29 @@ class CustomWidget {
         startDate: startDateTime,
         endDate: endDateTime);
 
-    return IconSlideAction(
-      caption: Default.CALENDER,
-      color: Color(Default.COLOR_DARKGREEN),
+    return SlidableAction(
+      label: Default.CALENDER,
+      backgroundColor: Color(Default.COLOR_DARKGREEN),
       foregroundColor: Colors.white,
-      iconWidget: Icon(
-        Icons.calendar_today,
-        size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
-        color: Colors.white,
-      ),
-      onTap: () => Add2Calendar.addEvent2Cal(event),
+      icon: Icons.calendar_today,
+      onPressed: (_) => Add2Calendar.addEvent2Cal(event),
     );
   }
 
   static Widget getSlidableShare(String subject, String text) {
-    return IconSlideAction(
-      caption: Default.SHARE,
-      color: Color(Default.COLOR_GRAY),
+    return SlidableAction(
+      label: Default.SHARE,
+      backgroundColor: Color(Default.COLOR_GRAY),
       foregroundColor: Colors.white,
-      iconWidget: Icon(
-        Icons.share,
-        size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
-        color: Colors.white,
-      ),
-      onTap: () => Share.share(text, subject: subject),
+      icon: Icons.share,
+      onPressed: (_) => Share.share(text, subject: subject),
     );
   }
 
   static ScaffoldFeatureController<SnackBar, SnackBarClosedReason>
       showNotification(BuildContext context, String text, IconData icon,
           Color backgroundColor) {
-    return Scaffold.of(context).showSnackBar(
+    return ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         backgroundColor: backgroundColor,
         content: ListTile(
@@ -530,19 +524,21 @@ class CustomWidget {
     );
   }
 
-  static FlatButton getSendButton(
+  static TextButton getSendButton(
       BuildContext context, Function onSendPressed) {
-    return FlatButton(
-      color: Color(Default.COLOR_GREEN),
-      textColor: Colors.white,
-      padding: EdgeInsets.only(
-        left: SizeConfig.getSafeBlockVerticalBy(7),
-        right: SizeConfig.getSafeBlockVerticalBy(7),
-        top: SizeConfig.getSafeBlockVerticalBy(2),
-        bottom: SizeConfig.getSafeBlockVerticalBy(2),
-      ),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(30.0),
+    return TextButton(
+      style: TextButton.styleFrom(
+        backgroundColor: Color(Default.COLOR_GREEN),
+        foregroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+        padding: EdgeInsets.only(
+          left: SizeConfig.getSafeBlockVerticalBy(7),
+          right: SizeConfig.getSafeBlockVerticalBy(7),
+          top: SizeConfig.getSafeBlockVerticalBy(2),
+          bottom: SizeConfig.getSafeBlockVerticalBy(2),
+        ),
       ),
       onPressed: () => onSendPressed(context),
       child: Text(
@@ -554,7 +550,7 @@ class CustomWidget {
     );
   }
 
-  static Widget _getURLIcon(String format) {
+  static Widget _getURLIcon(String? format) {
     final Color grey = Color(Default.COLOR_GRAY);
     final double size = SizeConfig.getSafeBlockVerticalBy(appFont.iconSize);
     final String alt = 'URL';

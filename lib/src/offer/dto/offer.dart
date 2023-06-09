@@ -7,32 +7,32 @@ class Offer {
   final String time;
   final String timeUntil;
   final String placeName;
-  final String room;
-  final String organizer;
-  final String url;
-  final String urlFormat;
-  final String email;
-  final String infoTitle;
-  AgeRange ageRange;
-  final int ageStart;
-  final int ageEnd;
+  final String? room;
+  final String? organizer;
+  final String? url;
+  final String? urlFormat;
+  final String? email;
+  final String? infoTitle;
+  late AgeRange ageRange;
+  final int? ageStart;
+  final int? ageEnd;
   final String schoolYear;
-  Address address;
-  final String name;
-  final String street;
-  final String houseNumber;
-  final String zip;
-  final String city;
-  final String country;
-  final String latLong;
+  late Address address;
+  final String? name;
+  final String? street;
+  final String? houseNumber;
+  final String? zip;
+  final String? city;
+  final String? country;
+  final String? latLong;
   static const String NAME = 'Offene Angebote';
 
   Offer(
-      {this.title,
-      this.occurrence,
-      this.time,
-      this.timeUntil,
-      this.placeName,
+      {required this.title,
+      required this.occurrence,
+      required this.time,
+      required this.timeUntil,
+      required this.placeName,
       this.room,
       this.infoTitle,
       this.organizer,
@@ -41,7 +41,7 @@ class Offer {
       this.email,
       this.ageStart,
       this.ageEnd,
-      this.schoolYear,
+      required this.schoolYear,
       this.name,
       this.street,
       this.houseNumber,
@@ -102,12 +102,12 @@ class Offer {
   }
 
   String getFormattedOrganiser() {
-    String text;
+    String? text;
 
     if (organizer != null) {
       text = infoTitle != null ? "$infoTitle: $organizer" : organizer;
     }
 
-    return text;
+    return text ?? "";
   }
 }

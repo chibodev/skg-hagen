@@ -4,5 +4,5 @@ class SettingsList {
 
   static const List<String> VALID_SETTINGS = <String>[FONT_SIZE];
 
-  SettingsList({this.title});
+  SettingsList({required this.title});
 }

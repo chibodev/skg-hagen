@@ -7,7 +7,7 @@ class PushNotifications {
   List<PushNotification> pushNotification;
 
   PushNotifications({
-    this.pushNotification,
+    required this.pushNotification,
   });
 
   factory PushNotifications.fromJson(Map<String, dynamic> json) =>

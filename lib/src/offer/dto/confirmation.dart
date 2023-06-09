@@ -3,9 +3,9 @@ import 'package:skg_hagen/src/offer/dto/concept.dart';
 import 'package:skg_hagen/src/offer/dto/quote.dart';
 
 class Confirmation {
-  final List<Appointment> appointment;
-  final List<Concept> concept;
-  final List<Quote> quote;
+  final List<Appointment>? appointment;
+  final List<Concept>? concept;
+  final List<Quote>? quote;
   static const String NAME = 'Konfirmanden';
 
   Confirmation({this.appointment, this.concept, this.quote});

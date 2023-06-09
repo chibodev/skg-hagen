@@ -5,10 +5,10 @@ class Token {
   String jwtToken;
 
   Token({
-    this.tokenType,
-    this.expiresIn,
-    this.jwtToken,
-    this.iat,
+    required this.tokenType,
+    required this.expiresIn,
+    required this.jwtToken,
+    required this.iat,
   });
 
   factory Token.fromJson(Map<String, dynamic> json) => Token(

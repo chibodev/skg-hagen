@@ -13,7 +13,7 @@ class SingleCard {
   }
 
   List<CardContent> buildCards(YamlMap cardConfig) {
-    final List<CardContent> cards = List<CardContent>();
+    final List<CardContent> cards = <CardContent>[];
 
     cardConfig.forEach((dynamic key, dynamic value) {
       final List<String> subtitle = <String>[];
@@ -44,7 +44,7 @@ class SingleCard {
 
   CardContent _createNewCard(
       String title, List<String> subtitle, String routeName, String name,
-      [String imagePath]) {
+      [String? imagePath]) {
     return CardContent(title, subtitle, routeName, name, imagePath);
   }
 }

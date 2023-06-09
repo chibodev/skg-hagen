@@ -1,6 +1,6 @@
 class Credentials {
-  String username;
-  String password;
+  String? username;
+  String? password;
 
   Credentials({this.username, this.password});
 }

@@ -20,7 +20,7 @@ class TokenClient {
     buildCacheOptions(Duration(minutes: 30), maxStale: Duration(hours: 1));
     options.contentType = Headers.formUrlEncodedContentType;
     final Credentials credentials = _getCredentials(env);
-    final Map<String, String> data = <String, String>{
+    final Map<String, String?> data = <String, String?>{
       'username': credentials.username,
       'password': credentials.password
     };

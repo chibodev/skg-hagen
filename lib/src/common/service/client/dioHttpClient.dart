@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:html/parser.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
@@ -20,11 +19,11 @@ class DioHTTPClient {
   static const int MAX_PAGE_RANGE = 10;
   static const int COMPLETED = 100;
 
-  Dio _client;
+  late Dio _client;
 
   DioHTTPClient() {
     final BaseOptions options = BaseOptions(
-        baseUrl: DotEnv().env['API'],
+        baseUrl: DotEnv().env['API'] ?? "",
         connectTimeout: TIMEOUT,
         receiveTimeout: TIMEOUT);
     _client = Dio(options);
@@ -55,7 +54,7 @@ class DioHTTPClient {
   }
 
   Future<Options> setOptions(
-      DioHTTPClient http, Network network, bool refresh) async {
+      DioHTTPClient http, Network network, bool? refresh) async {
     Options options = buildCacheOptions(
       Duration(days: 2),
       maxStale: Duration(days: 3),
@@ -77,7 +76,7 @@ class DioHTTPClient {
     return options;
   }
 
-  Map<String, dynamic> getQueryParameters({int index = 0}) {
+  Map<String, dynamic> getQueryParameters({int? index = 0}) {
     final Map<String, dynamic> queryParameters = HashMap<String, dynamic>();
     queryParameters.putIfAbsent(
         "index",
@@ -90,12 +89,12 @@ class DioHTTPClient {
   }
 
   Future<dynamic> getJSONResponse(
-      {@required DioHTTPClient http,
-      @required Options options,
-      Map<String, dynamic> queryParameters,
-      @required String path,
-      @required dynamic object,
-      @required String cacheData}) async {
+      {required DioHTTPClient http,
+      required Options options,
+      Map<String, dynamic>? queryParameters,
+      required String path,
+      required dynamic object,
+      required String cacheData}) async {
     return await http
         ._get(path: path, options: options, queryParameters: queryParameters)
         .then(
@@ -104,7 +103,7 @@ class DioHTTPClient {
         .catchError((dynamic onError) {
       if (sharedPreferences.containsKey(cacheData)) {
         return jsonDecode(
-          sharedPreferences.get(cacheData),
+          sharedPreferences.get(cacheData).toString(),
         );
       } else {
         FirebaseCrashlytics.instance.log(
@@ -116,10 +115,10 @@ class DioHTTPClient {
   }
 
   Future<dynamic> getHTMLResponse(
-      {@required DioHTTPClient http,
-      @required Options options,
-      @required String path,
-      @required String cacheData}) async {
+      {required DioHTTPClient http,
+      required Options options,
+      required String path,
+      required String cacheData}) async {
     _client.options.baseUrl = '';
     return await http
         ._get(path: path, options: options)
@@ -141,9 +140,9 @@ class DioHTTPClient {
   }
 
   Future<dynamic> postJSON({
-    @required DioHTTPClient http,
-    @required Options options,
-    @required String path,
+    required DioHTTPClient http,
+    required Options options,
+    required String path,
     dynamic data,
   }) async {
     return await http
@@ -159,9 +158,9 @@ class DioHTTPClient {
   }
 
   Future<bool> downloadFile(
-      {@required DioHTTPClient http,
-      @required String urlPath,
-      @required String savePath}) async {
+      {required DioHTTPClient http,
+      required String urlPath,
+      required String savePath}) async {
     return await http
             ._download(urlPath: urlPath, savePath: savePath)
             .catchError((dynamic onError) {
@@ -173,20 +172,21 @@ class DioHTTPClient {
   }
 
   Future<Response<dynamic>> _post(
-      {String path, dynamic data, Options options}) async {
+      {required String path, dynamic data, required Options options}) async {
     return await this._client.post(path, options: options, data: data);
   }
 
   Future<Response<dynamic>> _get(
-      {String path,
-      Options options,
-      Map<String, dynamic> queryParameters}) async {
+      {required String path,
+      required Options options,
+      Map<String, dynamic>? queryParameters}) async {
     return await this
         ._client
         .get(path, options: options, queryParameters: queryParameters);
   }
 
-  Future<int> _download({String urlPath, String savePath}) async {
+  Future<int> _download(
+      {required String urlPath, required String savePath}) async {
     int progress = 0;
 
     return await this._client.download(urlPath, savePath,

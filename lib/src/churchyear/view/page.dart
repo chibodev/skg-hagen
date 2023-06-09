@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:skg_hagen/src/churchyear/controller/singlePageController.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
@@ -10,7 +9,7 @@ import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class ChurchYearPage extends State<SinglePageController> {
-  SettingsMenu settingsMenu;
+  late SettingsMenu settingsMenu;
 
   @override
   void initState() {

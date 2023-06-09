@@ -3,17 +3,19 @@ class MonthlyScripture {
   static const String TITLE = 'Losung und Lehrtext';
   static const String SOURCE = 'https://www.losungen.de/die-losungen/';
 
-  String oldTestamentText;
-  String newTestamentText;
+  String? oldTestamentText;
+  String? newTestamentText;
 
   MonthlyScripture({this.oldTestamentText, this.newTestamentText});
 
   String getModifiedText() {
-    return oldTestamentText != null && oldTestamentText.length > TEXT_LIMIT
-        ? "${oldTestamentText.substring(0, TEXT_LIMIT)}..."
-        : oldTestamentText != null && oldTestamentText.length > 2
+    final String? modifiedText = oldTestamentText != null && oldTestamentText!.length > TEXT_LIMIT
+        ? "${oldTestamentText!.substring(0, TEXT_LIMIT)}..."
+        : oldTestamentText != null && oldTestamentText!.length > 2
             ? oldTestamentText
             : '';
+
+    return modifiedText ?? '';
   }
 
   String getSharableContent() {

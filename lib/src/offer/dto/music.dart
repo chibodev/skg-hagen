@@ -5,34 +5,34 @@ class Music {
 
   final String title;
   final String description;
-  final String imageUrl;
+  final String? imageUrl;
   final String email;
-  Address address;
-  final String organizer;
+  late Address address;
+  final String? organizer;
   final String occurrence;
   final String time;
   final String timeUntil;
   final String placeName;
-  final String room;
-  final String name;
-  final String street;
-  final String houseNumber;
-  final String zip;
-  final String city;
-  final String country;
-  final String latLong;
+  final String? room;
+  final String? name;
+  final String? street;
+  final String? houseNumber;
+  final String? zip;
+  final String? city;
+  final String? country;
+  final String? latLong;
   static const String NAME = 'Musik';
 
   Music(
-      {this.title,
-      this.description,
+      {required this.title,
+      required this.description,
       this.imageUrl,
-      this.email,
+      required this.email,
       this.organizer,
-      this.occurrence,
-      this.time,
-      this.timeUntil,
-      this.placeName,
+      required this.occurrence,
+      required this.time,
+      required this.timeUntil,
+      required this.placeName,
       this.room,
       this.name,
       this.street,

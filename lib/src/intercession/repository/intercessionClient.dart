@@ -17,7 +17,7 @@ class IntercessionClient {
     final Response<dynamic> response =  await http.postJSON(
         http: http, path: PATH, options: options, data: data);
 
-    if (response?.statusCode != HttpStatus.ok) {
+    if (response.statusCode != HttpStatus.ok) {
       return false;
     }
 

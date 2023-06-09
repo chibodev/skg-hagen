@@ -1,8 +1,8 @@
 class Presbytery {
-  String salutation;
-  String surname;
-  String firstname;
-  String description;
+  String? salutation;
+  String? surname;
+  String? firstname;
+  String? description;
   static const String NAME = 'Das Presbyterium';
 
   Presbytery({

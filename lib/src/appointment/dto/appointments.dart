@@ -1,7 +1,7 @@
 import 'package:skg_hagen/src/appointment/dto/appointment.dart';
 
 class Appointments {
-  List<Appointment> appointments;
+  List<Appointment> ?appointments;
   static const String NAME = 'Termine';
   static const String IMAGE = 'assets/images/termine.jpg';
 

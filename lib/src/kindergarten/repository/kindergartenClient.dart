@@ -7,8 +7,8 @@ class KindergartenClient {
   static const String PATH = 'app/kindergarten';
   static const String CACHE_DATA = 'app/kindergarten/data';
 
-  Future<Kindergarten> getAppointments(DioHTTPClient http, Network network,
-      {int index, bool refresh}) async {
+  Future<Kindergarten?> getAppointments(DioHTTPClient http, Network network,
+      {int? index, bool? refresh}) async {
     final Options options = await http.setOptions(http, network, refresh);
 
     final dynamic jsonResponse = await http.getJSONResponse(

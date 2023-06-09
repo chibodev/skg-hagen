@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
@@ -12,7 +11,7 @@ import 'package:skg_hagen/src/offer/dto/offers.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Concept extends State<ConceptController> {
-  SettingsMenu settingsMenu;
+  late SettingsMenu settingsMenu;
 
   @override
   void initState() {
@@ -51,11 +50,11 @@ class Concept extends State<ConceptController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Flexible(
-                    child: widget.concept.isNotEmpty
+                    child: widget.concept!.isNotEmpty
                         ? Padding(
                             padding: EdgeInsets.all(thirty),
                             child: SelectableText(
-                              widget?.concept?.first?.description,
+                              widget.concept!.first.description,
                               style: TextStyle(
                                 fontSize: SizeConfig.getSafeBlockVerticalBy(
                                     appFont.primarySize),

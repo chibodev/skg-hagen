@@ -14,12 +14,12 @@ import 'package:skg_hagen/src/kindergarten/view/cards.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Accordions extends State<Controller.Kindergarten> {
-  Kindergarten _kindergarten;
-  List<dynamic> _options;
+  Kindergarten? _kindergarten;
+  late List<dynamic> _options;
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
   bool _dataAvailable = false;
-  SettingsMenu settingsMenu;
+  late SettingsMenu settingsMenu;
 
   @override
   void initState() {
@@ -93,11 +93,11 @@ class Accordions extends State<Controller.Kindergarten> {
       _kindergarten = await KindergartenClient()
           .getAppointments(DioHTTPClient(), Network());
 
-      _options = List<dynamic>();
+      _options = <dynamic>[];
 
       if (_kindergarten != null) {
-        _options.add(_kindergarten.events);
-        _options.add(_kindergarten.news);
+        _options.add(_kindergarten?.events);
+        _options.add(_kindergarten?.news);
         _dataAvailable = true;
       }
       setState(() {

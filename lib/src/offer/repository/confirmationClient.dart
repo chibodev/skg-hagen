@@ -7,8 +7,8 @@ class ConfirmationClient {
   static const String PATH = 'app/confirmation';
   static const String CACHE_DATA = 'app/confirmation/data';
 
-  Future<Confirmation> getConfirmation(DioHTTPClient http, Network network,
-      {int index, bool refresh}) async {
+  Future<Confirmation?> getConfirmation(DioHTTPClient http, Network network,
+      {int? index, bool? refresh}) async {
     final Options options = await http.setOptions(http, network, refresh);
 
     final dynamic jsonResponse = await http.getJSONResponse(

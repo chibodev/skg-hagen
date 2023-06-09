@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
@@ -12,7 +11,7 @@ import 'package:skg_hagen/src/offer/dto/offers.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class ConfirmationAppointment extends State<ConfirmationAppointmentController> {
-  SettingsMenu settingsMenu;
+  late SettingsMenu settingsMenu;
 
   @override
   void initState() {
@@ -48,9 +47,9 @@ class ConfirmationAppointment extends State<ConfirmationAppointmentController> {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) => widget.dataAvailable
-                    ? _buildRows(widget.appointment[index], context)
+                    ? _buildRows(widget.appointment![index], context)
                     : CustomWidget.buildSliverSpinner(),
-                childCount: widget?.appointment?.length ?? 0,
+                childCount: widget.appointment?.length ?? 0,
               ),
             ),
           ],
@@ -83,21 +82,23 @@ class ConfirmationAppointment extends State<ConfirmationAppointmentController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Slidable(
-                actionPane: SlidableDrawerActionPane(),
-                actionExtentRatio: Default.SLIDE_RATIO,
-                actions: card.endOccurrence != null
-                    ? _getSlidableWithCalendar(card)
-                    : <Widget>[
-                        CustomWidget.getSlidableShare(
-                          card.title,
-                          Default.getSharableContent(
-                            card.title,
-                            card.getFormattedTimeAsString(),
-                            card.getFormattedOrganiser(),
-                            card.address,
-                          ),
-                        )
-                      ],
+                startActionPane: ActionPane(
+                  motion: const DrawerMotion(),
+                  extentRatio: Default.SLIDE_RATIO,
+                  children: card.endOccurrence != null
+                      ? _getSlidableWithCalendar(card)
+                      : <Widget>[
+                    CustomWidget.getSlidableShare(
+                      card.title,
+                      Default.getSharableContent(
+                        card.title,
+                        card.getFormattedTimeAsString(),
+                        card.getFormattedOrganiser(),
+                        card.address,
+                      ),
+                    )
+                  ],
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -127,7 +128,7 @@ class ConfirmationAppointment extends State<ConfirmationAppointmentController> {
           card.title,
           card.getFormattedTimeAsString(),
           card.getFormattedOrganiser(),
-          card?.address,
+          card.address,
         ),
       ),
       CustomWidget.getSlidableCalender(

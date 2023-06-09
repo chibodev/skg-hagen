@@ -15,12 +15,12 @@ import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Accordions extends State<Controller.ChurchYearController> {
-  EasterOffer _easterOffer;
-  List<dynamic> _options;
+  EasterOffer? _easterOffer;
+  late List<dynamic> _options;
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
   bool _dataAvailable = false;
-  SettingsMenu settingsMenu;
+  late SettingsMenu settingsMenu;
 
   @override
   void initState() {
@@ -72,7 +72,7 @@ class Accordions extends State<Controller.ChurchYearController> {
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) => _dataAvailable
-                ? Cards().buildRows(context, _options[index], _dataAvailable)
+                ? Cards().buildRows(context, _options?[index], _dataAvailable)
                 : CustomWidget.buildSliverSpinner(),
             childCount: _options?.length ?? 0,
           ),
@@ -98,7 +98,7 @@ class Accordions extends State<Controller.ChurchYearController> {
       _easterOffer =
           await EasterOfferClient().getOffers(DioHTTPClient(), Network());
 
-      _options = List<dynamic>();
+      _options = <dynamic>[];
 
       _setOptions();
 
@@ -111,7 +111,7 @@ class Accordions extends State<Controller.ChurchYearController> {
   void _setOptions() {
     //TODO: use somewhat of a tag service to avoid always extending
     if (_easterOffer != null) {
-      _options.add(_easterOffer.resurrectionStation);
+      _options.add(_easterOffer!.resurrectionStation);
       _dataAvailable = true;
     }
   }

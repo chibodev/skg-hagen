@@ -4,16 +4,16 @@ import 'package:skg_hagen/src/offer/dto/aidOfferQuestion.dart';
 import 'package:skg_hagen/src/offer/view/aidOffer.dart';
 
 class Aid extends StatefulWidget {
-  final DTO.AidOffer aidOffer;
-  final List<AidOfferQuestion> aidOfferQuestion;
+  final DTO.AidOffer? aidOffer;
+  final List<AidOfferQuestion>? aidOfferQuestion;
   final bool dataAvailable;
   final BuildContext context;
 
   const Aid(
-      {Key key,
-      this.context,
-      @required this.aidOffer,
-      this.aidOfferQuestion,
+      {Key? key,
+      required this.context,
+      required this.aidOffer,
+      required this.aidOfferQuestion,
       this.dataAvailable = true})
       : super(key: key);
 

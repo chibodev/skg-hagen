@@ -1,8 +1,8 @@
 class Aid {
-  String title;
-  String description;
-  String phone;
-  String email;
+  String? title;
+  String? description;
+  String? phone;
+  String? email;
 
   Aid({
     this.title,

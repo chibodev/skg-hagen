@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
@@ -14,10 +15,14 @@ class FeatureFlag {
   Future<bool> isEnabled(String featureName) async {
     bool isEnabled = false;
     try {
-      await remoteConfig.fetch(expiration: const Duration(seconds: 0));
-      await remoteConfig.activateFetched();
+      await remoteConfig.setConfigSettings(RemoteConfigSettings(
+        fetchTimeout: const Duration(seconds: 10),
+        minimumFetchInterval: Duration.zero,
+      ));
+      await remoteConfig.fetch();
+      await remoteConfig.fetchAndActivate();
       isEnabled = remoteConfig.getString(featureName) == '1' ? true : false;
-    } on FetchThrottledException catch (exception) {
+    } on FirebaseException catch (exception) {
       FirebaseCrashlytics.instance.log(
         exception.toString(),
       );

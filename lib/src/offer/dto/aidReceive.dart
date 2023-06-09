@@ -1,8 +1,8 @@
 class AidReceive {
-  String title;
-  String description;
-  String phone;
-  String email;
+  String? title;
+  String? description;
+  String? phone;
+  String? email;
 
   static const String NAME = 'Hilfe-Suchende';
   static const String IMAGE = 'assets/images/angebote.jpg';

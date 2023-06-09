@@ -11,7 +11,7 @@ class MonthlyScriptureClient {
   static const int NEW_TESTAMENT = 2;
 
   Future<MonthlyScripture> getDevotion(DioHTTPClient http, Network network,
-      {bool refresh}) async {
+      {bool? refresh}) async {
     final Options options = await http.setOptions(http, network, refresh);
     final MonthlyScripture dailyDevotion = MonthlyScripture();
     final DateTime today = DateTime.now();

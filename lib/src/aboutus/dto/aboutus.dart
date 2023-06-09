@@ -2,8 +2,8 @@ import 'package:skg_hagen/src/aboutus/dto/history.dart';
 import 'package:skg_hagen/src/aboutus/dto/presbytery.dart';
 
 class AboutUs {
-  List<History> history;
-  List<Presbytery> presbytery;
+  List<History>? history;
+  List<Presbytery>? presbytery;
 
   static const String NAME = 'Über uns';
   static const String IMAGE = 'assets/images/skg.jpg';

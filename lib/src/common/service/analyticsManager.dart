@@ -7,7 +7,7 @@ class AnalyticsManager {
 
   static final AnalyticsManager _instance = AnalyticsManager._();
 
-  final FirebaseAnalytics _firebaseAnalytics = FirebaseAnalytics();
+  final FirebaseAnalytics _firebaseAnalytics = FirebaseAnalytics.instance;
   bool _initialized = false;
 
   Future<void> setScreen(String screenName, String screenClassName) async {

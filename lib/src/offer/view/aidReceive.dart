@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
 import 'package:skg_hagen/src/common/library/globals.dart';
@@ -11,7 +10,7 @@ import 'package:skg_hagen/src/offer/dto/aidReceive.dart' as DTO;
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class AidReceive extends State<Controller.AidReceive> {
-  SettingsMenu settingsMenu;
+  late SettingsMenu settingsMenu;
 
   @override
   void initState() {
@@ -52,11 +51,11 @@ class AidReceive extends State<Controller.AidReceive> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Flexible(
-                    child: widget?.aidReceive != null
+                    child: widget.dataAvailable
                         ? Padding(
                             padding: EdgeInsets.all(thirty),
                             child: SelectableText(
-                              widget?.aidReceive?.description,
+                              widget.aidReceive?.description ?? "",
                               style: TextStyle(
                                 fontSize: SizeConfig.getSafeBlockVerticalBy(
                                     appFont.primarySize),
@@ -67,16 +66,18 @@ class AidReceive extends State<Controller.AidReceive> {
                   ),
                   Row(
                     children: <Widget>[
-                      widget?.aidReceive?.email != null
+                      widget.aidReceive?.email != null
                           ? CustomWidget.getSinglePageEmail(
                               thirty,
-                              widget?.aidReceive?.email,
-                              widget?.aidReceive?.title,
-                              widget?.buildContext)
+                              widget.aidReceive?.email ?? "",
+                              widget.aidReceive?.title ?? "",
+                              widget.buildContext)
                           : Container(),
-                      widget?.aidReceive?.phone != null
-                          ? CustomWidget.getSinglePagePhone(thirty,
-                              widget?.aidReceive?.phone, widget?.buildContext)
+                      widget.aidReceive?.phone != null
+                          ? CustomWidget.getSinglePagePhone(
+                              thirty,
+                              widget.aidReceive?.phone ?? "",
+                              widget.buildContext)
                           : Container()
                     ],
                   ),

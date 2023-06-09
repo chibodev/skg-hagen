@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
@@ -13,7 +12,7 @@ import 'package:skg_hagen/src/offer/dto/quote.dart' as DTO;
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Quote extends State<QuoteController> {
-  SettingsMenu settingsMenu;
+  late SettingsMenu settingsMenu;
 
   @override
   void initState() {
@@ -49,7 +48,7 @@ class Quote extends State<QuoteController> {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) => widget.dataAvailable
-                    ? _buildRows(widget?.quotes[index], context)
+                    ? _buildRows(widget.quotes![index], context)
                     : CustomWidget.buildSliverSpinner(),
                 childCount: widget?.quotes?.length ?? 0,
               ),
@@ -82,14 +81,16 @@ class Quote extends State<QuoteController> {
           child: Column(
             children: <Widget>[
               Slidable(
-                actionPane: SlidableDrawerActionPane(),
-                actionExtentRatio: Default.SLIDE_RATIO,
-                actions: <Widget>[
-                  CustomWidget.getSlidableShare(
-                    DTO.Quote.PAGE_NAME,
-                    Default.getSharableContent(quote.getText()),
-                  )
-                ],
+                startActionPane: ActionPane(
+                  motion: const DrawerMotion(),
+                  extentRatio: Default.SLIDE_RATIO,
+                  children: <Widget>[
+                    CustomWidget.getSlidableShare(
+                      DTO.Quote.PAGE_NAME,
+                      Default.getSharableContent(quote.getText()),
+                    )
+                  ],
+                ),
                 child: ListTile(
                   title: Padding(
                     padding: EdgeInsets.only(

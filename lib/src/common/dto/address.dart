@@ -6,14 +6,14 @@ class Address {
   static const String MAP_IMAGE_MARKUSKIRCHE = 'assets/images/markuskirche.jpg';
   static const String NAME = 'Adresse';
 
-  final String name;
-  final String street;
-  final String houseNumber;
-  final String zip;
-  final String city;
-  final String country;
-  final String room;
-  final String latLong;
+  final String? name;
+  final String? street;
+  final String? houseNumber;
+  final String? zip;
+  final String? city;
+  final String? country;
+  final String? room;
+  final String? latLong;
 
   Address(
       {this.name,
@@ -55,7 +55,7 @@ class Address {
   }
 
   String getCapitalizedAddressName() {
-    return (name == '' || name == null) ? '' : Default.capitalize(name);
+    return (name == '' || name == null) ? '' : Default.capitalize(name!);
   }
 
   String toString() {

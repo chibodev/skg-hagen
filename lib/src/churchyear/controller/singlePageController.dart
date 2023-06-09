@@ -10,9 +10,9 @@ class SinglePageController extends StatefulWidget {
   final BuildContext context;
 
   const SinglePageController(
-      {Key key,
-      this.context,
-      @required this.content,
+      {Key? key,
+      required this.context,
+      required this.content,
       this.dataAvailable = true,
       this.title = '',
       this.image = ChurchYear.IMAGE})

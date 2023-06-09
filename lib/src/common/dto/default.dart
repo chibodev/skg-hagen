@@ -12,14 +12,14 @@ class Default {
   static const double SLIDE_RATIO = 0.25;
   static const String SEND = 'Senden';
 
-  static String capitalize(String value) =>
-      value[0].toUpperCase() + value.substring(1);
+  static String capitalize(String? value) =>
+      value == null ? "" : value[0].toUpperCase() + value.substring(1);
 
   static String classNameFromRoute(String routeName) =>
       capitalize(routeName.substring(1));
 
   static String getSharableContent(String title,
-      [String time, String comment, Address address]) {
+      [String? time, String? comment, Address? address]) {
     return "$title\n"
         "${time == null ? '' : time + '\n'}"
         "${comment == null || comment == '' ? '' : comment + '\n'}"

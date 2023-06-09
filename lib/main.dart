@@ -33,8 +33,9 @@ void main() async {
     }
   };
 
-  runZoned<Future<void>>(() async {
-    final RemoteConfig firebaseRemoteConfig = await RemoteConfig.instance;
+  runZonedGuarded<Future<void>>(() async {
+    final FirebaseRemoteConfig firebaseRemoteConfig =
+        FirebaseRemoteConfig.instance;
     SharedPreferences.getInstance().then(
       (SharedPreferences sp) {
         sharedPreferences = sp;
@@ -43,12 +44,12 @@ void main() async {
         SystemChrome.setPreferredOrientations(
             <DeviceOrientation>[DeviceOrientation.portraitUp]).then(
           (_) {
-            DotEnv().load('.env').then((_) => runApp(MyApp()));
+            DotEnv().load(fileName: '.env').then((_) => runApp(MyApp()));
           },
         );
       },
     );
-  }, onError: FirebaseCrashlytics.instance.recordError);
+  }, FirebaseCrashlytics.instance.recordError);
 }
 
 class MyApp extends StatelessWidget {

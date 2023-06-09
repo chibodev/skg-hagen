@@ -4,7 +4,7 @@ class Network {
   static const String NO_INTERNET = 'Keine Netzverbindung!';
 
   Future<bool> hasInternet() async {
-    bool hasInternet;
+    late bool hasInternet;
 
     try {
       final List<InternetAddress> result =
