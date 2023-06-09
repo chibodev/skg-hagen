@@ -4,8 +4,8 @@ import 'package:skg_hagen/src/offer/dto/ageRange.dart';
 class Offer {
   final String title;
   final String occurrence;
-  final String time;
-  final String timeUntil;
+  final String? time;
+  final String? timeUntil;
   final String placeName;
   final String? room;
   final String? organizer;
@@ -30,8 +30,8 @@ class Offer {
   Offer(
       {required this.title,
       required this.occurrence,
-      required this.time,
-      required this.timeUntil,
+      this.time,
+      this.timeUntil,
       required this.placeName,
       this.room,
       this.infoTitle,
@@ -65,8 +65,8 @@ class Offer {
   factory Offer.fromJson(Map<String, dynamic> json) => Offer(
         title: json['title'],
         occurrence: json['occurrence'],
-        time: json["time"],
-        timeUntil: json["timeUntil"],
+        time: json["time"] == null ? null : json["time"],
+        timeUntil: json["timeUntil"] == null ? null : json["timeUntil"],
         placeName: json["placeName"],
         room: json["room"] == "" ? null : json["room"],
         infoTitle: json["infoTitle"] == "" ? null : json["infoTitle"],
@@ -90,24 +90,24 @@ class Offer {
 
   String getFormattedOccurrence() {
     final String occurrenceTime =
-        (time == "00:00:00") ? '--' : time.substring(0, 5);
+        (time == "00:00:00" || time == null) ? '--' : time!.substring(0, 5);
     final String occurrenceTimeUntil =
         (timeUntil == "00:00:00" || timeUntil == null)
             ? ''
-            : "- ${timeUntil.substring(0, 5)}";
+            : "- ${timeUntil!.substring(0, 5)}";
 
     return occurrence == ''
         ? occurrence
         : "$occurrence | $occurrenceTime $occurrenceTimeUntil";
   }
 
-  String getFormattedOrganiser() {
+  String? getFormattedOrganiser() {
     String? text;
 
     if (organizer != null) {
       text = infoTitle != null ? "$infoTitle: $organizer" : organizer;
     }
 
-    return text ?? "";
+    return text;
   }
 }

@@ -199,7 +199,7 @@ class CustomWidget {
     );
   }
 
-  static Widget getCardOrganizer(String organizer, BuildContext context) {
+  static Widget getCardOrganizer(String? organizer, BuildContext context) {
     return (organizer != null)
         ? Padding(
             padding: EdgeInsets.only(

@@ -3,10 +3,11 @@ import 'dart:io';
 import 'package:file_utils/file_utils.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:skg_hagen/src/common/service/permissionsManager.dart';
 
 class FileDownload {
-  Future<bool> hasPermission(Permission permissionHandler) async {
-    final PermissionStatus checkPermission = await permissionHandler.request();
+  Future<bool> hasPermission(PermissionsManager permissionHandler) async {
+    final PermissionStatus checkPermission = await permissionHandler.request(Permission.storage);
     return checkPermission == PermissionStatus.granted;
   }
 

@@ -10,6 +10,7 @@ import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
+import 'package:skg_hagen/src/common/service/permissionsManager.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/kindergarten/controller/news.dart';
 import 'package:skg_hagen/src/kindergarten/dto/kindergarten.dart';
@@ -116,10 +117,9 @@ class NewsView extends State<News> {
   }
 
   Future<void> _download(String fileUrl, String filename) async {
-    final Permission permissionHandler = Permission.storage;
     final DioHTTPClient client = DioHTTPClient();
 
-    if (await fileDownload.hasPermission(permissionHandler)) {
+    if (await fileDownload.hasPermission(PermissionsManager())) {
       setState(() {
         downloading = true;
       });
