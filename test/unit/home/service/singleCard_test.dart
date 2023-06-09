@@ -6,7 +6,13 @@ import 'package:skg_hagen/src/home/service/singleCard.dart';
 
 import '../../../mock/fileClientMock.dart';
 
-class MockAssetClient extends Mock implements AssetClient {}
+class MockAssetClient extends Mock implements AssetClient {
+  @override
+  Future<String> loadAsset(String? path) {
+    return super.noSuchMethod(Invocation.method(#loadAsset, <String?>[path]),
+        returnValue: Future<String>.value(''));
+  }
+}
 
 void main() {
   test('SingleCard loads mocked yaml to build its content', () async {

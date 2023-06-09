@@ -1,13 +1,15 @@
+import 'package:flutter/material.dart';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:skg_hagen/src/home/dto/cardContent.dart';
 
 void main() {
-  CardContent subject;
-  String title;
-  List<String> subtitle;
-  String routeName;
-  String name;
-  String custom;
+  late CardContent subject;
+  late String title;
+  late List<String> subtitle;
+  late String routeName;
+  late String name;
+  late String custom;
 
   setUpAll(() {
     title = 'title';
@@ -25,9 +27,17 @@ void main() {
     expect(subject.routeName, routeName);
     expect(subject.name, name);
     expect(subject.custom, custom);
+    expect(subject.getImageAsset(), isA<Image>());
   });
 
   test('CardContent gets correct formatted property', () {
     expect(subject.joinedSubtitle, 'first | second');
+  });
+
+  test('CardContent custom property is not set', () {
+    subject = CardContent(title, subtitle, routeName, name);
+    
+    expect(subject.custom, null);
+    expect(subject.getImageAsset(), null);
   });
 }

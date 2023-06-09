@@ -2,9 +2,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:skg_hagen/src/home/dto/monthlyScripture.dart';
 
 void main() {
-  MonthlyScripture subject;
-  String oldTestamentText;
-  String newTestamentText;
+  late MonthlyScripture subject;
+  late String oldTestamentText;
+  late String newTestamentText;
 
   setUpAll(() {
     oldTestamentText = 'This is a text';
