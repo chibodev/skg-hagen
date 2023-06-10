@@ -9,7 +9,7 @@ import 'package:skg_hagen/src/token/dto/token.dart';
 import 'package:skg_hagen/src/token/repository/credentials.dart';
 
 class TokenClient {
-  static const String _PATH = 'token';
+  static const String PATH = 'token';
 
   Future<Token> getToken(DioHTTPClient http, DotEnv env) async {
     if (!Environment.isProduction()) {
@@ -20,13 +20,9 @@ class TokenClient {
     buildCacheOptions(Duration(minutes: 30), maxStale: Duration(hours: 1));
     options.contentType = Headers.formUrlEncodedContentType;
     final Credentials credentials = _getCredentials(env);
-    final Map<String, String?> data = <String, String?>{
-      'username': credentials.username,
-      'password': credentials.password
-    };
+    final Map<String, String?> data = <String, String?>{'username': credentials.username, 'password': credentials.password};
 
-    final Response<dynamic> response = await http.postJSON(
-        http: http, options: options, path: _PATH, data: data);
+    final Response<dynamic> response = await http.postJSON(http: http, options: options, path: PATH, data: data);
 
     return Token.fromJson(jsonDecode(response.data));
   }

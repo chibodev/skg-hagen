@@ -9,9 +9,10 @@ void main() {
   setUpAll(() {
     oldTestamentText = 'This is a text';
     newTestamentText = 'Psalmen';
-    subject = MonthlyScripture(
-        oldTestamentText: oldTestamentText, newTestamentText: newTestamentText
-    );
+    subject = MonthlyScripture();
+    subject.oldTestamentText = oldTestamentText;
+    subject.newTestamentText = newTestamentText;
+
   });
 
   test('MonthlyScripture dto creates and gets properties successfully', (){

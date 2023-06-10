@@ -26,7 +26,7 @@ void main() {
     when(httpClient.setOptions(httpClient, network, any))
         .thenAnswer((_) async => options);
     when(httpClient.getQueryParameters(index: any))
-        .thenReturn(Map<String, dynamic>());
+        .thenReturn(queryParams);
     when(
       httpClient.getJSONResponse(
         http: httpClient,
@@ -79,7 +79,7 @@ void main() {
     when(httpClient.setOptions(httpClient, network, any))
         .thenAnswer((_) async => options);
     when(httpClient.getQueryParameters(index: any))
-        .thenReturn(Map<String, dynamic>());
+        .thenReturn(queryParams);
     when(
       httpClient.getJSONResponse(
         http: httpClient,

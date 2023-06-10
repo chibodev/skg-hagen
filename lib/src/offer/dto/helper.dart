@@ -6,7 +6,7 @@ class Helper {
   final String age;
   final String city;
   final String contact;
-  final String reason;
+  final String? reason;
 
   Helper(
       {required this.shopping,
@@ -16,7 +16,7 @@ class Helper {
       required this.age,
       required this.city,
       required this.contact,
-      required this.reason});
+      this.reason});
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         "shopping": shopping == true ? 1 : 0,
@@ -26,6 +26,6 @@ class Helper {
         "age": age,
         "city": city,
         "contact": contact,
-        "reason": reason,
+        "reason": reason ?? null,
       };
 }

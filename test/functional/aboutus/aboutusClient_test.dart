@@ -22,8 +22,7 @@ void main() {
 
   test('AboutUsClient successfully retrieves data', () async {
     when(network.hasInternet()).thenAnswer((_) async => false);
-    when(httpClient.setOptions(httpClient, network, any))
-        .thenAnswer((_) async => options);
+    when(httpClient.setOptions(httpClient, network, any)).thenAnswer((_) async => options);
     when(
       httpClient.getJSONResponse(
         http: httpClient,
@@ -32,17 +31,12 @@ void main() {
         object: AboutUs,
         cacheData: AboutUsClient.CACHE_DATA,
       ),
-    ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(
-        statusCode: HttpStatus.ok, path: 'aboutus.json'));
+    ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(statusCode: HttpStatus.ok, path: 'aboutus.json'));
 
-    final AboutUs? aboutUs =
-        await subject.getData(httpClient, network, refresh: true);
+    final AboutUs? aboutUs = await subject.getData(httpClient, network, refresh: true);
 
     expect(aboutUs!.history, isNotEmpty);
-    expect(
-        aboutUs.history!.first.description!
-            .contains('Die Ev.-Luth. Stadtkirchengemeinde Hagen'),
-        true);
+    expect(aboutUs.history!.first.description!.contains('Die Ev.-Luth. Stadtkirchengemeinde Hagen'), true);
     expect(aboutUs.history!.first.url, 'https://www.youtube.com');
     expect(aboutUs.history!.first.urlFormat, 'video');
 
@@ -58,8 +52,7 @@ void main() {
     dynamic error;
 
     when(network.hasInternet()).thenAnswer((_) async => true);
-    when(httpClient.setOptions(httpClient, network, any))
-        .thenAnswer((_) async => options);
+    when(httpClient.setOptions(httpClient, network, any)).thenAnswer((_) async => options);
     when(
       httpClient.getJSONResponse(
         http: httpClient,
@@ -68,8 +61,7 @@ void main() {
         object: AboutUs,
         cacheData: AboutUsClient.CACHE_DATA,
       ),
-    ).thenAnswer((_) async =>
-        HTTPClientMock.getJSONRequest(statusCode: HttpStatus.unauthorized));
+    ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(statusCode: HttpStatus.unauthorized));
 
     try {
       await subject.getData(httpClient, network, index: 0, refresh: false);

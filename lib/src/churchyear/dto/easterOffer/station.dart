@@ -9,15 +9,15 @@ class Station {
     required this.id,
     required this.title,
     required this.description,
-    required this.url,
-    required this.format,
+    this.url,
+    this.format,
   });
 
   factory Station.fromJson(Map<String, dynamic> json) => Station(
         id: json["id"],
         title: json["title"],
         description: json["description"],
-        url: json["url"],
-        format: json["format"],
+        url: json["url"] ?? null,
+        format: json["format"] ?? null,
       );
 }

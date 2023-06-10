@@ -5,16 +5,20 @@ import 'package:skg_hagen/src/legal/dto/imprint.dart';
 import 'package:skg_hagen/src/legal/dto/privacy.dart';
 import 'package:skg_hagen/src/legal/repository/legalClient.dart';
 
+import '../../mock/assetClientMock.dart';
 import '../../mock/fileClientMock.dart';
 
-class MockAssetClient extends Mock implements AssetClient {}
-
 void main() {
+  late LegalClient subject;
+  late AssetClient assetClient;
+
+  setUpAll(() {
+    subject = LegalClient();
+    assetClient = MockAssetClient();
+  });
+
   test('LegalClient successfully retrieves imprint', () async {
     final String filename = 'imprint.html';
-
-    final AssetClient assetClient = MockAssetClient();
-    final LegalClient subject = LegalClient();
 
     when(assetClient.loadAsset('assets/text/imprint.html')).thenAnswer(
         (_) async => FileClientMock.loadFromTestResourcePath(filename));
@@ -29,9 +33,6 @@ void main() {
 
   test('LegalClient successfully retrieves privacy', () async {
     final String filename = 'privacy.html';
-
-    final AssetClient assetClient = MockAssetClient();
-    final LegalClient subject = LegalClient();
 
     when(assetClient.loadAsset('assets/text/privacy.html')).thenAnswer(
         (_) async => FileClientMock.loadFromTestResourcePath(filename));
