@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/aboutus/dto/history.dart';
 import 'package:skg_hagen/src/aboutus/dto/presbytery.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 
 class Cards {
@@ -49,13 +48,11 @@ class Cards {
                       SelectableText(
                         card.description!,
                         style: TextStyle(
-                          fontSize: SizeConfig.getSafeBlockVerticalBy(
-                              appFont.primarySize),
+                          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                         ),
                       ),
                       Text(''),
-                      CustomWidget.getCardURL(card.url!, context,
-                          format: card.urlFormat!),
+                      CustomWidget.getCardURL(card.url!, context, format: card.urlFormat!),
                     ],
                   )),
             ),
@@ -84,16 +81,14 @@ class Cards {
                 title: Text(
                   card.getPresbyter(),
                   style: TextStyle(
-                    fontSize:
-                        SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
+                    fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                   ),
                 ),
                 subtitle: (cardDescriptionLength! > 1)
                     ? Text(
                         card.description ?? "",
                         style: TextStyle(
-                          fontSize: SizeConfig.getSafeBlockVerticalBy(
-                              appFont.secondarySize),
+                          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.secondarySize),
                         ),
                       )
                     : null,

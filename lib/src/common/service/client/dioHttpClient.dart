@@ -22,10 +22,7 @@ class DioHTTPClient {
   late Dio _client;
 
   DioHTTPClient() {
-    final BaseOptions options = BaseOptions(
-        baseUrl: DotEnv().env['API'] ?? "",
-        connectTimeout: TIMEOUT,
-        receiveTimeout: TIMEOUT);
+    final BaseOptions options = BaseOptions(baseUrl: DotEnv().env['API'] ?? "", connectTimeout: TIMEOUT, receiveTimeout: TIMEOUT);
     _client = Dio(options);
   }
 
@@ -53,8 +50,7 @@ class DioHTTPClient {
     }
   }
 
-  Future<Options> setOptions(
-      DioHTTPClient http, Network network, bool? refresh) async {
+  Future<Options> setOptions(DioHTTPClient http, Network network, bool? refresh) async {
     Options options = buildCacheOptions(
       Duration(days: 2),
       maxStale: Duration(days: 3),
@@ -69,20 +65,14 @@ class DioHTTPClient {
     final bool hasInternet = await network.hasInternet();
 
     if (hasInternet) {
-      options = buildCacheOptions(Duration(days: 2),
-          maxStale: Duration(days: 3),
-          forceRefresh: (refreshState && refresh == true) ? true : false);
+      options = buildCacheOptions(Duration(days: 2), maxStale: Duration(days: 3), forceRefresh: (refreshState && refresh == true) ? true : false);
     }
     return options;
   }
 
   Map<String, dynamic> getQueryParameters({int? index = 0}) {
     final Map<String, dynamic> queryParameters = HashMap<String, dynamic>();
-    queryParameters.putIfAbsent(
-        "index",
-        () => (index == null || index <= 0)
-            ? START_INDEX
-            : MAX_PAGE_RANGE * index);
+    queryParameters.putIfAbsent("index", () => (index == null || index <= 0) ? START_INDEX : MAX_PAGE_RANGE * index);
     queryParameters.putIfAbsent("page", () => MAX_PAGE_RANGE);
 
     return queryParameters;
@@ -114,11 +104,7 @@ class DioHTTPClient {
     });
   }
 
-  Future<dynamic> getHTMLResponse(
-      {required DioHTTPClient http,
-      required Options options,
-      required String path,
-      required String cacheData}) async {
+  Future<dynamic> getHTMLResponse({required DioHTTPClient http, required Options options, required String path, required String cacheData}) async {
     _client.options.baseUrl = '';
     return await http
         ._get(path: path, options: options)
@@ -134,7 +120,6 @@ class DioHTTPClient {
         FirebaseCrashlytics.instance.log(
           onError.error.toString(),
         );
-        return null;
       }
     });
   }
@@ -157,13 +142,8 @@ class DioHTTPClient {
     });
   }
 
-  Future<bool> downloadFile(
-      {required DioHTTPClient http,
-      required String urlPath,
-      required String savePath}) async {
-    return await http
-            ._download(urlPath: urlPath, savePath: savePath)
-            .catchError((dynamic onError) {
+  Future<bool> downloadFile({required DioHTTPClient http, required String urlPath, required String savePath}) async {
+    return await http._download(urlPath: urlPath, savePath: savePath).catchError((dynamic onError) {
           FirebaseCrashlytics.instance.log(
             onError.error.toString(),
           );
@@ -171,26 +151,18 @@ class DioHTTPClient {
         COMPLETED;
   }
 
-  Future<Response<dynamic>> _post(
-      {required String path, dynamic data, required Options options}) async {
+  Future<Response<dynamic>> _post({required String path, dynamic data, required Options options}) async {
     return await this._client.post(path, options: options, data: data);
   }
 
-  Future<Response<dynamic>> _get(
-      {required String path,
-      required Options options,
-      Map<String, dynamic>? queryParameters}) async {
-    return await this
-        ._client
-        .get(path, options: options, queryParameters: queryParameters);
+  Future<Response<dynamic>> _get({required String path, required Options options, Map<String, dynamic>? queryParameters}) async {
+    return await this._client.get(path, options: options, queryParameters: queryParameters);
   }
 
-  Future<int> _download(
-      {required String urlPath, required String savePath}) async {
+  Future<int> _download({required String urlPath, required String savePath}) async {
     int progress = 0;
 
-    return await this._client.download(urlPath, savePath,
-        onReceiveProgress: (int receivedBytes, int totalBytes) {
+    return await this._client.download(urlPath, savePath, onReceiveProgress: (int receivedBytes, int totalBytes) {
       progress = ((receivedBytes / totalBytes) * 100).toInt();
     }).then(
       (Response<dynamic> response) => progress,

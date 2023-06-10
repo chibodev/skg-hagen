@@ -15,8 +15,7 @@ class ChurchYearPage extends State<SinglePageController> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
-    AnalyticsManager()
-        .setScreen(widget.title, Default.classNameFromRoute(Routes.churchYear));
+    AnalyticsManager().setScreen(widget.title, Default.classNameFromRoute(Routes.churchYear));
   }
 
   @override
@@ -33,8 +32,7 @@ class ChurchYearPage extends State<SinglePageController> {
               expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
               backgroundColor: Color(Default.COLOR_GREEN),
               flexibleSpace: FlexibleSpaceBar(
-                titlePadding: const EdgeInsetsDirectional.only(
-                    start: 72, bottom: 16, end: 102),
+                titlePadding: const EdgeInsetsDirectional.only(start: 72, bottom: 16, end: 102),
                 title: CustomWidget.getTitle(widget.title),
                 background: Image.asset(
                   widget.image,
@@ -50,14 +48,13 @@ class ChurchYearPage extends State<SinglePageController> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Flexible(
-                    child: widget?.content?.description != null
+                    child: widget.content?.description != null
                         ? Padding(
                             padding: EdgeInsets.all(thirty),
                             child: SelectableText(
-                              widget?.content?.description,
+                              widget.content?.description,
                               style: TextStyle(
-                                fontSize: SizeConfig.getSafeBlockVerticalBy(
-                                    appFont.primarySize),
+                                fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                               ),
                             ),
                           )
@@ -67,10 +64,8 @@ class ChurchYearPage extends State<SinglePageController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Flexible(
-                        child: widget?.content?.url != null
-                            ? CustomWidget.getSinglePageCardURL(
-                                thirty, widget?.content?.url, context,
-                                format: widget?.content?.format)
+                        child: widget.content?.url != null
+                            ? CustomWidget.getSinglePageCardURL(thirty, widget.content?.url, context, format: widget.content?.format)
                             : Container(),
                       )
                     ],

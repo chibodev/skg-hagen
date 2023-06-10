@@ -79,7 +79,7 @@ class Accordions extends State<Controller.Offer> {
             (BuildContext context, int index) => _dataAvailable
                 ? Cards().buildRows(context, _options[index], _dataAvailable)
                 : CustomWidget.buildSliverSpinner(),
-            childCount: _options.length ?? 0,
+            childCount: _options.length,
           ),
         ),
         !_dataAvailable

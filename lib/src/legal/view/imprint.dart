@@ -77,12 +77,8 @@ class ImprintView extends State<Controller.Imprint> {
         },
         body: TabBarView(
           children: <Widget>[
-            _dataAvailableImprint
-                ? LegalPage().buildHtml(_imprint.imprint)
-                : Container(),
-            _dataAvailablePrivacy
-                ? LegalPage().buildHtml(_privacy.privacy)
-                : Container()
+            _dataAvailableImprint ? LegalPage().buildHtml(_imprint.imprint) : Container(),
+            _dataAvailablePrivacy ? LegalPage().buildHtml(_privacy.privacy) : Container()
           ],
         ),
       ),
@@ -97,7 +93,7 @@ class ImprintView extends State<Controller.Imprint> {
 
       setState(() {
         _isPerformingRequestImprint = false;
-        _dataAvailableImprint = _imprint?.imprint != null;
+        _dataAvailableImprint = _imprint.imprint != null;
       });
     }
   }
@@ -110,7 +106,7 @@ class ImprintView extends State<Controller.Imprint> {
 
       setState(() {
         _isPerformingRequestPrivacy = false;
-        _dataAvailablePrivacy = _privacy?.privacy != null;
+        _dataAvailablePrivacy = _privacy.privacy != null;
       });
     }
   }

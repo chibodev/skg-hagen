@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
 import 'package:skg_hagen/src/settings/dto/settingsList.dart';
 import 'package:skg_hagen/src/settings/service/settings.dart';
@@ -25,10 +25,9 @@ class SettingsMenu {
             return PopupMenuItem<SettingsList>(
               value: choice,
               child: Text(
-                Default?.capitalize(choice.title),
+                Default.capitalize(choice.title),
                 style: TextStyle(
-                  fontSize:
-                      SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
+                  fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                 ),
               ),
             );
@@ -64,10 +63,8 @@ class SettingsMenu {
                   children: <Widget>[
                     InkWell(
                       onTap: () {
-                        if (!appFont.isIncreaseMaximumReached())
-                          Settings().increaseFontSize(page: pageView);
-                        setState(
-                            () => increaseIconColor = _getIncreaseIconColor());
+                        if (!appFont.isIncreaseMaximumReached()) Settings().increaseFontSize(page: pageView);
+                        setState(() => increaseIconColor = _getIncreaseIconColor());
                       },
                       child: Icon(
                         Icons.add_circle,
@@ -78,10 +75,8 @@ class SettingsMenu {
                     ),
                     InkWell(
                       onTap: () {
-                        if (!appFont.isDecreaseMinimumReached())
-                          Settings().decreaseFontSize(page: pageView);
-                        setState(
-                            () => decreaseIconColor = _getDecreaseIconColor());
+                        if (!appFont.isDecreaseMinimumReached()) Settings().decreaseFontSize(page: pageView);
+                        setState(() => decreaseIconColor = _getDecreaseIconColor());
                       },
                       child: Icon(
                         Icons.remove_circle,
@@ -100,9 +95,7 @@ class SettingsMenu {
     );
   }
 
-  Color _getIncreaseIconColor() =>
-      appFont.isIncreaseMaximumReached() ? Colors.white38 : Colors.white;
+  Color _getIncreaseIconColor() => appFont.isIncreaseMaximumReached() ? Colors.white38 : Colors.white;
 
-  Color _getDecreaseIconColor() =>
-      appFont.isDecreaseMinimumReached() ? Colors.white38 : Colors.white;
+  Color _getDecreaseIconColor() => appFont.isDecreaseMinimumReached() ? Colors.white38 : Colors.white;
 }
