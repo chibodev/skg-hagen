@@ -1,12 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:open_file/open_file.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
@@ -27,8 +23,7 @@ class NewsView extends State<News> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
-    AnalyticsManager().setScreen(
-        DTO.News.NAME, Default.classNameFromRoute(Routes.kindergarten));
+    AnalyticsManager().setScreen(DTO.News.NAME, Default.classNameFromRoute(Routes.kindergarten));
   }
 
   @override
@@ -45,8 +40,7 @@ class NewsView extends State<News> {
               expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
               backgroundColor: Colors.white,
               flexibleSpace: FlexibleSpaceBar(
-                titlePadding: const EdgeInsetsDirectional.only(
-                    start: 72, bottom: 16, end: 102),
+                titlePadding: const EdgeInsetsDirectional.only(start: 72, bottom: 16, end: 102),
                 title: CustomWidget.getTitle(DTO.News.NAME),
                 background: Image.asset(
                   Kindergarten.IMAGE,
@@ -62,15 +56,9 @@ class NewsView extends State<News> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   CustomWidget.getSinglePageTitle(thirty, widget.news.title),
-                  CustomWidget.getSinglePageDescription(
-                      thirty, widget.news.description),
-                  widget.news.imageUrl != null
-                      ? CustomWidget.getImageFromNetwork(
-                          thirty, widget.news.imageUrl ?? "")
-                      : Container(),
-                  widget.news.fileUrl != null
-                      ? _downloadFile(contextOfBuilder)
-                      : Container(),
+                  CustomWidget.getSinglePageDescription(thirty, widget.news.description),
+                  widget.news.imageUrl != null ? CustomWidget.getImageFromNetwork(thirty, widget.news.imageUrl ?? "") : Container(),
+                  widget.news.fileUrl != null ? _downloadFile(contextOfBuilder) : Container(),
                 ],
               ),
             ),
@@ -94,9 +82,7 @@ class NewsView extends State<News> {
                 left: SizeConfig.getSafeBlockVerticalBy(1),
               ),
               child: Image.asset(
-                widget.news.format == 'pdf'
-                    ? 'assets/images/icon/pdf.png'
-                    : 'assets/images/icon/file.png',
+                widget.news.format == 'pdf' ? 'assets/images/icon/pdf.png' : 'assets/images/icon/file.png',
                 fit: BoxFit.scaleDown,
                 width: SizeConfig.getSafeBlockVerticalBy(appFont.boxSize),
                 height: SizeConfig.getSafeBlockHorizontalBy(appFont.boxSize),
@@ -126,8 +112,7 @@ class NewsView extends State<News> {
 
       final String saveDir = await fileDownload.getSaveDirectory();
       final String filePath = "$saveDir/$filename";
-      if (await client.downloadFile(
-          http: client, urlPath: fileUrl, savePath: filePath)) {
+      if (await client.downloadFile(http: client, urlPath: fileUrl, savePath: filePath)) {
         OpenFile.open(filePath);
       }
     }

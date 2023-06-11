@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/font.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
@@ -13,23 +10,20 @@ import 'package:skg_hagen/src/common/service/clipboard.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
-import 'package:skg_hagen/src/intercession/controller/intercession.dart'
-    as Controller;
+import 'package:skg_hagen/src/intercession/controller/intercession.dart' as Controller;
 import 'package:skg_hagen/src/intercession/dto/intercession.dart' as DTO;
 import 'package:skg_hagen/src/intercession/repository/intercessionClient.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class IntercessionPage extends State<Controller.Intercession> {
-  final TextEditingController _intercessionTextFieldcontroller =
-      TextEditingController();
+  final TextEditingController _intercessionTextFieldcontroller = TextEditingController();
   late SettingsMenu settingsMenu;
 
   @override
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
-    AnalyticsManager().setScreen(
-        DTO.Intercession.NAME, Default.classNameFromRoute(Routes.intercession));
+    AnalyticsManager().setScreen(DTO.Intercession.NAME, Default.classNameFromRoute(Routes.intercession));
   }
 
   @override
@@ -44,8 +38,7 @@ class IntercessionPage extends State<Controller.Intercession> {
       },
       child: Scaffold(
         body: Builder(
-          builder: (BuildContext contextOfBuilder) =>
-              _buildPage(contextOfBuilder),
+          builder: (BuildContext contextOfBuilder) => _buildPage(contextOfBuilder),
         ),
         bottomNavigationBar: Column(
           mainAxisSize: MainAxisSize.min,
@@ -54,9 +47,7 @@ class IntercessionPage extends State<Controller.Intercession> {
             FutureBuilder<bool>(
               future: Network().hasInternet(),
               builder: (BuildContext context, AsyncSnapshot<bool> response) {
-                if (response.connectionState == ConnectionState.done &&
-                    response.data != null &&
-                    response.data != true) {
+                if (response.connectionState == ConnectionState.done && response.data != null && response.data != true) {
                   return CustomWidget.noInternet();
                 }
                 return Container();
@@ -77,10 +68,8 @@ class IntercessionPage extends State<Controller.Intercession> {
           expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
           backgroundColor: Color(Default.COLOR_GREEN),
           flexibleSpace: FlexibleSpaceBar(
-            titlePadding: const EdgeInsetsDirectional.only(
-                start: 72, bottom: 16, end: 102),
-            title: CustomWidget.getTitle(DTO.Intercession.NAME,
-                color: Colors.black, noShadow: true),
+            titlePadding: const EdgeInsetsDirectional.only(start: 72, bottom: 16, end: 102),
+            title: CustomWidget.getTitle(DTO.Intercession.NAME, color: Colors.black, noShadow: true),
             background: Image.asset(
               DTO.Intercession.IMAGE,
               fit: BoxFit.cover,
@@ -100,8 +89,7 @@ class IntercessionPage extends State<Controller.Intercession> {
                   child: Text(
                     DTO.Intercession.HEADER,
                     style: TextStyle(
-                      fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          appFont.primarySize),
+                      fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                     ),
                   ),
                 ),
@@ -114,10 +102,7 @@ class IntercessionPage extends State<Controller.Intercession> {
                   ),
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Colors.grey,
-                          width: 0.5,
-                          style: BorderStyle.solid),
+                      border: Border.all(color: Colors.grey, width: 0.5, style: BorderStyle.solid),
                       borderRadius: BorderRadius.all(
                         Radius.circular(
                           SizeConfig.getSafeBlockVerticalBy(1),
@@ -131,8 +116,7 @@ class IntercessionPage extends State<Controller.Intercession> {
                       child: TextField(
                         controller: _intercessionTextFieldcontroller,
                         style: TextStyle(
-                          fontSize: SizeConfig.getSafeBlockVerticalBy(
-                              appFont.secondarySize),
+                          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.secondarySize),
                         ),
                         autofocus: true,
                         expands: false,
@@ -141,8 +125,7 @@ class IntercessionPage extends State<Controller.Intercession> {
                         decoration: InputDecoration.collapsed(
                           hintText: DTO.Intercession.PLACEHOLDER,
                           hintStyle: TextStyle(
-                            fontSize: SizeConfig.getSafeBlockVerticalBy(
-                                appFont.secondarySize - Font.SECONDARY_SIZE),
+                            fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.secondarySize - Font.SECONDARY_SIZE),
                           ),
                         ),
                       ),
@@ -159,18 +142,14 @@ class IntercessionPage extends State<Controller.Intercession> {
                         child: Text(
                           DTO.Intercession.EMAIL_TEXT,
                           style: TextStyle(
-                            fontSize: SizeConfig.getSafeBlockVerticalBy(
-                                appFont.primarySize),
+                            fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                           ),
                         ),
                       ),
                       InkWell(
                         splashColor: Color(Default.COLOR_GREEN),
-                        onTap: () => TapAction().sendMail(
-                            DTO.Intercession.EMAIL,
-                            DTO.Intercession.EMAIL_NAME),
-                        onLongPress: () => ClipboardService.copyAndNotify(
-                            context: context, text: DTO.Intercession.EMAIL),
+                        onTap: () => TapAction().sendMail(DTO.Intercession.EMAIL, DTO.Intercession.EMAIL_NAME),
+                        onLongPress: () => ClipboardService.copyAndNotify(context: context, text: DTO.Intercession.EMAIL),
                         child: Padding(
                           padding: EdgeInsets.only(
                             left: SizeConfig.getSafeBlockVerticalBy(1),
@@ -178,8 +157,7 @@ class IntercessionPage extends State<Controller.Intercession> {
                           child: Icon(
                             Icons.email,
                             color: Colors.grey,
-                            size: SizeConfig.getSafeBlockVerticalBy(
-                                appFont.iconSize),
+                            size: SizeConfig.getSafeBlockVerticalBy(appFont.iconSize),
                             semanticLabel: 'E-Mail',
                           ),
                         ),
@@ -201,16 +179,13 @@ class IntercessionPage extends State<Controller.Intercession> {
     }
   }
 
-  Future<void> _saveIntercession(
-      BuildContext context, String intercession) async {
-    final bool sentSuccess = await IntercessionClient()
-        .saveIntercession(DioHTTPClient(), Network(), intercession);
+  Future<void> _saveIntercession(BuildContext context, String intercession) async {
+    final bool sentSuccess = await IntercessionClient().saveIntercession(DioHTTPClient(), Network(), intercession);
 
     sentSuccess ? _sentSuccessful(context) : _sentFailed(context);
   }
 
-  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> _sentSuccessful(
-      BuildContext context) {
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> _sentSuccessful(BuildContext context) {
     _intercessionTextFieldcontroller.clear();
 
     final FocusScopeNode currentFocus = FocusScope.of(context);
@@ -226,12 +201,9 @@ class IntercessionPage extends State<Controller.Intercession> {
     );
   }
 
-  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> _sentFailed(
-      BuildContext context) {
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason> _sentFailed(BuildContext context) {
     return ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          backgroundColor: Colors.red,
-          content: _notification(DTO.Intercession.ERROR, Icons.error)),
+      SnackBar(backgroundColor: Colors.red, content: _notification(DTO.Intercession.ERROR, Icons.error)),
     );
   }
 

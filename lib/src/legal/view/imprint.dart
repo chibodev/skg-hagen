@@ -93,7 +93,7 @@ class ImprintView extends State<Controller.Imprint> {
 
       setState(() {
         _isPerformingRequestImprint = false;
-        _dataAvailableImprint = _imprint.imprint != null;
+        _dataAvailableImprint = _imprint.imprint.length > 1;
       });
     }
   }
@@ -106,7 +106,7 @@ class ImprintView extends State<Controller.Imprint> {
 
       setState(() {
         _isPerformingRequestPrivacy = false;
-        _dataAvailablePrivacy = _privacy.privacy != null;
+        _dataAvailablePrivacy = _privacy.privacy.length > 1;
       });
     }
   }

@@ -28,7 +28,7 @@ class DebugInterceptor extends Interceptor {
   }
 
   @override
-  Future<void> onResponse(Response response, ResponseInterceptorHandler handler) async {
+  Future<void> onResponse(Response<dynamic> response, ResponseInterceptorHandler handler) async {
     print("<-- ${response.statusCode} ${(response.requestOptions.baseUrl + response.requestOptions.path)}");
     print("Headers:");
     response.headers.forEach((dynamic k, dynamic v) => print('$k: $v'));

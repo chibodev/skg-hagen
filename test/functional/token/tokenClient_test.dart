@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:skg_hagen/src/token/dto/token.dart';
 import 'package:skg_hagen/src/token/repository/tokenClient.dart';
 
 import '../../mock/httpClientMock.dart';
@@ -17,7 +16,7 @@ class MockDotEnv extends Mock implements DotEnv {
 }
 
 void main() {
-  late TokenClient subject;
+  // late TokenClient subject;
   late MockDioHTTPClient httpClient;
   late MockDotEnv env;
   final Options options = Options();
@@ -25,7 +24,7 @@ void main() {
   final Map<String, String> data = <String, String>{'username': 'someData', 'password': 'somePass'};
 
   setUpAll(() {
-    subject = TokenClient();
+    // subject = TokenClient();
     httpClient = MockDioHTTPClient();
     env = MockDotEnv();
     localEnv.putIfAbsent('USERNAME', () => 'someData');

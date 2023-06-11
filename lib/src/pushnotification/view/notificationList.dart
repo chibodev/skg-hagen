@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
@@ -27,12 +26,10 @@ class NotificationList extends State<PushNotificationController> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
-    AnalyticsManager().setScreen(PushNotifications.NAME,
-        Default.classNameFromRoute(Routes.pushNotification));
+    AnalyticsManager().setScreen(PushNotifications.NAME, Default.classNameFromRoute(Routes.pushNotification));
     _getInitialNotifications();
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
+      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
         _getMoreNotifications();
       }
     });
@@ -56,9 +53,7 @@ class NotificationList extends State<PushNotificationController> {
       ),
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          !_hasInternet ? CustomWidget.noInternet() : Container()
-        ],
+        children: <Widget>[!_hasInternet ? CustomWidget.noInternet() : Container()],
       ),
     );
   }
@@ -68,35 +63,24 @@ class NotificationList extends State<PushNotificationController> {
       setState(() => _isPerformingRequest = true);
       _hasInternet = true;
 
-      pushNotifications = await PushNotificationClient()
-          .getPushNotifications(DioHTTPClient(), Network(), refresh: true);
+      pushNotifications = await PushNotificationClient().getPushNotifications(DioHTTPClient(), Network(), refresh: true);
 
       final bool status = pushNotifications?.pushNotification != null;
-      final List<PushNotification>? pushNotificationList =
-          pushNotifications?.pushNotification;
-      final bool notificationIsNotEmpty =
-          pushNotifications?.pushNotification != null &&
-              pushNotificationList != null &&
-              pushNotificationList.isNotEmpty;
+      final List<PushNotification>? pushNotificationList = pushNotifications?.pushNotification;
+      final bool notificationIsNotEmpty = pushNotifications?.pushNotification != null && pushNotificationList != null && pushNotificationList.isNotEmpty;
       _hasInternet = await Network().hasInternet();
 
       if (status) {
         final double edge = 50.0;
-        final double offsetFromBottom =
-            _scrollController.position.maxScrollExtent -
-                _scrollController.position.pixels;
+        final double offsetFromBottom = _scrollController.position.maxScrollExtent - _scrollController.position.pixels;
         if (offsetFromBottom < edge) {
-          _scrollController.animateTo(
-              _scrollController.offset - (edge - offsetFromBottom),
-              duration: Duration(milliseconds: 500),
-              curve: Curves.easeOut);
+          _scrollController.animateTo(_scrollController.offset - (edge - offsetFromBottom), duration: Duration(milliseconds: 500), curve: Curves.easeOut);
         }
       }
       setState(() {
         _isPerformingRequest = false;
         _indexCounter = 1;
-        _dataAvailable =
-            status && notificationIsNotEmpty;
+        _dataAvailable = status && notificationIsNotEmpty;
       });
     }
   }
@@ -110,23 +94,16 @@ class NotificationList extends State<PushNotificationController> {
         _isPerformingRequest = false;
       } else {
         final PushNotifications? newNotifications =
-            await PushNotificationClient().getPushNotifications(
-                DioHTTPClient(), Network(),
-                index: _indexCounter, refresh: true);
+            await PushNotificationClient().getPushNotifications(DioHTTPClient(), Network(), index: _indexCounter, refresh: true);
 
-        final List<PushNotification>? newEntries =
-            newNotifications?.pushNotification;
+        final List<PushNotification>? newEntries = newNotifications?.pushNotification;
         final bool? isResponseEmpty = newEntries?.isEmpty;
         if (isResponseEmpty != null && isResponseEmpty) {
           final double edge = 50.0;
-          final double offsetFromBottom =
-              _scrollController.position.maxScrollExtent -
-                  _scrollController.position.pixels;
+          final double offsetFromBottom = _scrollController.position.maxScrollExtent - _scrollController.position.pixels;
           if (offsetFromBottom < edge) {
-            _scrollController.animateTo(
-                _scrollController.offset - (edge - offsetFromBottom),
-                duration: Duration(milliseconds: 500),
-                curve: Curves.easeOut);
+            _scrollController.animateTo(_scrollController.offset - (edge - offsetFromBottom),
+                duration: Duration(milliseconds: 500), curve: Curves.easeOut);
           }
         }
         setState(() {
@@ -140,8 +117,7 @@ class NotificationList extends State<PushNotificationController> {
     }
   }
 
-  Widget _buildList(
-      BuildContext context, PushNotifications? pushNotifications) {
+  Widget _buildList(BuildContext context, PushNotifications? pushNotifications) {
     return CustomScrollView(
       controller: _scrollController,
       slivers: <Widget>[
@@ -151,8 +127,7 @@ class NotificationList extends State<PushNotificationController> {
           expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
           backgroundColor: Color(Default.COLOR_GREEN),
           flexibleSpace: FlexibleSpaceBar(
-            titlePadding: const EdgeInsetsDirectional.only(
-                start: 72, bottom: 16, end: 102),
+            titlePadding: const EdgeInsetsDirectional.only(start: 72, bottom: 16, end: 102),
             title: CustomWidget.getTitle(PushNotifications.NAME),
             background: Image.asset(
               PushNotifications.IMAGE,
@@ -166,8 +141,7 @@ class NotificationList extends State<PushNotificationController> {
             (BuildContext context, int index) {
               return pushNotifications == null
                   ? CustomWidget.buildProgressIndicator(_isPerformingRequest)
-                  : _buildRows(
-                      context, pushNotifications.pushNotification[index]);
+                  : _buildRows(context, pushNotifications.pushNotification[index]);
             },
             childCount: pushNotifications?.pushNotification.length ?? 0,
           ),
@@ -175,12 +149,8 @@ class NotificationList extends State<PushNotificationController> {
         SliverToBoxAdapter(
             child: Column(
           children: <Widget>[
-            !_dataAvailable
-                ? CustomWidget.centeredNoEntry(message: 'Keine Nachrichten')
-                : Container(),
-            (!_hasInternet)
-                ? Container()
-                : CustomWidget.buildProgressIndicator(_isPerformingRequest),
+            !_dataAvailable ? CustomWidget.centeredNoEntry(message: 'Keine Nachrichten') : Container(),
+            (!_hasInternet) ? Container() : CustomWidget.buildProgressIndicator(_isPerformingRequest),
           ],
         ))
       ],
@@ -202,8 +172,7 @@ class NotificationList extends State<PushNotificationController> {
                 title: Text(
                   list.title,
                   style: TextStyle(
-                    fontSize:
-                        SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
+                    fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                   ),
                 ),
                 subtitle: Column(
@@ -212,16 +181,14 @@ class NotificationList extends State<PushNotificationController> {
                     Text(
                       list.body,
                       style: TextStyle(
-                        fontSize: SizeConfig.getSafeBlockVerticalBy(
-                            appFont.secondarySize),
+                        fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.secondarySize),
                       ),
                     ),
                     Text(
                       "${list.getCategory()} · ${list.getFormattedValidUntil()}",
                       style: TextStyle(
                         color: Colors.grey,
-                        fontSize: SizeConfig.getSafeBlockVerticalBy(
-                            appFont.primarySize - 1),
+                        fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize - 1),
                       ),
                     ),
                   ],

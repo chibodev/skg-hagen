@@ -120,6 +120,7 @@ class DioHTTPClient {
         FirebaseCrashlytics.instance.log(
           onError.error.toString(),
         );
+        return onError;
       }
     });
   }
@@ -139,6 +140,7 @@ class DioHTTPClient {
       FirebaseCrashlytics.instance.log(
         onError.error.toString(),
       );
+      return onError;
     });
   }
 
@@ -147,6 +149,7 @@ class DioHTTPClient {
           FirebaseCrashlytics.instance.log(
             onError.error.toString(),
           );
+          return onError;
         }) ==
         COMPLETED;
   }

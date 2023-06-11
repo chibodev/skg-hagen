@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/dto/address.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/service/clipboard.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
@@ -72,10 +72,7 @@ class Cards {
                       startActionPane: ActionPane(
                         motion: const DrawerMotion(),
                         extentRatio: Default.SLIDE_RATIO,
-                        children: <Widget>[
-                          CustomWidget.getSlidableShare(
-                              card.getCapitalizedAddressName(), card.toString())
-                        ],
+                        children: <Widget>[CustomWidget.getSlidableShare(card.getCapitalizedAddressName(), card.toString())],
                       ),
                       child: Container(
                         padding: EdgeInsets.zero,
@@ -84,9 +81,7 @@ class Cards {
                         child: _getImageByName(card.name ?? ""),
                       ),
                     ),
-                    (card.street == null || card.name == null)
-                        ? CustomWidget.getNoLocation()
-                        : CustomWidget.getAddressWithAction(card)
+                    (card.street == null || card.name == null) ? CustomWidget.getNoLocation() : CustomWidget.getAddressWithAction(card)
                   ],
                 ),
               ),
@@ -98,8 +93,7 @@ class Cards {
   }
 
   Widget _buildTileForContacts(Contact card) {
-    final Color color =
-        card.administration == 0 ? Color(Default.COLOR_GREEN) : Colors.white;
+    final Color color = card.administration == 0 ? Color(Default.COLOR_GREEN) : Colors.white;
     return Material(
       child: Card(
         color: color,
@@ -109,8 +103,7 @@ class Cards {
             _getCircleAvatar(card.imageUrl ?? "", color),
             _getContacts(card),
             card.administration == 0
-                ? _getAddressWithoutAction(card.address,
-                    noColor: true, textColor: true)
+                ? _getAddressWithoutAction(card.address, noColor: true, textColor: true)
                 : _getOpening(card.opening, colorWhite: true),
           ],
         ),
@@ -139,10 +132,7 @@ class Cards {
                   startActionPane: ActionPane(
                     motion: const DrawerMotion(),
                     extentRatio: Default.SLIDE_RATIO,
-                    children: <Widget>[
-                      CustomWidget.getSlidableShare(
-                          card.name, Default.getSharableContent(card.url))
-                    ],
+                    children: <Widget>[CustomWidget.getSlidableShare(card.name, Default.getSharableContent(card.url))],
                   ),
                   child: _getSocialMediaIcon(card)),
             ],
@@ -163,14 +153,12 @@ class Cards {
                 card.getSocialImage(name),
                 fit: BoxFit.scaleDown,
                 width: SizeConfig.getSafeBlockVerticalBy(7),
-                height:
-                    SizeConfig.getSafeBlockHorizontalBy(appFont.imageIconSize),
+                height: SizeConfig.getSafeBlockHorizontalBy(appFont.imageIconSize),
               ),
               title: Text(
                 card.location,
                 style: TextStyle(
-                  fontSize:
-                      SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
+                  fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                 ),
               ),
             ),
@@ -183,18 +171,15 @@ class Cards {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          CustomWidget.getCardTitle(card.getContactName(),
-              textColor: card.administration == 0),
-          CustomWidget.getCardSubtitle(card.role,
-              textColor: card.administration == 0),
+          CustomWidget.getCardTitle(card.getContactName(), textColor: card.administration == 0),
+          CustomWidget.getCardSubtitle(card.role, textColor: card.administration == 0),
           _getPhoneAndEmail(card.phone, card.email, card.role)
         ],
       ),
     );
   }
 
-  Widget _getAddressWithoutAction(Address address,
-      {bool? noColor, bool? textColor}) {
+  Widget _getAddressWithoutAction(Address address, {bool? noColor, bool? textColor}) {
     return Expanded(
       child: Container(
         child: Column(
@@ -204,11 +189,8 @@ class Cards {
                 ? Text(
                     address.getStreetAndNumber(),
                     style: TextStyle(
-                      color: textColor == false
-                          ? Color(Default.COLOR_GREEN)
-                          : Colors.white,
-                      fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          appFont.primarySize),
+                      color: textColor == false ? Color(Default.COLOR_GREEN) : Colors.white,
+                      fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                     ),
                   )
                 : Text(''),
@@ -216,11 +198,8 @@ class Cards {
                 ? Text(
                     address.getZipAndCity(),
                     style: TextStyle(
-                      color: textColor == false
-                          ? Color(Default.COLOR_GREEN)
-                          : Colors.white,
-                      fontSize: SizeConfig.getSafeBlockVerticalBy(
-                          appFont.primarySize),
+                      color: textColor == false ? Color(Default.COLOR_GREEN) : Colors.white,
+                      fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                     ),
                   )
                 : Text(''),
@@ -245,20 +224,17 @@ class Cards {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
-                  fontSize:
-                      SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
+                  fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                 ),
               ),
             ),
             Padding(
-              padding:
-                  EdgeInsets.only(left: twenty, right: twenty, bottom: twenty),
+              padding: EdgeInsets.only(left: twenty, right: twenty, bottom: twenty),
               child: Text(
                 opening,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize:
-                      SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
+                  fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                 ),
               ),
             ),
@@ -269,7 +245,7 @@ class Cards {
   }
 
   Column _getCircleAvatar(String imageUrl, Color color) {
-    return imageUrl == null
+    return imageUrl.length < 2
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
@@ -315,8 +291,7 @@ class Cards {
               ? InkWell(
                   splashColor: Color(Default.COLOR_GREEN),
                   onTap: () => TapAction().callMe(phone),
-                  onLongPress: () => ClipboardService.copyAndNotify(
-                      context: _buildContext, text: phone),
+                  onLongPress: () => ClipboardService.copyAndNotify(context: _buildContext, text: phone),
                   child: Padding(
                     padding: EdgeInsets.only(
                       left: SizeConfig.getSafeBlockVerticalBy(1),
@@ -340,8 +315,7 @@ class Cards {
               ? InkWell(
                   splashColor: Color(Default.COLOR_GREEN),
                   onTap: () => TapAction().sendMail(email, title),
-                  onLongPress: () => ClipboardService.copyAndNotify(
-                      context: this._buildContext, text: email),
+                  onLongPress: () => ClipboardService.copyAndNotify(context: this._buildContext, text: email),
                   child: Padding(
                     padding: EdgeInsets.only(
                       left: SizeConfig.getSafeBlockVerticalBy(5),

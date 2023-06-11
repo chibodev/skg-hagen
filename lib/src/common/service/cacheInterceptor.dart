@@ -6,11 +6,11 @@ class CacheInterceptor extends Interceptor {
 
   @override
   Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-     return handler.next(options);
+    return handler.next(options);
   }
 
   @override
-  Future<void> onResponse(Response response, ResponseInterceptorHandler handler) async {
+  Future<void> onResponse(Response<dynamic> response, ResponseInterceptorHandler handler) async {
     final String keyData = "${response.requestOptions.path}/data";
     final String keyCache = response.requestOptions.path;
 

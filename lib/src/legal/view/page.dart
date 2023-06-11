@@ -10,7 +10,7 @@ class LegalPage {
     final double thirty = SizeConfig.getSafeBlockVerticalBy(3.5);
     return SingleChildScrollView(
       child: Html(
-        style: {
+        style: <String, Style>{
           "body": Style(
             padding: EdgeInsets.all(thirty),
           ),
@@ -19,8 +19,7 @@ class LegalPage {
           )),
         },
         data: content,
-        onLinkTap: (String? url, RenderContext context,
-            Map<String, String> attributes, dynamic element) async {
+        onLinkTap: (String? url, RenderContext context, Map<String, String> attributes, dynamic element) async {
           if (url != null && url.startsWith('http')) {
             TapAction().launchURL(url);
           }

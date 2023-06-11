@@ -32,7 +32,7 @@ class TokenClient {
     credentials.username = env.env['USERNAME'];
     credentials.password = env.env['PASSWORD'];
 
-    if (credentials.username == null && credentials == null) {
+    if (credentials.username == null && credentials.password == null) {
       throw Exception('Unable to retrieve credentials');
     }
 
