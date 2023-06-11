@@ -40,13 +40,9 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-    lintOptions {
-        disable 'InvalidPackage'
-    }
-
     defaultConfig {
         applicationId "de.skg_hagen"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -67,7 +63,6 @@ android {
             signingConfig signingConfigs.release
 
             minifyEnabled true
-            useProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             firebaseCrashlytics {
                 nativeSymbolUploadEnabled true
@@ -76,6 +71,7 @@ android {
             }
         }
     }
+    namespace 'de.skg_hagen'
 }
 
 flutter {
