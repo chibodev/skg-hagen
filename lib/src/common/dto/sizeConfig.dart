@@ -29,11 +29,11 @@ class SizeConfig {
     safeBlockVertical = (screenHeight - _safeAreaVertical) / 100;
   }
 
-  static double getSafeBlockVerticalBy(double factor){
+  static double getSafeBlockVerticalBy(double factor) {
     return safeBlockVertical * factor;
   }
 
-  static double getSafeBlockHorizontalBy(double factor){
+  static double getSafeBlockHorizontalBy(double factor) {
     return safeBlockHorizontal * factor;
   }
 }

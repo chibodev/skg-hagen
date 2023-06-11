@@ -20,9 +20,13 @@ class TokenClient {
     buildCacheOptions(Duration(minutes: 30), maxStale: Duration(hours: 1));
     options.contentType = Headers.formUrlEncodedContentType;
     final Credentials credentials = _getCredentials(env);
-    final Map<String, String?> data = <String, String?>{'username': credentials.username, 'password': credentials.password};
+    final Map<String, String?> data = <String, String?>{
+      'username': credentials.username,
+      'password': credentials.password
+    };
 
-    final Response<dynamic> response = await http.postJSON(http: http, options: options, path: PATH, data: data);
+    final Response<dynamic> response = await http.postJSON(
+        http: http, options: options, path: PATH, data: data);
 
     return Token.fromJson(jsonDecode(response.data));
   }

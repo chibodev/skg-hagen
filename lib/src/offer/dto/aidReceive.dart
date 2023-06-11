@@ -21,9 +21,11 @@ class AidReceive {
         description: json["description"] == "" || json["description"] == null
             ? null
             : json["description"],
-        phone:
-            json["phone"] == "" || json["phone"] == null ? null : json["phone"].toString().trim(),
-        email:
-            json["email"] == "" || json["email"] == null ? null : json["email"].toString().trim(),
+        phone: json["phone"] == "" || json["phone"] == null
+            ? null
+            : json["phone"].toString().trim(),
+        email: json["email"] == "" || json["email"] == null
+            ? null
+            : json["email"].toString().trim(),
       );
 }

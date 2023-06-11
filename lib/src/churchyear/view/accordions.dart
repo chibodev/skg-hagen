@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/churchyear/controller/churchyearController.dart' as Controller;
+import 'package:skg_hagen/src/churchyear/controller/churchyearController.dart'
+    as Controller;
 import 'package:skg_hagen/src/churchyear/dto/easterOffer.dart';
 import 'package:skg_hagen/src/churchyear/model/churchYear.dart';
 import 'package:skg_hagen/src/churchyear/repository/easterOfferClient.dart';
@@ -25,7 +26,8 @@ class Accordions extends State<Controller.ChurchYearController> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
-    AnalyticsManager().setScreen(ChurchYear.NAME, Default.classNameFromRoute(Routes.offer));
+    AnalyticsManager()
+        .setScreen(ChurchYear.NAME, Default.classNameFromRoute(Routes.offer));
     _getOffers();
   }
 
@@ -57,7 +59,8 @@ class Accordions extends State<Controller.ChurchYearController> {
           expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
           backgroundColor: Color(Default.COLOR_GREEN),
           flexibleSpace: FlexibleSpaceBar(
-            titlePadding: const EdgeInsetsDirectional.only(start: 72, bottom: 16, end: 102),
+            titlePadding: const EdgeInsetsDirectional.only(
+                start: 72, bottom: 16, end: 102),
             title: CustomWidget.getTitle(ChurchYear.NAME),
             background: Image.asset(
               ChurchYear.IMAGE,
@@ -68,8 +71,9 @@ class Accordions extends State<Controller.ChurchYearController> {
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) =>
-                _dataAvailable ? Cards().buildRows(context, _options[index], _dataAvailable) : CustomWidget.buildSliverSpinner(),
+            (BuildContext context, int index) => _dataAvailable
+                ? Cards().buildRows(context, _options[index], _dataAvailable)
+                : CustomWidget.buildSliverSpinner(),
             childCount: _options.length,
           ),
         ),
@@ -91,7 +95,8 @@ class Accordions extends State<Controller.ChurchYearController> {
       setState(() => _isPerformingRequest = true);
 
       _hasInternet = await Network().hasInternet();
-      _easterOffer = await EasterOfferClient().getOffers(DioHTTPClient(), Network());
+      _easterOffer =
+          await EasterOfferClient().getOffers(DioHTTPClient(), Network());
 
       _options = <dynamic>[];
 

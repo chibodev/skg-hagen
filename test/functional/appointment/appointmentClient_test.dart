@@ -25,8 +25,7 @@ void main() {
     when(network.hasInternet()).thenAnswer((_) async => false);
     when(httpClient.setOptions(httpClient, network, any))
         .thenAnswer((_) async => options);
-    when(httpClient.getQueryParameters(index: any))
-        .thenReturn(queryParams);
+    when(httpClient.getQueryParameters(index: any)).thenReturn(queryParams);
     when(
       httpClient.getJSONResponse(
         http: httpClient,
@@ -78,8 +77,7 @@ void main() {
 
     when(httpClient.setOptions(httpClient, network, any))
         .thenAnswer((_) async => options);
-    when(httpClient.getQueryParameters(index: any))
-        .thenReturn(queryParams);
+    when(httpClient.getQueryParameters(index: any)).thenReturn(queryParams);
     when(
       httpClient.getJSONResponse(
         http: httpClient,

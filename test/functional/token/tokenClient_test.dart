@@ -11,7 +11,8 @@ import '../../mock/httpClientMock.dart';
 class MockDotEnv extends Mock implements DotEnv {
   @override
   Map<String, String> get env {
-    return super.noSuchMethod(Invocation.getter(#env), returnValue: Map<String, String>());
+    return super.noSuchMethod(Invocation.getter(#env),
+        returnValue: Map<String, String>());
   }
 }
 
@@ -21,7 +22,10 @@ void main() {
   late MockDotEnv env;
   final Options options = Options();
   final Map<String, String> localEnv = Map<String, String>();
-  final Map<String, String> data = <String, String>{'username': 'someData', 'password': 'somePass'};
+  final Map<String, String> data = <String, String>{
+    'username': 'someData',
+    'password': 'somePass'
+  };
 
   setUpAll(() {
     // subject = TokenClient();
@@ -34,8 +38,13 @@ void main() {
   test('TokenClient successfully retrieves token', () async {
     when(env.env).thenReturn(localEnv);
 
-    when(httpClient.postJSON(http: httpClient, path: TokenClient.PATH, data: data, options: options))
-        .thenAnswer((_) async => HTTPClientMock.tokenPost(statusCode: HttpStatus.ok));
+    when(httpClient.postJSON(
+            http: httpClient,
+            path: TokenClient.PATH,
+            data: data,
+            options: options))
+        .thenAnswer(
+            (_) async => HTTPClientMock.tokenPost(statusCode: HttpStatus.ok));
 
     // final Token token = await subject.getToken(httpClient, env);
     //

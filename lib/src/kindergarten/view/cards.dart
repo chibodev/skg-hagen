@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/kindergarten/controller/news.dart';
 import 'package:skg_hagen/src/kindergarten/dto/events.dart';

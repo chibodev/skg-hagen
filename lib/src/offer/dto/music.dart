@@ -41,13 +41,23 @@ class Music {
       this.city,
       this.latLong,
       this.country}) {
-    this.address = Address(name: name, street: street, houseNumber: houseNumber, zip: zip, city: city, country: country, latLong: latLong, room: room);
+    this.address = Address(
+        name: name,
+        street: street,
+        houseNumber: houseNumber,
+        zip: zip,
+        city: city,
+        country: country,
+        latLong: latLong,
+        room: room);
   }
 
   factory Music.fromJson(Map<String, dynamic> json) => Music(
       title: json['title'],
       description: json['description'],
-      imageUrl: json['imageUrl'].toString().length > URL_MIN ? json['imageUrl'] : null,
+      imageUrl: json['imageUrl'].toString().length > URL_MIN
+          ? json['imageUrl']
+          : null,
       email: json['email'],
       organizer: json["organizer"] == "" ? null : json["organizer"],
       occurrence: json['occurrence'],
@@ -56,15 +66,24 @@ class Music {
       placeName: json["placeName"],
       room: json["room"] == "" ? null : json["room"],
       name: json["name"] == null || json["name"] == "" ? null : json["name"],
-      street: json["street"] == null || json["street"] == "" ? null : json["street"],
-      houseNumber: json["houseNumber"] == null || json["houseNumber"] == "" ? null : json["houseNumber"],
+      street: json["street"] == null || json["street"] == ""
+          ? null
+          : json["street"],
+      houseNumber: json["houseNumber"] == null || json["houseNumber"] == ""
+          ? null
+          : json["houseNumber"],
       zip: json["zip"] == null || json["zip"] == "" ? null : json["zip"],
       city: json["city"] == null || json["city"] == "" ? null : json["city"],
-      country: json["country"] == null || json["country"] == "" ? null : json["country"],
-      latLong: json["latLong"] == null || json["latLong"] == "" ? null : json['latLong']);
+      country: json["country"] == null || json["country"] == ""
+          ? null
+          : json["country"],
+      latLong: json["latLong"] == null || json["latLong"] == ""
+          ? null
+          : json['latLong']);
 
   String getFormattedOccurrence() {
-    final String occurrenceTime = (time == "00:00:00") ? '--' : time.substring(0, 5);
+    final String occurrenceTime =
+        (time == "00:00:00") ? '--' : time.substring(0, 5);
     return "$occurrence | $occurrenceTime";
   }
 }

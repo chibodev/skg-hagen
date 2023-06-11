@@ -23,7 +23,8 @@ void main() {
 
   test('PushNotificationClient successfully retrieves data', () async {
     when(network.hasInternet()).thenAnswer((_) async => false);
-    when(httpClient.setOptions(httpClient, network, any)).thenAnswer((_) async => options);
+    when(httpClient.setOptions(httpClient, network, any))
+        .thenAnswer((_) async => options);
     when(httpClient.getQueryParameters(index: any)).thenReturn(queryParams);
     when(
       httpClient.getJSONResponse(
@@ -34,13 +35,18 @@ void main() {
         object: PushNotifications,
         cacheData: PushNotificationClient.CACHE_DATA,
       ),
-    ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(statusCode: HttpStatus.ok, path: 'push_notification.json'));
+    ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(
+        statusCode: HttpStatus.ok, path: 'push_notification.json'));
 
-    final PushNotifications? pushNotifications = await subject.getPushNotifications(httpClient, network, index: 0, refresh: true);
+    final PushNotifications? pushNotifications = await subject
+        .getPushNotifications(httpClient, network, index: 0, refresh: true);
 
-    expect(pushNotifications!.pushNotification.first.title, 'Appointment: Choir');
-    expect(pushNotifications.pushNotification.first.validUntil, DateTime.parse('2020-03-29'));
-    expect(pushNotifications.pushNotification.first.body, 'Gathering of Holy Voices. Join Us');
+    expect(
+        pushNotifications!.pushNotification.first.title, 'Appointment: Choir');
+    expect(pushNotifications.pushNotification.first.validUntil,
+        DateTime.parse('2020-03-29'));
+    expect(pushNotifications.pushNotification.first.body,
+        'Gathering of Holy Voices. Join Us');
     expect(pushNotifications.pushNotification.first.screen, '/appointment');
   });
 
@@ -48,7 +54,8 @@ void main() {
     dynamic error;
 
     when(network.hasInternet()).thenAnswer((_) async => false);
-    when(httpClient.setOptions(httpClient, network, any)).thenAnswer((_) async => options);
+    when(httpClient.setOptions(httpClient, network, any))
+        .thenAnswer((_) async => options);
     when(httpClient.getQueryParameters(index: any)).thenReturn(queryParams);
     when(
       httpClient.getJSONResponse(
@@ -59,10 +66,12 @@ void main() {
         object: PushNotifications,
         cacheData: PushNotificationClient.CACHE_DATA,
       ),
-    ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(statusCode: HttpStatus.unauthorized));
+    ).thenAnswer((_) async =>
+        HTTPClientMock.getJSONRequest(statusCode: HttpStatus.unauthorized));
 
     try {
-      await subject.getPushNotifications(httpClient, network, index: 0, refresh: false);
+      await subject.getPushNotifications(httpClient, network,
+          index: 0, refresh: false);
     } catch (e) {
       error = e;
     }

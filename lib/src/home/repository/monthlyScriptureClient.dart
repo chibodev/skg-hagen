@@ -10,7 +10,8 @@ class MonthlyScriptureClient {
   static const int OLD_TESTAMENT = 0;
   static const int NEW_TESTAMENT = 2;
 
-  Future<MonthlyScripture> getDevotion(DioHTTPClient http, Network network, {bool? refresh}) async {
+  Future<MonthlyScripture> getDevotion(DioHTTPClient http, Network network,
+      {bool? refresh}) async {
     final Options options = await http.setOptions(http, network, refresh);
     final MonthlyScripture dailyDevotion = MonthlyScripture();
     int counter = 0;

@@ -22,7 +22,8 @@ void main() {
 
   test('OfferClient successfully retrieves data', () async {
     when(network.hasInternet()).thenAnswer((_) async => true);
-    when(httpClient.setOptions(httpClient, network, any)).thenAnswer((_) async => options);
+    when(httpClient.setOptions(httpClient, network, any))
+        .thenAnswer((_) async => options);
     when(
       httpClient.getJSONResponse(
         http: httpClient,
@@ -31,9 +32,11 @@ void main() {
         object: Offers,
         cacheData: OfferClient.CACHE_DATA,
       ),
-    ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(statusCode: HttpStatus.ok, path: 'offers.json'));
+    ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(
+        statusCode: HttpStatus.ok, path: 'offers.json'));
 
-    final Offers? offers = await subject.getOffers(httpClient, network, refresh: true);
+    final Offers? offers =
+        await subject.getOffers(httpClient, network, refresh: true);
 
     expect(offers!.offers, isNotEmpty);
     expect(offers.offers!.first.title, 'Crossover SKG-Band');
@@ -58,11 +61,13 @@ void main() {
 
     expect(offers.projects, isNotEmpty);
     expect(offers.projects!.first.title, 'New');
-    expect(offers.projects!.first.description.contains('Project description'), true);
+    expect(offers.projects!.first.description.contains('Project description'),
+        true);
     expect(offers.projects!.length, 1);
 
     expect(offers.music, isNotEmpty);
-    expect(offers.music!.first.description, 'Der Kinderchor - unter der Leitung Meister Meistermann');
+    expect(offers.music!.first.description,
+        'Der Kinderchor - unter der Leitung Meister Meistermann');
     expect(offers.music!.first.occurrence, 'Montags');
     expect(offers.music!.first.time, '16:15:00');
     expect(offers.music!.first.placeName, 'marchurch');
@@ -82,7 +87,8 @@ void main() {
     Offers? offers;
 
     when(network.hasInternet()).thenAnswer((_) async => false);
-    when(httpClient.setOptions(httpClient, network, any)).thenAnswer((_) async => options);
+    when(httpClient.setOptions(httpClient, network, any))
+        .thenAnswer((_) async => options);
     when(
       httpClient.getJSONResponse(
         http: httpClient,
@@ -91,9 +97,11 @@ void main() {
         object: Offers,
         cacheData: OfferClient.CACHE_DATA,
       ),
-    ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(statusCode: HttpStatus.unauthorized));
+    ).thenAnswer((_) async =>
+        HTTPClientMock.getJSONRequest(statusCode: HttpStatus.unauthorized));
 
-    offers = await subject.getOffers(httpClient, network, index: 0, refresh: false);
+    offers =
+        await subject.getOffers(httpClient, network, index: 0, refresh: false);
 
     expect(offers, isNotNull);
     expect(offers?.offers, isNull);

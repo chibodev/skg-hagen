@@ -18,7 +18,8 @@ class Quote extends State<QuoteController> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
-    AnalyticsManager().setScreen(DTO.Quote.NAME, Default.classNameFromRoute(Routes.offer));
+    AnalyticsManager()
+        .setScreen(DTO.Quote.NAME, Default.classNameFromRoute(Routes.offer));
   }
 
   @override
@@ -34,7 +35,8 @@ class Quote extends State<QuoteController> {
               expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
               backgroundColor: Color(Default.COLOR_GREEN),
               flexibleSpace: FlexibleSpaceBar(
-                titlePadding: const EdgeInsetsDirectional.only(start: 72, bottom: 16, end: 102),
+                titlePadding: const EdgeInsetsDirectional.only(
+                    start: 72, bottom: 16, end: 102),
                 title: CustomWidget.getTitle(DTO.Quote.PAGE_NAME),
                 background: Image.asset(
                   Offers.IMAGE,
@@ -45,7 +47,9 @@ class Quote extends State<QuoteController> {
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) => widget.dataAvailable ? _buildRows(widget.quotes![index], context) : CustomWidget.buildSliverSpinner(),
+                (BuildContext context, int index) => widget.dataAvailable
+                    ? _buildRows(widget.quotes![index], context)
+                    : CustomWidget.buildSliverSpinner(),
                 childCount: widget.quotes?.length ?? 0,
               ),
             ),
@@ -95,7 +99,8 @@ class Quote extends State<QuoteController> {
                     child: Text(
                       quote.text,
                       style: TextStyle(
-                        fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
+                        fontSize: SizeConfig.getSafeBlockVerticalBy(
+                            appFont.primarySize),
                       ),
                     ),
                   ),
@@ -108,7 +113,8 @@ class Quote extends State<QuoteController> {
                           child: Text(
                             quote.getBook(),
                             style: TextStyle(
-                              fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
+                              fontSize: SizeConfig.getSafeBlockVerticalBy(
+                                  appFont.primarySize),
                             ),
                           ),
                         )

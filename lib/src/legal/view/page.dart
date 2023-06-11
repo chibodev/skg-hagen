@@ -19,7 +19,8 @@ class LegalPage {
           )),
         },
         data: content,
-        onLinkTap: (String? url, RenderContext context, Map<String, String> attributes, dynamic element) async {
+        onLinkTap: (String? url, RenderContext context,
+            Map<String, String> attributes, dynamic element) async {
           if (url != null && url.startsWith('http')) {
             TapAction().launchURL(url);
           }

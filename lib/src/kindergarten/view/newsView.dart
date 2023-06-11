@@ -23,7 +23,8 @@ class NewsView extends State<News> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
-    AnalyticsManager().setScreen(DTO.News.NAME, Default.classNameFromRoute(Routes.kindergarten));
+    AnalyticsManager().setScreen(
+        DTO.News.NAME, Default.classNameFromRoute(Routes.kindergarten));
   }
 
   @override
@@ -40,7 +41,8 @@ class NewsView extends State<News> {
               expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
               backgroundColor: Colors.white,
               flexibleSpace: FlexibleSpaceBar(
-                titlePadding: const EdgeInsetsDirectional.only(start: 72, bottom: 16, end: 102),
+                titlePadding: const EdgeInsetsDirectional.only(
+                    start: 72, bottom: 16, end: 102),
                 title: CustomWidget.getTitle(DTO.News.NAME),
                 background: Image.asset(
                   Kindergarten.IMAGE,
@@ -56,9 +58,15 @@ class NewsView extends State<News> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   CustomWidget.getSinglePageTitle(thirty, widget.news.title),
-                  CustomWidget.getSinglePageDescription(thirty, widget.news.description),
-                  widget.news.imageUrl != null ? CustomWidget.getImageFromNetwork(thirty, widget.news.imageUrl ?? "") : Container(),
-                  widget.news.fileUrl != null ? _downloadFile(contextOfBuilder) : Container(),
+                  CustomWidget.getSinglePageDescription(
+                      thirty, widget.news.description),
+                  widget.news.imageUrl != null
+                      ? CustomWidget.getImageFromNetwork(
+                          thirty, widget.news.imageUrl ?? "")
+                      : Container(),
+                  widget.news.fileUrl != null
+                      ? _downloadFile(contextOfBuilder)
+                      : Container(),
                 ],
               ),
             ),
@@ -76,13 +84,16 @@ class NewsView extends State<News> {
           padding: EdgeInsets.zero,
           child: InkWell(
             splashColor: Color(Default.COLOR_GREEN),
-            onTap: () => _download(widget.news.fileUrl ?? "", widget.news.filename ?? ""),
+            onTap: () => _download(
+                widget.news.fileUrl ?? "", widget.news.filename ?? ""),
             child: Padding(
               padding: EdgeInsets.only(
                 left: SizeConfig.getSafeBlockVerticalBy(1),
               ),
               child: Image.asset(
-                widget.news.format == 'pdf' ? 'assets/images/icon/pdf.png' : 'assets/images/icon/file.png',
+                widget.news.format == 'pdf'
+                    ? 'assets/images/icon/pdf.png'
+                    : 'assets/images/icon/file.png',
                 fit: BoxFit.scaleDown,
                 width: SizeConfig.getSafeBlockVerticalBy(appFont.boxSize),
                 height: SizeConfig.getSafeBlockHorizontalBy(appFont.boxSize),
@@ -112,7 +123,8 @@ class NewsView extends State<News> {
 
       final String saveDir = await fileDownload.getSaveDirectory();
       final String filePath = "$saveDir/$filename";
-      if (await client.downloadFile(http: client, urlPath: fileUrl, savePath: filePath)) {
+      if (await client.downloadFile(
+          http: client, urlPath: fileUrl, savePath: filePath)) {
         OpenFile.open(filePath);
       }
     }

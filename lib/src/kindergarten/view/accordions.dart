@@ -6,7 +6,8 @@ import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
-import 'package:skg_hagen/src/kindergarten/controller/kindergarten.dart' as Controller;
+import 'package:skg_hagen/src/kindergarten/controller/kindergarten.dart'
+    as Controller;
 import 'package:skg_hagen/src/kindergarten/dto/kindergarten.dart';
 import 'package:skg_hagen/src/kindergarten/repository/kindergartenClient.dart';
 import 'package:skg_hagen/src/kindergarten/view/cards.dart';
@@ -24,7 +25,8 @@ class Accordions extends State<Controller.Kindergarten> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
-    AnalyticsManager().setScreen(Kindergarten.NAME, Default.classNameFromRoute(Routes.kindergarten));
+    AnalyticsManager().setScreen(
+        Kindergarten.NAME, Default.classNameFromRoute(Routes.kindergarten));
     _getInfos();
   }
 
@@ -40,7 +42,10 @@ class Accordions extends State<Controller.Kindergarten> {
       ),
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
-        children: <Widget>[CustomWidget.getFooter(Kindergarten.FOOTER), !_hasInternet ? CustomWidget.noInternet() : Container()],
+        children: <Widget>[
+          CustomWidget.getFooter(Kindergarten.FOOTER),
+          !_hasInternet ? CustomWidget.noInternet() : Container()
+        ],
       ),
     );
   }
@@ -53,7 +58,8 @@ class Accordions extends State<Controller.Kindergarten> {
           expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
           backgroundColor: Colors.white,
           flexibleSpace: FlexibleSpaceBar(
-            titlePadding: const EdgeInsetsDirectional.only(start: 72, bottom: 16, end: 102),
+            titlePadding: const EdgeInsetsDirectional.only(
+                start: 72, bottom: 16, end: 102),
             title: CustomWidget.getTitle(Kindergarten.NAME),
             background: Image.asset(
               Kindergarten.IMAGE,
@@ -64,7 +70,9 @@ class Accordions extends State<Controller.Kindergarten> {
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) => !_dataAvailable ? CustomWidget.buildSliverSpinner() : Cards().buildRows(context, _options[index]),
+            (BuildContext context, int index) => !_dataAvailable
+                ? CustomWidget.buildSliverSpinner()
+                : Cards().buildRows(context, _options[index]),
             childCount: _options.length,
           ),
         ),
@@ -82,7 +90,8 @@ class Accordions extends State<Controller.Kindergarten> {
       setState(() => _isPerformingRequest = true);
 
       _hasInternet = await Network().hasInternet();
-      _kindergarten = await KindergartenClient().getAppointments(DioHTTPClient(), Network());
+      _kindergarten = await KindergartenClient()
+          .getAppointments(DioHTTPClient(), Network());
 
       _options = <dynamic>[];
 

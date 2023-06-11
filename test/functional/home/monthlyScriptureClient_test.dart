@@ -26,7 +26,8 @@ void main() {
     final String path = subject.getPath();
 
     when(network.hasInternet()).thenAnswer((_) async => false);
-    when(httpClient.setOptions(httpClient, network, any)).thenAnswer((_) async => options);
+    when(httpClient.setOptions(httpClient, network, any))
+        .thenAnswer((_) async => options);
     when(
       httpClient.getHTMLResponse(
         http: httpClient,
@@ -35,20 +36,25 @@ void main() {
         cacheData: MonthlyScriptureClient.CACHE_DATA,
       ),
     ).thenAnswer(
-      (_) async => HTTPClientMock.getHTMLRequest(statusCode: HttpStatus.ok, path: filename),
+      (_) async => HTTPClientMock.getHTMLRequest(
+          statusCode: HttpStatus.ok, path: filename),
     );
 
-    final MonthlyScripture verse = await subject.getDevotion(httpClient, network);
+    final MonthlyScripture verse =
+        await subject.getDevotion(httpClient, network);
 
-    expect(verse.oldTestamentText?.contains('Ich will die Müden erquicken'), true);
-    expect(verse.newTestamentText?.contains('denn ihrer ist das Himmelreich'), true);
+    expect(
+        verse.oldTestamentText?.contains('Ich will die Müden erquicken'), true);
+    expect(verse.newTestamentText?.contains('denn ihrer ist das Himmelreich'),
+        true);
   });
 
   test('MonthlyScriptureClient fails to retrieves data', () async {
     final String path = subject.getPath();
 
     when(network.hasInternet()).thenAnswer((_) async => false);
-    when(httpClient.setOptions(httpClient, network, any)).thenAnswer((_) async => options);
+    when(httpClient.setOptions(httpClient, network, any))
+        .thenAnswer((_) async => options);
     when(
       httpClient.getHTMLResponse(
         http: httpClient,
@@ -60,9 +66,12 @@ void main() {
       (_) async => Document.html('entry unknown'),
     );
 
-    final MonthlyScripture verse = await subject.getDevotion(httpClient, network);
+    final MonthlyScripture verse =
+        await subject.getDevotion(httpClient, network);
 
-    expect(verse.oldTestamentText?.contains('Wer wird uns Gutes sehen lassen?'), true);
-    expect(verse.newTestamentText?.contains('Ich bin das Licht der Welt.'), true);
+    expect(verse.oldTestamentText?.contains('Wer wird uns Gutes sehen lassen?'),
+        true);
+    expect(
+        verse.newTestamentText?.contains('Ich bin das Licht der Welt.'), true);
   });
 }

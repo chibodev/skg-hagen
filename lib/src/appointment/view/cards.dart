@@ -25,10 +25,12 @@ class Cards extends State<AppointmentController> {
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
-    AnalyticsManager().setScreen(Appointments.NAME, Default.classNameFromRoute(Routes.appointment));
+    AnalyticsManager().setScreen(
+        Appointments.NAME, Default.classNameFromRoute(Routes.appointment));
     _getInitialAppointments();
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
         _getMoreAppointments();
       }
     });
@@ -52,7 +54,9 @@ class Cards extends State<AppointmentController> {
       ),
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
-        children: <Widget>[!_hasInternet ? CustomWidget.noInternet() : Container()],
+        children: <Widget>[
+          !_hasInternet ? CustomWidget.noInternet() : Container()
+        ],
       ),
     );
   }
@@ -62,7 +66,8 @@ class Cards extends State<AppointmentController> {
       setState(() => _isPerformingRequest = true);
       _hasInternet = true;
 
-      appointments = await AppointmentClient().getAppointments(DioHTTPClient(), Network(), refresh: true);
+      appointments = await AppointmentClient()
+          .getAppointments(DioHTTPClient(), Network(), refresh: true);
 
       final bool status = appointments?.appointments != null;
       final bool? noAppointments = appointments?.appointments?.isEmpty;
@@ -70,9 +75,14 @@ class Cards extends State<AppointmentController> {
 
       if (status && noAppointments != null && noAppointments) {
         final double edge = 50.0;
-        final double offsetFromBottom = _scrollController.position.maxScrollExtent - _scrollController.position.pixels;
+        final double offsetFromBottom =
+            _scrollController.position.maxScrollExtent -
+                _scrollController.position.pixels;
         if (offsetFromBottom < edge) {
-          _scrollController.animateTo(_scrollController.offset - (edge - offsetFromBottom), duration: Duration(milliseconds: 500), curve: Curves.easeOut);
+          _scrollController.animateTo(
+              _scrollController.offset - (edge - offsetFromBottom),
+              duration: Duration(milliseconds: 500),
+              curve: Curves.easeOut);
         }
       }
       setState(() {
@@ -90,21 +100,29 @@ class Cards extends State<AppointmentController> {
       if (!_hasInternet) {
         _isPerformingRequest = false;
       } else {
-        final Appointments? newAppointments = await AppointmentClient().getAppointments(DioHTTPClient(), Network(), index: _indexCounter, refresh: true);
+        final Appointments? newAppointments = await AppointmentClient()
+            .getAppointments(DioHTTPClient(), Network(),
+                index: _indexCounter, refresh: true);
 
         final List<DTO.Appointment>? newEntries = newAppointments?.appointments;
         final bool? isResponseEmpty = newEntries?.isEmpty;
         if (isResponseEmpty != null && isResponseEmpty) {
           final double edge = 50.0;
-          final double offsetFromBottom = _scrollController.position.maxScrollExtent - _scrollController.position.pixels;
+          final double offsetFromBottom =
+              _scrollController.position.maxScrollExtent -
+                  _scrollController.position.pixels;
           if (offsetFromBottom < edge) {
-            _scrollController.animateTo(_scrollController.offset - (edge - offsetFromBottom),
-                duration: Duration(milliseconds: 500), curve: Curves.easeOut);
+            _scrollController.animateTo(
+                _scrollController.offset - (edge - offsetFromBottom),
+                duration: Duration(milliseconds: 500),
+                curve: Curves.easeOut);
           }
         }
         setState(() {
           _isPerformingRequest = false;
-          if (isResponseEmpty != null && !isResponseEmpty && newEntries != null) {
+          if (isResponseEmpty != null &&
+              !isResponseEmpty &&
+              newEntries != null) {
             appointments?.appointments?.addAll(newEntries);
             _indexCounter++;
           }
@@ -123,7 +141,8 @@ class Cards extends State<AppointmentController> {
           expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
           backgroundColor: Color(Default.COLOR_GREEN),
           flexibleSpace: FlexibleSpaceBar(
-            titlePadding: const EdgeInsetsDirectional.only(start: 72, bottom: 16, end: 102),
+            titlePadding: const EdgeInsetsDirectional.only(
+                start: 72, bottom: 16, end: 102),
             title: CustomWidget.getTitle(Appointments.NAME),
             background: Image.asset(
               Appointments.IMAGE,
@@ -143,7 +162,9 @@ class Cards extends State<AppointmentController> {
           ),
         ),
         SliverToBoxAdapter(
-          child: (!_hasInternet) ? Container() : CustomWidget.buildProgressIndicator(_isPerformingRequest),
+          child: (!_hasInternet)
+              ? Container()
+              : CustomWidget.buildProgressIndicator(_isPerformingRequest),
         )
       ],
     );
@@ -191,11 +212,14 @@ class Cards extends State<AppointmentController> {
                     CustomWidget.getOccurrence(
                       card.getFormattedTimeAsString(),
                     ),
-                    CustomWidget.getCardOrganizer(card.getFormattedOrganiser(), context),
+                    CustomWidget.getCardOrganizer(
+                        card.getFormattedOrganiser(), context),
                     Row(
                       children: <Widget>[
-                        CustomWidget.getCardEmail(card.email, card.title, context),
-                        CustomWidget.getCardURL(card.url, context, format: card.urlFormat),
+                        CustomWidget.getCardEmail(
+                            card.email, card.title, context),
+                        CustomWidget.getCardURL(card.url, context,
+                            format: card.urlFormat),
                       ],
                     )
                   ],

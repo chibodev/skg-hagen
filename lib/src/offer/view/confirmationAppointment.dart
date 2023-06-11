@@ -88,16 +88,16 @@ class ConfirmationAppointment extends State<ConfirmationAppointmentController> {
                   children: card.endOccurrence != null
                       ? _getSlidableWithCalendar(card)
                       : <Widget>[
-                    CustomWidget.getSlidableShare(
-                      card.title,
-                      Default.getSharableContent(
-                        card.title,
-                        card.getFormattedTimeAsString(),
-                        card.getFormattedOrganiser(),
-                        card.address,
-                      ),
-                    )
-                  ],
+                          CustomWidget.getSlidableShare(
+                            card.title,
+                            Default.getSharableContent(
+                              card.title,
+                              card.getFormattedTimeAsString(),
+                              card.getFormattedOrganiser(),
+                              card.address,
+                            ),
+                          )
+                        ],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

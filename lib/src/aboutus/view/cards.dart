@@ -48,11 +48,13 @@ class Cards {
                       SelectableText(
                         card.description!,
                         style: TextStyle(
-                          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
+                          fontSize: SizeConfig.getSafeBlockVerticalBy(
+                              appFont.primarySize),
                         ),
                       ),
                       Text(''),
-                      CustomWidget.getCardURL(card.url!, context, format: card.urlFormat!),
+                      CustomWidget.getCardURL(card.url!, context,
+                          format: card.urlFormat!),
                     ],
                   )),
             ),
@@ -81,14 +83,16 @@ class Cards {
                 title: Text(
                   card.getPresbyter(),
                   style: TextStyle(
-                    fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
+                    fontSize:
+                        SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                   ),
                 ),
                 subtitle: (cardDescriptionLength! > 1)
                     ? Text(
                         card.description ?? "",
                         style: TextStyle(
-                          fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.secondarySize),
+                          fontSize: SizeConfig.getSafeBlockVerticalBy(
+                              appFont.secondarySize),
                         ),
                       )
                     : null,

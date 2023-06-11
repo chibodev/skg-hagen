@@ -2,8 +2,7 @@ import 'dart:io';
 
 class FileClientMock {
   static Future<String> loadFromTestResourcePath(String filename) async {
-    final File file =
-        File('${_getPath()}/$filename');
+    final File file = File('${_getPath()}/$filename');
     return await file.readAsString();
   }
 

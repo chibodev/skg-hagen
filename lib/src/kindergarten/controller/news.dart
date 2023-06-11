@@ -6,7 +6,8 @@ class News extends StatefulWidget {
   final DTO.News news;
   final BuildContext context;
 
-  const News({Key? key, required this.context, required this.news}) : super(key: key);
+  const News({Key? key, required this.context, required this.news})
+      : super(key: key);
 
   @override
   NewsView createState() => NewsView();

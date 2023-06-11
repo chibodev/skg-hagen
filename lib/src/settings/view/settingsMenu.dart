@@ -27,7 +27,8 @@ class SettingsMenu {
               child: Text(
                 Default.capitalize(choice.title),
                 style: TextStyle(
-                  fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
+                  fontSize:
+                      SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                 ),
               ),
             );
@@ -63,8 +64,10 @@ class SettingsMenu {
                   children: <Widget>[
                     InkWell(
                       onTap: () {
-                        if (!appFont.isIncreaseMaximumReached()) Settings().increaseFontSize(page: pageView);
-                        setState(() => increaseIconColor = _getIncreaseIconColor());
+                        if (!appFont.isIncreaseMaximumReached())
+                          Settings().increaseFontSize(page: pageView);
+                        setState(
+                            () => increaseIconColor = _getIncreaseIconColor());
                       },
                       child: Icon(
                         Icons.add_circle,
@@ -75,8 +78,10 @@ class SettingsMenu {
                     ),
                     InkWell(
                       onTap: () {
-                        if (!appFont.isDecreaseMinimumReached()) Settings().decreaseFontSize(page: pageView);
-                        setState(() => decreaseIconColor = _getDecreaseIconColor());
+                        if (!appFont.isDecreaseMinimumReached())
+                          Settings().decreaseFontSize(page: pageView);
+                        setState(
+                            () => decreaseIconColor = _getDecreaseIconColor());
                       },
                       child: Icon(
                         Icons.remove_circle,
@@ -95,7 +100,9 @@ class SettingsMenu {
     );
   }
 
-  Color _getIncreaseIconColor() => appFont.isIncreaseMaximumReached() ? Colors.white38 : Colors.white;
+  Color _getIncreaseIconColor() =>
+      appFont.isIncreaseMaximumReached() ? Colors.white38 : Colors.white;
 
-  Color _getDecreaseIconColor() => appFont.isDecreaseMinimumReached() ? Colors.white38 : Colors.white;
+  Color _getDecreaseIconColor() =>
+      appFont.isDecreaseMinimumReached() ? Colors.white38 : Colors.white;
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:skg_hagen/src/home/dto/cardContent.dart';
 
@@ -21,7 +20,6 @@ void main() {
   });
 
   test('CardContent dto creates and gets properties successfully', () {
-
     expect(subject.title, title);
     expect(subject.subtitle, subtitle);
     expect(subject.routeName, routeName);
@@ -36,7 +34,7 @@ void main() {
 
   test('CardContent custom property is not set', () {
     subject = CardContent(title, subtitle, routeName, name);
-    
+
     expect(subject.custom, null);
     expect(subject.getImageAsset(), null);
   });

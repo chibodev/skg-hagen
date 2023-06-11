@@ -174,8 +174,7 @@ class Cards extends State<Home> {
                                       semanticLabel: 'Phone',
                                     ),
                                     onPressed: () {
-                                      TapAction()
-                                          .callMe(response.data?.phone);
+                                      TapAction().callMe(response.data?.phone);
                                     },
                                   ),
                                 ),

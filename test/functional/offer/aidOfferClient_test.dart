@@ -23,7 +23,8 @@ void main() {
 
   test('AidOfferClient successfully retrieves data', () async {
     when(network.hasInternet()).thenAnswer((_) async => true);
-    when(httpClient.setOptions(httpClient, network, any)).thenAnswer((_) async => options);
+    when(httpClient.setOptions(httpClient, network, any))
+        .thenAnswer((_) async => options);
     when(
       httpClient.getJSONResponse(
         http: httpClient,
@@ -32,9 +33,11 @@ void main() {
         object: Aid,
         cacheData: AidOfferClient.CACHE_DATA,
       ),
-    ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(statusCode: HttpStatus.ok, path: 'aid_offer.json'));
+    ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(
+        statusCode: HttpStatus.ok, path: 'aid_offer.json'));
 
-    final Aid? aid = await subject.getAidOffer(httpClient, network, refresh: true);
+    final Aid? aid =
+        await subject.getAidOffer(httpClient, network, refresh: true);
 
     expect(aid!.offer!.title, 'Helfer');
     expect(aid.offer!.description, 'Ja, DICH suchen wir');
@@ -64,7 +67,8 @@ void main() {
     final Aid? result;
 
     when(network.hasInternet()).thenAnswer((_) async => false);
-    when(httpClient.setOptions(httpClient, network, any)).thenAnswer((_) async => options);
+    when(httpClient.setOptions(httpClient, network, any))
+        .thenAnswer((_) async => options);
     when(
       httpClient.getJSONResponse(
         http: httpClient,
@@ -73,9 +77,11 @@ void main() {
         object: Aid,
         cacheData: AidOfferClient.CACHE_DATA,
       ),
-    ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(statusCode: HttpStatus.unauthorized));
+    ).thenAnswer((_) async =>
+        HTTPClientMock.getJSONRequest(statusCode: HttpStatus.unauthorized));
 
-    result = await subject.getAidOffer(httpClient, network, index: 0, refresh: false);
+    result = await subject.getAidOffer(httpClient, network,
+        index: 0, refresh: false);
 
     expect(result?.offer, isNull);
     expect(result?.receive, isNull);
@@ -83,14 +89,27 @@ void main() {
   });
 
   test('AidOfferClient successfully sends aid offer', () async {
-    final Helper helper = Helper(shopping: true, errands: false, animalWalk: true, name: 'Ali D', age: '29', city: 'D-Town', contact: 'd@town.de');
+    final Helper helper = Helper(
+        shopping: true,
+        errands: false,
+        animalWalk: true,
+        name: 'Ali D',
+        age: '29',
+        city: 'D-Town',
+        contact: 'd@town.de');
     final Map<String, dynamic> payload = helper.toJson();
 
     when(network.hasInternet()).thenAnswer((_) async => false);
-    when(httpClient.setOptions(httpClient, network, false)).thenAnswer((_) async => options);
+    when(httpClient.setOptions(httpClient, network, false))
+        .thenAnswer((_) async => options);
 
-    when(httpClient.postJSON(http: httpClient, path: AidOfferClient.PATH, data: payload, options: options))
-        .thenAnswer((_) async => HTTPClientMock.formPost(statusCode: HttpStatus.ok, path: AidOfferClient.PATH));
+    when(httpClient.postJSON(
+            http: httpClient,
+            path: AidOfferClient.PATH,
+            data: payload,
+            options: options))
+        .thenAnswer((_) async => HTTPClientMock.formPost(
+            statusCode: HttpStatus.ok, path: AidOfferClient.PATH));
 
     final bool response = await subject.saveHelper(httpClient, network, helper);
 
@@ -106,14 +125,27 @@ void main() {
   });
 
   test('AidOfferClient fails to send offer aid', () async {
-    final Helper helper = Helper(shopping: true, errands: false, animalWalk: true, name: '', age: '', city: '', contact: '');
+    final Helper helper = Helper(
+        shopping: true,
+        errands: false,
+        animalWalk: true,
+        name: '',
+        age: '',
+        city: '',
+        contact: '');
     final Map<String, dynamic> payload = helper.toJson();
 
     when(network.hasInternet()).thenAnswer((_) async => false);
-    when(httpClient.setOptions(httpClient, network, false)).thenAnswer((_) async => options);
+    when(httpClient.setOptions(httpClient, network, false))
+        .thenAnswer((_) async => options);
 
-    when(httpClient.postJSON(http: httpClient, path: AidOfferClient.PATH, data: payload, options: options))
-        .thenAnswer((_) async => HTTPClientMock.formPost(statusCode: HttpStatus.badRequest, path: AidOfferClient.PATH));
+    when(httpClient.postJSON(
+            http: httpClient,
+            path: AidOfferClient.PATH,
+            data: payload,
+            options: options))
+        .thenAnswer((_) async => HTTPClientMock.formPost(
+            statusCode: HttpStatus.badRequest, path: AidOfferClient.PATH));
 
     final bool response = await subject.saveHelper(httpClient, network, helper);
 

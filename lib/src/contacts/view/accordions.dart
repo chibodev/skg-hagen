@@ -25,7 +25,8 @@ class Accordions extends State<Controller.Contacts> {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
     AnalyticsManager().setScreen('Kontakte', 'Contacts');
-    AnalyticsManager().setScreen(Contacts.NAME, Default.classNameFromRoute(Routes.contacts));
+    AnalyticsManager()
+        .setScreen(Contacts.NAME, Default.classNameFromRoute(Routes.contacts));
     _getContacts();
   }
 
@@ -41,7 +42,9 @@ class Accordions extends State<Controller.Contacts> {
       ),
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
-        children: <Widget>[!_hasInternet ? CustomWidget.noInternet() : Container()],
+        children: <Widget>[
+          !_hasInternet ? CustomWidget.noInternet() : Container()
+        ],
       ),
     );
   }
@@ -55,7 +58,8 @@ class Accordions extends State<Controller.Contacts> {
           expandedHeight: SizeConfig.getSafeBlockVerticalBy(20),
           backgroundColor: Color(Default.COLOR_GREEN),
           flexibleSpace: FlexibleSpaceBar(
-            titlePadding: const EdgeInsetsDirectional.only(start: 72, bottom: 16, end: 102),
+            titlePadding: const EdgeInsetsDirectional.only(
+                start: 72, bottom: 16, end: 102),
             title: CustomWidget.getTitle(Contacts.NAME),
             background: Image.asset(
               Contacts.IMAGE,
@@ -66,7 +70,9 @@ class Accordions extends State<Controller.Contacts> {
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) => !_dataAvailable ? CustomWidget.buildSliverSpinner() : Cards().buildRows(_options[index], context),
+            (BuildContext context, int index) => !_dataAvailable
+                ? CustomWidget.buildSliverSpinner()
+                : Cards().buildRows(_options[index], context),
             childCount: _options.length,
           ),
         ),

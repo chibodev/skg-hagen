@@ -48,15 +48,16 @@ class PushNotificationsManager {
     _buildContext = context;
     if (!_initialized) {
       // For iOS request permission first.
-      _firebaseMessaging..requestPermission(
-        alert: true,
-        announcement: false,
-        badge: true,
-        carPlay: false,
-        criticalAlert: false,
-        provisional: false,
-        sound: true,
-      );
+      _firebaseMessaging
+        ..requestPermission(
+          alert: true,
+          announcement: false,
+          badge: true,
+          carPlay: false,
+          criticalAlert: false,
+          provisional: false,
+          sound: true,
+        );
 
       _configLocalNotification();
       FirebaseMessaging.onMessage.listen((RemoteMessage message) async {

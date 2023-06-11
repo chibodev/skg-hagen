@@ -7,7 +7,8 @@ import 'package:skg_hagen/src/common/service/permissionsManager.dart';
 
 class FileDownload {
   Future<bool> hasPermission(PermissionsManager permissionHandler) async {
-    final PermissionStatus checkPermission = await permissionHandler.request(Permission.storage);
+    final PermissionStatus checkPermission =
+        await permissionHandler.request(Permission.storage);
     return checkPermission == PermissionStatus.granted;
   }
 

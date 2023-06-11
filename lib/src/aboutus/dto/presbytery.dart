@@ -13,11 +13,11 @@ class Presbytery {
   });
 
   factory Presbytery.fromJson(Map<String, dynamic> json) => Presbytery(
-    salutation: json["salutation"],
-    surname: json["surname"],
-    firstname: json["firstname"],
-    description: json["description"],
-  );
+        salutation: json["salutation"],
+        surname: json["surname"],
+        firstname: json["firstname"],
+        description: json["description"],
+      );
 
   String getPresbyter() => "$salutation $firstname $surname";
 }

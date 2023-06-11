@@ -10,5 +10,4 @@ class Concept {
   factory Concept.fromJson(Map<String, dynamic> json) => Concept(
         description: json["description"],
       );
-
 }
