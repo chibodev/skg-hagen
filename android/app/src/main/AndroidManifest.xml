@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="de.skg_hagen">
 
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" tools:node="remove" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
