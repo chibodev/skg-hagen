@@ -30,7 +30,8 @@
             android:hardwareAccelerated="true"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="MissingClass">
             <!-- This keeps the window background of the activity showing
                  until Flutter renders its first frame. It can be removed if
                  there is no splash screen (such as the default splash screen
@@ -70,7 +71,8 @@
             android:authorities="${applicationId}.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true"
-            tools:replace="android:authorities">
+            tools:replace="android:authorities"
+            tools:ignore="MissingClass">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths"

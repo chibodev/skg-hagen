@@ -15,7 +15,7 @@ dependencies:
   yaml: ^3.1.1
   dio: ^4.0.6
   dio_http_cache: ^0.3.0
-  map_launcher: any
+  map_launcher: ^2.5.0
   firebase_crashlytics: ^3.0.17
   shared_preferences: ^2.0.17
   flutter_html: ^2.2.1
