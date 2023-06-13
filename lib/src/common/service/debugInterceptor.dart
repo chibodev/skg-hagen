@@ -1,45 +1,49 @@
 import 'package:dio/dio.dart';
 
-class DebugInterceptor extends Interceptor{
+class DebugInterceptor extends Interceptor {
   @override
-  Future<dynamic> onRequest(RequestOptions options) async{
+  Future<void> onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
     print(
-        "--> ${options.method != null ? options.method.toUpperCase() : 'METHOD'} ${"" + (options.baseUrl ?? "") + (options.path ?? "")}");
+        "--> ${options.method.isNotEmpty ? options.method.toUpperCase() : 'METHOD'} ${"" + (options.baseUrl) + (options.path)}");
     print("Headers:");
     options.headers.forEach((dynamic k, dynamic v) => print('$k: $v'));
-    if (options.queryParameters != null) {
+    if (options.queryParameters.isNotEmpty) {
       print("queryParameters:");
-      options.queryParameters.forEach((dynamic k, dynamic v) => print('$k: $v'));
+      options.queryParameters
+          .forEach((dynamic k, dynamic v) => print('$k: $v'));
     }
     if (options.data != null) {
       print("Body: ${options.data}");
     }
     print(
-        "--> END ${options.method != null ? options.method.toUpperCase() : 'METHOD'}");
+        "--> END ${options.method.isNotEmpty ? options.method.toUpperCase() : 'METHOD'}");
 
-    return options;
+    return handler.next(options);
   }
 
   @override
-  Future<dynamic> onError(DioError dioError) async{
+  Future<void> onError(
+      DioError dioError, ErrorInterceptorHandler handler) async {
     print(
-        "<-- ${dioError.message} ${(dioError.response?.request != null ? (dioError.response.request.baseUrl + dioError.response.request.path) : 'URL')}");
+        "<-- ${dioError.message} ${dioError.response?.requestOptions.baseUrl} ${dioError.response?.requestOptions.path}");
     print(
-        "${dioError.response != null ? dioError.response.data : 'Unknown Error'}");
+        "${dioError.response != null ? dioError.response?.data : 'Unknown Error'}");
     print("<-- End error");
 
-    return dioError;
+    return handler.next(dioError);
   }
 
   @override
-  Future<dynamic> onResponse(Response<dynamic> response) async{
+  Future<void> onResponse(
+      Response<dynamic> response, ResponseInterceptorHandler handler) async {
     print(
-        "<-- ${response.statusCode} ${(response.request != null ? (response.request.baseUrl + response.request.path) : 'URL')}");
+        "<-- ${response.statusCode} ${(response.requestOptions.baseUrl + response.requestOptions.path)}");
     print("Headers:");
-    response.headers?.forEach((dynamic k, dynamic v) => print('$k: $v'));
+    response.headers.forEach((dynamic k, dynamic v) => print('$k: $v'));
     print("Response: ${response.data}");
     print("<-- END HTTP");
 
-    return response;
+    return handler.next(response);
   }
 }

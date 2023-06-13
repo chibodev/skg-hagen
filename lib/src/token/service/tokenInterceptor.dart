@@ -6,55 +6,67 @@ import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
 import 'package:skg_hagen/src/token/dto/token.dart';
 import 'package:skg_hagen/src/token/repository/tokenClient.dart';
 
-class TokenInterceptor extends Interceptor {
+class TokenInterceptor extends QueuedInterceptor {
   final TokenClient _tokenClient = TokenClient();
-  String token;
+  String? token;
   int _counter = 0;
 
   TokenInterceptor();
 
   @override
-  Future<dynamic> onRequest(RequestOptions options) async {
+  Future<void> onResponse(
+      Response<dynamic> response, ResponseInterceptorHandler handler) async {
     if (token == null) {
-      final DioHTTPClient http = DioHTTPClient();
-      http.client.lock();
-      return await _tokenClient.getToken(DioHTTPClient(), DotEnv()).then((Token tkn) {
-        options.headers[HttpHeaders.authorizationHeader] =
-            token = "${tkn?.tokenType} ${tkn?.jwtToken}";
-        return options;
-      }).whenComplete(() => http.client.unlock());
+      return await _tokenClient
+          .getToken(DioHTTPClient(), DotEnv())
+          .then((Token tkn) {
+        response.requestOptions.headers[HttpHeaders.authorizationHeader] =
+            token = "${tkn.tokenType} ${tkn.jwtToken}";
+        handler.next(response);
+      });
     } else {
-      options.headers[HttpHeaders.authorizationHeader] = "Bearer $token";
-      return options;
+      response.requestOptions.headers[HttpHeaders.authorizationHeader] =
+          "Bearer $token";
+      return handler.next(response);
     }
   }
 
   @override
-  Future<dynamic> onError(DioError error) async {
+  Future<void> onError(DioError error, ErrorInterceptorHandler handler) async {
     _counter++;
     if (_counter < 3) {
       final DioHTTPClient http = DioHTTPClient();
       if (error.response?.statusCode == HttpStatus.unauthorized) {
-        final RequestOptions options = error.response.request;
-        if (token != options.headers[HttpHeaders.authorizationHeader]) {
-          options.headers[HttpHeaders.authorizationHeader] = "Bearer $token";
-          return http.client.request(options.path, options: options);
+        if (token !=
+            error.requestOptions.headers[HttpHeaders.authorizationHeader]) {
+          error.requestOptions.headers[HttpHeaders.authorizationHeader] =
+              "Bearer $token";
+          final Options opts = Options(
+              method: error.requestOptions.method,
+              headers: error.requestOptions.headers);
+          final Response<dynamic> cloneReq = await http.client.request(
+              error.requestOptions.path,
+              options: opts,
+              data: error.requestOptions.data,
+              queryParameters: error.requestOptions.queryParameters);
+          return handler.resolve(cloneReq);
         }
-        http.client.lock();
-        http.client.interceptors.responseLock.lock();
-        http.client.interceptors.errorLock.lock();
+
         return _tokenClient.getToken(http, DotEnv()).then((Token tkn) {
-          options.headers[HttpHeaders.authorizationHeader] =
-              token = "${tkn?.tokenType} ${tkn?.jwtToken}";
-        }).whenComplete(() {
-          http.client.unlock();
-          http.client.interceptors.responseLock.unlock();
-          http.client.interceptors.errorLock.unlock();
-        }).then((dynamic e) {
-          return http.client.request(options.path, options: options);
+          error.requestOptions.headers[HttpHeaders.authorizationHeader] =
+              token = "${tkn.tokenType} ${tkn.jwtToken}";
+        }).then((dynamic e) async {
+          final Options opts = Options(
+              method: error.requestOptions.method,
+              headers: error.requestOptions.headers);
+          final Response<dynamic> cloneReq = await http.client.request(
+              error.requestOptions.path,
+              options: opts,
+              data: error.requestOptions.data,
+              queryParameters: error.requestOptions.queryParameters);
+          return handler.resolve(cloneReq);
         });
       }
     }
-    return null;
   }
 }

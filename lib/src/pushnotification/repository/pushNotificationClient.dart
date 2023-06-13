@@ -7,9 +7,9 @@ class PushNotificationClient {
   static const String PATH = 'app/push/notification';
   static const String CACHE_DATA = 'app/push/notification/data';
 
-  Future<PushNotifications> getPushNotifications(
+  Future<PushNotifications?> getPushNotifications(
       DioHTTPClient http, Network network,
-      {int index, bool refresh}) async {
+      {int? index, bool? refresh}) async {
     final Options options = await http.setOptions(http, network, refresh);
     final Map<String, dynamic> queryParameters =
         http.getQueryParameters(index: index);

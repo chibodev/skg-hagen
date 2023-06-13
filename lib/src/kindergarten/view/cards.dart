@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/kindergarten/controller/news.dart';
 import 'package:skg_hagen/src/kindergarten/dto/events.dart';
 import 'package:skg_hagen/src/kindergarten/dto/news.dart' as DTO;
 
 class Cards {
-  BuildContext _context;
+  late BuildContext _context;
 
   Widget buildRows(BuildContext context, dynamic card) {
     this._context = context;
 
-    final List<Widget> list = List<Widget>();
+    final List<Widget> list = <Widget>[];
     String subjectName = "";
 
     if (card is List<Events>) {
@@ -57,19 +57,21 @@ class Cards {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Slidable(
-                actionPane: SlidableDrawerActionPane(),
-                actionExtentRatio: Default.SLIDE_RATIO,
-                actions: <Widget>[
-                  CustomWidget.getSlidableShare(
-                    card.title,
-                    Default.getSharableContent(
+                startActionPane: ActionPane(
+                  motion: const DrawerMotion(),
+                  extentRatio: Default.SLIDE_RATIO,
+                  children: <Widget>[
+                    CustomWidget.getSlidableShare(
                       card.title,
-                      card.getFormattedOccurrence(),
-                      card.comment,
-                      card?.address,
+                      Default.getSharableContent(
+                        card.title,
+                        card.getFormattedOccurrence(),
+                        card.comment,
+                        card.address,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
                 child: Container(
                   width: SizeConfig.screenHeight,
                   child: Column(

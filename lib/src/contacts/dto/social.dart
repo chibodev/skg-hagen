@@ -7,18 +7,18 @@ class Social {
   static const String NAME = 'Social Media';
 
   static const List<String> VALID_SOCIAL = <String>[
-    'facebook', 'instagram', 'twitter', 'whatsapp', 'youtube'
+    'facebook',
+    'instagram',
+    'twitter',
+    'whatsapp',
+    'youtube'
   ];
 
   String name;
   String url;
   String location;
 
-  Social({
-    this.name,
-    this.url,
-    this.location
-  });
+  Social({required this.name, required this.url, required this.location});
 
   factory Social.fromJson(Map<String, dynamic> json) => Social(
         name: json["name"],
@@ -26,10 +26,10 @@ class Social {
         location: json["location"],
       );
 
-  bool isSocialValid(String name) =>  VALID_SOCIAL.contains(name);
+  bool isSocialValid(String name) => VALID_SOCIAL.contains(name);
 
   String getSocialImage(String name) {
-    String imagePath;
+    String imagePath = "";
 
     //TODO: change logic: loop through folder and set based on name of png | return null if not found
     switch (name) {

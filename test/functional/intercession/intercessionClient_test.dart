@@ -1,54 +1,61 @@
 import 'dart:io';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
-import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/intercession/repository/intercessionClient.dart';
 
-import '../../mock/httpClientFormMock.dart';
-
-class MockDioHTTPClient extends Mock implements DioHTTPClient {}
-
-class MockDotEnv extends Mock implements DotEnv {}
+import '../../mock/httpClientMock.dart';
 
 void main() {
-  IntercessionClient subject;
-  MockDioHTTPClient httpClient;
+  late IntercessionClient subject;
+  late MockDioHTTPClient httpClient;
+  late MockNetwork network;
+  final Options options = Options();
+  final String intercession = 'gebetswunsch';
+  final Map<String, String> data = <String, String>{
+    'intercession': intercession
+  };
 
   setUpAll(() {
     subject = IntercessionClient();
+    httpClient = MockDioHTTPClient();
+    network = MockNetwork();
   });
 
   test('IntercessionClient successfully sends intercession', () async {
-    httpClient = MockDioHTTPClient();
+    when(network.hasInternet()).thenAnswer((_) async => false);
+    when(httpClient.setOptions(httpClient, network, false))
+        .thenAnswer((_) async => options);
 
     when(httpClient.postJSON(
             http: httpClient,
-            path: 'app/intercession',
-            data: anyNamed('data'),
-            options: anyNamed('options')))
-        .thenAnswer((_) async =>
-            HTTPClientFormMock.formPost(statusCode: HttpStatus.ok));
+            path: IntercessionClient.PATH,
+            data: data,
+            options: options))
+        .thenAnswer((_) async => HTTPClientMock.formPost(
+            statusCode: HttpStatus.ok, path: IntercessionClient.PATH));
 
-    final bool response = await subject.saveIntercession(httpClient, Network(), 'gebetswunsch');
+    final bool response =
+        await subject.saveIntercession(httpClient, network, intercession);
 
     expect(response, isTrue);
   });
 
   test('IntercessionClient fails', () async {
-    httpClient = MockDioHTTPClient();
-
+    when(network.hasInternet()).thenAnswer((_) async => false);
+    when(httpClient.setOptions(httpClient, network, any))
+        .thenAnswer((_) async => options);
     when(httpClient.postJSON(
-        http: httpClient,
-        path: 'app/intercession',
-        data: anyNamed('data'),
-        options: anyNamed('options')))
-        .thenAnswer((_) async =>
-        HTTPClientFormMock.formPost(statusCode: HttpStatus.badRequest));
+            http: httpClient,
+            path: IntercessionClient.PATH,
+            data: data,
+            options: options))
+        .thenAnswer((_) async => HTTPClientMock.formPost(
+            statusCode: HttpStatus.badRequest, path: IntercessionClient.PATH));
 
-    final bool response = await subject.saveIntercession(httpClient, Network(), 'gebetswunsch');
+    final bool response =
+        await subject.saveIntercession(httpClient, network, intercession);
 
     expect(response, isFalse);
   });

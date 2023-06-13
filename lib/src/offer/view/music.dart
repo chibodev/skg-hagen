@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
@@ -11,7 +10,7 @@ import 'package:skg_hagen/src/offer/dto/offers.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Music extends State<MusicController> {
-  SettingsMenu settingsMenu;
+  late SettingsMenu settingsMenu;
 
   @override
   void initState() {
@@ -51,29 +50,29 @@ class Music extends State<MusicController> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  CustomWidget.getSinglePageTitle(thirty, widget?.music?.title),
-                  widget?.music?.imageUrl != null
+                  CustomWidget.getSinglePageTitle(thirty, widget.music!.title),
+                  widget.music?.imageUrl != null
                       ? CustomWidget.getImageFromNetwork(
-                          thirty, widget?.music?.imageUrl)
+                          thirty, widget.music?.imageUrl ?? "")
                       : Container(),
                   CustomWidget.getSinglePageDescription(
-                      thirty, widget?.music?.description),
-                  widget.music.occurrence.length > 2
+                      thirty, widget.music!.description),
+                  widget.music!.occurrence.length > 2
                       ? CustomWidget.getSinglePageOccurrence(
                           thirty,
                           Default.capitalize(
-                              widget?.music?.getFormattedOccurrence()))
+                              widget.music?.getFormattedOccurrence()))
                       : Container(),
-                  widget.music.email.length > 2
+                  widget.music!.email.length > 2
                       ? CustomWidget.getSinglePageEmail(thirty,
-                          widget?.music?.email, widget?.music?.title, context)
+                          widget.music!.email, widget.music!.title, context)
                       : Container(),
                   Padding(
                     padding: EdgeInsets.only(
                         bottom: SizeConfig.getSafeBlockVerticalBy(1)),
                     child: CustomWidget.getAddressWithAction(
-                        widget?.music?.address,
-                        room: widget?.music?.room),
+                        widget.music!.address,
+                        room: widget.music?.room),
                   ),
                 ],
               ),

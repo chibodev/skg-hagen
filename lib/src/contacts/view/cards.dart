@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/dto/address.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/service/clipboard.dart';
 import 'package:skg_hagen/src/common/service/tapAction.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
@@ -11,11 +11,11 @@ import 'package:skg_hagen/src/contacts/dto/contact.dart';
 import 'package:skg_hagen/src/contacts/dto/social.dart';
 
 class Cards {
-  BuildContext _buildContext;
+  late BuildContext _buildContext;
 
   Widget buildRows(dynamic card, BuildContext context) {
     this._buildContext = context;
-    final List<Widget> list = List<Widget>();
+    final List<Widget> list = <Widget>[];
     String subjectName = "";
 
     if (card is List<Address>) {
@@ -69,17 +69,19 @@ class Cards {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Slidable(
-                      actionPane: SlidableDrawerActionPane(),
-                      actionExtentRatio: Default.SLIDE_RATIO,
-                      actions: <Widget>[
-                        CustomWidget.getSlidableShare(
-                            card.getCapitalizedAddressName(), card.toString())
-                      ],
+                      startActionPane: ActionPane(
+                        motion: const DrawerMotion(),
+                        extentRatio: Default.SLIDE_RATIO,
+                        children: <Widget>[
+                          CustomWidget.getSlidableShare(
+                              card.getCapitalizedAddressName(), card.toString())
+                        ],
+                      ),
                       child: Container(
                         padding: EdgeInsets.zero,
                         height: SizeConfig.getSafeBlockVerticalBy(14),
                         width: SizeConfig.getSafeBlockHorizontalBy(100),
-                        child: _getImageByName(card.name),
+                        child: _getImageByName(card.name ?? ""),
                       ),
                     ),
                     (card.street == null || card.name == null)
@@ -104,7 +106,7 @@ class Cards {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            _getCircleAvatar(card.imageUrl, color),
+            _getCircleAvatar(card.imageUrl ?? "", color),
             _getContacts(card),
             card.administration == 0
                 ? _getAddressWithoutAction(card.address,
@@ -134,12 +136,14 @@ class Cards {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Slidable(
-                  actionPane: SlidableDrawerActionPane(),
-                  actionExtentRatio: Default.SLIDE_RATIO,
-                  actions: <Widget>[
-                    CustomWidget.getSlidableShare(
-                        card.name, Default.getSharableContent(card.url))
-                  ],
+                  startActionPane: ActionPane(
+                    motion: const DrawerMotion(),
+                    extentRatio: Default.SLIDE_RATIO,
+                    children: <Widget>[
+                      CustomWidget.getSlidableShare(
+                          card.name, Default.getSharableContent(card.url))
+                    ],
+                  ),
                   child: _getSocialMediaIcon(card)),
             ],
           ),
@@ -190,7 +194,7 @@ class Cards {
   }
 
   Widget _getAddressWithoutAction(Address address,
-      {bool noColor, bool textColor}) {
+      {bool? noColor, bool? textColor}) {
     return Expanded(
       child: Container(
         child: Column(
@@ -226,7 +230,7 @@ class Cards {
     );
   }
 
-  Widget _getOpening(String opening, {bool colorWhite}) {
+  Widget _getOpening(String opening, {bool? colorWhite}) {
     final double twenty = SizeConfig.getSafeBlockVerticalBy(2);
     return Expanded(
       child: Container(
@@ -265,7 +269,7 @@ class Cards {
   }
 
   Column _getCircleAvatar(String imageUrl, Color color) {
-    return imageUrl == null
+    return imageUrl.length < 2
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
@@ -335,8 +339,7 @@ class Cards {
           email != ""
               ? InkWell(
                   splashColor: Color(Default.COLOR_GREEN),
-                  onTap: () =>
-                      TapAction().sendMail(email, title),
+                  onTap: () => TapAction().sendMail(email, title),
                   onLongPress: () => ClipboardService.copyAndNotify(
                       context: this._buildContext, text: email),
                   child: Padding(
@@ -363,8 +366,8 @@ class Cards {
     );
   }
 
-  Image _getImageByName(String name) {
-    Image image;
+  Image? _getImageByName(String name) {
+    Image? image;
     if (name.contains('johannis')) {
       image = Image.asset(
         Address.MAP_IMAGE_JOHANNISKIRCHE,

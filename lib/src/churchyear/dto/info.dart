@@ -1,13 +1,13 @@
 class Info {
   String title;
   String description;
-  String url;
+  dynamic url;
 
-  Info({this.description, this.title, this.url});
+  Info({required this.description, required this.title, this.url});
 
   factory Info.fromJson(Map<String, dynamic> json) => Info(
         title: json["title"],
-        url: json["url"],
+        url: json["url"] ?? null,
         description: json["description"],
       );
 }

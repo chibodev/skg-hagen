@@ -6,8 +6,8 @@ class ResurrectionStation {
   List<Station> station;
 
   ResurrectionStation({
-    this.info,
-    this.station,
+    required this.info,
+    required this.station,
   });
 
   factory ResurrectionStation.fromJson(Map<String, dynamic> json) =>

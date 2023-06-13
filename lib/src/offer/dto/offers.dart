@@ -3,9 +3,9 @@ import 'package:skg_hagen/src/offer/dto/offer.dart';
 import 'package:skg_hagen/src/offer/dto/project.dart';
 
 class Offers {
-  final List<Offer> offers;
-  final List<Project> projects;
-  final List<Music> music;
+  final List<Offer>? offers;
+  final List<Project>? projects;
+  final List<Music>? music;
   static const String NAME = 'Angebote';
   static const String IMAGE = 'assets/images/gruppen.jpg';
   static const String FOOTER =

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/service/client/assetClient.dart';
 import 'package:skg_hagen/src/settings/dto/settingsList.dart';
 import 'package:skg_hagen/src/settings/service/settings.dart';
 
 class SettingsMenu {
-  List<SettingsList> choices;
+  late List<SettingsList> choices;
   dynamic pageView;
-  BuildContext _context;
+  late BuildContext _context;
 
   SettingsMenu({@required this.pageView}) {
     _populateSettingsList();
@@ -25,7 +25,7 @@ class SettingsMenu {
             return PopupMenuItem<SettingsList>(
               value: choice,
               child: Text(
-                Default?.capitalize(choice.title),
+                Default.capitalize(choice.title),
                 style: TextStyle(
                   fontSize:
                       SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),

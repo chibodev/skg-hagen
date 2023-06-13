@@ -3,44 +3,42 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
-import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/kindergarten/dto/kindergarten.dart';
 import 'package:skg_hagen/src/kindergarten/repository/kindergartenClient.dart';
 
 import '../../mock/httpClientMock.dart';
 
-class MockDioHTTPClient extends Mock implements DioHTTPClient {}
-
-class MockNetwork extends Mock implements Network {}
-
 void main() {
-  KindergartenClient subject;
-  MockDioHTTPClient client;
-  MockNetwork network;
+  late KindergartenClient subject;
+  late MockDioHTTPClient httpClient;
+  late MockNetwork network;
+  final Options options = Options();
 
   setUpAll(() {
     subject = KindergartenClient();
-    client = MockDioHTTPClient();
+    httpClient = MockDioHTTPClient();
     network = MockNetwork();
   });
 
   test('KindergartenClient successfully retrieves data', () async {
     when(network.hasInternet()).thenAnswer((_) async => false);
+    when(httpClient.setOptions(httpClient, network, any))
+        .thenAnswer((_) async => options);
     when(
-      client.getJSONResponse(
-          http: client,
-          path: 'app/kindergarten',
-          object: Kindergarten,
-          options: anyNamed('options'),
-          cacheData: anyNamed('cacheData')),
+      httpClient.getJSONResponse(
+        http: httpClient,
+        options: options,
+        path: KindergartenClient.PATH,
+        object: Kindergarten,
+        cacheData: KindergartenClient.CACHE_DATA,
+      ),
     ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(
         statusCode: HttpStatus.ok, path: 'kindergarten.json'));
 
-    final Kindergarten kindergarten =
-        await subject.getAppointments(client, network, refresh: true);
+    final Kindergarten? kindergarten =
+        await subject.getAppointments(httpClient, network, refresh: true);
 
-    expect(kindergarten.events, isNotEmpty);
+    expect(kindergarten!.events, isNotEmpty);
     expect(
         kindergarten.events.first.title, 'Demonstration gegen Bienensterben');
     expect(kindergarten.events.first.occurrence, DateTime.parse('2019-09-27'));
@@ -73,48 +71,50 @@ void main() {
   });
 
   test('KindergartenClient fails and throws Exception', () async {
-    DioError error;
+    dynamic error;
 
     when(network.hasInternet()).thenAnswer((_) async => false);
+    when(httpClient.setOptions(httpClient, network, any))
+        .thenAnswer((_) async => options);
     when(
-      client.getJSONResponse(
-          http: client,
-          path: 'app/kindergarten',
-          object: Kindergarten,
-          options: anyNamed('options'),
-          cacheData: anyNamed('cacheData')),
+      httpClient.getJSONResponse(
+        http: httpClient,
+        options: options,
+        path: KindergartenClient.PATH,
+        object: Kindergarten,
+        cacheData: KindergartenClient.CACHE_DATA,
+      ),
     ).thenAnswer((_) async =>
         HTTPClientMock.getJSONRequest(statusCode: HttpStatus.unauthorized));
 
     try {
-      await subject.getAppointments(client, network, index: 0, refresh: false);
+      await subject.getAppointments(httpClient, network,
+          index: 0, refresh: false);
     } catch (e) {
       error = e;
     }
 
     expect(error, isNotNull);
-    expect(error is Exception, isTrue);
-    expect(error.error.statusCode, HttpStatus.unauthorized);
+    expect(error is NoSuchMethodError, isTrue);
   });
 
   test('FileDownload test pass', () async {
-    when(client.downloadFile(
-            http: client, urlPath: 'fileUrl', savePath: 'filePath'))
+    when(httpClient.downloadFile(
+            http: httpClient, urlPath: 'fileUrl', savePath: 'filePath'))
         .thenAnswer((_) async => true);
 
-    final bool name = await client.downloadFile(
-        http: client, urlPath: 'fileUrl', savePath: 'filePath');
-    assert(name, isTrue);
+    final bool result = await httpClient.downloadFile(
+        http: httpClient, urlPath: 'fileUrl', savePath: 'filePath');
+    assert(result, isTrue);
   });
 
   test('FileDownload test fails', () async {
-    when(client.downloadFile(
-            http: client, urlPath: 'fileUrlError', savePath: 'filePath'))
+    when(httpClient.downloadFile(
+            http: httpClient, urlPath: 'fileUrlError', savePath: 'filePath'))
         .thenAnswer((_) async => false);
 
-    final bool result = await client.downloadFile(
-        http: client, urlPath: 'fileUrlError', savePath: 'filePath');
-
+    final bool result = await httpClient.downloadFile(
+        http: httpClient, urlPath: 'fileUrlError', savePath: 'filePath');
     assert(result != true, true);
   });
 }

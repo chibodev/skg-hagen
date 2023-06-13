@@ -10,22 +10,21 @@ class Events {
   final String time;
   final String comment;
   final String placeName;
-  Address address;
-  final String name;
-  final String street;
-  final String houseNumber;
-  final String zip;
-  final String city;
-  final String country;
-  final String latLong;
+  late Address address;
+  final String? name;
+  final String? street;
+  final String? houseNumber;
+  final String? zip;
+  final String? city;
+  final String? country;
+  final String? latLong;
 
   Events(
-      {this.title,
-      this.occurrence,
-      this.time,
-      this.comment,
-      this.placeName,
-      this.address,
+      {required this.title,
+      required this.occurrence,
+      required this.time,
+      required this.comment,
+      required this.placeName,
       this.name,
       this.street,
       this.houseNumber,
@@ -67,7 +66,7 @@ class Events {
 
   String getFormattedOccurrence() {
     initializeDateFormatting('de_DE', null);
-    final List<String> timeSplit =
+    final List<String>? timeSplit =
         this.time == "00:00:00" ? null : this.time.split(':');
     if (timeSplit == null) {
       return DateFormat("E d.M.yy", "de_DE")

@@ -5,33 +5,35 @@ class CacheInterceptor extends Interceptor {
   CacheInterceptor();
 
   @override
-  Future<dynamic> onRequest(RequestOptions options) async {
-    return options;
+  Future<void> onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
+    return handler.next(options);
   }
 
   @override
-  Future<dynamic> onResponse(Response<dynamic> response) async {
-    final String keyData = "${response.request.path}/data";
-    final String keyCache = response.request.path;
+  Future<void> onResponse(
+      Response<dynamic> response, ResponseInterceptorHandler handler) async {
+    final String keyData = "${response.requestOptions.path}/data";
+    final String keyCache = response.requestOptions.path;
 
     sharedPreferences.setString(keyData, response.toString());
     sharedPreferences.setBool(keyCache, true);
   }
 
   @override
-  Future<dynamic> onError(DioError e) async {
-    if (e.type == DioErrorType.CONNECT_TIMEOUT ||
-        e.type == DioErrorType.DEFAULT) {
-      final String keyData = "${e.request.path}/data";
-      final String keyCache = e.request.path;
+  Future<void> onError(DioError err, ErrorInterceptorHandler handler) async {
+    if (err.type == DioErrorType.connectTimeout ||
+        err.type == DioErrorType.other) {
+      final String keyData = "${err.requestOptions.path}/data";
+      final String keyCache = err.requestOptions.path;
 
       final dynamic cachedResponse = sharedPreferences.get(keyData);
       if (cachedResponse != null) {
-        return cachedResponse;
+        return handler.next(cachedResponse);
       } else {
         sharedPreferences.setBool(keyCache, false);
       }
     }
-    return e;
+    return handler.next(err);
   }
 }

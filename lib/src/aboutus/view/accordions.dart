@@ -13,12 +13,12 @@ import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Accordions extends State<Controller.AboutUs> {
-  AboutUs _aboutUs;
-  List<dynamic> _options;
+  AboutUs? _aboutUs;
+  List<dynamic>? _options;
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
   bool _dataAvailable = false;
-  SettingsMenu settingsMenu;
+  late SettingsMenu settingsMenu;
 
   @override
   void initState() {
@@ -71,7 +71,7 @@ class Accordions extends State<Controller.AboutUs> {
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) => !_dataAvailable
                 ? CustomWidget.buildSliverSpinner()
-                : Cards().buildRows(_options[index], context: context),
+                : Cards().buildRows(_options![index], context: context),
             childCount: _options?.length ?? 0,
           ),
         ),
@@ -91,10 +91,10 @@ class Accordions extends State<Controller.AboutUs> {
       _hasInternet = await Network().hasInternet();
       _aboutUs = await AboutUsClient().getData(DioHTTPClient(), Network());
 
-      _options = List<dynamic>();
+      _options = <dynamic>[];
       if (_aboutUs != null) {
-        _options.add(_aboutUs.history);
-        _options.add(_aboutUs.presbytery);
+        _options?.add(_aboutUs?.history);
+        _options?.add(_aboutUs?.presbytery);
         _dataAvailable = true;
       }
 

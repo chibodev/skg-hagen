@@ -7,8 +7,8 @@ class OfferClient {
   static const String PATH = 'app/offers';
   static const String CACHE_DATA = 'app/offers/data';
 
-  Future<Offers> getOffers(DioHTTPClient http, Network network,
-      {int index, bool refresh}) async {
+  Future<Offers?> getOffers(DioHTTPClient http, Network network,
+      {int? index, bool? refresh}) async {
     final Options options = await http.setOptions(http, network, refresh);
 
     final dynamic jsonResponse = await http.getJSONResponse(

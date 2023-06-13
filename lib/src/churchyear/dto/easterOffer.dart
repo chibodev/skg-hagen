@@ -5,7 +5,7 @@ class EasterOffer {
   ResurrectionStation resurrectionStation;
 
   EasterOffer({
-    this.resurrectionStation,
+    required this.resurrectionStation,
   });
 
   factory EasterOffer.fromJson(Map<String, dynamic> json) => EasterOffer(

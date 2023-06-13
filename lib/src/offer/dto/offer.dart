@@ -4,35 +4,35 @@ import 'package:skg_hagen/src/offer/dto/ageRange.dart';
 class Offer {
   final String title;
   final String occurrence;
-  final String time;
-  final String timeUntil;
+  final String? time;
+  final String? timeUntil;
   final String placeName;
-  final String room;
-  final String organizer;
-  final String url;
-  final String urlFormat;
-  final String email;
-  final String infoTitle;
-  AgeRange ageRange;
-  final int ageStart;
-  final int ageEnd;
+  final String? room;
+  final String? organizer;
+  final String? url;
+  final String? urlFormat;
+  final String? email;
+  final String? infoTitle;
+  late AgeRange ageRange;
+  final int? ageStart;
+  final int? ageEnd;
   final String schoolYear;
-  Address address;
-  final String name;
-  final String street;
-  final String houseNumber;
-  final String zip;
-  final String city;
-  final String country;
-  final String latLong;
+  late Address address;
+  final String? name;
+  final String? street;
+  final String? houseNumber;
+  final String? zip;
+  final String? city;
+  final String? country;
+  final String? latLong;
   static const String NAME = 'Offene Angebote';
 
   Offer(
-      {this.title,
-      this.occurrence,
+      {required this.title,
+      required this.occurrence,
       this.time,
       this.timeUntil,
-      this.placeName,
+      required this.placeName,
       this.room,
       this.infoTitle,
       this.organizer,
@@ -41,7 +41,7 @@ class Offer {
       this.email,
       this.ageStart,
       this.ageEnd,
-      this.schoolYear,
+      required this.schoolYear,
       this.name,
       this.street,
       this.houseNumber,
@@ -65,8 +65,8 @@ class Offer {
   factory Offer.fromJson(Map<String, dynamic> json) => Offer(
         title: json['title'],
         occurrence: json['occurrence'],
-        time: json["time"],
-        timeUntil: json["timeUntil"],
+        time: json["time"] == null ? null : json["time"],
+        timeUntil: json["timeUntil"] == null ? null : json["timeUntil"],
         placeName: json["placeName"],
         room: json["room"] == "" ? null : json["room"],
         infoTitle: json["infoTitle"] == "" ? null : json["infoTitle"],
@@ -90,19 +90,19 @@ class Offer {
 
   String getFormattedOccurrence() {
     final String occurrenceTime =
-        (time == "00:00:00") ? '--' : time.substring(0, 5);
+        (time == "00:00:00" || time == null) ? '--' : time!.substring(0, 5);
     final String occurrenceTimeUntil =
         (timeUntil == "00:00:00" || timeUntil == null)
             ? ''
-            : "- ${timeUntil.substring(0, 5)}";
+            : "- ${timeUntil!.substring(0, 5)}";
 
     return occurrence == ''
         ? occurrence
         : "$occurrence | $occurrenceTime $occurrenceTimeUntil";
   }
 
-  String getFormattedOrganiser() {
-    String text;
+  String? getFormattedOrganiser() {
+    String? text;
 
     if (organizer != null) {
       text = infoTitle != null ? "$infoTitle: $organizer" : organizer;

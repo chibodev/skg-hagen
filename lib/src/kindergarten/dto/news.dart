@@ -1,19 +1,19 @@
 class News {
   final String title;
+  final String? imageUrl;
   final String description;
-  final String url;
-  final String urlFormat;
-  final String imageUrl;
-  final String fileUrl;
-  final String filename;
-  final String format;
+  final String? url;
+  final String? urlFormat;
+  final String? fileUrl;
+  final String? filename;
+  final String? format;
   static const int URL_MIN = 7;
   static const String NAME = 'Aktionen';
 
   News(
-      {this.title,
+      {required this.title,
       this.imageUrl,
-      this.description,
+      required this.description,
       this.url,
       this.urlFormat,
       this.fileUrl,

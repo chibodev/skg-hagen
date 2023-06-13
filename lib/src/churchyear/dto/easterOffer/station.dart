@@ -6,9 +6,9 @@ class Station {
   dynamic format;
 
   Station({
-    this.id,
-    this.title,
-    this.description,
+    required this.id,
+    required this.title,
+    required this.description,
     this.url,
     this.format,
   });
@@ -17,7 +17,7 @@ class Station {
         id: json["id"],
         title: json["title"],
         description: json["description"],
-        url: json["url"],
-        format: json["format"],
+        url: json["url"] ?? null,
+        format: json["format"] ?? null,
       );
 }

@@ -1,5 +1,5 @@
 class BibleBook {
-  String _name;
+  late String _name;
 
   static const String _1MOSE = "1. Mose";
   static const String _2MOSE = "2. Mose";
@@ -145,7 +145,7 @@ class BibleBook {
     _name = name;
   }
 
-  String getAbbreviation() {
+  String? getAbbreviation() {
     return MAPPER[_name];
   }
 }

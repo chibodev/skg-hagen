@@ -25,8 +25,8 @@ class PushNotificationsManager {
    3. if not empty and not deactivated ignore
    */
 
-  BuildContext _buildContext;
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  late BuildContext _buildContext;
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   bool _initialized = false;
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -48,19 +48,29 @@ class PushNotificationsManager {
     _buildContext = context;
     if (!_initialized) {
       // For iOS request permission first.
-      _firebaseMessaging.requestNotificationPermissions();
+      _firebaseMessaging
+        ..requestPermission(
+          alert: true,
+          announcement: false,
+          badge: true,
+          carPlay: false,
+          criticalAlert: false,
+          provisional: false,
+          sound: true,
+        );
+
       _configLocalNotification();
-      _firebaseMessaging.configure(
-        onMessage: (Map<String, dynamic> message) async {
-          final Messaging messaging = Messaging.fromJson(message);
-          _showNotification(messaging);
-        },
-        onLaunch: _openScreen,
-        onResume: _openScreen,
-      );
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+        final Messaging messaging = Messaging.fromJson(message.toMap());
+        _showNotification(messaging);
+      });
+
+      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+        _openScreen(message.toMap());
+      });
 
       if (!Environment.isProduction()) {
-        final String token = await _firebaseMessaging.getToken();
+        final String? token = await _firebaseMessaging.getToken();
         print("FirebaseMessaging token: $token");
       }
 
@@ -70,7 +80,7 @@ class PushNotificationsManager {
 
   Future<void> _openScreen(Map<String, dynamic> message) async {
     final Messaging messaging = Messaging.fromJson(message);
-    _openScreenByRoute(messaging.data.screen);
+    _openScreenByRoute(messaging.data.screen ?? "");
   }
 
   void _openScreenByRoute(String routeName) {
@@ -79,9 +89,9 @@ class PushNotificationsManager {
     }
   }
 
-  Future<void> onSelectNotification(String payload) async {
-    final Data data = Data.fromJson(jsonDecode(payload));
-    _openScreenByRoute(data.screen);
+  Future<void> onSelectNotification(String? payload) async {
+    final Data data = Data.fromJson(jsonDecode(payload!));
+    _openScreenByRoute(data.screen ?? "");
   }
 
   void _showNotification(Messaging message) async {
@@ -89,7 +99,7 @@ class PushNotificationsManager {
         AndroidNotificationDetails(
             Platform.isAndroid ? 'de.skg_hagen' : 'de.skghagen.app',
             'skg Hagen',
-            'notification',
+            channelDescription: 'notification',
             playSound: true,
             enableVibration: true,
             importance: Importance.max,

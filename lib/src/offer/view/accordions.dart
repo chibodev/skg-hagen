@@ -17,14 +17,14 @@ import 'package:skg_hagen/src/offer/view/cards.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Accordions extends State<Controller.Offer> {
-  Offers _offers;
-  Confirmation _confirmation;
-  Aid _aid;
-  List<dynamic> _options;
+  Offers? _offers;
+  Confirmation? _confirmation;
+  Aid? _aid;
+  late List<dynamic> _options;
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
   bool _dataAvailable = false;
-  SettingsMenu settingsMenu;
+  late SettingsMenu settingsMenu;
 
   @override
   void initState() {
@@ -79,7 +79,7 @@ class Accordions extends State<Controller.Offer> {
             (BuildContext context, int index) => _dataAvailable
                 ? Cards().buildRows(context, _options[index], _dataAvailable)
                 : CustomWidget.buildSliverSpinner(),
-            childCount: _options?.length ?? 0,
+            childCount: _options.length,
           ),
         ),
         !_dataAvailable
@@ -101,7 +101,7 @@ class Accordions extends State<Controller.Offer> {
           .getConfirmation(DioHTTPClient(), Network());
       _aid = await AidOfferClient().getAidOffer(DioHTTPClient(), Network());
 
-      _options = List<dynamic>();
+      _options = <dynamic>[];
 
       _setOptions();
 
@@ -114,9 +114,9 @@ class Accordions extends State<Controller.Offer> {
   void _setOptions() {
     //TODO: use somewhat of a tag service to avoid always extending
     if (_offers != null) {
-      _options.add(_offers.offers);
-      _options.add(_offers.music);
-      _options.add(_offers.projects);
+      _options.add(_offers!.offers);
+      _options.add(_offers!.music);
+      _options.add(_offers!.projects);
       _dataAvailable = true;
     }
 

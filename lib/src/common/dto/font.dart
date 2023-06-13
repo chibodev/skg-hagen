@@ -1,11 +1,11 @@
 import 'package:skg_hagen/src/common/library/globals.dart';
 
 class Font {
-  double primarySize;
-  double secondarySize;
-  double iconSize;
-  double boxSize;
-  double imageIconSize;
+  late double primarySize;
+  late double secondarySize;
+  late double iconSize;
+  late double boxSize;
+  late double imageIconSize;
 
   static const String PRIMARY_SIZE_NAME = 'standardFontSize';
   static const String SECONDARY_SIZE_NAME = 'secondaryFontSize';
@@ -21,21 +21,21 @@ class Font {
   static const String NAME = 'Optima';
 
   Font() {
-    primarySize = sharedPreferences.containsKey(PRIMARY_SIZE_NAME)
+    primarySize = (sharedPreferences.containsKey(PRIMARY_SIZE_NAME)
         ? sharedPreferences.getDouble(PRIMARY_SIZE_NAME)
-        : PRIMARY_SIZE;
-    secondarySize = sharedPreferences.containsKey(SECONDARY_SIZE_NAME)
+        : PRIMARY_SIZE)!;
+    secondarySize = (sharedPreferences.containsKey(SECONDARY_SIZE_NAME)
         ? sharedPreferences.getDouble(SECONDARY_SIZE_NAME)
-        : SECONDARY_SIZE;
-    iconSize = sharedPreferences.containsKey(ICON_SIZE_NAME)
+        : SECONDARY_SIZE)!;
+    iconSize = (sharedPreferences.containsKey(ICON_SIZE_NAME)
         ? sharedPreferences.getDouble(ICON_SIZE_NAME)
-        : ICON_SIZE;
-    boxSize = sharedPreferences.containsKey(BOX_SIZE_NAME)
+        : ICON_SIZE)!;
+    boxSize = (sharedPreferences.containsKey(BOX_SIZE_NAME)
         ? sharedPreferences.getDouble(BOX_SIZE_NAME)
-        : BOX_SIZE;
-    imageIconSize = sharedPreferences.containsKey(IMAGE_ICON_SIZE_NAME)
+        : BOX_SIZE)!;
+    imageIconSize = (sharedPreferences.containsKey(IMAGE_ICON_SIZE_NAME)
         ? sharedPreferences.getDouble(IMAGE_ICON_SIZE_NAME)
-        : IMAGE_ICON_SIZE;
+        : IMAGE_ICON_SIZE)!;
   }
 
   void increaseSize() {

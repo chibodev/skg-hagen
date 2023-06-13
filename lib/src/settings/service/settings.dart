@@ -10,7 +10,7 @@ class Settings {
   Future<List<SettingsList>> getList(AssetClient assetClient) async {
     final String list = await assetClient.loadAsset(CONFIG_FILE);
     final YamlMap listConfig = loadYaml(list);
-    final List<SettingsList> settingsList = List<SettingsList>();
+    final List<SettingsList> settingsList = <SettingsList>[];
 
     listConfig.forEach((dynamic key, dynamic value) {
       value.forEach((dynamic item) {

@@ -1,8 +1,8 @@
 class AidReceive {
-  String title;
-  String description;
-  String phone;
-  String email;
+  String? title;
+  String? description;
+  String? phone;
+  String? email;
 
   static const String NAME = 'Hilfe-Suchende';
   static const String IMAGE = 'assets/images/angebote.jpg';
@@ -21,9 +21,11 @@ class AidReceive {
         description: json["description"] == "" || json["description"] == null
             ? null
             : json["description"],
-        phone:
-            json["phone"] == "" || json["phone"] == null ? null : json["phone"].toString().trim(),
-        email:
-            json["email"] == "" || json["email"] == null ? null : json["email"].toString().trim(),
+        phone: json["phone"] == "" || json["phone"] == null
+            ? null
+            : json["phone"].toString().trim(),
+        email: json["email"] == "" || json["email"] == null
+            ? null
+            : json["email"].toString().trim(),
       );
 }

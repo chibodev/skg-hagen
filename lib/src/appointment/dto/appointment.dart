@@ -3,47 +3,48 @@ import 'package:intl/intl.dart';
 import 'package:skg_hagen/src/common/dto/address.dart';
 
 class Appointment {
-  Address address;
+  late Address address;
   final String title;
   final DateTime occurrence;
   final String time;
-  final DateTime endOccurrence;
-  final String endTime;
+  final DateTime? endOccurrence;
+  final String? endTime;
   final String placeName;
   final String room;
-  final String infoTitle;
-  final String organizer;
-  final String url;
-  final String urlFormat;
-  final String email;
-  final String name;
-  final String street;
-  final String houseNumber;
-  final String zip;
-  final String city;
-  final String country;
-  final String latLong;
+  final String? infoTitle;
+  final String? organizer;
+  final String? url;
+  final String? urlFormat;
+  final String? email;
+  final String? name;
+  final String? street;
+  final String? houseNumber;
+  final String? zip;
+  final String? city;
+  final String? country;
+  final String? latLong;
 
-  Appointment(
-      {this.title,
-      this.occurrence,
-      this.time,
-      this.endOccurrence,
-      this.endTime,
-      this.placeName,
-      this.room,
-      this.infoTitle,
-      this.organizer,
-      this.url,
-      this.urlFormat,
-      this.email,
-      this.name,
-      this.street,
-      this.houseNumber,
-      this.zip,
-      this.city,
-      this.country,
-      this.latLong}) {
+  Appointment({
+    required this.title,
+    required this.occurrence,
+    required this.time,
+    this.endOccurrence,
+    this.endTime,
+    required this.placeName,
+    required this.room,
+    this.infoTitle,
+    this.organizer,
+    this.url,
+    this.urlFormat,
+    this.email,
+    this.name,
+    this.street,
+    this.houseNumber,
+    this.zip,
+    this.city,
+    this.country,
+    this.latLong,
+  }) {
     this.address = Address(
         name: name,
         street: street,
@@ -112,7 +113,7 @@ class Appointment {
   }
 
   DateTime getFormattedClosingTime() {
-    return _convertToDateTime(this.endOccurrence, this.endTime);
+    return _convertToDateTime(this.endOccurrence!, this.endTime!);
   }
 
   String getFormattedTimeAsString() {
@@ -131,10 +132,10 @@ class Appointment {
   }
 
   String getFormattedOrganiser() {
-    String text;
+    String text = "";
 
     if (organizer != null) {
-      text = infoTitle != null ? "$infoTitle: $organizer" : organizer;
+      text = (infoTitle != null ? "$infoTitle: $organizer" : organizer)!;
     }
 
     return text;

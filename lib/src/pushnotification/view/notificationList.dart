@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
@@ -16,12 +15,12 @@ import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class NotificationList extends State<PushNotificationController> {
   int _indexCounter = 0;
-  PushNotifications pushNotifications;
+  late PushNotifications? pushNotifications;
   final ScrollController _scrollController = ScrollController();
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
   bool _dataAvailable = true;
-  SettingsMenu settingsMenu;
+  late SettingsMenu settingsMenu;
 
   @override
   void initState() {
@@ -72,6 +71,12 @@ class NotificationList extends State<PushNotificationController> {
           .getPushNotifications(DioHTTPClient(), Network(), refresh: true);
 
       final bool status = pushNotifications?.pushNotification != null;
+      final List<PushNotification>? pushNotificationList =
+          pushNotifications?.pushNotification;
+      final bool notificationIsNotEmpty =
+          pushNotifications?.pushNotification != null &&
+              pushNotificationList != null &&
+              pushNotificationList.isNotEmpty;
       _hasInternet = await Network().hasInternet();
 
       if (status) {
@@ -89,8 +94,7 @@ class NotificationList extends State<PushNotificationController> {
       setState(() {
         _isPerformingRequest = false;
         _indexCounter = 1;
-        _dataAvailable =
-            status && pushNotifications.pushNotification.isNotEmpty;
+        _dataAvailable = status && notificationIsNotEmpty;
       });
     }
   }
@@ -103,14 +107,14 @@ class NotificationList extends State<PushNotificationController> {
       if (!_hasInternet) {
         _isPerformingRequest = false;
       } else {
-        final PushNotifications newNotifications =
+        final PushNotifications? newNotifications =
             await PushNotificationClient().getPushNotifications(
                 DioHTTPClient(), Network(),
                 index: _indexCounter, refresh: true);
 
-        final List<PushNotification> newEntries =
+        final List<PushNotification>? newEntries =
             newNotifications?.pushNotification;
-        final bool isResponseEmpty = newEntries?.isEmpty;
+        final bool? isResponseEmpty = newEntries?.isEmpty;
         if (isResponseEmpty != null && isResponseEmpty) {
           final double edge = 50.0;
           final double offsetFromBottom =
@@ -125,8 +129,10 @@ class NotificationList extends State<PushNotificationController> {
         }
         setState(() {
           _isPerformingRequest = false;
-          if (isResponseEmpty != null && !isResponseEmpty) {
-            pushNotifications?.pushNotification?.addAll(newEntries);
+          if (isResponseEmpty != null &&
+              !isResponseEmpty &&
+              newEntries != null) {
+            pushNotifications?.pushNotification.addAll(newEntries);
             _indexCounter++;
           }
         });
@@ -134,7 +140,8 @@ class NotificationList extends State<PushNotificationController> {
     }
   }
 
-  Widget _buildList(BuildContext context, PushNotifications pushNotifications) {
+  Widget _buildList(
+      BuildContext context, PushNotifications? pushNotifications) {
     return CustomScrollView(
       controller: _scrollController,
       slivers: <Widget>[
@@ -162,7 +169,7 @@ class NotificationList extends State<PushNotificationController> {
                   : _buildRows(
                       context, pushNotifications.pushNotification[index]);
             },
-            childCount: pushNotifications?.pushNotification?.length ?? 0,
+            childCount: pushNotifications?.pushNotification.length ?? 0,
           ),
         ),
         SliverToBoxAdapter(
@@ -191,7 +198,7 @@ class NotificationList extends State<PushNotificationController> {
             children: <Widget>[
               ListTile(
                 isThreeLine: true,
-                onTap: () => Navigator.of(context).pushNamed(list.screen),
+                onTap: () => Navigator.of(context).pushNamed(list.screen ?? ""),
                 title: Text(
                   list.title,
                   style: TextStyle(

@@ -10,34 +10,34 @@ class Contact {
   String role;
   String phone;
   String email;
-  String imageUrl;
+  String? imageUrl;
   int administration;
   String opening;
-  String name;
+  String? name;
   String street;
   String houseNumber;
   String zip;
   String city;
   String country;
-  Address address;
+  late Address address;
 
   Contact({
-    this.title,
-    this.surname,
-    this.firstname,
-    this.role,
-    this.phone,
-    this.email,
+    required this.title,
+    required this.surname,
+    required this.firstname,
+    required this.role,
+    required this.phone,
+    required this.email,
     this.imageUrl,
-    this.administration,
-    this.opening,
+    required this.administration,
+    required this.opening,
     this.name,
-    this.street,
-    this.houseNumber,
-    this.zip,
-    this.city,
-    this.country,
-  }){
+    required this.street,
+    required this.houseNumber,
+    required this.zip,
+    required this.city,
+    required this.country,
+  }) {
     this.address = Address(
         name: name,
         street: street,
@@ -54,10 +54,13 @@ class Contact {
         role: json["role"],
         phone: json["phone"],
         email: json["email"],
-        imageUrl: json['imageUrl'].toString().length > URL_MIN ? json['imageUrl'] : null,
+        imageUrl: json['imageUrl'].toString().length > URL_MIN
+            ? json['imageUrl']
+            : null,
         administration: int.parse(json["administration"]),
         opening: json["opening"],
-        name: (json["name"] == "--" || json["name"] == "") ? null : json["name"],
+        name:
+            (json["name"] == "--" || json["name"] == "") ? null : json["name"],
         street: json["street"],
         houseNumber: json["houseNumber"],
         zip: json["zip"],
@@ -65,7 +68,7 @@ class Contact {
         country: json["country"],
       );
 
-  String getContactName(){
+  String getContactName() {
     return title == "" ? "$firstname $surname" : "$firstname $surname ($title)";
   }
 }

@@ -6,33 +6,33 @@ class Appointment {
   static const String NAME = 'Termine';
   static const String PAGE_NAME = 'Konfi-Termine';
 
-  Address address;
+  late Address address;
   final String title;
   final DateTime occurrence;
   final String time;
-  final DateTime endOccurrence;
-  final String endTime;
+  final DateTime? endOccurrence;
+  final String? endTime;
   final String placeName;
   final String room;
-  final String infoTitle;
-  final String organizer;
-  final String email;
-  final String name;
-  final String street;
-  final String houseNumber;
-  final String zip;
-  final String city;
-  final String country;
-  final String latLong;
+  final String? infoTitle;
+  final String? organizer;
+  final String? email;
+  final String? name;
+  final String? street;
+  final String? houseNumber;
+  final String? zip;
+  final String? city;
+  final String? country;
+  final String? latLong;
 
   Appointment(
-      {this.title,
-      this.occurrence,
-      this.time,
+      {required this.title,
+      required this.occurrence,
+      required this.time,
       this.endOccurrence,
       this.endTime,
-      this.placeName,
-      this.room,
+      required this.placeName,
+      required this.room,
       this.infoTitle,
       this.organizer,
       this.email,
@@ -109,7 +109,7 @@ class Appointment {
   }
 
   DateTime getFormattedClosingTime() {
-    return _convertToDateTime(this.endOccurrence, this.endTime);
+    return _convertToDateTime(this.endOccurrence!, this.endTime!);
   }
 
   String getFormattedTimeAsString() {
@@ -128,10 +128,10 @@ class Appointment {
   }
 
   String getFormattedOrganiser() {
-    String text;
+    String text = "";
 
     if (organizer != null) {
-      text = infoTitle != null ? "$infoTitle: $organizer" : organizer;
+      text = (infoTitle != null ? "$infoTitle: $organizer" : organizer)!;
     }
 
     return text;

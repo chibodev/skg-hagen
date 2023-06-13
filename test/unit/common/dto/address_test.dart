@@ -4,14 +4,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:skg_hagen/src/common/dto/address.dart';
 
 void main() {
-  Address subject;
-  String name;
-  String street;
-  String houseNumber;
-  String zip;
-  String city;
-  String country;
-  String json;
+  late Address subject;
+  late String name;
+  late String street;
+  late String houseNumber;
+  late String zip;
+  late String city;
+  late String country;
+  late String json;
 
   setUpAll(() {
     name = 'Test';
@@ -62,5 +62,18 @@ void main() {
 
     expect(jsonPayload,
         '{"name":"Test","street":"Street","houseNumber":"23A","zip":"67896","city":"Testy","country":"TE","room":null}');
+  });
+
+  test('Address when json is null', () {
+    final Address subjectJson = Address.fromJson(jsonDecode("{}"));
+
+    expect(subjectJson.name, null);
+    expect(subjectJson.street, null);
+    expect(subjectJson.houseNumber, null);
+    expect(subjectJson.zip, null);
+    expect(subjectJson.city, null);
+    expect(subjectJson.country, null);
+    expect(subjectJson.room, null);
+    expect(subjectJson.latLong, null);
   });
 }

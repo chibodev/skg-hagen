@@ -11,13 +11,13 @@ import 'package:skg_hagen/src/legal/view/page.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class ImprintView extends State<Controller.Imprint> {
-  Imprint _imprint;
-  Privacy _privacy;
+  late Imprint _imprint;
+  late Privacy _privacy;
   bool _dataAvailableImprint = false;
   bool _dataAvailablePrivacy = false;
   bool _isPerformingRequestImprint = false;
   bool _isPerformingRequestPrivacy = false;
-  SettingsMenu settingsMenu;
+  late SettingsMenu settingsMenu;
 
   @override
   void initState() {
@@ -97,7 +97,7 @@ class ImprintView extends State<Controller.Imprint> {
 
       setState(() {
         _isPerformingRequestImprint = false;
-        _dataAvailableImprint = _imprint?.imprint != null;
+        _dataAvailableImprint = _imprint.imprint.length > 1;
       });
     }
   }
@@ -110,7 +110,7 @@ class ImprintView extends State<Controller.Imprint> {
 
       setState(() {
         _isPerformingRequestPrivacy = false;
-        _dataAvailablePrivacy = _privacy?.privacy != null;
+        _dataAvailablePrivacy = _privacy.privacy.length > 1;
       });
     }
   }

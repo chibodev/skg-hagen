@@ -7,8 +7,8 @@ class AppointmentClient {
   static const String PATH = 'app/appointments';
   static const String CACHE_DATA = 'app/appointments/data';
 
-  Future<Appointments> getAppointments(DioHTTPClient http, Network network,
-      {int index, bool refresh}) async {
+  Future<Appointments?> getAppointments(DioHTTPClient http, Network network,
+      {int? index, bool? refresh}) async {
     final Options options = await http.setOptions(http, network, refresh);
 
     final Map<String, dynamic> queryParameters =

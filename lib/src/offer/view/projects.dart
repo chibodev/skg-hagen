@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
@@ -11,7 +10,7 @@ import 'package:skg_hagen/src/offer/dto/project.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Projects extends State<ProjectsController> {
-  SettingsMenu settingsMenu;
+  late SettingsMenu settingsMenu;
 
   @override
   void initState() {
@@ -51,13 +50,12 @@ class Projects extends State<ProjectsController> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  CustomWidget.getSinglePageTitle(
-                      thirty, widget?.project?.title),
+                  CustomWidget.getSinglePageTitle(thirty, widget.project.title),
                   CustomWidget.getSinglePageDescription(
-                      thirty, widget?.project?.description),
-                  widget?.project?.imageUrl != null
+                      thirty, widget.project.description),
+                  widget.project.imageUrl != null
                       ? CustomWidget.getImageFromNetwork(
-                          thirty, widget?.project?.imageUrl)
+                          thirty, widget.project.imageUrl ?? "")
                       : Container(),
                 ],
               ),

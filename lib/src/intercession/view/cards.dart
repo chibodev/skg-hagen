@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/font.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/routes/routes.dart';
 import 'package:skg_hagen/src/common/service/analyticsManager.dart';
 import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
@@ -22,14 +19,14 @@ import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 class IntercessionPage extends State<Controller.Intercession> {
   final TextEditingController _intercessionTextFieldcontroller =
       TextEditingController();
-  SettingsMenu settingsMenu;
+  late SettingsMenu settingsMenu;
 
   @override
   void initState() {
     super.initState();
     settingsMenu = SettingsMenu(pageView: this);
-    AnalyticsManager().setScreen(DTO.Intercession.NAME,
-        Default.classNameFromRoute(Routes.intercession));
+    AnalyticsManager().setScreen(
+        DTO.Intercession.NAME, Default.classNameFromRoute(Routes.intercession));
   }
 
   @override
@@ -56,7 +53,7 @@ class IntercessionPage extends State<Controller.Intercession> {
               builder: (BuildContext context, AsyncSnapshot<bool> response) {
                 if (response.connectionState == ConnectionState.done &&
                     response.data != null &&
-                    !response.data == true) {
+                    response.data != true) {
                   return CustomWidget.noInternet();
                 }
                 return Container();
@@ -218,7 +215,7 @@ class IntercessionPage extends State<Controller.Intercession> {
       currentFocus.unfocus();
     }
 
-    return Scaffold.of(context).showSnackBar(
+    return ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         backgroundColor: Color(Default.COLOR_GREEN),
         content: _notification(DTO.Intercession.SUCCESS, Icons.check_circle),
@@ -228,7 +225,7 @@ class IntercessionPage extends State<Controller.Intercession> {
 
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason> _sentFailed(
       BuildContext context) {
-    return Scaffold.of(context).showSnackBar(
+    return ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
           backgroundColor: Colors.red,
           content: _notification(DTO.Intercession.ERROR, Icons.error)),

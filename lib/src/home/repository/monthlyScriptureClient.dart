@@ -11,20 +11,15 @@ class MonthlyScriptureClient {
   static const int NEW_TESTAMENT = 2;
 
   Future<MonthlyScripture> getDevotion(DioHTTPClient http, Network network,
-      {bool refresh}) async {
+      {bool? refresh}) async {
     final Options options = await http.setOptions(http, network, refresh);
     final MonthlyScripture dailyDevotion = MonthlyScripture();
-    final DateTime today = DateTime.now();
     int counter = 0;
-    final String path = "$DEVOTION_URL${today.year}/"
-        "${_getFormattedValue(today.month)}"
-        "${_getFormattedValue(today.day)}"
-        ".html";
 
     final dynamic document = await http.getHTMLResponse(
       http: http,
       options: options,
-      path: path,
+      path: getPath(),
       cacheData: CACHE_DATA,
     );
 
@@ -43,5 +38,14 @@ class MonthlyScriptureClient {
 
   String _getFormattedValue(int value) {
     return value.toString().length == 1 ? "0$value" : value.toString();
+  }
+
+  String getPath() {
+    final DateTime today = DateTime.now();
+
+    return "$DEVOTION_URL${today.year}/"
+        "${_getFormattedValue(today.month)}"
+        "${_getFormattedValue(today.day)}"
+        ".html";
   }
 }

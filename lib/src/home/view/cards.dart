@@ -37,12 +37,12 @@ import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 class Cards extends State<Home> {
   MonthlyScriptureClient monthlyScriptureClient = MonthlyScriptureClient();
   AidClient aidClient = AidClient();
-  DTO.Aid _aid;
+  DTO.Aid? _aid;
   bool _hasInternet = true;
   bool _dataAvailable = true;
   bool _isChurchYearEnabled = false;
-  BuildContext _context;
-  SettingsMenu settingsMenu;
+  late BuildContext _context;
+  late SettingsMenu settingsMenu;
 
   @override
   void initState() {
@@ -108,171 +108,171 @@ class Cards extends State<Home> {
         !_hasInternet ? CustomWidget.noInternet() : Container(),
         Container(
           color: Color(Default.COLOR_GREEN),
-          child: FutureBuilder<Aid>(
+          child: FutureBuilder<Aid?>(
             future: _getAidText(),
-            builder: (BuildContext context, AsyncSnapshot<Aid> response) {
+            builder: (BuildContext context, AsyncSnapshot<Aid?> response) {
               if (response.connectionState == ConnectionState.done &&
                   response.data != null) {
                 return InkWell(
-                  onTap: () {
-                    return showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          backgroundColor: Color(Default.COLOR_GREEN),
-                          title: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Expanded(
-                                child: Text(
-                                  response.data.title,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: SizeConfig.getSafeBlockVerticalBy(
-                                        appFont.primarySize),
-                                  ),
-                                ),
-                              ),
-                              FlatButton(
-                                onPressed: () => Share.share(
-                                    response.data.description,
-                                    subject: response.data.title),
-                                child: Icon(
-                                  Icons.share,
+                  onTap: () => showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        backgroundColor: Color(Default.COLOR_GREEN),
+                        title: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Expanded(
+                              child: Text(
+                                response.data?.title ?? "",
+                                style: TextStyle(
                                   color: Colors.white,
-                                  size: SizeConfig.getSafeBlockVerticalBy(
-                                      appFont.iconSize),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: SizeConfig.getSafeBlockVerticalBy(
+                                      appFont.primarySize),
                                 ),
                               ),
-                            ],
-                          ),
-                          content: Column(
-                            children: <Widget>[
-                              Expanded(
-                                child: SingleChildScrollView(
-                                  child: SelectableText(
-                                    response.data.description,
-                                    style: TextStyle(
-                                        fontSize:
-                                            SizeConfig.getSafeBlockVerticalBy(
-                                                appFont.primarySize),
-                                        color: Colors.black,
-                                        fontFamily: Font.NAME),
-                                  ),
-                                ),
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  Padding(
-                                    padding: EdgeInsets.only(top: twenty),
-                                    child: FlatButton(
-                                      child: Icon(
-                                        Icons.phone,
-                                        color: Colors.white,
-                                        size: SizeConfig.getSafeBlockVerticalBy(
-                                            appFont.iconSize),
-                                        semanticLabel: 'Phone',
-                                      ),
-                                      onPressed: () {
-                                        TapAction().callMe(response.data.phone);
-                                      },
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(top: twenty),
-                                    child: FlatButton(
-                                      child: Icon(
-                                        Icons.email,
-                                        color: Colors.white,
-                                        size: SizeConfig.getSafeBlockVerticalBy(
-                                            appFont.iconSize),
-                                        semanticLabel: 'Email',
-                                      ),
-                                      onPressed: () {
-                                        TapAction().sendMail(
-                                            response.data.email,
-                                            response.data.title);
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          actions: <Widget>[
-                            Divider(),
-                            FlatButton.icon(
-                              textColor: Colors.black,
-                              icon: ImageIcon(
-                                AssetImage(AidOffer.VOLUNTEER),
-                                color: Colors.black,
-                                size: SizeConfig.getSafeBlockVerticalBy(
-                                    appFont.iconSize),
-                              ),
-                              label: Flexible(
-                                child: Text(
-                                  AidOffer.NAME,
-                                  style: TextStyle(
-                                      fontSize:
-                                          SizeConfig.getSafeBlockVerticalBy(
-                                              appFont.primarySize),
-                                      fontFamily: Font.NAME),
-                                ),
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute<dynamic>(
-                                    builder: (BuildContext _context) =>
-                                        Controller.Aid(
-                                      aidOffer: _aid?.offer,
-                                      context: _context,
-                                      dataAvailable: _dataAvailable,
-                                      aidOfferQuestion: _aid?.offerQuestion,
-                                    ),
-                                  ),
-                                );
-                              },
                             ),
-                            Divider(),
-                            FlatButton.icon(
-                              textColor: Colors.black,
-                              icon: ImageIcon(
-                                AssetImage(DTO.AidReceive.HELP),
-                                color: Colors.black,
+                            TextButton(
+                              onPressed: () => Share.share(
+                                  response.data?.description ?? "",
+                                  subject: response.data?.title),
+                              child: Icon(
+                                Icons.share,
+                                color: Colors.white,
                                 size: SizeConfig.getSafeBlockVerticalBy(
                                     appFont.iconSize),
                               ),
-                              label: Flexible(
-                                child: Text(
-                                  DTO.AidReceive.NAME,
-                                  style: TextStyle(
-                                      fontSize:
-                                          SizeConfig.getSafeBlockVerticalBy(
-                                              appFont.primarySize),
-                                      fontFamily: Font.NAME),
-                                ),
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute<dynamic>(
-                                    builder: (BuildContext _context) =>
-                                        AidReceive(
-                                      aidReceive: _aid?.receive,
-                                      dataAvailable: _dataAvailable,
-                                      buildContext: _context,
-                                    ),
-                                  ),
-                                );
-                              },
                             ),
                           ],
-                        );
-                      },
-                    );
-                  },
+                        ),
+                        content: Column(
+                          children: <Widget>[
+                            Expanded(
+                              child: SingleChildScrollView(
+                                child: SelectableText(
+                                  response.data?.description ?? "",
+                                  style: TextStyle(
+                                      fontSize:
+                                          SizeConfig.getSafeBlockVerticalBy(
+                                              appFont.primarySize),
+                                      color: Colors.black,
+                                      fontFamily: Font.NAME),
+                                ),
+                              ),
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.only(top: twenty),
+                                  child: TextButton(
+                                    child: Icon(
+                                      Icons.phone,
+                                      color: Colors.white,
+                                      size: SizeConfig.getSafeBlockVerticalBy(
+                                          appFont.iconSize),
+                                      semanticLabel: 'Phone',
+                                    ),
+                                    onPressed: () {
+                                      TapAction().callMe(response.data?.phone);
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: twenty),
+                                  child: TextButton(
+                                    child: Icon(
+                                      Icons.email,
+                                      color: Colors.white,
+                                      size: SizeConfig.getSafeBlockVerticalBy(
+                                          appFont.iconSize),
+                                      semanticLabel: 'Email',
+                                    ),
+                                    onPressed: () {
+                                      TapAction().sendMail(
+                                          response.data?.email ?? "",
+                                          response.data?.title ?? "");
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        actions: <Widget>[
+                          Divider(),
+                          TextButton.icon(
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.black,
+                            ),
+                            icon: ImageIcon(
+                              AssetImage(AidOffer.VOLUNTEER),
+                              color: Colors.black,
+                              size: SizeConfig.getSafeBlockVerticalBy(
+                                  appFont.iconSize),
+                            ),
+                            label: Flexible(
+                              child: Text(
+                                AidOffer.NAME,
+                                style: TextStyle(
+                                    fontSize: SizeConfig.getSafeBlockVerticalBy(
+                                        appFont.primarySize),
+                                    fontFamily: Font.NAME),
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute<dynamic>(
+                                  builder: (BuildContext _context) =>
+                                      Controller.Aid(
+                                    aidOffer: _aid?.offer,
+                                    context: _context,
+                                    dataAvailable: _dataAvailable,
+                                    aidOfferQuestion: _aid?.offerQuestion,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          Divider(),
+                          TextButton.icon(
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.black,
+                            ),
+                            icon: ImageIcon(
+                              AssetImage(DTO.AidReceive.HELP),
+                              color: Colors.black,
+                              size: SizeConfig.getSafeBlockVerticalBy(
+                                  appFont.iconSize),
+                            ),
+                            label: Flexible(
+                              child: Text(
+                                DTO.AidReceive.NAME,
+                                style: TextStyle(
+                                    fontSize: SizeConfig.getSafeBlockVerticalBy(
+                                        appFont.primarySize),
+                                    fontFamily: Font.NAME),
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute<dynamic>(
+                                  builder: (BuildContext _context) =>
+                                      AidReceive(
+                                    aidReceive: _aid?.receive,
+                                    dataAvailable: _dataAvailable,
+                                    buildContext: _context,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.all(1.0),
                     child: ListTile(
@@ -305,47 +305,17 @@ class Cards extends State<Home> {
   InkWell _devotionalTab(
       BuildContext context, AsyncSnapshot<MonthlyScripture> response) {
     return InkWell(
-      onTap: () {
-        return showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              backgroundColor: Color(Default.COLOR_GREEN),
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Flexible(
-                    child: Text(
-                      MonthlyScripture.TITLE,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: SizeConfig.getSafeBlockVerticalBy(
-                            appFont.primarySize),
-                      ),
-                    ),
-                  ),
-                  FlatButton(
-                    onPressed: () => Share.share(
-                        response.data.getSharableContent(),
-                        subject: MonthlyScripture.TITLE),
-                    child: Icon(Icons.share,
-                        color: Colors.white,
-                        size: SizeConfig.getSafeBlockVerticalBy(
-                            appFont.iconSize)),
-                  ),
-                ],
-              ),
-              content: SingleChildScrollView(
-                child: _getDevotionalAndLesson(
-                  response.data.oldTestamentText,
-                  response.data.newTestamentText,
-                ),
-              ),
-              actions: <Widget>[
-                FlatButton(
+      onTap: () => showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Color(Default.COLOR_GREEN),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Flexible(
                   child: Text(
-                    'Schließen',
+                    MonthlyScripture.TITLE,
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -353,17 +323,45 @@ class Cards extends State<Home> {
                           appFont.primarySize),
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+                ),
+                TextButton(
+                  onPressed: () => Share.share(
+                      response.data?.getSharableContent() ?? "",
+                      subject: MonthlyScripture.TITLE),
+                  child: Icon(Icons.share,
+                      color: Colors.white,
+                      size:
+                          SizeConfig.getSafeBlockVerticalBy(appFont.iconSize)),
                 ),
               ],
-            );
-          },
-        );
-      },
+            ),
+            content: SingleChildScrollView(
+              child: _getDevotionalAndLesson(
+                response.data?.oldTestamentText,
+                response.data?.newTestamentText,
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text(
+                  'Schließen',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize:
+                        SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      ),
       child: Center(
-        child: _getDevotional(response.data.getModifiedText()),
+        child: _getDevotional(response.data?.getModifiedText() ?? ""),
       ),
     );
   }
@@ -381,7 +379,7 @@ class Cards extends State<Home> {
   }
 
   Widget _getDevotionalAndLesson(
-      String oldTestamentText, String newTestamentText) {
+      String? oldTestamentText, String? newTestamentText) {
     final TextStyle style = TextStyle(
         fontSize: SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
         color: Colors.white,
@@ -409,7 +407,7 @@ class Cards extends State<Home> {
         .getDevotion(DioHTTPClient(), Network());
   }
 
-  Future<Aid> _getAidText() async {
+  Future<Aid?> _getAidText() async {
     return await AidClient().getAid(DioHTTPClient(), Network());
   }
 
@@ -418,13 +416,15 @@ class Cards extends State<Home> {
     return await SingleCard().getAllCards(AssetClient());
   }
 
-  Widget _buildCards(List<CardContent> cards) {
-    return ListView.builder(
-        padding: EdgeInsets.zero,
-        itemCount: cards.length,
-        itemBuilder: (dynamic context, int index) {
-          return _buildRows(cards[index]);
-        });
+  Widget _buildCards(List<CardContent>? cards) {
+    return cards == null
+        ? Container()
+        : ListView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: cards.length,
+            itemBuilder: (dynamic context, int index) {
+              return _buildRows(cards[index]);
+            });
   }
 
   Widget _buildRows(CardContent card) {
@@ -507,14 +507,14 @@ class Cards extends State<Home> {
                   title: Text(UPDATE_TITLE),
                   content: Text(UPDATE_MESSAGE),
                   actions: <Widget>[
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         UPDATE_NOW,
                       ),
                       onPressed: () => LaunchReview.launch(
                           writeReview: false, iOSAppId: APP_STORE_ID),
                     ),
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         UPDATE_LATER,
                       ),
@@ -529,7 +529,7 @@ class Cards extends State<Home> {
                   title: Text(UPDATE_TITLE),
                   content: Text(UPDATE_MESSAGE),
                   actions: <Widget>[
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         UPDATE_NOW,
                         style: TextStyle(
@@ -540,7 +540,7 @@ class Cards extends State<Home> {
                       onPressed: () => LaunchReview.launch(
                           writeReview: false, androidAppId: PLAY_STORE_ID),
                     ),
-                    FlatButton(
+                    TextButton(
                       child: Text(
                         UPDATE_LATER,
                         style: TextStyle(

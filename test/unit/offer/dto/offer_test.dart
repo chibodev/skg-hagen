@@ -7,8 +7,12 @@ void main() {
 
   group('Occurrence', () {
     test('Offer dto successfully gets occurrence text', () {
-      subject =
-          Offer(title: 'Kinderchor', occurrence: 'Montags', time: "19:15:00");
+      subject = Offer(
+          title: 'Kinderchor',
+          occurrence: 'Montags',
+          time: "19:15:00",
+          placeName: '',
+          schoolYear: '');
 
       expect(subject.title, 'Kinderchor');
       expect(subject.getFormattedOccurrence(), 'Montags | 19:15 ');
@@ -28,14 +32,24 @@ void main() {
 
   test('Offer dto successfully gets formatted organiser', () {
     subject = Offer(
-        title: 'New Offer', organizer: 'Allison Gray', infoTitle: 'Leitung');
+        title: 'New Offer',
+        organizer: 'Allison Gray',
+        infoTitle: 'Leitung',
+        occurrence: '',
+        placeName: '',
+        schoolYear: '');
 
     expect(subject.title, 'New Offer');
     expect(subject.getFormattedOrganiser(), 'Leitung: Allison Gray');
   });
 
   test('Offer dto does not have organiser', () {
-    subject = Offer(title: 'No organiser', organizer: null);
+    subject = Offer(
+        title: 'No organiser',
+        organizer: null,
+        occurrence: '',
+        placeName: '',
+        schoolYear: '');
 
     expect(subject.title, 'No organiser');
     expect(subject.getFormattedOrganiser(), isNull);
@@ -46,7 +60,9 @@ void main() {
         title: 'Member Meeting',
         occurrence: 'Montags',
         time: "19:15:00",
-        schoolYear: '12');
+        schoolYear: '12',
+        timeUntil: '',
+        placeName: '');
 
     expect(subject.title, 'Member Meeting');
     expect(subject.getFormattedSchoolYear(), '12. Schuljahr');

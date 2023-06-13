@@ -13,12 +13,12 @@ import 'package:skg_hagen/src/contacts/view/cards.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Accordions extends State<Controller.Contacts> {
-  Contacts _contacts;
-  List<dynamic> _options;
+  Contacts? _contacts;
+  late List<dynamic> _options;
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
   bool _dataAvailable = false;
-  SettingsMenu settingsMenu;
+  late SettingsMenu settingsMenu;
 
   @override
   void initState() {
@@ -73,7 +73,7 @@ class Accordions extends State<Controller.Contacts> {
             (BuildContext context, int index) => !_dataAvailable
                 ? CustomWidget.buildSliverSpinner()
                 : Cards().buildRows(_options[index], context),
-            childCount: _options?.length ?? 0,
+            childCount: _options.length,
           ),
         ),
         !_dataAvailable
@@ -95,11 +95,11 @@ class Accordions extends State<Controller.Contacts> {
         DioHTTPClient(),
         Network(),
       );
-      _options = List<dynamic>();
+      _options = <dynamic>[];
       if (_contacts != null) {
-        _options.add(_contacts.address);
-        _options.add(_contacts.contact);
-        _options.add(_contacts.social);
+        _options.add(_contacts!.address);
+        _options.add(_contacts!.contact);
+        _options.add(_contacts!.social);
         _dataAvailable = true;
       }
       setState(() {

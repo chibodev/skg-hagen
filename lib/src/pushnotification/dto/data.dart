@@ -1,11 +1,11 @@
 class Data {
   String clickAction;
   String status;
-  String screen;
+  String? screen;
 
   Data({
-    this.clickAction,
-    this.status,
+    required this.clickAction,
+    required this.status,
     this.screen,
   });
 

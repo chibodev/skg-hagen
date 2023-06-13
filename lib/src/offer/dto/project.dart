@@ -1,11 +1,11 @@
 class Project {
   final String title;
   final String description;
-  final String imageUrl;
+  final String? imageUrl;
   static const int URL_MIN = 7;
   static const String NAME = 'Projekte';
 
-  Project({this.title, this.imageUrl, this.description});
+  Project({required this.title, this.imageUrl, required this.description});
 
   factory Project.fromJson(Map<String, dynamic> json) => Project(
         title: json['title'],

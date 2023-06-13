@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:skg_hagen/src/churchyear/controller/singlePageController.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
@@ -10,7 +9,7 @@ import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class ChurchYearPage extends State<SinglePageController> {
-  SettingsMenu settingsMenu;
+  late SettingsMenu settingsMenu;
 
   @override
   void initState() {
@@ -51,11 +50,11 @@ class ChurchYearPage extends State<SinglePageController> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   Flexible(
-                    child: widget?.content?.description != null
+                    child: widget.content?.description != null
                         ? Padding(
                             padding: EdgeInsets.all(thirty),
                             child: SelectableText(
-                              widget?.content?.description,
+                              widget.content?.description,
                               style: TextStyle(
                                 fontSize: SizeConfig.getSafeBlockVerticalBy(
                                     appFont.primarySize),
@@ -68,10 +67,10 @@ class ChurchYearPage extends State<SinglePageController> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Flexible(
-                        child: widget?.content?.url != null
+                        child: widget.content?.url != null
                             ? CustomWidget.getSinglePageCardURL(
-                                thirty, widget?.content?.url, context,
-                                format: widget?.content?.format)
+                                thirty, widget.content?.url, context,
+                                format: widget.content?.format)
                             : Container(),
                       )
                     ],

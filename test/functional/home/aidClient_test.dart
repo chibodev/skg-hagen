@@ -3,21 +3,16 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:skg_hagen/src/common/service/client/dioHttpClient.dart';
-import 'package:skg_hagen/src/common/service/network.dart';
 import 'package:skg_hagen/src/home/dto/aid.dart';
 import 'package:skg_hagen/src/home/repository/aidClient.dart';
 
 import '../../mock/httpClientMock.dart';
 
-class MockDioHTTPClient extends Mock implements DioHTTPClient {}
-
-class MockNetwork extends Mock implements Network {}
-
 void main() {
-  AidClient subject;
-  MockDioHTTPClient httpClient;
-  MockNetwork network;
+  late AidClient subject;
+  late MockDioHTTPClient httpClient;
+  late MockNetwork network;
+  final Options options = Options();
 
   setUpAll(() {
     subject = AidClient();
@@ -26,49 +21,54 @@ void main() {
   });
 
   test('AidClient successfully retrieves data', () async {
+    when(network.hasInternet()).thenAnswer((_) async => false);
+    when(httpClient.setOptions(httpClient, network, any))
+        .thenAnswer((_) async => options);
     when(
       httpClient.getJSONResponse(
         http: httpClient,
-        path: 'app/aid',
+        options: options,
+        path: AidClient.PATH,
         object: Aid,
-        options: anyNamed('options'),
-        cacheData: 'app/aid/data',
+        cacheData: AidClient.CACHE_DATA,
       ),
     ).thenAnswer((_) async => HTTPClientMock.getJSONRequest(
         statusCode: HttpStatus.ok, path: 'aid.json'));
 
-    final Aid aid = await subject.getAid(httpClient, network);
+    final Aid? aid = await subject.getAid(httpClient, network);
 
-    expect(aid.title, 'Corona-Hinweis / Nachbarschafts-Hilfe');
+    expect(aid!.title, 'Corona-Hinweis / Nachbarschafts-Hilfe');
     expect(
-        aid.description
+        aid.description!
             .contains('Einkaufen, Gassi gehen, Botendienste erledigen.'),
         isTrue);
     expect(aid.phone, '023464 83929');
     expect(aid.email, 'corona-hilfe@hagen.de');
   });
 
-  test('AidClient fails and throws Exception', () async {
-    DioError error;
+  test('AidClient fails', () async {
+    final Aid? result;
+
+    when(network.hasInternet()).thenAnswer((_) async => true);
+    when(httpClient.setOptions(httpClient, network, any))
+        .thenAnswer((_) async => options);
     when(
       httpClient.getJSONResponse(
         http: httpClient,
-        path: 'app/aid',
+        options: options,
+        path: AidClient.PATH,
         object: Aid,
-        options: anyNamed('options'),
-        cacheData: 'app/aid/data',
+        cacheData: AidClient.CACHE_DATA,
       ),
     ).thenAnswer((_) async =>
         HTTPClientMock.getJSONRequest(statusCode: HttpStatus.unauthorized));
 
-    try {
-      await subject.getAid(httpClient, network, index: 0, refresh: false);
-    } catch (e) {
-      error = e;
-    }
+    result =
+        await subject.getAid(httpClient, network, index: 0, refresh: false);
 
-    expect(error, isNotNull);
-    expect(error is Exception, isTrue);
-    expect(error.error.statusCode, HttpStatus.unauthorized);
+    expect(result?.description, isNull);
+    expect(result?.email, isNull);
+    expect(result?.phone, isNull);
+    expect(result?.title, isNull);
   });
 }

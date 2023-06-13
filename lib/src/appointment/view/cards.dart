@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:skg_hagen/src/appointment/controller/appointmentController.dart';
 import 'package:skg_hagen/src/appointment/dto/appointment.dart' as DTO;
@@ -16,11 +15,11 @@ import 'package:skg_hagen/src/settings/view/settingsMenu.dart';
 
 class Cards extends State<AppointmentController> {
   int _indexCounter = 0;
-  Appointments appointments;
+  late Appointments? appointments;
   final ScrollController _scrollController = ScrollController();
   bool _isPerformingRequest = false;
   bool _hasInternet = true;
-  SettingsMenu settingsMenu;
+  late SettingsMenu settingsMenu;
 
   @override
   void initState() {
@@ -71,9 +70,10 @@ class Cards extends State<AppointmentController> {
           .getAppointments(DioHTTPClient(), Network(), refresh: true);
 
       final bool status = appointments?.appointments != null;
+      final bool? noAppointments = appointments?.appointments?.isEmpty;
       _hasInternet = await Network().hasInternet();
 
-      if (status && appointments.appointments.isEmpty) {
+      if (status && noAppointments != null && noAppointments) {
         final double edge = 50.0;
         final double offsetFromBottom =
             _scrollController.position.maxScrollExtent -
@@ -100,13 +100,13 @@ class Cards extends State<AppointmentController> {
       if (!_hasInternet) {
         _isPerformingRequest = false;
       } else {
-        final Appointments newAppointments = await AppointmentClient()
+        final Appointments? newAppointments = await AppointmentClient()
             .getAppointments(DioHTTPClient(), Network(),
                 index: _indexCounter, refresh: true);
 
-        final List<DTO.Appointment> newEntries = newAppointments.appointments;
-        final bool isResponseEmpty = newEntries.isEmpty;
-        if (isResponseEmpty) {
+        final List<DTO.Appointment>? newEntries = newAppointments?.appointments;
+        final bool? isResponseEmpty = newEntries?.isEmpty;
+        if (isResponseEmpty != null && isResponseEmpty) {
           final double edge = 50.0;
           final double offsetFromBottom =
               _scrollController.position.maxScrollExtent -
@@ -120,8 +120,10 @@ class Cards extends State<AppointmentController> {
         }
         setState(() {
           _isPerformingRequest = false;
-          if (!isResponseEmpty) {
-            appointments.appointments.addAll(newEntries);
+          if (isResponseEmpty != null &&
+              !isResponseEmpty &&
+              newEntries != null) {
+            appointments?.appointments?.addAll(newEntries);
             _indexCounter++;
           }
         });
@@ -129,7 +131,7 @@ class Cards extends State<AppointmentController> {
     }
   }
 
-  Widget _buildCards(BuildContext context, Appointments appointments) {
+  Widget _buildCards(BuildContext context, Appointments? appointments) {
     return CustomScrollView(
       controller: _scrollController,
       slivers: <Widget>[
@@ -154,7 +156,7 @@ class Cards extends State<AppointmentController> {
             (BuildContext context, int index) {
               return appointments == null
                   ? CustomWidget.buildProgressIndicator(_isPerformingRequest)
-                  : _buildRows(context, appointments.appointments[index]);
+                  : _buildRows(context, appointments.appointments![index]);
             },
             childCount: appointments?.appointments?.length ?? 0,
           ),
@@ -186,21 +188,23 @@ class Cards extends State<AppointmentController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Slidable(
-                actionPane: SlidableDrawerActionPane(),
-                actionExtentRatio: Default.SLIDE_RATIO,
-                actions: card.endOccurrence != null
-                    ? _getSlidableWithCalendar(card)
-                    : <Widget>[
-                        CustomWidget.getSlidableShare(
-                          card.title,
-                          Default.getSharableContent(
+                startActionPane: ActionPane(
+                  motion: const DrawerMotion(),
+                  extentRatio: Default.SLIDE_RATIO,
+                  children: card.endOccurrence != null
+                      ? _getSlidableWithCalendar(card)
+                      : <Widget>[
+                          CustomWidget.getSlidableShare(
                             card.title,
-                            card.getFormattedTimeAsString(),
-                            card.getFormattedOrganiser(),
-                            card.address,
-                          ),
-                        )
-                      ],
+                            Default.getSharableContent(
+                              card.title,
+                              card.getFormattedTimeAsString(),
+                              card.getFormattedOrganiser(),
+                              card.address,
+                            ),
+                          )
+                        ],
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
@@ -244,7 +248,7 @@ class Cards extends State<AppointmentController> {
           card.title,
           card.getFormattedTimeAsString(),
           card.getFormattedOrganiser(),
-          card?.address,
+          card.address,
         ),
       ),
     ];

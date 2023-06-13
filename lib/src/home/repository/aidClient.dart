@@ -7,8 +7,8 @@ class AidClient {
   static const String PATH = 'app/aid';
   static const String CACHE_DATA = 'app/aid/data';
 
-  Future<Aid> getAid(DioHTTPClient http, Network network,
-      {int index, bool refresh}) async {
+  Future<Aid?> getAid(DioHTTPClient http, Network network,
+      {int? index, bool? refresh}) async {
     final Options options = await http.setOptions(http, network, refresh);
 
     final dynamic jsonResponse = await http.getJSONResponse(

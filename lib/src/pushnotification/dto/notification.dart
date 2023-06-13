@@ -3,8 +3,8 @@ class Notification {
   String title;
 
   Notification({
-    this.body,
-    this.title,
+    required this.body,
+    required this.title,
   });
 
   factory Notification.fromJson(Map<dynamic, dynamic> json) => Notification(

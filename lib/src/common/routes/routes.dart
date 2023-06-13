@@ -13,7 +13,6 @@ import 'package:skg_hagen/src/kindergarten/controller/kindergarten.dart';
 import 'package:skg_hagen/src/kindergarten/dto/kindergarten.dart' as DTO;
 import 'package:skg_hagen/src/legal/controller/imprint.dart';
 import 'package:skg_hagen/src/legal/dto/imprint.dart' as DTO;
-import 'package:skg_hagen/src/legal/dto/privacy.dart' as DTO;
 import 'package:skg_hagen/src/offer/controller/offer.dart';
 import 'package:skg_hagen/src/offer/dto/offers.dart';
 import 'package:skg_hagen/src/pushnotification/controller/appointmentController.dart';

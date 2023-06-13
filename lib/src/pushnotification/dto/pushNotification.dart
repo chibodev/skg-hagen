@@ -5,14 +5,14 @@ import 'package:skg_hagen/src/common/routes/routes.dart';
 class PushNotification {
   final String title;
   final String body;
-  final String screen;
+  final String? screen;
   final DateTime validUntil;
 
   PushNotification({
-    this.title,
-    this.body,
+    required this.title,
+    required this.body,
     this.screen,
-    this.validUntil,
+    required this.validUntil,
   });
 
   factory PushNotification.fromJson(Map<String, dynamic> json) =>
@@ -30,7 +30,7 @@ class PushNotification {
     return "Gültig bis ${DateFormat("E d.M.yy", "de_DE").format(this.validUntil).toLowerCase().toUpperCase()}";
   }
 
-  String getCategory() {
+  String? getCategory() {
     return Routes.MAPPING.containsKey(screen) ? Routes.MAPPING[screen] : null;
   }
 }

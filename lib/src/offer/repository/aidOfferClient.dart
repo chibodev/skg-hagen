@@ -10,8 +10,8 @@ class AidOfferClient {
   static const String PATH = 'app/aid_offer';
   static const String CACHE_DATA = 'app/aid_offer/data';
 
-  Future<Aid> getAidOffer(DioHTTPClient http, Network network,
-      {int index, bool refresh}) async {
+  Future<Aid?> getAidOffer(DioHTTPClient http, Network network,
+      {int? index, bool? refresh}) async {
     final Options options = await http.setOptions(http, network, refresh);
 
     final dynamic jsonResponse = await http.getJSONResponse(
@@ -36,6 +36,6 @@ class AidOfferClient {
     final Response<dynamic> response = await http.postJSON(
         http: http, path: PATH, options: options, data: helper.toJson());
 
-    return response?.statusCode != HttpStatus.ok ? false : true;
+    return response.statusCode != HttpStatus.ok ? false : true;
   }
 }

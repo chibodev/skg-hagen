@@ -1,6 +1,6 @@
 class JsonResponse {
-  final String status;
-  final String error;
+  final String? status;
+  final String? error;
 
   JsonResponse({
     this.status,

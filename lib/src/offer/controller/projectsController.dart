@@ -8,9 +8,9 @@ class ProjectsController extends StatefulWidget {
   final BuildContext context;
 
   const ProjectsController(
-      {Key key,
-      this.context,
-      @required this.project,
+      {Key? key,
+      required this.context,
+      required this.project,
       this.dataAvailable = true})
       : super(key: key);
 

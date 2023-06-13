@@ -1,20 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:skg_hagen/src/aboutus/dto/history.dart';
 import 'package:skg_hagen/src/aboutus/dto/presbytery.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 
 class Cards {
-  Widget buildRows(dynamic card, {BuildContext context}) {
-    final List<Widget> list = List<Widget>();
+  Widget buildRows(dynamic card, {BuildContext? context}) {
+    final List<Widget> list = <Widget>[];
     String subjectName = "";
 
     if (card is List<History>) {
       subjectName = History.NAME;
       for (int i = 0; i < card.length; i++) {
-        list.add(_buildTileForHistory(card[i], context));
+        list.add(_buildTileForHistory(card[i], context!));
       }
     } else if (card is List<Presbytery>) {
       subjectName = Presbytery.NAME;
@@ -47,15 +46,15 @@ class Cards {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       SelectableText(
-                        card.description,
+                        card.description!,
                         style: TextStyle(
                           fontSize: SizeConfig.getSafeBlockVerticalBy(
                               appFont.primarySize),
                         ),
                       ),
                       Text(''),
-                      CustomWidget.getCardURL(card.url, context,
-                          format: card.urlFormat),
+                      CustomWidget.getCardURL(card.url!, context,
+                          format: card.urlFormat!),
                     ],
                   )),
             ),
@@ -66,6 +65,8 @@ class Cards {
   }
 
   Widget _buildTileForPresbytery(Presbytery card) {
+    final int? cardDescriptionLength = card.description?.length;
+
     return Material(
       child: Padding(
         padding: EdgeInsets.only(
@@ -86,9 +87,9 @@ class Cards {
                         SizeConfig.getSafeBlockVerticalBy(appFont.primarySize),
                   ),
                 ),
-                subtitle: (card.description.length > 1)
+                subtitle: (cardDescriptionLength! > 1)
                     ? Text(
-                        card.description,
+                        card.description ?? "",
                         style: TextStyle(
                           fontSize: SizeConfig.getSafeBlockVerticalBy(
                               appFont.secondarySize),

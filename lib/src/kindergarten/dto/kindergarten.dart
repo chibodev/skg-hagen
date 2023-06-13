@@ -9,7 +9,7 @@ class Kindergarten {
   static const String FOOTER =
       'Für weitere Informationen wenden Sie sich bitte an Mitarbeiter des Kindergartens.';
 
-  Kindergarten({this.events, this.news});
+  Kindergarten({required this.events, required this.news});
 
   factory Kindergarten.fromJson(Map<String, dynamic> json) {
     return Kindergarten(

@@ -11,13 +11,13 @@ class IntercessionClient {
       DioHTTPClient http, Network network, String intercession) async {
     final Options options = await http.setOptions(http, network, false);
     final Map<String, String> data = <String, String>{
-    'intercession': intercession,
+      'intercession': intercession,
     };
 
-    final Response<dynamic> response =  await http.postJSON(
+    final Response<dynamic> response = await http.postJSON(
         http: http, path: PATH, options: options, data: data);
 
-    if (response?.statusCode != HttpStatus.ok) {
+    if (response.statusCode != HttpStatus.ok) {
       return false;
     }
 

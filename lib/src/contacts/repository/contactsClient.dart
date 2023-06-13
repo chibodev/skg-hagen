@@ -7,8 +7,8 @@ class ContactsClient {
   static const String PATH = 'app/contact';
   static const String CACHE_DATA = 'app/contact/data';
 
-  Future<Contacts> getContacts(DioHTTPClient http, Network network,
-      {int index, bool refresh}) async {
+  Future<Contacts?> getContacts(DioHTTPClient http, Network network,
+      {int? index, bool? refresh}) async {
     final Options options = await http.setOptions(http, network, refresh);
 
     final dynamic jsonResponse = await http.getJSONResponse(

@@ -7,8 +7,8 @@ class AboutUsClient {
   static const String PATH = 'app/aboutus';
   static const String CACHE_DATA = 'app/aboutus/data';
 
-  Future<AboutUs> getData(DioHTTPClient http, Network network,
-      {int index, bool refresh}) async {
+  Future<AboutUs?> getData(DioHTTPClient http, Network network,
+      {int? index, bool refresh = false}) async {
     final Options options = await http.setOptions(http, network, refresh);
 
     final dynamic jsonResponse = await http.getJSONResponse(

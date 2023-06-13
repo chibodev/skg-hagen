@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/dto/default.dart';
 import 'package:skg_hagen/src/common/dto/sizeConfig.dart';
+import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 import 'package:skg_hagen/src/offer/controller/aid.dart' as Controller;
 import 'package:skg_hagen/src/offer/controller/aidReceive.dart';
@@ -23,15 +23,15 @@ import 'package:skg_hagen/src/offer/dto/project.dart';
 import 'package:skg_hagen/src/offer/dto/quote.dart';
 
 class Cards {
-  BuildContext _buildContext;
-  bool _dataAvailable;
+  late BuildContext _buildContext;
+  late bool _dataAvailable;
 
   Widget buildRows(BuildContext context, dynamic card, bool dataAvailable) {
     this._buildContext = context;
     this._dataAvailable = dataAvailable;
     String subjectName = "";
 
-    final List<Widget> list = List<Widget>();
+    final List<Widget> list = <Widget>[];
 
     if (card is List<Offer>) {
       for (int i = 0; i < card.length; i++) {
@@ -82,19 +82,21 @@ class Cards {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Slidable(
-                actionPane: SlidableDrawerActionPane(),
-                actionExtentRatio: Default.SLIDE_RATIO,
-                actions: <Widget>[
-                  CustomWidget.getSlidableShare(
-                    card.title,
-                    Default.getSharableContent(
+                startActionPane: ActionPane(
+                  motion: const DrawerMotion(),
+                  extentRatio: Default.SLIDE_RATIO,
+                  children: <Widget>[
+                    CustomWidget.getSlidableShare(
                       card.title,
-                      card.getFormattedOccurrence(),
-                      card.getFormattedOrganiser(),
-                      card.address,
-                    ),
-                  )
-                ],
+                      Default.getSharableContent(
+                        card.title,
+                        card.getFormattedOccurrence(),
+                        card.getFormattedOrganiser(),
+                        card.address,
+                      ),
+                    )
+                  ],
+                ),
                 child: Container(
                   width: SizeConfig.screenHeight,
                   child: Column(
@@ -120,7 +122,7 @@ class Cards {
               (card.address.street == null || card.address.name == null)
                   ? CustomWidget.getNoLocation()
                   : CustomWidget.getAddressWithAction(card.address,
-                      room: card.room),
+                      room: card.room ?? ""),
             ],
           ),
         ),
@@ -347,14 +349,14 @@ class Cards {
 
   Widget _buildTileForAid(BuildContext context, Aid card) {
     final Controller.Aid aidOffer = Controller.Aid(
-      aidOffer: card?.offer,
+      aidOffer: card.offer,
       context: context,
       dataAvailable: this._dataAvailable,
-      aidOfferQuestion: card?.offerQuestion,
+      aidOfferQuestion: card.offerQuestion,
     );
 
     final AidReceive aidReceive = AidReceive(
-      aidReceive: card?.receive,
+      aidReceive: card.receive,
       buildContext: context,
       dataAvailable: this._dataAvailable,
     );
@@ -370,12 +372,8 @@ class Cards {
                   DTOAidOffer.AidOffer.VOLUNTEER, DTOAidOffer.AidOffer.NAME)
               : Container(),
           card.receive != null
-              ? getAidContent(
-                  context,
-                  card,
-                  aidReceive,
-                  DTOAidReceive.AidReceive.HELP,
-                  DTOAidReceive.AidReceive.NAME)
+              ? getAidContent(context, card, aidReceive,
+                  DTOAidReceive.AidReceive.HELP, DTOAidReceive.AidReceive.NAME)
               : Container(),
         ],
       ),

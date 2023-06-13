@@ -10,19 +10,19 @@ import 'package:skg_hagen/src/common/library/globals.dart';
 import 'package:skg_hagen/src/common/view/customWidget.dart';
 
 class Cards {
-  BuildContext _buildContext;
-  bool _dataAvailable;
+  late BuildContext _buildContext;
+  late bool _dataAvailable;
 
   Widget buildRows(BuildContext context, dynamic card, bool dataAvailable) {
     this._buildContext = context;
     this._dataAvailable = dataAvailable;
     String subjectName = "";
 
-    final List<Widget> list = List<Widget>();
+    final List<Widget> list = <Widget>[];
     if (card is ResurrectionStation) {
       subjectName = EasterOffer.NAME;
-      list.add(_buildTileForInfo(card?.info));
-      for (int i = 0; i < card?.station?.length; i++) {
+      list.add(_buildTileForInfo(card.info));
+      for (int i = 0; i < card.station.length; i++) {
         list.add(_buildTileForEasterOffer(card.station[i]));
       }
     }
